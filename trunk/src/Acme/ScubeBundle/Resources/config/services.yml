@@ -1,0 +1,7 @@
+parameters:
+#    acme_scube.example.class: Acme\ScubeBundle\Example
+
+services:
+#    acme_scube.example:
+#        class: %acme_scube.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
