@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Scube</title>
+<link href="{{ asset('bundles/base/css/style.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/base/css/style.fancybox.css') }}" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" src="{{ asset('bundles/base/js/jquery.1.7.1.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/base/js/jquery-ui-personalized-1.6rc2.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/base/js/jquery.form.js') }}"></script> 
+<script type="text/javascript" src="{{ asset('bundles/base/js/jquery.fancybox.js') }}"></script> 
+<!--<script type="text/javascript" src="{{ asset('bundles/base/js/jquery.scrollbar.js') }}"></script> -->
+
+
+<script>
+  $(function() {
+  $( "#grid" ).sortable();
+  $( "#grid" ).disableSelection();
+  });
+
+
+
+  $(".Appbutton, .FreeAppbutton").fancybox({
+  padding: 0,
+  
+  openEffect : 'elastic',
+  openSpeed  : 150,
+  
+  closeEffect : 'elastic',
+  closeSpeed  : 150,
+  helpers : {
+  overlay : null
+  }
+  });
+
+</script>
+
+<!--[if lt IE 7]>
+ <style type="text/css">
+ .dock img { behavior: url({{ asset('bundles/base/iepngfix.htc') }}) }
+ </style>
+<![endif]-->
+
+</head>
+<body>
+
+<div id="header">
+  <img src="{{ asset('bundles/base/medias/logo_scube_entete.png') }}" alt="Scube" />
+</div>
+
+<div id="tools_corner">
+  <a class="FreeAppbutton fancybox.ajax" href="/Apps/"><img src="{{ asset('bundles/base/medias/tools-corner.png') }}" alt="Tools" /></a>
+</div>
+
+<div id="login_corner">
+  <a class="FreeAppbutton fancybox.ajax" href="/Apps/register"><img src="{{ asset('bundles/base/medias/shutdown-corner.png') }}" alt="Logout" /></a>
+</div>
+
+
+
+<ul id="grid">
+  <li class="Appbutton ui-state-default fancybox.ajax" href="/Apps/register"><img alt="Register" src="{{ asset('/static/register/medias/icon.png') }}" /></li>
+  <li class="Appbutton ui-state-default fancybox.ajax" href="/Apps/login">1</li>
+  <li class="Appbutton ui-state-default">2</li>
+  <li class="Appbutton ui-state-default">3</li>
+  <li class="Appbutton ui-state-default">4</li>
+  <li class="Appbutton ui-state-default">5</li>
+  <li class="Appbutton ui-state-default">6</li>
+  <li class="Appbutton ui-state-default">7</li>
+  <li class="Appbutton ui-state-default">3</li>
+  <li class="Appbutton ui-state-default">3</li>
+  <li class="Appbutton ui-state-default">3</li>
+  <li class="Appbutton ui-state-default">3</li>
+</ul>
+
+</body>
+</html>

@@ -2,13 +2,13 @@
 // src/Acme/ScubeBundle/Controller/ScubeController.php
 namespace Acme\ScubeBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class ScubeController
+class ScubeController extends Controller
 {
     public function indexAction()
     {
-        return new Response('<html><body>Hello !</body></html>');
+		return $this->render('AcmeScubeBundle:Scube:index.html.twig'/*, array('user' => $name)*/);
     }
 }
 ?>
