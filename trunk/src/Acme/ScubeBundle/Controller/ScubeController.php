@@ -8,7 +8,7 @@ class ScubeController extends Controller
 {
     public function indexAction()
     {
-		return $this->render('AcmeScubeBundle:Scube:index.html.twig'/*, array('user' => $name)*/);
+	return $this->render('AcmeScubeBundle:Scube:index.html.twig'/*, array('user' => $name)*/);
     }
 }
 ?>
