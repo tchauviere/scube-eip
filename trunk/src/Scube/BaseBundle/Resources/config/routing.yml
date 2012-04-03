@@ -1,0 +1,3 @@
+_homepage:
+    pattern:  /base/{name}
+    defaults: { _controller: ScubeBaseBundle:Base:index }
