@@ -1,4 +1,0 @@
-AcmeScubeBundle_homepage:
-    pattern:  /base/
-    defaults: { _controller: AcmeScubeBundle:Scube:index }
-
