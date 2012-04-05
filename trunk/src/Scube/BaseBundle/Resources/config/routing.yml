@@ -1,3 +1,8 @@
 _homepage:
-    pattern:  /base/{name}
+    pattern:  /
     defaults: { _controller: ScubeBaseBundle:Base:index }
+
+_register:
+    pattern:  /register
+    defaults: { _controller: ScubeBaseBundle:Base:register }
+

@@ -1,0 +1,159 @@
+body
+{
+font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+background-color:#CCC;
+margin:0;
+}
+h1{
+font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+text-shadow:0px 1px 1px white;
+text-align:center;
+font-size:26px;
+color:#333;
+margin:25px 10px;;
+}
+a{
+	color:#568dc5;
+}
+a:hover{
+	color:#4878ac;
+}
+
+#header
+{
+    width:100%;
+    height:60px;
+    text-align:center;
+    background:#333;
+    padding-top:8px;
+    margin:0px;
+	box-shadow: 0 0 10px #555; 
+}
+
+#tools_corner
+{
+    position:absolute;
+    left:0;
+    top:0;
+}
+#login_corner
+{
+    position:absolute;
+    right:0;
+    top:0;
+}
+
+#grid
+{ 
+    float:left;
+    list-style-type: none; 
+    margin: 0 auto; 
+    padding: 0;
+    width:100%;
+    height:100%;
+}
+  
+#grid li { 
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    background-color: #333;
+    vertical-align:middle;
+    color:white;
+    width:128px;
+    height:128px;
+    margin: 24px; 
+    padding: 0px; 
+    float: left;
+    text-align:center;
+    vertical-align:middle;
+}
+
+#grid .Appbutton img
+{
+    width:128px;
+    height:128px;
+    vertical-align:middle;
+}
+#grid .Appbutton:hover
+{
+    background-color: #666;
+   /* margin:12px;
+    width:153px;
+    height:153px;*/
+}
+
+
+.page_frame {
+	background-color:white;
+	width:500px;
+	-moz-border-radius:5px;
+    -webkit-border-radius:5px;
+	margin:0 auto;
+	padding:10px;
+	box-shadow: 0 0 10px #333;
+	-moz-box-shadow: 0 0 10px #333;
+	-webkit-box-shadow: 0 0 10px #333;
+}
+
+
+/* FORMS */
+
+form {
+	margin:0 auto;
+}
+
+label {
+	font-weight:bold;
+	display:block;
+	width:50%;
+	height:25px;
+	margin:0 auto;
+}
+input {
+	display:block;
+	width:50%;
+	height:25px;
+	margin:0 auto;
+	margin-bottom:10px;
+}
+
+select {
+	display:block;
+	width:50%;
+	height:25px;
+	margin:0 auto;
+	margin-bottom:10px;
+}
+#form_Birthday {
+	display:block;
+	width:50%;
+	height:25px;
+	margin:0 auto;
+	margin-bottom:10px;
+}
+#form_Birthday select {
+	display:inline;
+	width:31%;
+	height:25px;
+	margin:0 auto;
+	margin-bottom:10px;
+}
+
+input[type="submit"] {
+	background-color: #92b417;
+	-moz-border-radius:5px;
+    -webkit-border-radius:5px;
+	color:white;
+	font-weight:bold;
+	font-size:16px;
+	border:none;
+}
+
+.form_error {
+	color:#e43018;
+	text-align:center;
+}
+.form_success {
+	color:#7f9d21;
+	text-align:center;
+}

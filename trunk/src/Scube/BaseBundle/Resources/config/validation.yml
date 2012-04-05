@@ -1,0 +1,23 @@
+# Scube/BaseBundle/Resources/config/validation.yml
+Scube\BaseBundle\Entity\Users:
+    properties:
+        firstname:
+            - MinLength: { limit: 2, message: "Your firstname must have at least {{ limit }} characters." }
+            - MaxLength: { limit: 100, message: "Your firstname is too long. It must have less than {{ limit }} characters." }
+        surname:
+            - MinLength: { limit: 2, message: "Your surname must have at least {{ limit }} characters." }
+            - MaxLength: { limit: 100, message: "Your surname is too long. It must have less than {{ limit }} characters." }
+        email:
+            - NotBlank: ~
+            - Email:
+                message: The email "{{ value }}" is not a valid email.
+        password:
+            - NotBlank: ~
+            - MinLength: { limit: 6, message: "Your password must have at least {{ limit }} characters." }
+            - MaxLength: { limit: 35, message: "Your password is too long. It must have less than {{ limit }} characters." }
+        birthday:
+            - Date: ~
+        gender:
+            - Choice:
+                choices:  [male, female]
+                message:  Choose a valid gender.
