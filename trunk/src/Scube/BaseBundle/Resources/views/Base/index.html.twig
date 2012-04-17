@@ -1,1 +1,144 @@
-Welcome in your interface !
+{% extends 'ScubeBaseBundle:Base:base.html.twig' %}
+
+{% block title %}Scube{% endblock %}
+
+{% block more_javascripts %}
+{% javascripts
+    '@ScubeBaseBundle/Resources/public/js/grid.js'
+%}
+<script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+<script>
+
+	$(document).ready(function() 
+	{
+		load_Grid();
+		$("#home_corner").click(function() {
+			if (!$("#home_box").length){
+				$("#header").append("<div id='home_box'></div>");
+				
+				/* Get the content from server */
+				$.ajax({
+				  url: '{{ path('_frame_profile') }}',
+				  success: function(data) {
+					$('#home_box').html(data);
+					$("#home_box").css({
+										position:"absolute",
+										top:0,
+										left:0,
+										width:400,
+										height:500
+										
+										});
+					$("#home_box").fadeIn();
+				  }
+				});
+				
+			}
+			else
+				$("#home_box").fadeToggle();
+			
+			
+		});
+		
+	});
+
+	$(window).resize(function() 
+	{
+		load_Grid();
+	});
+
+  $(".Appbutton, .FreeAppbutton").fancybox({
+  padding: 0,
+  
+  openEffect : 'elastic',
+  openSpeed  : 150,
+  
+  closeEffect : 'elastic',
+  closeSpeed  : 150,
+  helpers : {
+  overlay : null
+  }
+  });
+
+  var Widgets = {
+				{% for widget in user.getBaseInterface().getWidgets() %}
+					"cell_{{widget.id}}":{"id":{{widget.id}},"pos_x":{{widget.posX}},"pos_y":{{widget.posY}},"width":{{widget.width}},"height":{{widget.height}},"url":"{{ path(widget.widget.link)}}"},
+				{% endfor %}
+			  };
+
+function	load_widget(id, force)
+{
+	if ($("#"+id+" .widget_content").length == 0 || force)
+		$.ajax({
+		  url: Widgets[id]["url"],
+		  beforeSend: function() {			
+			$("#"+id).append("<div class='widget_content'></div>");
+		  },
+		  success: function(data) {			
+			$("#"+id+" .widget_content").html(data);
+		  }
+		});
+}
+			  
+</script>
+
+<style>
+
+.cell_fullscreen {
+	{% image '@ScubeBaseBundle/Resources/public/images/fullscreen.png' %}
+		background:transparent url({{ asset_url }}) top left no-repeat;
+	{% endimage %}
+	
+}
+.cell_fullscreen:hover {
+	{% image '@ScubeBaseBundle/Resources/public/images/fullscreen_hover.png' %}
+		background:transparent url({{ asset_url }}) top left no-repeat;
+	{% endimage %}
+	
+}
+.cell_remove {
+	{% image '@ScubeBaseBundle/Resources/public/images/remove.png'	%}
+		background:transparent url({{ asset_url }}) top left no-repeat;
+	{% endimage %}
+}
+
+.cell_anchor {
+	{% image '@ScubeBaseBundle/Resources/public/images/anchor.png'	%}
+		background:transparent url({{ asset_url }}) top left no-repeat;
+	{% endimage %}
+}
+
+body {
+	overflow:hidden;
+}
+
+</style>
+
+{% endblock %}
+
+{% block body %}
+{{ parent() }}
+
+<div id="mcs_container">
+	<div class="customScrollBox">
+		<div class="container">
+    		<div class="content">
+        		<div id="Grid">
+
+				</div>
+			</div>
+		</div>
+		<div class="dragger_container">
+    		<div class="dragger"></div>
+		</div>
+	</div>
+</div>
+
+{#
+	{% for app in user.getApps() %}
+		<li class="Appbutton ui-state-default fancybox.ajax" href="">{{app.name}}</li>
+	{% endfor %}
+#}
+{% endblock %}

@@ -6,3 +6,10 @@ _register:
     pattern:  /register
     defaults: { _controller: ScubeBaseBundle:Base:register }
 
+_logout:
+    pattern:  /logout
+    defaults: { _controller: ScubeBaseBundle:Base:logout }
+
+_frame_profile:
+    pattern:  /frame_profile
+    defaults: { _controller: ScubeBaseBundle:Base:frame_profile }

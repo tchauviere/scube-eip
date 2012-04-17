@@ -16,7 +16,10 @@ class BaseController extends Controller
 		/* User logged -> display the index */
 		if ($session->get('user'))
 		{
-			return $this->render('ScubeBaseBundle:Base:index.html.twig');
+			$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:Users');
+			$user = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
+						
+			return $this->render('ScubeBaseBundle:Base:index.html.twig', array('user' => $user));
 		}
 		/* User not logged -> display login form */
 		else
@@ -38,6 +41,7 @@ class BaseController extends Controller
 					$user = $repository->findOneBy(array('email' => $LoggingUser->getEmail(), 'password' => $LoggingUser->getPassword()));
 					if ($user)
 					{
+						$user->getApps();
 						$session->set('user', $user);
 						return $this->redirect($this->generateUrl('_homepage'));
 					}
@@ -75,5 +79,20 @@ class BaseController extends Controller
 		}
 			
 		return $this->render('ScubeBaseBundle:Base:register.html.twig', array('form' => $form->createView(), "success"=>false));
+    }
+	
+	public function logoutAction(Request $request)
+    {
+		$this->getRequest()->getSession()->remove('user');
+		return $this->redirect($this->generateUrl('_homepage'));
+    }
+	
+	public function frame_profileAction(Request $request)
+    {
+		$session = $this->getRequest()->getSession();
+		
+		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:Users');
+		$user = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));					
+		return $this->render('ScubeBaseBundle:Base:frame_profile.html.twig', array('user' => $user));
     }
 }

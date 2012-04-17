@@ -2,6 +2,10 @@ ScubeBaseBundle:
     resource: "@ScubeBaseBundle/Resources/config/routing.yml"
     prefix:   /
 
+ScubeFriendsBundle:
+    resource: "@ScubeFriendsBundle/Resources/config/routing.yml"
+    prefix:   /
+
 
 # Internal routing configuration to handle ESI
 #_internal:

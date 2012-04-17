@@ -3,6 +3,7 @@
 namespace Scube\BaseBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
@@ -47,6 +48,35 @@ class Users
      */
     protected $gender;
 	
+	/**
+     * @ORM\ManyToMany(targetEntity="Scube\BaseBundle\Entity\Apps")
+	 * @ORM\JoinTable(name="users_apps") 
+     */ 
+    protected $apps;
+	
+	/**
+     * @ORM\ManyToMany(targetEntity="Scube\BaseBundle\Entity\Apps")
+	 * @ORM\JoinTable(name="users_adminapps") 
+     */ 
+    protected $adminapps;
+	
+	/**
+     * @ORM\OneToOne(targetEntity="Scube\BaseBundle\Entity\BaseInterface")
+     * @ORM\JoinColumn(name="base_interface", referencedColumnName="id")
+     */
+    protected $baseInterface;
+	
+	/**
+     * @ORM\OneToOne(targetEntity="Scube\BaseBundle\Entity\UsersProfile")
+     * @ORM\JoinColumn(name="users_profile", referencedColumnName="id")
+     */
+    protected $profile;
+	
+	public function __construct()
+    {
+        $this->apps = new ArrayCollection();
+		$this->adminapps = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -178,4 +208,74 @@ class Users
         return $this->gender;
     }
 	
+
+    /**
+     * Add apps
+     *
+     * @param Scube\BaseBundle\Entity\Apps $apps
+     */
+    public function addApps(\Scube\BaseBundle\Entity\Apps $apps)
+    {
+        $this->apps[] = $apps;
+    }
+
+    /**
+     * Get apps
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getApps()
+    {
+        return $this->apps;
+    }
+
+    /**
+     * Get adminapps
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getAdminapps()
+    {
+        return $this->adminapps;
+    }
+
+    /**
+     * Set inteface
+     *
+     * @param Scube\BaseBundle\Entity\BaseInterface $interface
+     */
+    public function setBaseInterface(\Scube\BaseBundle\Entity\BaseInterface $inteface)
+    {
+        $this->baseInterface = $interface;
+    }
+
+    /**
+     * Get inteface
+     *
+     * @return Scube\BaseBundle\Entity\BaseInterface 
+     */
+    public function getBaseInterface()
+    {
+        return $this->baseInterface;
+    }
+
+    /**
+     * Set profile
+     *
+     * @param Scube\BaseBundle\Entity\UsersProfile $profile
+     */
+    public function setProfile(\Scube\BaseBundle\Entity\UsersProfile $profile)
+    {
+        $this->profile = $profile;
+    }
+
+    /**
+     * Get profile
+     *
+     * @return Scube\BaseBundle\Entity\UsersProfile 
+     */
+    public function getProfile()
+    {
+        return $this->profile;
+    }
 }
