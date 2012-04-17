@@ -1,1 +1,35 @@
 <h1>{{user.surname}} {{user.firstname}}</h1>
+
+
+		<table id="frame_profile_infos">
+		
+		<tr>
+		<td class="img_profile">
+		{% image '@ScubeBaseBundle/Resources/public/images/user.png' output='/images/user.png'	%}
+		<img src="{{ asset_url }}" alt="Picture"/></a>
+		{% endimage %}
+		</td>
+	
+		<td class="details_profile">
+		<ul>
+			<li>Gender: {{user.gender}}</li>
+			<li>Status: {{user.getProfile().status}}</li>
+			<li>Phone: {{ '+' ~ user.getProfile().getPhoneId() ~ ' ' ~ user.getProfile().getPhoneNumber()}}</li>
+			<li>City: {{user.getProfile().getCity()}}</li>
+			<li>Native From: {{user.getProfile().getNativeCity()}}</li>
+			<li>Tongue(s): {{user.getProfile().getTongues()}}</li>
+			<li>Website: {{user.getProfile().getWebsite()}}</li>
+		</ul>
+		</td>
+		</tr>
+		
+		
+		<tr>
+		<td colspan='2'>
+		
+			<a class="account_params_btn">Modify Account</a>
+			<a class="account_params_btn">Modify Profile</a>
+		</td>
+		</tr>
+		
+		</table>

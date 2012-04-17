@@ -236,3 +236,52 @@ input[type="submit"] {
 	color:#7f9d21;
 	text-align:center;
 }
+
+/* PROFILE FRAME */
+
+#frame_profile_infos .img_profile{
+	width: 20%;
+}
+
+#frame_profile_infos .details_profile{
+	width: 80%;
+}
+
+#frame_profile_infos .buttons_profile{
+	padding-top: 15px;
+}
+
+#frame_profile_infos {
+	width: 100%;
+}
+
+#frame_profile_infos ul{
+	list-style-type:none;
+	margin: 0 auto;
+}
+
+#frame_profile_infos li{
+	text-align: left;
+	font-size: 13px;
+}
+
+.account_params_btn{
+margin: 0 15px;
+margin-top: 15px;
+background: #222;
+display: block;
+padding: 5px 10px 6px;
+color: #fff;
+text-decoration: none;
+font-weight: bold;
+line-height: 1;
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+-moz-box-shadow: 0 1px 3px #999;
+-webkit-box-shadow: 0 1px 3px #999;
+text-shadow: 0 -1px 1px #222;
+border-bottom: 1px solid #222;
+position: relative;
+cursor: pointer;
+text-align: center;
+}
