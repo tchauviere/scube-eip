@@ -67,6 +67,101 @@ a:hover{
     top:15px;
 }
 
+#Grid {
+	position:relative;
+}
+
+.empty_cell {
+	background-color:whiteSmoke;
+	border-radius:5px;
+	position:absolute;
+}
+
+.plain_cell {
+	background-color:#4878ac;
+	border-radius:5px;
+	position:absolute;
+}
+
+.cell_hover {
+	background-color:#CCC;
+	border-radius:5px;
+	position:absolute;
+}
+
+.cell_fullscreen {
+	position:relative;
+	float:right;
+	margin:5px;
+	width:30px;
+	height:30px;
+}
+
+.cell_remove {
+	position:relative;
+	float:right;
+	margin:5px;
+	width:36px;
+	height:36px;
+	cursor:pointer;
+}
+
+.cell_anchor {
+	position:relative;
+	float:left;
+	margin:5px;
+	width:36px;
+	height:36px;
+	cursor:pointer;
+}
+
+.widget_content {
+	padding-top:40px;
+	/*position:relative;
+	float:left;*/
+}
+.widget_1x1 {
+	margin:0 auto;
+	text-align:center;
+}
+.widget_1x1_title {
+	text-align:center;
+	color:white;
+	font-size:18px;
+}
+
+ /* 
+#grid li { 
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    background-color: #333;
+    vertical-align:middle;
+    color:white;
+    width:128px;
+    height:128px;
+    margin: 24px; 
+    padding: 0px; 
+    float: left;
+    text-align:center;
+    vertical-align:middle;
+}
+*/
+
+#grid .Appbutton img
+{
+    width:128px;
+    height:128px;
+    vertical-align:middle;
+}
+#grid .Appbutton:hover
+{
+    background-color: #666;
+   /* margin:12px;
+    width:153px;
+    height:153px;*/
+}
+
+
 .page_frame {
 	background-color:whiteSmoke;
 	width:500px;

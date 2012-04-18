@@ -48,17 +48,15 @@
 		load_Grid();
 	});
 
-  $(".Appbutton, .FreeAppbutton").fancybox({
-  padding: 0,
-  
-  openEffect : 'elastic',
-  openSpeed  : 150,
-  
-  closeEffect : 'elastic',
-  closeSpeed  : 150,
-  helpers : {
-  overlay : null
-  }
+  $(".AppBox").fancybox({
+	  padding: 0,
+	  openEffect : 'elastic',
+	  openSpeed  : 150,
+	  closeEffect : 'elastic',
+	  closeSpeed  : 150,
+	  helpers : {
+	  overlay : null
+	  }
   });
 
   var Widgets = {
@@ -77,6 +75,18 @@ function	load_widget(id, force)
 		  },
 		  success: function(data) {			
 			$("#"+id+" .widget_content").html(data);
+			if ($("#"+id+" .widget_content .GridButton").length)
+				$("#"+id+" .widget_content").click(function() {
+					$("#"+id+" .widget_content").fancybox({
+						  padding: 0,
+						  openEffect : 'elastic',
+						  openSpeed  : 150,
+						  closeEffect : 'elastic',
+						  closeSpeed  : 150,
+						  type:'ajax',
+						  href:$("#"+id+" .widget_content .GridButton").attr("openapp")
+					});
+				});
 		  }
 		});
 }
@@ -84,18 +94,31 @@ function	load_widget(id, force)
 </script>
 
 <style>
+#fancybox-loading, .fancybox-close, .fancybox-prev span, .fancybox-next span {
+	{% image '@ScubeBaseBundle/Resources/public/images/fancybox_sprite.png' %}
+		background-image: url({{ asset_url }});
+	{% endimage %}
+}
+#fancybox-loading div {
+	{% image '@ScubeBaseBundle/Resources/public/images/fancybox_loading.gif' %}
+		background-image: url({{ asset_url }}) center center no-repeat;
+	{% endimage %}
+}
+.fancybox-nav {
+	{% image '@ScubeBaseBundle/Resources/public/images/blank.gif' %}
+		background-image:transparent  url({{ asset_url }}); /* helps IE */
+	{% endimage %}
+}
 
 .cell_fullscreen {
 	{% image '@ScubeBaseBundle/Resources/public/images/fullscreen.png' %}
 		background:transparent url({{ asset_url }}) top left no-repeat;
 	{% endimage %}
-	
 }
 .cell_fullscreen:hover {
 	{% image '@ScubeBaseBundle/Resources/public/images/fullscreen_hover.png' %}
 		background:transparent url({{ asset_url }}) top left no-repeat;
 	{% endimage %}
-	
 }
 .cell_remove {
 	{% image '@ScubeBaseBundle/Resources/public/images/remove.png'	%}
@@ -106,6 +129,12 @@ function	load_widget(id, force)
 .cell_anchor {
 	{% image '@ScubeBaseBundle/Resources/public/images/anchor.png'	%}
 		background:transparent url({{ asset_url }}) top left no-repeat;
+	{% endimage %}
+}
+
+.empty_cell_hover {
+	{% image '@ScubeBaseBundle/Resources/public/images/background_cell_hover.png'	%}
+		background:url({{ asset_url }}) center no-repeat;
 	{% endimage %}
 }
 

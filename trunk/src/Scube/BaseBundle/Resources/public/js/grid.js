@@ -137,6 +137,17 @@ function load_Grid()
 				$("#"+cell_id).css({
 							'background-color':"transparent"
 							});
+			else
+			{
+				$("#"+cell_id).hover(
+				  function () {
+					$(this).addClass("empty_cell_hover");
+				  },
+				  function () {
+					$(this).removeClass("empty_cell_hover");
+				  }
+				);
+			}
 			if (edit_mode)
 			$("#"+cell_id).droppable( {
       								accept: '.widget',
