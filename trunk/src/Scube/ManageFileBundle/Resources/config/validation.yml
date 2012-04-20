@@ -1,0 +1,7 @@
+Scube\ManageFileBundle\Entity\File:
+    properties:
+        file:
+            - File:
+                maxSize: 2048k
+                mimeTypes: [image/svg+xml, image/png, image/jpeg, image/gif]
+                mimeTypesMessage: Only pictures
