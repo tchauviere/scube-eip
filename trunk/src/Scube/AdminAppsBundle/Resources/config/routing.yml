@@ -1,0 +1,3 @@
+AdminAppsBundle_homepage:
+    pattern:  /admin_apps
+    defaults: { _controller: ScubeAdminAppsBundle:AdminApps:index }

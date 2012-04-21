@@ -44,6 +44,7 @@
 			else {
 				$('input:checkbox[name=grid_lock]').attr("disabled", false);
 				switch_admin_mode(false);
+				switch_edit_mode(false);
 			}
 		});
 		
@@ -138,7 +139,7 @@ function	load_widget(id, force)
 
 function	load_adminWidget(id, force)
 {
-	$("#"+id).append('<div class="widget_content"><div class="GridButton" openapp="{{path("FriendsBundle_homepage")}}"><p class="GridButton_title">Friends</p></div></div>');
+	$("#"+id).append('<div class="widget_content"><div class="GridButton" openapp="'+AdminWidgets[id]['url']+'"><p class="GridButton_title">'+AdminWidgets[id]['name']+'</p></div></div>');
 	
 	$("#"+id).click(function() {
 		$("#"+id+" .widget_content").fancybox({

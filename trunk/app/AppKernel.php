@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new Scube\BaseBundle\ScubeBaseBundle(),
 			new Scube\FriendsBundle\ScubeFriendsBundle(),
 			new Scube\ManageFileBundle\ScubeManageFileBundle(),
+			new Scube\AdminAppsBundle\ScubeAdminAppsBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
