@@ -14,6 +14,40 @@
 	$(document).ready(function() 
 	{
 		load_Grid();
+		
+		{% image '@ScubeBaseBundle/Resources/public/images/empty.png' %}
+			$("input:checkbox[name=grid_lock]").checkbox({empty:"{{ asset_url }}"});
+		{% endimage %}
+		
+		{% image '@ScubeBaseBundle/Resources/public/images/empty.png' %}
+			$("input:checkbox[name=grid_admin]").checkbox({empty:"{{ asset_url }}"});
+		{% endimage %}
+		
+		$('input:checkbox[name=grid_lock]').change(function () {
+			if ($(this).attr("checked")) {
+				$('input:checkbox[name=grid_admin]').attr("disabled", false);
+				switch_edit_mode(false);
+			}
+			else {
+				$('input:checkbox[name=grid_admin]').attr("checked", false);
+				$('input:checkbox[name=grid_admin]').attr("disabled", true);
+				switch_edit_mode(true);
+			}
+		});
+		$('input:checkbox[name=grid_admin]').change(function () {
+			if ($(this).attr("checked")) {
+				$('input:checkbox[name=grid_lock]').attr("checked", true);
+				$('input:checkbox[name=grid_lock]').attr("disabled", true);
+				switch_edit_mode(false);
+				switch_admin_mode(true);
+			}
+			else {
+				$('input:checkbox[name=grid_lock]').attr("disabled", false);
+				switch_admin_mode(false);
+			}
+		});
+		
+		
 		$("#home_corner").click(function() {
 			if (!$("#home_box").length){
 				$("#header").append("<div id='home_box'></div>");
@@ -40,7 +74,6 @@
 			
 			
 		});
-		
 	});
 
 	$(window).resize(function() 
@@ -49,13 +82,19 @@
 	});
 
   $(".AppBox").fancybox({
+		minWidth:400,
 	  padding: 0,
 	  openEffect : 'elastic',
 	  openSpeed  : 150,
 	  closeEffect : 'elastic',
 	  closeSpeed  : 150,
+	  autoScale:true,
+	  type:'ajax',
 	  helpers : {
 	  overlay : null
+	  },
+	  afterShow:function(){
+		$(".Application form").ajaxForm({target:'.Application:parent'});
 	  }
   });
 
@@ -64,7 +103,13 @@
 					"cell_{{widget.id}}":{"id":{{widget.id}},"pos_x":{{widget.posX}},"pos_y":{{widget.posY}},"width":{{widget.width}},"height":{{widget.height}},"url":"{{ path(widget.widget.link)}}"},
 				{% endfor %}
 			  };
+  var AdminWidgets = {
+				{% for app in user.getAdminapps() %}
+					"cell_{{app.id}}":{"id":{{app.id}},"url":"{{ path(app.link)}}","name":"{{ app.name}}"},
+				{% endfor %}
+			  };
 
+			  
 function	load_widget(id, force)
 {
 	if ($("#"+id+" .widget_content").length == 0 || force)
@@ -89,6 +134,23 @@ function	load_widget(id, force)
 				});
 		  }
 		});
+}
+
+function	load_adminWidget(id, force)
+{
+	$("#"+id).append('<div class="widget_content"><div class="GridButton" openapp="{{path("FriendsBundle_homepage")}}"><p class="GridButton_title">Friends</p></div></div>');
+	
+	$("#"+id+" .widget_content").click(function() {
+		$("#"+id+" .widget_content").fancybox({
+			  padding: 0,
+			  openEffect : 'elastic',
+			  openSpeed  : 150,
+			  closeEffect : 'elastic',
+			  closeSpeed  : 150,
+			  type:'ajax',
+			  href:$("#"+id+" .widget_content .GridButton").attr("openapp")
+		});
+	});
 }
 			  
 </script>
@@ -135,6 +197,12 @@ function	load_widget(id, force)
 .empty_cell_hover {
 	{% image '@ScubeBaseBundle/Resources/public/images/background_cell_hover.png'	%}
 		background:url({{ asset_url }}) center no-repeat;
+	{% endimage %}
+}
+
+.jquery-checkbox img {
+	{% image '@ScubeBaseBundle/Resources/public/images/checkbox.png'	%}
+		background: transparent url({{ asset_url }}) no-repeat;
 	{% endimage %}
 }
 

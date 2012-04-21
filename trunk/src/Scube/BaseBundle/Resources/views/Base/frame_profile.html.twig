@@ -1,4 +1,4 @@
-<h1>{{user.surname}} {{user.firstname}}</h1>
+<h1>{{user.firstname}} {{user.surname}}</h1>
 
 
 		<table id="frame_profile_infos">
@@ -13,12 +13,11 @@
 		<td class="details_profile">
 		<ul>
 			<li>Gender: {{user.gender}}</li>
-			<li>Status: {{user.getProfile().status}}</li>
-			<li>Phone: {{ '+' ~ user.getProfile().getPhoneId() ~ ' ' ~ user.getProfile().getPhoneNumber()}}</li>
-			<li>City: {{user.getProfile().getCity()}}</li>
-			<li>Native From: {{user.getProfile().getNativeCity()}}</li>
-			<li>Tongue(s): {{user.getProfile().getTongues()}}</li>
-			<li>Website: {{user.getProfile().getWebsite()}}</li>
+			{%if user.getProfile().status%}<li>Status: {{user.getProfile().status}}</li>{%endif%}
+			{%if user.getProfile().phoneNumber%}<li>Phone: {{user.getProfile().getPhoneNumber()}}</li>{%endif%}
+			{%if user.getProfile().city%}<li>City: {{user.getProfile().getCity()}}</li>{%endif%}
+			{%if user.getProfile().nativeCity%}<li>Native From: {{user.getProfile().getNativeCity()}}</li>{%endif%}
+			{%if user.getProfile().website%}<li>Website: {{user.getProfile().getWebsite()}}</li>{%endif%}
 		</ul>
 		</td>
 		</tr>
@@ -27,8 +26,8 @@
 		<tr>
 		<td colspan='2'>
 		
-			<a class="account_params_btn">Modify Account</a>
-			<a class="account_params_btn">Modify Profile</a>
+			<a class="AppBox account_params_btn" href="{{ path('_edit_profile') }}">Edit profile</a>
+			<a class="AppBox account_params_btn" href="{{ path('_edit_account') }}">Edit account</a>
 		</td>
 		</tr>
 		

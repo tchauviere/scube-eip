@@ -244,7 +244,7 @@ class Users
      *
      * @param Scube\BaseBundle\Entity\BaseInterface $interface
      */
-    public function setBaseInterface(\Scube\BaseBundle\Entity\BaseInterface $inteface)
+    public function setBaseInterface(\Scube\BaseBundle\Entity\BaseInterface $interface)
     {
         $this->baseInterface = $interface;
     }

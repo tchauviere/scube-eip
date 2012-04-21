@@ -19,57 +19,47 @@ class UsersProfile
     protected $id;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $picture;
 	
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=20, nullable=true)
      */
     protected $status;
 
     /**
-     * @ORM\Column(type="string", length=5)
+     * @ORM\Column(type="string", length=5, nullable=true)
      */
     protected $language;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    protected $phone_id;
-
-    /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $phone_number;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $native_city;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $city;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $address;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $postal_code;
 
     /**
-     * @ORM\Column(type="string", length=5)
-     */
-    protected $tongues;
-
-    /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=200, nullable=true)
      */
     protected $website;
 
@@ -121,26 +111,6 @@ class UsersProfile
     public function getLanguage()
     {
         return $this->language;
-    }
-
-    /**
-     * Set phone_id
-     *
-     * @param integer $phoneId
-     */
-    public function setPhoneId($phoneId)
-    {
-        $this->phone_id = $phoneId;
-    }
-
-    /**
-     * Get phone_id
-     *
-     * @return integer 
-     */
-    public function getPhoneId()
-    {
-        return $this->phone_id;
     }
 
     /**
@@ -241,26 +211,6 @@ class UsersProfile
     public function getPostalCode()
     {
         return $this->postal_code;
-    }
-
-    /**
-     * Set tongues
-     *
-     * @param string $tongues
-     */
-    public function setTongues($tongues)
-    {
-        $this->tongues = $tongues;
-    }
-
-    /**
-     * Get tongues
-     *
-     * @return string 
-     */
-    public function getTongues()
-    {
-        return $this->tongues;
     }
 
     /**

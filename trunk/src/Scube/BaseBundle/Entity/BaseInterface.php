@@ -58,4 +58,14 @@ class BaseInterface
     {
         return $this->widgets;
 	}
+
+    /**
+     * Add widgets
+     *
+     * @param Scube\BaseBundle\Entity\InterfaceWidget $widgets
+     */
+    public function addInterfaceWidget(\Scube\BaseBundle\Entity\InterfaceWidget $widgets)
+    {
+        $this->widgets[] = $widgets;
+    }
 }

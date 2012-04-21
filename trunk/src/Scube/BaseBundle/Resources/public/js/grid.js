@@ -20,18 +20,36 @@ var	border;
 var back_shadow = 0;
 var fullscreen = false;
 var edit_mode = false;
+var admin_mode = false;
 var widgets_opacity = 0.7;
 
-function switch_edit_mode()
+function switch_edit_mode(value)
 {
-	if (edit_mode)
+	if (admin_mode)
+		clean_grid();
+	if (value)
+		edit_mode = value;
+	else if (edit_mode)
 		edit_mode = false;
 	else
 		edit_mode = true;
-		
+	
 	load_Grid();
-	$("#lock_header .lock").toggle();
-	$("#lock_header .unlock").toggle();
+}
+
+function switch_admin_mode(value)
+{
+	if (edit_mode || value == false)
+		clean_grid();
+	if (value)
+		admin_mode = value;
+	else if (admin_mode)
+		admin_mode = false;
+	else
+		admin_mode = true;
+	
+	if (admin_mode == true)
+		load_AdminGrid();
 }
 
 function init_Widgets_Array()
@@ -42,6 +60,11 @@ function init_Widgets_Array()
 			WidgetsOnGrid[i][j] = 0;
 		}
 	}
+}
+
+function clean_grid()
+{
+	$("#Grid").html("");
 }
 
 function add_WidgetOnGrid(id, pos_x, pos_y, width, height)
@@ -104,6 +127,21 @@ function add_WidgetOnGrid(id, pos_x, pos_y, width, height)
 			WidgetsOnGrid[i][j] = id;
 		}
 	}
+}
+
+function add_AdminWidgetOnGrid(id, pos_x, pos_y, width, height)
+{
+	$("#Grid").append("<div class='plain_cell widget' id='" + id + "'></div>");
+	
+	$("#"+id).css({'width':cell_width*width + (cell_border*(width-1)),
+					'height':cell_height*height + (cell_border*(height-1)),
+					'left':cell_width*pos_x + cell_border*pos_x,
+					'top':cell_height*pos_y + cell_border*pos_y,
+					'z-index':110,
+					'opacity':widgets_opacity
+					});
+	
+	load_adminWidget(id);
 }
 
 function load_Grid()
@@ -180,6 +218,37 @@ function load_Grid()
 	/*Load les exemples*/
 	for (id in Widgets) {
 		add_WidgetOnGrid(id, Widgets[id]['pos_x'], Widgets[id]['pos_y'], Widgets[id]['width'], Widgets[id]['height']);
+	}
+	
+	/* 
+	malihu custom scrollbar function parameters: 
+	1) scroll type (values: "vertical" or "horizontal")
+	2) scroll easing amount (0 for no easing) 
+	3) scroll easing type 
+	4) extra bottom scrolling space for vertical scroll type only (minimum value: 1)
+	5) scrollbar height/width adjustment (values: "auto" or "fixed")
+	6) mouse-wheel support (values: "yes" or "no")
+	7) scrolling via buttons support (values: "yes" or "no")
+	8) buttons scrolling speed (values: 1-20, 1 being the slowest)
+	*/
+	$("#mcs_container").mCustomScrollbar("vertical",300,"easeOutCirc",1.05,"auto","yes","no",15);
+	$("#mcs_container").css({"width":page_width+"px","height":(page_height - $("#mcs_container").position().top)+"px"});
+	$("#mcs_container").mCustomScrollbar("vertical",300,"easeOutCirc",1.05,"auto","yes","no",15);
+}
+
+function load_AdminGrid()
+{
+	init_Widgets_Array();
+	
+	x=0;
+	y=0;
+	/*Load les exemples*/
+	for (id in AdminWidgets) {
+		add_AdminWidgetOnGrid(id, x++, y, 1, 1);
+		if (x == cells_per_line) {
+			y++;
+			x = 0;
+		}
 	}
 	
 	/* 

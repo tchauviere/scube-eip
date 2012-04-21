@@ -11,6 +11,8 @@
 	'@ScubeBaseBundle/Resources/public/js/jquery.mCustomScrollbar.js' 
 	'@ScubeBaseBundle/Resources/public/js/jquery.mousewheel.min.js' 
 	'@ScubeBaseBundle/Resources/public/js/jquery.ui.js'
+	'@ScubeBaseBundle/Resources/public/js/jquery.submit.js'
+	'@ScubeBaseBundle/Resources/public/js/jquery.checkbox.js'
 %}
 <script type="text/javascript" src="{{ asset_url }}"></script>
 {% endjavascripts %}
@@ -52,15 +54,15 @@
 </div>
 
 <div id="lock_header">
-	<a href="#" onclick="switch_edit_mode();">
-		{% image '@ScubeBaseBundle/Resources/public/images/lock_header.png'	%}
-		<img class="lock" width="30" src="{{ asset_url }}" alt="Lock/Unlock"/>
-		{% endimage %}
-		{% image '@ScubeBaseBundle/Resources/public/images/unlock_header.png'	%}
-		<img class="unlock" style="display:none;" width="30" src="{{ asset_url }}" alt="Lock/Unlock"/>
-		{% endimage %}
-	</a>
+	<input type="checkbox" name="grid_lock" checked="checked" /> <label>Lock</label>
 </div>
+
+{%if user.getAdminApps()|length != 0%}
+<div id="admin_header">
+	<input type="checkbox" name="grid_admin" /> <label>Admin</label>
+</div>
+{%endif%}
+
 {% endif %}
 
 

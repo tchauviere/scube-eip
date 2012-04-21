@@ -13,3 +13,10 @@ _logout:
 _frame_profile:
     pattern:  /frame_profile
     defaults: { _controller: ScubeBaseBundle:Base:frame_profile }
+
+_edit_profile:
+    pattern:  /edit_profile
+    defaults: { _controller: ScubeBaseBundle:Base:editProfile }
+_edit_account:
+    pattern:  /edit_account
+    defaults: { _controller: ScubeBaseBundle:Base:editAccount }

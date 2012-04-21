@@ -21,3 +21,17 @@ Scube\BaseBundle\Entity\Users:
             - Choice:
                 choices:  [male, female]
                 message:  Choose a valid gender.
+
+Scube\BaseBundle\Entity\UsersProfile:
+    properties:
+        status:
+            - Choice:
+                choices:  [single, married]
+                message:  Choose a valid marital status.
+        language:
+            - Choice:
+                choices:  [en, fr]
+                message:  Choose a valid language.
+        website:
+            - Url:
+                message:  Invalid website url syntax.

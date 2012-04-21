@@ -5,6 +5,8 @@ namespace Scube\BaseBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Scube\BaseBundle\Entity\Users;
+use Scube\BaseBundle\Entity\UsersProfile;
+use Scube\BaseBundle\Entity\BaseInterface;
 
 class BaseController extends Controller
 {
@@ -41,7 +43,6 @@ class BaseController extends Controller
 					$user = $repository->findOneBy(array('email' => $LoggingUser->getEmail(), 'password' => $LoggingUser->getPassword()));
 					if ($user)
 					{
-						$user->getApps();
 						$session->set('user', $user);
 						return $this->redirect($this->generateUrl('_homepage'));
 					}
@@ -69,8 +70,19 @@ class BaseController extends Controller
 			$form->bindRequest($request);
 	
 			if ($form->isValid()) {
+				/* Set profile object */
+				$profile = new UsersProfile();
+				/* Set interface object */
+				$interface = new BaseInterface();
+				
+				
+				$users->setProfile($profile);
+				$users->setBaseInterface($interface);
+				
 				
 				$em = $this->getDoctrine()->getEntityManager();
+				$em->persist($profile);
+				$em->persist($interface);
 				$em->persist($users);
 				$em->flush();
 				
@@ -79,6 +91,79 @@ class BaseController extends Controller
 		}
 			
 		return $this->render('ScubeBaseBundle:Base:register.html.twig', array('form' => $form->createView(), "success"=>false));
+    }
+
+	public function editAccountAction(Request $request)
+    {
+		$session = $this->getRequest()->getSession();
+		
+		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:Users');
+		$user = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
+		
+		$form = $this->createFormBuilder($user)
+            ->add('Firstname', 'text')
+            ->add('Surname', 'text')
+			->add('Email', 'email')
+			->add('Password', 'password')
+			->add('Birthday', 'birthday')
+			->add('Gender', 'choice', array('choices' => array('male' => 'Male', 'female' => 'Female')))
+            ->getForm();
+			
+		if ($request->getMethod() == 'POST') {
+			$form->bindRequest($request);
+	
+			if ($form->isValid()) {
+			
+				$em = $this->getDoctrine()->getEntityManager();
+				$em->flush();
+				
+				$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:Users');
+				$LoggingUser = $form->getData();
+				$user = $repository->findOneBy(array('email' => $LoggingUser->getEmail(), 'password' => $LoggingUser->getPassword()));
+				if ($user)
+				{
+					$session->set('user', $user);
+				}
+				
+				return $this->render('ScubeBaseBundle:Base:edit_account.html.twig', array('form' => $form->createView(), "success"=>true));
+			}
+		}
+			
+		return $this->render('ScubeBaseBundle:Base:edit_account.html.twig', array('form' => $form->createView(), "success"=>false));
+    }
+	
+	public function editProfileAction(Request $request)
+    {
+		$session = $this->getRequest()->getSession();
+		
+		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:Users');
+		$user = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
+		
+		$profile = $user->getProfile();
+		
+		$form = $this->createFormBuilder($profile)
+			->add('status', 'choice', array("required"=>false, 'choices' => array('single' => 'Single', 'married' => 'Married')))
+			->add('language', 'choice', array("required"=>false, 'choices' => array('en' => 'English', 'fr' => 'Francais')))
+			->add('phone_number', 'text', array("required"=>false))
+			->add('native_city', 'text', array("required"=>false))
+			->add('city', 'text', array("required"=>false))
+			->add('address', 'text', array("required"=>false))
+			->add('postal_code', 'text', array("required"=>false))
+			->add('website', 'url', array("required"=>false))
+            ->getForm();
+			
+		if ($request->getMethod() == 'POST') {
+			$form->bindRequest($request);
+	
+			if ($form->isValid()) {
+				$em = $this->getDoctrine()->getEntityManager();
+				$em->flush();
+				
+				return $this->render('ScubeBaseBundle:Base:edit_profile.html.twig', array('form' => $form->createView(),"success"=>true));
+			}
+		}
+			
+		return $this->render('ScubeBaseBundle:Base:edit_profile.html.twig', array('form' => $form->createView(), "success"=>false));
     }
 	
 	public function logoutAction(Request $request)

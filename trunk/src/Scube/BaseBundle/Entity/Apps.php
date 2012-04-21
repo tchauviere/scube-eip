@@ -25,6 +25,11 @@ class Apps
 	/**
      * @ORM\Column(type="string", length=200)
      */
+    protected $bundleName;
+	
+	/**
+     * @ORM\Column(type="string", length=200)
+     */
     protected $link;
 	
 	/**
@@ -120,5 +125,25 @@ class Apps
     public function getLink()
     {
         return $this->link;
+    }
+
+    /**
+     * Set bundleName
+     *
+     * @param string $bundleName
+     */
+    public function setBundleName($bundleName)
+    {
+        $this->bundleName = $bundleName;
+    }
+
+    /**
+     * Get bundleName
+     *
+     * @return string 
+     */
+    public function getBundleName()
+    {
+        return $this->bundleName;
     }
 }
