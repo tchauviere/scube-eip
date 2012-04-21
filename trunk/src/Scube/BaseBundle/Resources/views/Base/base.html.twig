@@ -34,7 +34,7 @@
 {% block body %}
 <div id="header">
 	<a href="{{ path('_homepage') }}">
-	{% image '@ScubeBaseBundle/Resources/public/images/logo_scube_entete.png' output='/images/logo.jpg'	%}
+	{% image '@ScubeBaseBundle/Resources/public/images/logo_scube_entete.png' %}
 	<img src="{{ asset_url }}" alt="Logo"/></a>
 	{% endimage %}
 </div>
@@ -42,13 +42,13 @@
 {% if user is defined %}
 <div id="login_corner">
 	<a href="{{ path('_logout') }}">
-	{% image '@ScubeBaseBundle/Resources/public/images/shutdown-corner.png' output='/images/logout.png'	%}
+	{% image '@ScubeBaseBundle/Resources/public/images/shutdown-corner.png'	%}
 	<img src="{{ asset_url }}" alt="Logout"/></a>
 	{% endimage %}
 </div>
 
 <div id="home_corner">
-	{% image '@ScubeBaseBundle/Resources/public/images/tools-corner.png' output='/images/tools.png'	%}
+	{% image '@ScubeBaseBundle/Resources/public/images/tools-corner.png' %}
 	<img src="{{ asset_url }}" alt="Home"/>
 	{% endimage %}
 </div>

@@ -140,7 +140,7 @@ function	load_adminWidget(id, force)
 {
 	$("#"+id).append('<div class="widget_content"><div class="GridButton" openapp="{{path("FriendsBundle_homepage")}}"><p class="GridButton_title">Friends</p></div></div>');
 	
-	$("#"+id+" .widget_content").click(function() {
+	$("#"+id).click(function() {
 		$("#"+id+" .widget_content").fancybox({
 			  padding: 0,
 			  openEffect : 'elastic',

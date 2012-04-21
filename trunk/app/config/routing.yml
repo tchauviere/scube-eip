@@ -5,7 +5,7 @@ ScubeBaseBundle:
 ScubeFriendsBundle:
     resource: "@ScubeFriendsBundle/Resources/config/routing.yml"
     prefix:   /
-	
+
 ScubeManageFileBundle:
     resource: "@ScubeManageFileBundle/Resources/config/routing.yml"
     prefix:   /
