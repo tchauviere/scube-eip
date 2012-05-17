@@ -1,0 +1,20 @@
+.GridButton img
+{
+    width:128px;
+    height:128px;
+    vertical-align:middle;
+}
+
+.GridButton {
+	margin:0 auto;
+	text-align:center;
+}
+.GridButton_title {
+	text-align:center;
+	color:white;
+	font-size:18px;
+}
+
+.widget_content {
+	/*padding-top:40px;*/
+}

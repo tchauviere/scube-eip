@@ -1,0 +1,10 @@
+<form method="post" action="{{ path('ScubeManageFileBundle_delete') }}">
+
+	{% for img in list %}
+	    		<a href='{{ img }}'><img style='margin-left:30px;' width='250' src='{{ img }}'></a><input type="checkbox" name="pictures[]" value="{{ img }}" />
+	{% endfor %}
+	<input type="submit" value="Delete" />
+</form>
+<br />
+<a href="{{ path('ScubeManageFileBundle_upload') }}"> <input type="button" value="Upload an other picture"> </a>
+<a href="{{ path('ScubeManageFileBundle_show_pictures') }}"> <input type="button" value="Display pictures"> </a>
