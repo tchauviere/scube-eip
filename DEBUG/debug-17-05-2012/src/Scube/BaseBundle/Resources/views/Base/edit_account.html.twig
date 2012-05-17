@@ -1,0 +1,23 @@
+{% extends 'ScubeBaseBundle:Base:base_application.html.twig' %}
+
+
+{% block body %}
+{{ parent() }}
+
+<div class="Application">
+
+<h1>Edit account</h1>
+
+{% if success %}
+	<p class="form_success">Your account has been successfully updated. For a full update, <a href="{{ path('_homepage') }}">please refresh your desktop here</a>.</p>
+{% endif %}
+<form action="{{ path('_edit_account') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+
+    <input type="submit" value="Save account" />
+</form>
+
+
+</div>
+
+{% endblock %}

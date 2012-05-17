@@ -1,0 +1,37 @@
+{% extends 'ScubeBaseBundle:Base:base_application.html.twig' %}
+
+
+{% block body %}
+{{ parent() }}
+
+<div class="Application">
+
+<table class="table_content">
+<tr>
+	<td class="sidebar_left">
+		<ul class="sidebar_navigation">
+			<li><a href="{{ path("AdminUserBundle_homepage")}}">Manage users</a></li>
+			<li><a href="{{ path("AdminUserBundle_groups")}}">Manage groups</a></li>
+		</ul>
+	</td>
+	<td class="sidebar_main">
+		<h1>Groups Manager</h1>
+	
+		<table class="table_full_size">
+		
+			{% for grp in grp_list %}
+			<tr>
+				<td>
+					<div class="table_title">{{grp.getName()}}</div>
+				</td>
+				<td>
+					<a href="{{ path("AdminUserBundle_group_edit", { 'id': grp.getId()})}}">Edit</a>
+				</td>
+			</tr>
+			{% endfor %}
+		</table>
+	</td>
+</tr>
+</div>
+
+{% endblock %}

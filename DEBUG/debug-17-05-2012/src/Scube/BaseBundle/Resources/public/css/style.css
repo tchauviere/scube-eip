@@ -1,0 +1,224 @@
+body
+{
+font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+background-color:#FFF;
+margin:0;
+}
+h1{
+font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+text-shadow:0px 1px 1px white;
+text-align:center;
+font-size:26px;
+color:#333;
+margin:25px 10px;;
+}
+a{
+	color:#568dc5;
+}
+a:hover{
+	color:#4878ac;
+}
+
+#header
+{
+    width:100%;
+    height:60px;
+    text-align:center;
+    background:#333;
+    padding-top:8px;
+    margin:0px;
+	margin-bottom:10px;
+	box-shadow: 0 0 10px #555; 
+}
+
+#home_corner
+{
+    position:absolute;
+	cursor:pointer;
+    left:0;
+    top:0;
+	z-index:151;
+}
+#home_box
+{
+	min-width:100px;
+	min-height:200px;
+	background:whiteSmoke;
+	border:2px solid #8eb218;
+	display:none;
+	z-index:150;
+	padding-bottom:10px;
+}
+#home_box h1
+{
+	margin-top:10px;
+}
+
+#login_corner
+{
+    position:absolute;
+    right:0;
+    top:0;
+}
+
+#lock_header
+{
+    position:absolute;
+    left:120px;
+    top:10px;
+	width: 150px;
+}
+#lock_header label
+{
+	display:inline;
+	font-weight:normal;
+	color:white;
+}
+
+#admin_header
+{
+    position:absolute;
+    left:120px;
+    top:35px;
+	width: 150px;
+}
+#admin_header label
+{
+	display:inline;
+	font-weight:normal;
+	color:white;
+}
+
+.page_frame {
+	background-color:whiteSmoke;
+	width:500px;
+	-moz-border-radius:5px;
+    -webkit-border-radius:5px;
+	margin:0 auto;
+	padding:10px;
+	box-shadow: 0 0 10px #333;
+	-moz-box-shadow: 0 0 10px #333;
+	-webkit-box-shadow: 0 0 10px #333;
+}
+
+
+/* FORMS */
+
+form {
+	margin:0 auto;
+}
+
+label {
+	font-weight:bold;
+	display:block;
+	width:50%;
+	height:25px;
+	margin:0 auto;
+}
+input {
+	display:block;
+	width:50%;
+	height:25px;
+	margin:0 auto;
+	margin-bottom:10px;
+}
+
+select {
+	display:block;
+	width:50%;
+	height:25px;
+	margin:0 auto;
+	margin-bottom:10px;
+}
+select[multiple="multiple"] {
+	display:block;
+	width:50%;
+	height:auto;
+	margin:0 auto;
+	margin-bottom:10px;
+}
+#form_Birthday {
+	display:block;
+	width:50%;
+	height:25px;
+	margin:0 auto;
+	margin-bottom:10px;
+}
+#form_Birthday select {
+	display:inline;
+	width:31%;
+	height:25px;
+	margin:0 auto;
+	margin-bottom:10px;
+}
+
+input[type="submit"] {
+	background-color: #92b417;
+	-moz-border-radius:5px;
+    -webkit-border-radius:5px;
+	color:white;
+	font-weight:bold;
+	font-size:16px;
+	border:none;
+}
+
+.form_error {
+	color:#e43018;
+	text-align:center;
+}
+.form_success {
+	color:#7f9d21;
+	text-align:center;
+}
+
+/* PROFILE FRAME */
+
+#frame_profile_infos .img_profile{
+	width: 20%;
+}
+
+#frame_profile_infos .details_profile{
+	width: 80%;
+}
+
+#frame_profile_infos .buttons_profile{
+	padding-top: 15px;
+}
+
+#frame_profile_infos {
+	width: 100%;
+}
+
+#frame_profile_infos ul{
+	list-style-type:none;
+	margin: 0 auto;
+}
+
+#frame_profile_infos li{
+	text-align: left;
+	font-size: 13px;
+}
+
+.account_params_btn{
+margin: 0 15px;
+margin-top: 15px;
+background: #8EB218;
+display: block;
+padding: 5px 10px 6px;
+color: #fff;
+text-decoration: none;
+font-weight: bold;
+line-height: 1;
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+-moz-box-shadow: 0 1px 3px #999;
+-webkit-box-shadow: 0 1px 3px #999;
+text-shadow: 0 -1px 1px #222;
+border-bottom: 1px solid #222;
+position: relative;
+cursor: pointer;
+text-align: center;
+}
+.account_params_btn:hover{
+color: #fff;
+}
