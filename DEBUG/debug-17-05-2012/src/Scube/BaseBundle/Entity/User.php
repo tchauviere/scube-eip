@@ -55,7 +55,7 @@ class User
     protected $baseInterface;
 	
 	/**
-     * @ORM\OneToOne(targetEntity="Scube\BaseBundle\Entity\PermissionsGroup")
+     * @ORM\ManyToOne(targetEntity="Scube\BaseBundle\Entity\PermissionsGroup")
      * @ORM\JoinColumn(name="permissions_group", referencedColumnName="id")
      */
     protected $permissionsGroup;
