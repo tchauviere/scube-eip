@@ -33,13 +33,18 @@ mailer_password=\"\"
 locale=\"en\"
 secret=\"01e324a59f7ff5232919a83d4ade681c2024d876\"\n";
 	    
-	    $result = file_put_contents("../app/config/parameters.ini", $new_parameters);
-	    if ($result == FALSE)
-	       $error = 1;
-	    
-	    }
+		$filename = "../app/config/parameters.ini";
+		
+		if (is_writable($filename))
+		{
+			file_put_contents($filename, $new_parameters);
+			$win = 1;
+		}
 	    else
-		$win = 1;
+		{
+			$error = 1;
+		}
+	}
 }
 
 
@@ -66,7 +71,14 @@ secret=\"01e324a59f7ff5232919a83d4ade681c2024d876\"\n";
 
 <?php
 if ($win)
-   echo "<p>The configuration step is now finished !<br />You can now use the Scube admin.</p>";
+   echo "<p style='color:black;text-align:center;'><span style='color:green;'>The database is now activated !</span><br /><br />
+   		<span style='color:red;'>Check your database exists and tables are empty. Else, error can occured.</span>
+   		<br /><br />
+   		<strong>Please now execute these two commands in the ROOT FOLDER :</strong><br /><br />
+		<pre>php app/console assetic:dump<br /></pre>
+		<pre>php app/console doctrine:schema:update --force</pre><br />
+		<br />
+		And then : <a href='../web/app_dev.php/install'>Continue the installation ></a></p>";
 else if (!$error)
 {
 ?>
