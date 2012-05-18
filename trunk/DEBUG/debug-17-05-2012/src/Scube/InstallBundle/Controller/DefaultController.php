@@ -47,7 +47,7 @@ class DefaultController extends Controller
 		$em->flush();
 		
 		$default_app3 = new Application();
-		$default_app3->setName("User settings for administrator");
+		$default_app3->setName("Settings manager for administrator");
 		$default_app3->setBundleName("");
 		$default_app3->setAdminBundleName("AdminSettingsBundle");
 		$default_app3->setLink("");
