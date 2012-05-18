@@ -169,6 +169,14 @@ else
 
 <?php
 	echo "<textarea class='symfony-configuration'>".$new_parameters."</textarea>";
+	echo "<p style='color:black;text-align:center;'
+   		<span style='color:red;'>Check your database exists and tables are empty. Else, error can occured.</span>
+   		<br /><br />
+   		<strong>Please now execute these two commands in the ROOT FOLDER :</strong><br /><br />
+		<pre>php app/console assetic:dump<br /></pre>
+		<pre>php app/console doctrine:schema:update --force</pre><br />
+		<br />
+		And then : <a href='../web/app_dev.php/install'>Continue the installation ></a></p>";
 }
 ?>
 
