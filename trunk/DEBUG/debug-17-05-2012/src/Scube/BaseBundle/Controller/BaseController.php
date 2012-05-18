@@ -49,7 +49,10 @@ class BaseController extends Controller
 					return $this->render('ScubeBaseBundle:Base:login.html.twig', array('form' => $form->createView(), 'error' => true));
 				}
 			}
-			return $this->render('ScubeBaseBundle:Base:login.html.twig', array('form' => $form->createView(), "error"=>false));
+			$allow_registration = $this->getDoctrine()->getRepository('ScubeBaseBundle:ScubeSetting')->findOneBy(array('key' => "allow_registration"));
+			if (!$allow_registration || $allow_registration->getValue() == "0")
+				$allow_registration = false;
+			return $this->render('ScubeBaseBundle:Base:login.html.twig', array('allow_registration'=>$allow_registration, 'form' => $form->createView(), "error"=>false));
 		}
     }
 	public function logoutAction(Request $request)
@@ -60,6 +63,10 @@ class BaseController extends Controller
 	
 	public function registerAction(Request $request)
     {
+		$allow_registration = $this->getDoctrine()->getRepository('ScubeBaseBundle:ScubeSetting')->findOneBy(array('key' => "allow_registration"));
+		if (!$allow_registration || $allow_registration->getValue() == "0")
+			return $this->render('ScubeBaseBundle:Base:register.html.twig', array("allow_registration"=>false, "success"=>false));
+		
 		$user = new User();
 		
 		$form = $this->createFormBuilder($user)
@@ -99,7 +106,7 @@ class BaseController extends Controller
 			}
 		}
 			
-		return $this->render('ScubeBaseBundle:Base:register.html.twig', array('form' => $form->createView(), "success"=>false));
+		return $this->render('ScubeBaseBundle:Base:register.html.twig', array("allow_registration"=>$allow_registration,'form' => $form->createView(), "success"=>false));
     }
 	
 	/* Account Edition Form */

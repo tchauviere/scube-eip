@@ -7,6 +7,7 @@ use Scube\BaseBundle\Entity\User;
 use Scube\BaseBundle\Entity\UserProfile;
 use Scube\BaseBundle\Entity\BaseInterface;
 use Scube\BaseBundle\Entity\PermissionsGroup;
+use Scube\BaseBundle\Entity\ScubeSetting;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -45,6 +46,27 @@ class DefaultController extends Controller
 		$em->persist($default_app2);
 		$em->flush();
 		
+		$default_app3 = new Application();
+		$default_app3->setName("User settings for administrator");
+		$default_app3->setBundleName("");
+		$default_app3->setAdminBundleName("AdminSettingsBundle");
+		$default_app3->setLink("");
+		$default_app3->setAdminLink("AdminSettingsBundle_homepage");
+		$default_app3->setDescription("Manage setting values.");
+		$default_app3->setActivated(true);
+		$default_app3->setNecessary(true);
+		$em = $this->getDoctrine()->getEntityManager();
+		$em->persist($default_app3);
+		$em->flush();
+		
+		/* Default Settings */
+		$default_setting = new ScubeSetting();
+		$default_setting->setKey("allow_registration");
+		$default_setting->setValue("1");
+		$em = $this->getDoctrine()->getEntityManager();
+		$em->persist($default_setting);
+		$em->flush();
+		
 		/* Default Permissions Groups */
 		
 		// admin
@@ -53,6 +75,7 @@ class DefaultController extends Controller
 		
 		$default_grp->addAdminApplication($default_app);
 		$default_grp->addAdminApplication($default_app2);
+		$default_grp->addAdminApplication($default_app3);
 		
 		$em = $this->getDoctrine()->getEntityManager();
 		$em->persist($default_grp);

@@ -9,15 +9,20 @@
 
 <div class="page_frame">
 
-{% if success %}
-	<p class="form_success">Your account has been successfully created. <a href="{{ path('_homepage') }}">You can now login here !</a></p>
+{% if allow_registration %}
+	{% if success %}
+		<p class="form_success">Your account has been successfully created. <a href="{{ path('_homepage') }}">You can now login here !</a></p>
+	{% else %}
+	<form action="{{ path('_register') }}" method="post" {{ form_enctype(form) }}>
+		{{ form_widget(form) }}
+	
+		<input type="submit" value="Register now !" />
+	</form>
+	{% endif %}
 {% else %}
-<form action="{{ path('_register') }}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
-
-    <input type="submit" value="Register now !" />
-</form>
+	<p class="form_error">Registration not activated</p>
 {% endif %}
+
 
 </div>
 
