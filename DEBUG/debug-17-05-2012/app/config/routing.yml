@@ -10,10 +10,6 @@ ScubeBaseBundle:
     resource: "@ScubeBaseBundle/Resources/config/routing.yml"
     prefix:   /
 
-ScubeFriendsBundle:
-    resource: "@ScubeFriendsBundle/Resources/config/routing.yml"
-    prefix:   /
-
 ScubeManageFileBundle:
     resource: "@ScubeManageFileBundle/Resources/config/routing.yml"
     prefix:   /
@@ -25,6 +21,9 @@ ScubeAdminAppsBundle:
 ScubeAdminSettingsBundle:
     resource: "@ScubeAdminSettingsBundle/Resources/config/routing.yml"
     prefix:   /
+
+#APP_DELIMITER
+
 
 # Internal routing configuration to handle ESI
 #_internal:

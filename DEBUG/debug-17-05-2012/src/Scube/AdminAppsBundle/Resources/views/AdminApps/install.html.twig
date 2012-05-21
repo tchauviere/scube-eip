@@ -16,10 +16,12 @@
 	</td>
 	<td class="sidebar_main">
 		<h1>Install application</h1>
-	
 		{% if success %}
-			<p class="form_success">Application has been installed.</p>
+			<p class="form_success">Application has been successfully installed.</p>
 		{% endif %}
+		
+		<p>If your application is already installed, please uninstall before (for a reinstall process).</p>
+		
 		<form action="{{ path('AdminAppsBundle_install') }}" method="post" {{ form_enctype(form) }}>
 			{{ form_widget(form) }}
 		

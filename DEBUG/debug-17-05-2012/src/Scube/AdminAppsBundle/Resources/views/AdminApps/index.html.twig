@@ -34,7 +34,7 @@
 				</td>
 				<td>
 					{% if app.getNecessary() == false %}
-						<a href="{{ path("AdminAppsBundle_remove", { 'id': app.getId()})}}">Remove</a>
+						<a href="{{ path("AdminAppsBundle_remove", { 'id': app.getId()})}}">Uninstall</a>
 					{%endif%}
 				</td>
 			</tr>
