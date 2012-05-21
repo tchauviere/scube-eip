@@ -18,12 +18,13 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
             new Scube\BaseBundle\ScubeBaseBundle(),
-			new Scube\FriendsBundle\ScubeFriendsBundle(),
 			new Scube\ManageFileBundle\ScubeManageFileBundle(),
 			new Scube\AdminAppsBundle\ScubeAdminAppsBundle(),
             new Scube\InstallBundle\ScubeInstallBundle(),
             new Scube\AdminUserBundle\ScubeAdminUserBundle(),
 			new Scube\AdminSettingsBundle\ScubeAdminSettingsBundle(),
+			/*APP_DELIMITER*/
+
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

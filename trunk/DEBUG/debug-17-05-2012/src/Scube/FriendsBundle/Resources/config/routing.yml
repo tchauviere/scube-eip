@@ -1,7 +1,0 @@
-FriendsBundle_homepage:
-    pattern:  /friends
-    defaults: { _controller: ScubeFriendsBundle:Friends:index }
-
-FriendsBundle_widget:
-    pattern:  /friends/widget
-    defaults: { _controller: ScubeFriendsBundle:Friends:widget }
