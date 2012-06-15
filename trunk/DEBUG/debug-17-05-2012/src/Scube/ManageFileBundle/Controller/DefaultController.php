@@ -11,13 +11,14 @@ class DefaultController extends Controller
     
     public function indexAction($name = "toto")
     {
-        return $this->redirect($this->generateUrl('ScubeManageFileBundle_show_pictures'));
+        return $this->redirect($this->generateUrl('ScubeManageFileBundle_pictures_show'));
     }
     
 	public function uploadAction(Request $request)
 	{		
 		$userID = "1234";
-		$filePath = "Medias/Pictures/$userID/";
+		$picturesPath = "Medias/Pictures/$userID/";
+		$pdfPath = "Medias/PDF/$userID/";
 		$file = new File();
 
 		$form = $this->createFormBuilder($file)
@@ -27,8 +28,12 @@ class DefaultController extends Controller
 		if ($request->getMethod() == 'POST') {
 			$form->bindRequest($request);
 			if ($form->isValid()) {
- 				$form['file']->getData()->move($filePath, rand().".png");
-				return $this->redirect($this->generateUrl('ScubeManageFileBundle_show_pictures'));
+				$extension = $form['file']->getData()->guessExtension();
+				if ($extension == 'pdf')
+					$form['file']->getData()->move($pdfPath, rand().'.'.$extension);
+				else
+ 					$form['file']->getData()->move($picturesPath, rand().'.'.$extension);
+				return $this->redirect($this->generateUrl('ScubeManageFileBundle_pictures_show'));
 			}
 		}
 		
@@ -45,7 +50,7 @@ class DefaultController extends Controller
 					$filename = $filename[count($filename) - 2].'/'.$filename[count($filename) - 1];
 					unlink('Medias/Pictures/'.$filename);
 				}
-				return $this->redirect($this->generateUrl('ScubeManageFileBundle_show_pictures'));
+				return $this->redirect($this->generateUrl('ScubeManageFileBundle_pictures_show'));
 			}
 		}
 		
@@ -66,6 +71,8 @@ class DefaultController extends Controller
 	
 	public function showAction(Request $request)
 	{
+		// PICTURES
+		
 		$userID = "1234";
 		$filePath = "Medias/Pictures/$userID";
 		
@@ -76,8 +83,25 @@ class DefaultController extends Controller
 		while ($entry = $handle->read()) {
 			if (!@is_dir($entry))
 				$list[$i++] = $this->get('request')->getBasePath()."/$filePath/$entry";
+
 		}
-		return $this->render('ScubeManageFileBundle:Default:show.html.twig', array('list' => $list));
+		return $this->render('ScubeManageFileBundle:Default:show.html.twig', array('list' => $list, 'server_addr' => $_SERVER['HTTP_HOST']));
+		
+		// PDF
+		/*
+		$userID = "1234";
+		$filePath = "Medias/PDF/$userID";
+		
+		$list = array();
+		$handle = @dir($filePath);
+
+		$i = 0;
+		while ($entry = $handle->read()) {
+			if (!@is_dir($entry))
+				$list[$i++] = $this->get('request')->getBasePath()."/$filePath/$entry";
+		}
+		return $this->render('ScubeManageFileBundle:Default:pdf.html.twig', array('pdf_path' => $list[0]));
+		*/
 	}
 	
 }

@@ -1,15 +1,15 @@
 ScubeManageFileBundle_homepage:
-    pattern:  /document
+    pattern:  /pictures
     defaults: { _controller: ScubeManageFileBundle:Default:index }
 
-ScubeManageFileBundle_show_pictures:
-    pattern:  /document/show
+ScubeManageFileBundle_pictures_show:
+    pattern:  /pictures/show
     defaults: { _controller: ScubeManageFileBundle:Default:show }
 
-ScubeManageFileBundle_upload:
-    pattern:  /document/upload
+ScubeManageFileBundle_pictures_upload:
+    pattern:  /pictures/upload
     defaults: { _controller: 'ScubeManageFileBundle:Default:upload' }
     
-ScubeManageFileBundle_delete:
-    pattern:  /document/delete
+ScubeManageFileBundle_pictures_delete:
+    pattern:  /pictures/delete
     defaults: { _controller: 'ScubeManageFileBundle:Default:delete' }

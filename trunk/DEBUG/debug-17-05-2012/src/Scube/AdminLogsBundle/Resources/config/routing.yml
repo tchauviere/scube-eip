@@ -1,0 +1,3 @@
+AdminLogsBundle_homepage:
+    pattern:  /admin_logs
+    defaults: { _controller: ScubeAdminLogsBundle:AdminLogs:index }

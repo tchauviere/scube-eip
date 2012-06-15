@@ -23,8 +23,11 @@ class AppKernel extends Kernel
             new Scube\InstallBundle\ScubeInstallBundle(),
             new Scube\AdminUserBundle\ScubeAdminUserBundle(),
 			new Scube\AdminSettingsBundle\ScubeAdminSettingsBundle(),
+			new Scube\AdminLogsBundle\ScubeAdminLogsBundle(),
+			new Scube\ConnectionsBundle\ScubeConnectionsBundle(),
 			/*APP_DELIMITER*/
 
+            
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

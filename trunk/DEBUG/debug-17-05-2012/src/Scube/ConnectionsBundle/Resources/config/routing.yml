@@ -1,0 +1,9 @@
+ConnectionsBundle_homepage:
+    pattern:  /connections
+    defaults: { _controller: ScubeConnectionsBundle:Connections:index }
+ConnectionsBundle_search:
+    pattern:  /connections_search
+    defaults: { _controller: ScubeConnectionsBundle:Connections:search }
+ConnectionsBundle_widget:
+    pattern:  /connections_widget
+    defaults: { _controller: ScubeConnectionsBundle:Connections:widget }

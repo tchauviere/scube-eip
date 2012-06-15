@@ -38,13 +38,15 @@
 			if ($(this).attr("checked")) {
 				$('input:checkbox[name=grid_lock]').attr("checked", true);
 				$('input:checkbox[name=grid_lock]').attr("disabled", true);
-				switch_edit_mode(false);
+				edit_mode = false;
+				clean_grid();
 				switch_admin_mode(true);
 			}
 			else {
 				$('input:checkbox[name=grid_lock]').attr("disabled", false);
 				switch_admin_mode(false);
-				switch_edit_mode(false);
+				edit_mode = false;
+				load_Grid();
 			}
 		});
 		
