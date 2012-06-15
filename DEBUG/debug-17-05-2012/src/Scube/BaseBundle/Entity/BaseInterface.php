@@ -18,10 +18,10 @@ class BaseInterface
      */
     protected $id;
 
-	/**
-     * @ORM\OneToMany(targetEntity="Scube\BaseBundle\Entity\InterfaceWidget", mappedBy="widget")
-	 * @ORM\JoinTable(name="interface_widgets") 
-     */ 
+	 /**
+     * @ORM\ManyToMany(targetEntity="Scube\BaseBundle\Entity\InterfaceWidget")
+	 * @ORM\JoinTable(name="interface_widgets")
+     */
     protected $widgets;
 	
     public function __construct()

@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Scube\BaseBundle\Entity\User;
 use Scube\BaseBundle\Entity\UserProfile;
 use Scube\BaseBundle\Entity\BaseInterface;
+use Scube\BaseBundle\Entity\Widget;
+use Scube\BaseBundle\Entity\InterfaceWidget;
 
 class BaseController extends Controller
 {
@@ -20,7 +22,7 @@ class BaseController extends Controller
 		{
 			$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
 			$user = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
-						
+			
 			return $this->render('ScubeBaseBundle:Base:index.html.twig', array('user' => $user));
 		}
 		/* User not logged -> display login form */
@@ -102,7 +104,7 @@ class BaseController extends Controller
 				$em->persist($user);
 				$em->flush();
 				
-				return $this->render('ScubeBaseBundle:Base:register.html.twig', array("success"=>true));
+				return $this->render('ScubeBaseBundle:Base:register.html.twig', array("allow_registration"=>$allow_registration,"success"=>true));
 			}
 		}
 			

@@ -20,7 +20,7 @@ class InterfaceWidget
 
 	/**
      * @ORM\OneToOne(targetEntity="Scube\BaseBundle\Entity\Widget")
-     * @ORM\JoinColumn(name="widgets", referencedColumnName="id")
+     * @ORM\JoinColumn(name="widget", referencedColumnName="id")
      */
     protected $widget;
 	

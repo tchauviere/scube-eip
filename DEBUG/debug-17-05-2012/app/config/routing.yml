@@ -1,3 +1,7 @@
+ScubeConnectionsBundle:
+    resource: "@ScubeConnectionsBundle/Resources/config/routing.yml"
+    prefix:   /
+
 ScubeAdminUserBundle:
     resource: "@ScubeAdminUserBundle/Resources/config/routing.yml"
     prefix:   /
@@ -20,6 +24,10 @@ ScubeAdminAppsBundle:
 
 ScubeAdminSettingsBundle:
     resource: "@ScubeAdminSettingsBundle/Resources/config/routing.yml"
+    prefix:   /
+
+ScubeAdminLogsBundle:
+    resource: "@ScubeAdminLogsBundle/Resources/config/routing.yml"
     prefix:   /
 
 #APP_DELIMITER

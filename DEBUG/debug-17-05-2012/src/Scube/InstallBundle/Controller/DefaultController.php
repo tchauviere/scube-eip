@@ -8,6 +8,9 @@ use Scube\BaseBundle\Entity\UserProfile;
 use Scube\BaseBundle\Entity\BaseInterface;
 use Scube\BaseBundle\Entity\PermissionsGroup;
 use Scube\BaseBundle\Entity\ScubeSetting;
+use Scube\BaseBundle\Entity\Widget;
+use Scube\BaseBundle\Entity\InterfaceWidget;
+use Scube\BaseBundle\Entity\ConnectionsGroup;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -59,6 +62,44 @@ class DefaultController extends Controller
 		$em->persist($default_app3);
 		$em->flush();
 		
+		$default_app4 = new Application();
+		$default_app4->setName("Server Logs Manager for administrator");
+		$default_app4->setBundleName("");
+		$default_app4->setAdminBundleName("AdminLogsBundle");
+		$default_app4->setLink("");
+		$default_app4->setAdminLink("AdminLogsBundle_homepage");
+		$default_app4->setDescription("View Scube's Logs and find errors");
+		$default_app4->setActivated(true);
+		$default_app4->setNecessary(true);
+		$em = $this->getDoctrine()->getEntityManager();
+		$em->persist($default_app4);
+		$em->flush();
+		
+		$default_app5 = new Application();
+		$default_app5->setName("Connections");
+		$default_app5->setBundleName("ConnectionsBundle");
+		$default_app5->setAdminBundleName("");
+		$default_app5->setLink("ConnectionsBundle_homepage");
+		$default_app5->setAdminLink("");
+		$default_app5->setDescription("Organize your contacts");
+		$default_app5->setActivated(true);
+		$default_app5->setNecessary(true);
+		$em = $this->getDoctrine()->getEntityManager();
+		$em->persist($default_app5);
+		$em->flush();
+			/* Widgets de Connections */
+			$default_wid = new Widget();
+			$default_wid->setApplication($default_app5);
+			$default_wid->setLink("ConnectionsBundle_widget");
+			$default_wid->setMinWidth(1);
+			$default_wid->setMaxWidth(1);
+			$default_wid->setMinHeight(1);
+			$default_wid->setMaxHeight(1);
+			$default_wid->setFullscreen(true);
+			$em = $this->getDoctrine()->getEntityManager();
+			$em->persist($default_wid);
+			$em->flush();
+		
 		/* Default Settings */
 		$default_setting = new ScubeSetting();
 		$default_setting->setKey("allow_registration");
@@ -73,9 +114,12 @@ class DefaultController extends Controller
 		$default_grp = new PermissionsGroup();
 		$default_grp->setName("administrator");
 		
+		$default_grp->addApplication($default_app5);
+		
 		$default_grp->addAdminApplication($default_app);
 		$default_grp->addAdminApplication($default_app2);
 		$default_grp->addAdminApplication($default_app3);
+		$default_grp->addAdminApplication($default_app4);
 		
 		$em = $this->getDoctrine()->getEntityManager();
 		$em->persist($default_grp);
@@ -99,15 +143,29 @@ class DefaultController extends Controller
 		$default_usr->setBirthday(new \DateTime());
 		$default_usr->setGender("male");
 		
+		$default_usr_connection = new ConnectionsGroup();
+		$default_usr_connection->setName("Default");
+		
 		$default_usr_profile = new UserProfile();
 		$default_usr_interface = new BaseInterface();
+			$default_usr_interface_widget = new InterfaceWidget();
+			$default_usr_interface_widget->setWidth(1);
+			$default_usr_interface_widget->setHeight(1);
+			$default_usr_interface_widget->setPosX(1);
+			$default_usr_interface_widget->setPosY(1);
+			$default_usr_interface_widget->setWidget($default_wid);
+			$default_usr_interface->addInterfaceWidget($default_usr_interface_widget);
+		
 		$default_usr->setProfile($default_usr_profile);
 		$default_usr->setBaseInterface($default_usr_interface);
 		$default_usr->setPermissionsGroup($default_grp);
+		$default_usr->addConnectionsGroup($default_usr_connection);
 		
 		$em = $this->getDoctrine()->getEntityManager();
 		$em->persist($default_usr_profile);
+		$em->persist($default_usr_interface_widget);
 		$em->persist($default_usr_interface);
+		$em->persist($default_usr_connection);
 		$em->persist($default_usr);
 		$em->flush();
 		

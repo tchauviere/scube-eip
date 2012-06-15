@@ -61,6 +61,12 @@ class User
     protected $permissionsGroup;
 	
 	/**
+     * @ORM\ManyToMany(targetEntity="Scube\BaseBundle\Entity\ConnectionsGroup")
+	 * @ORM\JoinTable(name="connections_groups")
+     */ 
+    protected $connectionsGroups;
+	
+	/**
      * @ORM\OneToOne(targetEntity="Scube\BaseBundle\Entity\UserProfile")
      * @ORM\JoinColumn(name="user_profile", referencedColumnName="id")
      */
@@ -68,8 +74,6 @@ class User
 	
     public function __construct()
     {
-        $this->applications = new \Doctrine\Common\Collections\ArrayCollection();
-    $this->admin_applications = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -260,5 +264,25 @@ class User
     public function getPermissionsGroup()
     {
         return $this->permissionsGroup;
+    }
+
+    /**
+     * Add connectionsGroups
+     *
+     * @param Scube\BaseBundle\Entity\ConnectionsGroup $connectionsGroups
+     */
+    public function addConnectionsGroup(\Scube\BaseBundle\Entity\ConnectionsGroup $connectionsGroups)
+    {
+        $this->connectionsGroups[] = $connectionsGroups;
+    }
+
+    /**
+     * Get connectionsGroups
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getConnectionsGroups()
+    {
+        return $this->connectionsGroups;
     }
 }
