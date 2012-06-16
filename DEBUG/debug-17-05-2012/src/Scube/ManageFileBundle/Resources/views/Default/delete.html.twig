@@ -163,10 +163,10 @@ There is no picture
 
 {% endif %}
 {% if list is empty %}
-<a href="{{ path('ScubeManageFileBundle_pictures_upload') }}"> <input type="button" value="Upload a picture"> </a>
+<a href="{{ path('ScubeManageFileBundle_upload') }}"> <input type="button" value="Upload a picture"> </a>
 {% else %}
-<a href="{{ path('ScubeManageFileBundle_pictures_upload') }}"> <input type="button" value="Upload an other picture"> </a>
-<a href="{{ path('ScubeManageFileBundle_pictures_delete') }}"> <input type="button" value="Delete pictures"> </a>
+<a href="{{ path('ScubeManageFileBundle_upload') }}"> <input type="button" value="Upload an other picture"> </a>
+<a href="{{ path('ScubeManageFileBundle_delete') }}"> <input type="button" value="Delete pictures"> </a>
 {% endif %}
 
 </div>
