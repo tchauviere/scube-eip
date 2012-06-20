@@ -40,13 +40,14 @@
 </div>
 
 {% if user is defined %}
+{#
 <div id="login_corner">
 	<a href="{{ path('_logout') }}">
 	{% image '@ScubeBaseBundle/Resources/public/images/shutdown-corner.png'	%}
 	<img src="{{ asset_url }}" alt="Logout"/></a>
 	{% endimage %}
 </div>
-
+#}
 <div id="home_corner">
 	{% image '@ScubeBaseBundle/Resources/public/images/tools-corner.png' %}
 	<img src="{{ asset_url }}" alt="Home"/>

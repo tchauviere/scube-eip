@@ -22,7 +22,7 @@ a:hover{
 #header
 {
     width:100%;
-    height:60px;
+    height:50px;
     text-align:center;
     background:#333;
     padding-top:8px;
@@ -51,7 +51,9 @@ a:hover{
 }
 #home_box h1
 {
-	margin-top:10px;
+	margin-top:5px;
+	margin-left:60px;
+	text-align:left;
 }
 
 #login_corner
@@ -65,7 +67,7 @@ a:hover{
 {
     position:absolute;
     left:120px;
-    top:10px;
+    top:5px;
 	width: 150px;
 }
 #lock_header label
@@ -79,7 +81,7 @@ a:hover{
 {
     position:absolute;
     left:120px;
-    top:35px;
+    top:30px;
 	width: 150px;
 }
 #admin_header label
@@ -221,4 +223,86 @@ text-align: center;
 }
 .account_params_btn:hover{
 color: #fff;
+}
+
+.start_menu{
+	width:100%;
+	border-spacing:0px;
+	border-collapse:collapse;
+}
+
+.start_menu_btn{
+	height:150px;
+	width:150px;
+	margin: 0 15px;
+	margin-top: 15px;
+	background: #8EB218;
+	display: block;
+	padding: 10px;
+	color: #fff;
+	text-decoration: none;
+	font-weight: bold;
+	line-height: 35px;
+	vertical-align:middle;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-box-shadow: 0 1px 3px #999;
+	-webkit-box-shadow: 0 1px 3px #999;
+	text-shadow: 0 -1px 1px #222;
+	position: relative;
+	cursor: pointer;
+	text-align: center;
+}
+.start_menu_btn:hover{
+	color:white;
+}
+.start_menu_mini_btn{
+	height:75px;
+	width:75px;
+	background: #8EB218;
+	display: block;
+	color: #fff;
+	text-decoration: none;
+	font-weight: bold;
+	line-height: 20px;
+	position: relative;
+	cursor: pointer;
+	text-align: center;
+	vertical-align:middle;
+}
+
+.red_btn{
+background: #94211a;
+}
+.yellow_btn{
+background: #b7aa10;
+}
+.blue_btn{
+background: #4878ac;
+}
+
+.td_top {
+	vertical-align:top;
+}
+
+.td_btn {
+	height:160px;
+	width:160px;
+	margin: 0 15px;
+	margin-top: 15px;
+	background: #8EB218;
+	display: block;
+	padding: 5px 10px 6px;
+	color: #fff;
+	text-decoration: none;
+	font-weight: bold;
+	line-height: 1;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-box-shadow: 0 1px 3px #999;
+	-webkit-box-shadow: 0 1px 3px #999;
+	text-shadow: 0 -1px 1px #222;
+	position: relative;
+	cursor: pointer;
+	text-align: center;
 }

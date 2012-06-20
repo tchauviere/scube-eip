@@ -1,3 +1,7 @@
+WidgetsConnectionsWidgetBundle:
+    resource: "@WidgetsConnectionsWidgetBundle/Resources/config/routing.yml"
+    prefix:   /
+
 ScubeConnectionsBundle:
     resource: "@ScubeConnectionsBundle/Resources/config/routing.yml"
     prefix:   /
@@ -31,7 +35,6 @@ ScubeAdminLogsBundle:
     prefix:   /
 
 #APP_DELIMITER
-
 
 # Internal routing configuration to handle ESI
 #_internal:
