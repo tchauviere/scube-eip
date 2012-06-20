@@ -12,9 +12,10 @@
 }
 
 .plain_cell {
-	background-color:#4878ac;
+	background-color:#333;
 	border-radius:5px;
 	position:absolute;
+	box-shadow: 0 0 10px #555;
 }
 
 .cell_hover {
@@ -24,8 +25,10 @@
 }
 
 .cell_fullscreen {
-	position:relative;
-	float:right;
+	position:absolute;
+	/*float:right;*/
+	right:0px;
+	top:0;
 	margin:5px;
 	width:30px;
 	height:30px;

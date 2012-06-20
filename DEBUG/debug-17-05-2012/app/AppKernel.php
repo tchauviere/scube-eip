@@ -25,8 +25,9 @@ class AppKernel extends Kernel
 			new Scube\AdminSettingsBundle\ScubeAdminSettingsBundle(),
 			new Scube\AdminLogsBundle\ScubeAdminLogsBundle(),
 			new Scube\ConnectionsBundle\ScubeConnectionsBundle(),
+			
+			new Widgets\ConnectionsWidgetBundle\WidgetsConnectionsWidgetBundle(),
 			/*APP_DELIMITER*/
-
             
         );
 

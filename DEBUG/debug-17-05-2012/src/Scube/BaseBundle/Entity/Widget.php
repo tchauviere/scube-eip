@@ -27,6 +27,16 @@ class Widget
 	/**
      * @ORM\Column(type="string", length="200")
      */
+    protected $name;
+	
+	/**
+     * @ORM\Column(type="string", unique="true", length="200")
+     */
+    protected $bundle_name;
+	
+	/**
+     * @ORM\Column(type="string", length="200")
+     */
     protected $link;
 	
 	/**
@@ -202,5 +212,45 @@ class Widget
     public function getApplication()
     {
         return $this->application;
+    }
+
+    /**
+     * Set bundle_name
+     *
+     * @param string $bundleName
+     */
+    public function setBundleName($bundleName)
+    {
+        $this->bundle_name = $bundleName;
+    }
+
+    /**
+     * Get bundle_name
+     *
+     * @return string 
+     */
+    public function getBundleName()
+    {
+        return $this->bundle_name;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 }

@@ -89,8 +89,10 @@ class DefaultController extends Controller
 		$em->flush();
 			/* Widgets de Connections */
 			$default_wid = new Widget();
+			$default_wid->setName("Connections");
 			$default_wid->setApplication($default_app5);
-			$default_wid->setLink("ConnectionsBundle_widget");
+			$default_wid->setLink("WidgetsConnectionsWidgetBundle_homepage");
+			$default_wid->setBundleName("ConnectionsWidgetBundle");
 			$default_wid->setMinWidth(1);
 			$default_wid->setMaxWidth(1);
 			$default_wid->setMinHeight(1);
