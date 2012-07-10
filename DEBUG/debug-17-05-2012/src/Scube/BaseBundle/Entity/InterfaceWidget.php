@@ -19,7 +19,7 @@ class InterfaceWidget
     protected $id;
 
 	/**
-     * @ORM\OneToOne(targetEntity="Scube\BaseBundle\Entity\Widget")
+     * @ORM\ManyToOne(targetEntity="Scube\BaseBundle\Entity\Widget")
      * @ORM\JoinColumn(name="widget", referencedColumnName="id")
      */
     protected $widget;

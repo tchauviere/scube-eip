@@ -74,6 +74,7 @@ function add_WidgetOnGrid(id, pos_x, pos_y, width, height)
 		$("#"+id).append("<div class='cell_anchor'></div><div class='cell_remove'></div>");
 	else
 		$("#"+id).append("<div class='cell_fullscreen'>");
+		
 	$("#"+id+" .cell_fullscreen").click(function() {
 		
 		if (fullscreen)
@@ -96,6 +97,11 @@ function add_WidgetOnGrid(id, pos_x, pos_y, width, height)
 					});
 		}
 	});
+	
+	$("#"+id+" .cell_remove").click(function() {
+		delete_widget_from_grid(id);
+	});
+	
 	$("#"+id).css({'width':cell_width*width + (cell_border*(width-1)),
 					'height':cell_height*height + (cell_border*(height-1)),
 					'left':cell_width*pos_x + cell_border*pos_x,
@@ -148,8 +154,10 @@ function load_Grid()
 {
 	page_width = $(window).width();
 	page_height = $(window).height();
+	/*
 	cells_per_line = 7;
 	nb_line = 5;
+	*/
 	cell_border = 10;
 	
 	cell_width = Math.round((page_width - cell_border) / cells_per_line) - cell_border;
@@ -180,9 +188,11 @@ function load_Grid()
 				$("#"+cell_id).hover(
 				  function () {
 					$(this).addClass("empty_cell_hover");
+					load_empty_cells();
 				  },
 				  function () {
 					$(this).removeClass("empty_cell_hover");
+					unload_empty_cells();
 				  }
 				);
 			}
@@ -234,6 +244,7 @@ function load_Grid()
 	$("#mcs_container").mCustomScrollbar("vertical",300,"easeOutCirc",1.05,"auto","yes","no",15);
 	$("#mcs_container").css({"width":page_width+"px","height":(page_height - $("#mcs_container").position().top)+"px"});
 	$("#mcs_container").mCustomScrollbar("vertical",300,"easeOutCirc",1.05,"auto","yes","no",15);
+	
 }
 
 function load_AdminGrid()
@@ -271,6 +282,7 @@ function move_Widget(id, pos_x, pos_y)
 {
 	Widgets[id].pos_x = pos_x;
 	Widgets[id].pos_y = pos_y;
+	save_moving_position(id, pos_x, pos_y);
 	
 	/* Delete the old widget position on grid */
 	for (var i=0; i!=nb_line; ++i) {

@@ -14,7 +14,7 @@
 				<table class="start_menu">
 					<tr>
 						<td class="td_top" >
-							<a class="AppBox start_menu_mini_btn" href="{{ path('_edit_profile') }}">
+							<a class="AppBox start_menu_mini_btn" href="{{ path('_my_apps') }}">
 							{% image '@ScubeBaseBundle/Resources/public/images/applications.png' %}
 							<br /><img src="{{ asset_url }}" alt="My apps"/>
 							{% endimage %}
@@ -23,7 +23,7 @@
 						<td class="td_top">
 							<a class="AppBox start_menu_mini_btn" href="{{ path('_edit_profile') }}">
 							{% image '@ScubeBaseBundle/Resources/public/images/inbox.png' %}
-							<br /><img src="{{ asset_url }}" alt="My apps"/>
+							<br /><img src="{{ asset_url }}" alt="Inbox"/>
 							{% endimage %}
 							</a>
 						</td>
@@ -32,14 +32,14 @@
 						<td class="td_top">
 							<a class="AppBox start_menu_mini_btn" href="{{ path('_edit_profile') }}">
 							{% image '@ScubeBaseBundle/Resources/public/images/connections.png' %}
-							<br /><img src="{{ asset_url }}" alt="My apps"/>
+							<br /><img src="{{ asset_url }}" alt="Connections"/>
 							{% endimage %}
 							</a>
 						</td>
 						<td class="td_top">
 							<a class="AppBox start_menu_mini_btn" href="{{ path('_edit_profile') }}">
 							{% image '@ScubeBaseBundle/Resources/public/images/medias.png' %}
-							<br /><img src="{{ asset_url }}" alt="My apps"/>
+							<br /><img src="{{ asset_url }}" alt="Medias"/>
 							{% endimage %}
 							</a>
 						</td>
@@ -65,36 +65,3 @@
 		</td>
 	</tr>
 </table>
-{#
-		<table id="frame_profile_infos">
-		
-		<tr>
-		<td class="img_profile">
-		{% image '@ScubeBaseBundle/Resources/public/images/user.png' %}
-		<img src="{{ asset_url }}" alt="Picture"/></a>
-		{% endimage %}
-		</td>
-	
-		<td class="details_profile">
-		<ul>
-			<li>Gender: {{user.gender}}</li>
-			{%if user.getProfile().status%}<li>Status: {{user.getProfile().status}}</li>{%endif%}
-			{%if user.getProfile().phoneNumber%}<li>Phone: {{user.getProfile().getPhoneNumber()}}</li>{%endif%}
-			{%if user.getProfile().city%}<li>City: {{user.getProfile().getCity()}}</li>{%endif%}
-			{%if user.getProfile().nativeCity%}<li>Native From: {{user.getProfile().getNativeCity()}}</li>{%endif%}
-			{%if user.getProfile().website%}<li>Website: {{user.getProfile().getWebsite()}}</li>{%endif%}
-		</ul>
-		</td>
-		</tr>
-		
-		
-		<tr>
-		<td colspan='2'>
-		
-			<a class="AppBox account_params_btn" href="{{ path('_edit_profile') }}">Edit profile</a>
-			<a class="AppBox account_params_btn" href="{{ path('_edit_account') }}">Edit account</a>
-		</td>
-		</tr>
-		
-		</table>
-		#}

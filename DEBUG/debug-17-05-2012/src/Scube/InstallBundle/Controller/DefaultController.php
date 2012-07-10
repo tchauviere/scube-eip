@@ -110,6 +110,20 @@ class DefaultController extends Controller
 		$em->persist($default_setting);
 		$em->flush();
 		
+		$default_setting2 = new ScubeSetting();
+		$default_setting2->setKey("dashboard_cell_width");
+		$default_setting2->setValue("7");
+		$em = $this->getDoctrine()->getEntityManager();
+		$em->persist($default_setting2);
+		$em->flush();
+		
+		$default_setting3 = new ScubeSetting();
+		$default_setting3->setKey("dashboard_cell_height");
+		$default_setting3->setValue("5");
+		$em = $this->getDoctrine()->getEntityManager();
+		$em->persist($default_setting3);
+		$em->flush();
+		
 		/* Default Permissions Groups */
 		
 		// admin

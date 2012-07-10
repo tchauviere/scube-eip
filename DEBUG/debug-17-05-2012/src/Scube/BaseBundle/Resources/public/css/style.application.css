@@ -70,4 +70,26 @@
 	width:100%;
 }
 
+.miniGridSelectorRed {
+	width:24px;
+	height:24px;
+	background-color:#94211A;
+}
+
+.miniGridSelectorRed {
+	width:36px;
+	height:36px;
+	background-color:#94211A;
+}
+.miniGridSelectorGray {
+	width:36px;
+	height:36px;
+	background-color:whiteSmoke;
+	cursor:pointer;
+}
+.miniGridSelectorHover {
+	width:36px;
+	height:36px;
+	background-color:#8EB218;
+}
 
