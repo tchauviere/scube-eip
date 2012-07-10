@@ -50,7 +50,6 @@
 			}
 		});
 		
-		
 		$("#home_corner").click(function() {
 			if (!$("#home_box").length){
 				$("#header").append("<div id='home_box'></div>");
@@ -108,7 +107,32 @@
 					"cell_{{app.id}}":{"id":{{app.id}},"url":"{{ path(app.adminLink)}}","name":"{{ app.name}}"},
 				{% endfor %}
 			  };
+			  
+  var	cells_per_line = {{ dashboard_width.value }}/*7*/;
+  var	nb_line = {{ dashboard_height.value }}/*5*/;
 
+function	load_empty_cells()
+{
+	$(".empty_cell_hover").fancybox({
+		  padding: 0,
+		  openEffect : 'elastic',
+		  openSpeed  : 150,
+		  closeEffect : 'elastic',
+		  closeSpeed  : 150,
+		  autoScale:true,
+		  type:'iframe',
+		  helpers : {
+		  overlay : null
+		  },
+		  href:"{{ path("_add_widget")}}"
+	});
+}
+
+function	unload_empty_cells()
+{
+	$(".empty_cell_hover").click(function() {
+		});
+}
 			  
 function	load_widget(id, force)
 {
@@ -144,6 +168,21 @@ function	load_adminWidget(id, force)
 {
 	/* LE HREF DANS LA DIV PEUT POSER PROBLEME */
 	$("#"+id).append('<div class="widget_content AppBox" href="'+AdminWidgets[id]['url']+'"><div class="GridButton"><p class="GridButton_title">'+AdminWidgets[id]['name']+'</p></div></div>');
+}
+
+function	save_moving_position(id, pos_x, pos_y)
+{
+	$.ajax({
+		  url: "{{ path("_save_widget_position_noparam") }}/"+Widgets[id]['id']+"/"+pos_x+"/"+pos_y
+		});
+}
+
+function	delete_widget_from_grid(id)
+{
+	$.ajax({
+		  url: "{{ path("_delete_widget_noparam") }}/"+Widgets[id]['id'],
+		  success: function(data) {	location.reload(); }
+		});
 }
 			  
 </script>
@@ -225,9 +264,4 @@ body {
 	</div>
 </div>
 
-{#
-	{% for app in user.getApps() %}
-		<li class="Appbutton ui-state-default fancybox.ajax" href="">{{app.name}}</li>
-	{% endfor %}
-#}
 {% endblock %}

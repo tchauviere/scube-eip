@@ -20,3 +20,24 @@ _edit_profile:
 _edit_account:
     pattern:  /edit_account
     defaults: { _controller: ScubeBaseBundle:Base:editAccount }
+_my_apps:
+    pattern:  /my_apps
+    defaults: { _controller: ScubeBaseBundle:Base:myApps }
+_my_widgets:
+    pattern:  /my_widgets
+    defaults: { _controller: ScubeBaseBundle:Base:myWidgets }
+_add_widget:
+    pattern:  /add_widget
+    defaults: { _controller: ScubeBaseBundle:Base:addWidget }
+_save_widget_position:
+    pattern:  /save_widget_position/{widget_id}/{pos_x}/{pos_y}
+    defaults: { _controller: ScubeBaseBundle:Base:saveWidgetPosition }
+_save_widget_position_noparam:
+    pattern:  /save_widget_position
+    defaults: { _controller: ScubeBaseBundle:Base:saveWidgetPosition }
+_delete_widget:
+    pattern:  /delete_widget/{id}
+    defaults: { _controller: ScubeBaseBundle:Base:deleteWidget }
+_delete_widget_noparam:
+    pattern:  /delete_widget
+    defaults: { _controller: ScubeBaseBundle:Base:deleteWidget }
