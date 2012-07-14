@@ -1,9 +1,27 @@
 ConnectionsBundle_homepage:
     pattern:  /connections
     defaults: { _controller: ScubeConnectionsBundle:Connections:index }
-ConnectionsBundle_search:
-    pattern:  /connections_search
-    defaults: { _controller: ScubeConnectionsBundle:Connections:search }
 ConnectionsBundle_widget:
     pattern:  /connections_widget
     defaults: { _controller: ScubeConnectionsBundle:Connections:widget }
+ConnectionsBundle_ajax_users_list:
+    pattern:  /connections_ajax_users_list/{group_id}/{search}
+    defaults: { _controller: ScubeConnectionsBundle:Connections:UsersList}
+ConnectionsBundle_ajax_users_list_noparam:
+    pattern:  /connections_ajax_users_list
+    defaults: { _controller: ScubeConnectionsBundle:Connections:UsersList }
+ConnectionsBundle_remove_group:
+    pattern:  /connections_remove_group/{id}
+    defaults: { _controller: ScubeConnectionsBundle:Connections:removeGroup }
+ConnectionsBundle_add_user_in_group:
+    pattern:  /connections_add_user_in_group/{id_usr}/{id_grp}
+    defaults: { _controller: ScubeConnectionsBundle:Connections:AddUserInGroup }
+ConnectionsBundle_add_user_in_group_noparam:
+    pattern:  /connections_add_user_in_group
+    defaults: { _controller: ScubeConnectionsBundle:Connections:AddUserInGroup }
+ConnectionsBundle_remove_user_from_group:
+    pattern:  /connections_remove_user_from_group/{id_usr}/{id_grp}
+    defaults: { _controller: ScubeConnectionsBundle:Connections:RemoveUserFromGroup }
+ConnectionsBundle_remove_user_from_group_noparam:
+    pattern:  /connections_remove_user_from_group
+    defaults: { _controller: ScubeConnectionsBundle:Connections:RemoveUserFromGroup }

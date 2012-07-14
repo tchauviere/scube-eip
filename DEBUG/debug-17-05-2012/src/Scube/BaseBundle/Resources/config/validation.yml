@@ -35,3 +35,9 @@ Scube\BaseBundle\Entity\UsersProfile:
         website:
             - Url:
                 message:  Invalid website url syntax.
+
+Scube\BaseBundle\Entity\ConnectionsGroup:
+    properties:
+        name:
+            - MinLength: { limit: 1, message: "Your Setting's key  must have at least {{ limit }} characters." }
+            - MaxLength: { limit: 100, message: "Your Setting's key is too long. It must have less than {{ limit }} characters." }
