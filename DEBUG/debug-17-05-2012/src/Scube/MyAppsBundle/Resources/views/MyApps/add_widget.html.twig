@@ -10,9 +10,9 @@
 <tr>
 	<td class="sidebar_left">
 		<ul class="sidebar_navigation">
-			<li><a href="{{ path("_my_apps")}}">My Apps</a></li>
-			<li><a href="{{ path("_my_widgets")}}">My Widgets</a></li>
-			<li><a href="{{ path("_add_widget")}}">Clip new Widgets</a></li>
+			<li><a href="{{ path("ScubeMyAppsBundle_homepage")}}">My Apps</a></li>
+			<li><a href="{{ path("ScubeMyAppsBundle_my_widgets")}}">My Widgets</a></li>
+			<li><a href="{{ path("ScubeMyAppsBundle_add_widget")}}">Clip new Widgets</a></li>
 		</ul>
 	</td>
 	<td class="sidebar_main">
@@ -49,7 +49,7 @@
 			</table>
 			
 			<h3>Select the widget you want to clip</h3>
-			<form action="{{ path('_add_widget') }}" method="post" {{ form_enctype(form) }}>
+			<form action="{{ path('ScubeMyAppsBundle_add_widget') }}" method="post" {{ form_enctype(form) }}>
 				{{ form_widget(form) }}
 			
 				<input type="submit" value="Clip the widget now !" />
