@@ -124,7 +124,7 @@ function	load_empty_cells()
 		  helpers : {
 		  overlay : null
 		  },
-		  href:"{{ path("_add_widget")}}"
+		  href:"{{ path("ScubeMyAppsBundle_add_widget")}}"
 	});
 }
 
@@ -173,14 +173,14 @@ function	load_adminWidget(id, force)
 function	save_moving_position(id, pos_x, pos_y)
 {
 	$.ajax({
-		  url: "{{ path("_save_widget_position_noparam") }}/"+Widgets[id]['id']+"/"+pos_x+"/"+pos_y
+		  url: "{{ path("ScubeMyAppsBundle_save_widget_position_noparam") }}/"+Widgets[id]['id']+"/"+pos_x+"/"+pos_y
 		});
 }
 
 function	delete_widget_from_grid(id)
 {
 	$.ajax({
-		  url: "{{ path("_delete_widget_noparam") }}/"+Widgets[id]['id'],
+		  url: "{{ path("ScubeMyAppsBundle_delete_widget_noparam") }}/"+Widgets[id]['id'],
 		  success: function(data) {	location.reload(); }
 		});
 }
