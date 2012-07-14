@@ -33,6 +33,7 @@ class BaseController extends Controller
 		/* User not logged -> display login form */
 		else
 		{
+			$allow_registration = $this->getDoctrine()->getRepository('ScubeBaseBundle:ScubeSetting')->findOneBy(array('key' => "allow_registration"));
 			$user = new User();
 		
 			$form = $this->createFormBuilder($user)
@@ -53,10 +54,10 @@ class BaseController extends Controller
 						$session->set('user', $user);
 						return $this->redirect($this->generateUrl('_homepage'));
 					}
-					return $this->render('ScubeBaseBundle:Base:login.html.twig', array('form' => $form->createView(), 'error' => true));
+					return $this->render('ScubeBaseBundle:Base:login.html.twig', array('allow_registration'=>$allow_registration, 'form' => $form->createView(), 'error' => true));
 				}
 			}
-			$allow_registration = $this->getDoctrine()->getRepository('ScubeBaseBundle:ScubeSetting')->findOneBy(array('key' => "allow_registration"));
+			
 			if (!$allow_registration || $allow_registration->getValue() == "0")
 				$allow_registration = false;
 			return $this->render('ScubeBaseBundle:Base:login.html.twig', array('allow_registration'=>$allow_registration, 'form' => $form->createView(), "error"=>false));
