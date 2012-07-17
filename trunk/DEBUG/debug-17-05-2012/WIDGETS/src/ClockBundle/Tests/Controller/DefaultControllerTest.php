@@ -1,6 +1,6 @@
 <?php
 
-namespace Widgets\SimpleClockBundle\Tests\Controller;
+namespace Widgets\ClockBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
