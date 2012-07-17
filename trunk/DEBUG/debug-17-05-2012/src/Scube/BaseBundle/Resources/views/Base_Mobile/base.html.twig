@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" />
+
+<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+{% block more_javascripts %}{% endblock %}
+<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
+
+<title>{% block title %}Scube{% endblock %}</title>
+</head>
+
+<body>
+{% block body %}
+<div data-role="page" id="mainFrame">
+	<div data-role="header" data-theme="b" >
+		{% image '@ScubeBaseBundle/Resources/public/images/logo_scube_entete.png' %}
+		<img src="{{ asset_url }}" alt="Logo"/>
+		{% endimage %}
+		{% block header_btns %}
+		<a href="#menuFrame" data-transition="slidedown" data-theme="a" data-rel="dialog" data-icon="grid" class="ui-btn-right" style="margin-top: 5px;" >Options</a>
+		{% endblock %}
+		{% block back_btns %}
+		<a href="{{ path('_homepage') }}" data-transition="slide" data-direction="reverse" data-theme="a" data-icon="arrow-l class="ui-btn-right" style="margin: 72%; margin-top: 5px;" >Back</a>
+		{% endblock %}
+	</div>
+{% endblock %}
+</div>
+
+
+<div data-role="dialog" id="menuFrame">
+	<div data-role="content" data-theme="b">
+		<h1>Menu</h1>
+		<a href="{{ path('ScubeAccountBundle_edit_profile') }}" data-role="button" data-icon="gear">Edit Profil</a>
+		<a href="{{ path('_logout') }}" data-role="button" data-icon="delete">Logout</a>
+		<a href="{{ path('_homepage') }}" data-role="button" data-icon="back" data-theme="a">Cancel</a>
+	</div>
+</div>
+
+</body>
+</html>

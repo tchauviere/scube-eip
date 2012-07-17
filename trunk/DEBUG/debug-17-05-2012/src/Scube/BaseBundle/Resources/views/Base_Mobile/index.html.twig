@@ -1,0 +1,22 @@
+{% extends 'ScubeBaseBundle:Base_Mobile:base.html.twig' %}
+
+{% block title %}Scube{% endblock %}
+
+{% block body %}
+{{ parent() }}
+{% block back_btns %}{% endblock %}
+
+<div data-role="content">
+
+</div>
+
+<div data-role="footer"  data-position="fixed" data-theme="b">
+	<div data-role="navbar">
+		<ul>
+			<li><a href="{{ path('_homepage') }}">Home</a></li>
+			<li><a href="#">Contacts</a></li>
+			<li><a href="#">Messages</a></li>
+		</ul>
+	</div>
+</div>
+{% endblock %}
