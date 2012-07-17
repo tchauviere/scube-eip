@@ -159,9 +159,6 @@ class DefaultController extends Controller
 		$default_usr->setBirthday(new \DateTime());
 		$default_usr->setGender("male");
 		
-		$default_usr_connection = new ConnectionsGroup();
-		$default_usr_connection->setName("Default");
-		
 		$default_usr_profile = new UserProfile();
 		$default_usr_interface = new BaseInterface();
 			$default_usr_interface_widget = new InterfaceWidget();
@@ -175,13 +172,11 @@ class DefaultController extends Controller
 		$default_usr->setProfile($default_usr_profile);
 		$default_usr->setBaseInterface($default_usr_interface);
 		$default_usr->setPermissionsGroup($default_grp);
-		$default_usr->addConnectionsGroup($default_usr_connection);
 		
 		$em = $this->getDoctrine()->getEntityManager();
 		$em->persist($default_usr_profile);
 		$em->persist($default_usr_interface_widget);
 		$em->persist($default_usr_interface);
-		$em->persist($default_usr_connection);
 		$em->persist($default_usr);
 		$em->flush();
 		
