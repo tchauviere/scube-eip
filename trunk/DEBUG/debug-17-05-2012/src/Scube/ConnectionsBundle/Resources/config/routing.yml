@@ -25,3 +25,10 @@ ConnectionsBundle_remove_user_from_group:
 ConnectionsBundle_remove_user_from_group_noparam:
     pattern:  /connections_remove_user_from_group
     defaults: { _controller: ScubeConnectionsBundle:Connections:RemoveUserFromGroup }
+
+ConnectionsBundle_edit_group:
+    pattern:  /connections_edit_group/{id}
+    defaults: { _controller: ScubeConnectionsBundle:Connections:EditGroup }
+ConnectionsBundle_edit_group_noparam:
+    pattern:  /connections_edit_group
+    defaults: { _controller: ScubeConnectionsBundle:Connections:EditGroup }

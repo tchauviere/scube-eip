@@ -7,8 +7,14 @@
 		{% image '@ScubeBaseBundle/Resources/public/images/remove.png' %}
 		<img width="16" src="{{ asset_url }}" alt="Remove"/></a>
 		{% endimage %}
-		</a>
+		</a> 
 	{% endif %}
+	
+	<a style="float:right;" href="{{path("ScubeProfileViewerBundle_homepage", { 'id_user': usr.getId()})}}" >
+	{% image '@ScubeBaseBundle/Resources/public/images/user.png' %}
+	<img width="16" src="{{ asset_url }}" alt="Profile"/></a>
+	{% endimage %}
+	</a>
 	
 	<input type="hidden" value="{{usr.getId()}}"/></li>
 {% endfor %}

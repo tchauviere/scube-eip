@@ -1,0 +1,12 @@
+ScubeProfileViewerBundle_homepage:
+    pattern:  /profile/{id_user}
+    defaults: { _controller: ScubeProfileViewerBundle:ProfileViewer:index }
+ScubeProfileViewerBundle_newsfeed:
+    pattern:  /profile/newsfeed/{id_user}
+    defaults: { _controller: ScubeProfileViewerBundle:ProfileViewer:newsfeed }
+ScubeProfileViewerBundle_infos:
+    pattern:  /profile/infos/{id_user}
+    defaults: { _controller: ScubeProfileViewerBundle:ProfileViewer:infos }
+ScubeProfileViewerBundle_pics:
+    pattern:  /profile/pics/{id_user}
+    defaults: { _controller: ScubeProfileViewerBundle:ProfileViewer:pics }
