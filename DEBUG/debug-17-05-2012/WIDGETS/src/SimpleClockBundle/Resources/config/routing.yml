@@ -1,3 +1,0 @@
-WidgetsSimpleClockBundle_homepage:
-    pattern:  /widgets/simpleclock
-    defaults: { _controller: WidgetsSimpleClockBundle:Default:index }
