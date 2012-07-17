@@ -22,54 +22,79 @@
 			{% endimage %}
 		</div>
 		<div id="search_group_filter">
-			<span id="search_group_filter_name"></span> 
-			<a href="#" onclick="delete_filter();" >
+			 
+		
+			<a style="float:right" href="#" onclick="delete_filter();" >
 			{% image '@ScubeBaseBundle/Resources/public/images/remove.png' %}
 			<img width="16" src="{{ asset_url }}" alt="Remove"/></a>
 			{% endimage %}
 			</a>
+			
+			<div id="container_search_group_filter_name">
+			
+				<a style="float:left;" href="#" onclick="edit_group();" >
+				{% image '@ScubeBaseBundle/Resources/public/images/edit.png' %}
+				<img width="16" src="{{ asset_url }}" alt="Edit"/></a>
+				{% endimage %}
+				</a>
+				
+				<span id="search_group_filter_name"></span> 
+			
+			</div>
+			
+			<div id="form_edit_group"></div>
+			
 		</div>
+		
+		
+		
 		<ul id="search_list">
 			
 		</ul>
 	</td>
 	<td class="sidebar_main">
-		<h1>My connections</h1>
 		
-		{% if success %}
-			<p class="form_success">The group has been successfully added.</p>
-		{% endif %}
-		<form class="top_form" action="{{ path("ConnectionsBundle_homepage")}}" method="post" {{ form_enctype(form) }}>
-			
-			{{ form_widget(form._token) }}
-			{{ form_widget(form.name) }}
 		
-			<input type="submit" value="Create group" />
-		</form>
+		<div id="group_grid">
+			<h1>My connections</h1>
+			
+			{% if success %}
+				<p class="form_success">The group has been successfully added.</p>
+			{% endif %}
+			<form class="top_form" action="{{ path("ConnectionsBundle_homepage")}}" method="post" {{ form_enctype(form) }}>
+				
+				{{ form_widget(form._token) }}
+				{{ form_widget(form.name) }}
+			
+				<input type="submit" value="Create group" />
+			</form>
+			
+			<table id="connections_grid" class="table_full_size" style="border-spacing:5px;">
+			<tr>
+				{% for group in user.getConnectionsGroups() %}
+				
+					<td onclick="select_group({{group.getId()}});" class="cell_group" id="group_{{group.getId()}}">
+						<input type="hidden" value="{{group.getId()}}"/>
+						<div class="cell_group_remove">
+							<a href="{{path("ConnectionsBundle_remove_group", { 'id': group.getId()})}}" >
+							{% image '@ScubeBaseBundle/Resources/public/images/remove.png' %}
+							<img width="16" src="{{ asset_url }}" alt="Remove"/></a>
+							{% endimage %}
+							</a>
+						</div>
+						<div class="cell_group_name"><span id="cell_group_name_{{group.getId()}}">{{group.getName()}}</span> (<span id="cell_group_length_{{group.getId()}}">{{group.getUsers()|length}}</span>)</div>
+					</td>
+				
+					{% if loop.index % 4 == 0 %}
+						</tr><tr>
+					{% endif %}
+				
+				{% endfor %}
+			</tr>
+			</table>
 		
-		<table id="connections_grid" class="table_full_size" style="border-spacing:5px;">
-		<tr>
-			{% for group in user.getConnectionsGroups() %}
-			
-				<td onclick="select_group({{group.getId()}});" class="cell_group" id="group_{{group.getId()}}">
-					<input type="hidden" value="{{group.getId()}}"/>
-					<div class="cell_group_remove">
-						<a href="{{path("ConnectionsBundle_remove_group", { 'id': group.getId()})}}" >
-						{% image '@ScubeBaseBundle/Resources/public/images/remove.png' %}
-						<img width="16" src="{{ asset_url }}" alt="Remove"/></a>
-						{% endimage %}
-						</a>
-					</div>
-					<div class="cell_group_name"><span id="cell_group_name_{{group.getId()}}">{{group.getName()}}</span> (<span id="cell_group_length_{{group.getId()}}">{{group.getUsers()|length}}</span>)</div>				
-				</td>
-			
-				{% if loop.index % 4 == 0 %}
-					</tr><tr>
-				{% endif %}
-			
-			{% endfor %}
-		</tr>
-		</table>
+		</div>
+		
 	</td>
 </tr>
 </div>
@@ -152,13 +177,29 @@ function	select_group(group_id)
 	load_users_list(group_id);
 	$("#search_group_filter_name").html($("#cell_group_name_"+group_id).html());
 	$("#search_group_filter").show();
+	
+	$.ajax({
+			  url: "{{ path("ConnectionsBundle_edit_group_noparam") }}/" + group_id,
+			  success: function(data) {	
+			  	$("#form_edit_group").html(data);
+			  }
+			});
+}
+
+function	edit_group()
+{
+	$("#container_search_group_filter_name").hide();
+	$('#form_edit_group').show();
 }
 
 function	delete_filter()
 {
 	group_selected = false;
 	$("#connections_grid td").removeClass("cell_group_selected");
+	$("#container_search_group_filter_name").show();
 	$("#search_group_filter").hide();
+	$("#form_edit_group").hide();
+	
 	load_users_list();
 }	
 
@@ -240,6 +281,10 @@ function	remove_connection_from_group(user_id, group_id)
 		vertical-align:middle;
 		font-size:16px;
 		font-weight:bold;
+		background-color:white;
+		border-radius:5px;
+		box-shadow: 0 0 5px #555;
+		margin:10px;
 	}
 	#search_group_filter img {
 		vertical-align:middle;
@@ -249,38 +294,43 @@ function	remove_connection_from_group(user_id, group_id)
 		display:none;
 	}
 	
+	#form_edit_group {
+		display:none;
+	}
+	#form_edit_group_link {
+		display:none;
+	}
+	
+	.top_form_left input[type="text"] {
+		float:left;
+		width:80%;
+		display:block;
+		font-weight:bold;
+		border:none;
+		text-align:center;
+		font-size:16px;
+		font-weight:bold;
+		margin-left:16px;
+	}
+	.top_form_left input[type="checkbox"] {
+		float:right;
+		width:15%;
+		height:16px;
+		display:block;
+		margin:0px;
+	}
+	.top_form_left label {
+		height:16px;
+		font-size:10px;
+		float:left;
+		width:80%;
+		display:block;
+		text-align:left;
+		font-weight:normal;
+	}
+	
 </style>
 
-{#
-<div class="Application">
 
-<table class="table_content">
-<tr>
-	<td class="sidebar_left">
-		<ul class="sidebar_navigation">
-			<li><a href="{{ path("ConnectionsBundle_homepage")}}">My connections</a></li>
-			<li><a href="{{ path("ConnectionsBundle_search")}}">Search contact</a></li>
-		</ul>
-	</td>
-	<td class="sidebar_main">
-		<h1>My connections</h1>
-		<table class="table_full_size">
-			{% for group in user.getConnectionsGroups() %}
-			<tr>
-				<td>
-					<div class="table_title">{{group.getName()}}</div>
-				</td>
-				<td>
-					{% for connection in group.getUsers() %}
-						{{connection.getFirstname()}} {{connection.getSurname()}},<br />
-					{% endfor %}
-				</td>
-			</tr>
-			{% endfor %}
-		</table>
-	</td>
-</tr>
-</div>
-#}
 
 {% endblock %}

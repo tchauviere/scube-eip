@@ -30,6 +30,10 @@ class ConnectionsController extends Controller
        
                        if ($form->isValid()) {
                        
+					   		    $grp->setAuthProfileNews(false);
+								$grp->setAuthProfileInfos(false);
+								$grp->setAuthProfilePics(false);
+								
                                $em = $this->getDoctrine()->getEntityManager();
 							   $em->persist($grp);
 							   $user->addConnectionsGroup($grp);
@@ -40,6 +44,31 @@ class ConnectionsController extends Controller
                }
          
 		 return $this->render('ScubeConnectionsBundle:Connections:index.html.twig', array('user'=>$user, 'form' => $form->createView(), "success"=>false));
+    }
+	public function editGroupAction(Request $request, $id=0)
+    {
+		$grp = $this->getDoctrine()->getRepository('ScubeBaseBundle:ConnectionsGroup')->find($id);
+		
+		$form = $this->createFormBuilder($grp)
+           ->add('name', 'text')
+		   ->add('auth_profile_news', 'checkbox', array('required'=>false, 'label'=> "My news"))
+		   ->add('auth_profile_infos', 'checkbox', array('required'=>false, 'label'=> "My infos"))
+		   ->add('auth_profile_pics', 'checkbox', array('required'=>false, 'label'=> "My pictures"))
+           ->getForm();
+               
+               if ($request->getMethod() == 'POST') {
+                       $form->bindRequest($request);
+       
+                       if ($form->isValid()) {
+                       
+                               $em = $this->getDoctrine()->getEntityManager();
+                               $em->flush();
+							                                  
+                               return $this->redirect($this->generateUrl('ConnectionsBundle_homepage'));
+                       }
+               }
+         
+		 return $this->render('ScubeConnectionsBundle:Connections:edit_group.html.twig', array('form' => $form->createView(), "group"=>$grp));
     }
 	public function removeGroupAction(Request $request, $id)
     {
