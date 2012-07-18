@@ -7,3 +7,6 @@ ScubeAccountBundle_edit_email_password:
 ScubeAccountBundle_edit_profile:
     pattern:  /edit_profile
     defaults: { _controller: ScubeAccountBundle:Account:editProfile }
+ScubeAccountBundle_edit_picture:
+    pattern:  /edit_picture
+    defaults: { _controller: ScubeAccountBundle:Account:editPicture }

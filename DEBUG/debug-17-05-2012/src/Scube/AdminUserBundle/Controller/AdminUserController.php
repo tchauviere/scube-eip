@@ -56,6 +56,8 @@ class AdminUserController extends Controller
 				$em->persist($user);
 				$em->flush();
 				
+				\Scube\BaseBundle\Controller\BaseController::createUserDirectory($this->get('kernel'), $user);
+				
 				return $this->render('ScubeAdminUserBundle:AdminUser:add_user.html.twig', array('user'=>$user, 'form' => $form->createView(), "success"=>true));
 			}
 		}
@@ -108,8 +110,13 @@ class AdminUserController extends Controller
 			throw $this->createNotFoundException('No user found for id '.$id);
 		}
 		
+		\Scube\BaseBundle\Controller\BaseController::removeUserDirectory($this->get('kernel'), $user);
+		
 		$em->remove($user);
 		$em->flush();
+		
+		
+		
 		return $this->redirect($this->generateUrl('AdminUserBundle_homepage'));
     }
 	
