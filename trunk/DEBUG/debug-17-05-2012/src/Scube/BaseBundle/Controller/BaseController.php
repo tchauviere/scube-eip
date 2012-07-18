@@ -150,7 +150,9 @@ class BaseController extends Controller
 	
 	public static function createUserDirectory($kernel, $user)
 	{
-		mkdir($kernel->getRootDir(). '/../web/users/'.$user->getId());
+		$filename = $kernel->getRootDir(). '/../web/users/'.$user->getId();
+		if (!file_exists($filename) && !is_dir($filename))
+			mkdir($filename);
 	}
 	public static function removeUserDirectory($kernel, $user)
 	{

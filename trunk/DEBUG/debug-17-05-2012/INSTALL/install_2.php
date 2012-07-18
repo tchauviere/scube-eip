@@ -56,7 +56,7 @@ secret=\"01e324a59f7ff5232919a83d4ade681c2024d876\"\n";
     <head>
         <meta charset="UTF-8" />
         <link href="css/install.css" rel="stylesheet" media="all" />
-        <title>Scube Installation step 2</title>
+        <title>Scube Installation step 2</title>		
     </head>
     <body>
         <div id="symfony-wrapper">
@@ -69,19 +69,29 @@ secret=\"01e324a59f7ff5232919a83d4ade681c2024d876\"\n";
                 <div class="symfony-block-content">
                     <h1>Database set up</h1>
 
+				
 <?php
 if ($win)
-   echo "<p style='color:black;text-align:center;'><span style='color:green;'>The database is now activated !</span><br /><br />
-   		<span style='color:red;'>Check your database exists and tables are empty. Else, error can occured.</span>
-   		<br /><br />
-   		<strong>Please now execute these two commands in the ROOT FOLDER :</strong><br /><br />
-		<pre>php app/console assetic:dump<br /></pre>
-		<pre>php app/console doctrine:schema:update --force</pre><br />
-		<br />
-		And then : <a href='../web/app_dev.php/install'>Continue the installation ></a></p>";
+  {
+	echo "<form method='post' action='check_php.php' >   
+					<p> Please enter the full PATH to your php.exe: </p>
+					<br>
+					<input type='text' name='path' size='40' accept='txt'><br>
+					<input type='submit' value='ok'> </form> <br />";
+
+		/*if (isset($_POST['path'])) 
+		{ 
+			$path_php = $_POST['path'];   // $message contenant maintenant le path de php.
+			print "kakakakakak" + $path_php;
+		}*/
+		$scriptDump = "php ../app/console assetic:dump";
+		$scriptUpdate = "php ../doctrine:schema:update --force";
+		}
 else if (!$error)
 {
 ?>
+
+
 <p>Please complete the following form</p>
 <form action="install_2.php" method="POST">
         <div class="symfony-form-column">
