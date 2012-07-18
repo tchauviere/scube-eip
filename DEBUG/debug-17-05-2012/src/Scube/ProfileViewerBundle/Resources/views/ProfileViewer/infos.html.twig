@@ -1,1 +1,6 @@
-Email : {{user_to_display.getEmail()}}
+{% if auth %}
+	Email : {{user_to_display.getEmail()}}
+{% else %}
+	<p class="error">You need permissions</p>
+{% endif %}
+
