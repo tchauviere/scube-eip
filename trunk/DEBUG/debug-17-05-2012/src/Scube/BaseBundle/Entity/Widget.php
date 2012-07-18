@@ -20,7 +20,7 @@ class Widget
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="Scube\BaseBundle\Entity\Application", inversedBy="widgets")
-	 * @ORM\JoinColumn(name="application", referencedColumnName="id")
+	 * @ORM\JoinColumn(name="application", referencedColumnName="id", onDelete="CASCADE", onUpdate="CASCADE")
 	 */
 	protected $application;
 	

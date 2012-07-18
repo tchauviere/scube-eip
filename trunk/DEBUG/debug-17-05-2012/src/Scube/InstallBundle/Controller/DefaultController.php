@@ -180,6 +180,8 @@ class DefaultController extends Controller
 		$em->persist($default_usr);
 		$em->flush();
 		
+		\Scube\BaseBundle\Controller\BaseController::createUserDirectory($this->get('kernel'), $default_usr);
+		
 		
         return $this->render('ScubeInstallBundle:Default:index.html.twig', array('name' => false));
     }

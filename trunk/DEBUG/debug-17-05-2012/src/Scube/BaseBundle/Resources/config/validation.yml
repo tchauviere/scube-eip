@@ -24,6 +24,11 @@ Scube\BaseBundle\Entity\Users:
 
 Scube\BaseBundle\Entity\UsersProfile:
     properties:
+        picture:
+            - File:
+                maxSize: 4M
+                mimeTypes: [image/png, image/jpeg, image/gif]
+                mimeTypesMessage: Pictures only
         status:
             - Choice:
                 choices:  [single, married]
