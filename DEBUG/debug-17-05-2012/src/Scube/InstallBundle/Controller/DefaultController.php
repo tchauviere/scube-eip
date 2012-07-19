@@ -12,6 +12,7 @@ use Scube\BaseBundle\Entity\Widget;
 use Scube\BaseBundle\Entity\InterfaceWidget;
 use Scube\BaseBundle\Entity\ConnectionsGroup;
 use Scube\BaseBundle\Entity\Calendar;
+use Scube\BaseBundle\Entity\Mailbox;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -129,6 +130,19 @@ class DefaultController extends Controller
 		$em->persist($default_app7);
 		$em->flush();
 		
+		$default_app8 = new Application();
+		$default_app8->setName("Mailbox");
+		$default_app8->setBundleName("MailboxBundle");
+		$default_app8->setAdminBundleName("");
+		$default_app8->setLink("ScubeMailboxBundle_homepage");
+		$default_app8->setAdminLink("");
+		$default_app8->setDescription("Send messages to your contacts");
+		$default_app8->setActivated(true);
+		$default_app8->setNecessary(true);
+		$em = $this->getDoctrine()->getEntityManager();
+		$em->persist($default_app8);
+		$em->flush();
+		
 		/* Default Settings */
 		$default_setting = new ScubeSetting();
 		$default_setting->setKey("allow_registration");
@@ -160,6 +174,7 @@ class DefaultController extends Controller
 		$default_grp->addApplication($default_app5);
 		$default_grp->addApplication($default_app6);
 		$default_grp->addApplication($default_app7);
+		$default_grp->addApplication($default_app8);
 		
 		$default_grp->addAdminApplication($default_app);
 		$default_grp->addAdminApplication($default_app2);
@@ -177,6 +192,7 @@ class DefaultController extends Controller
 		$default_grp2->addApplication($default_app5);
 		$default_grp2->addApplication($default_app6);
 		$default_grp2->addApplication($default_app7);
+		$default_grp2->addApplication($default_app8);
 		
 		$em = $this->getDoctrine()->getEntityManager();
 		$em->persist($default_grp2);
@@ -194,6 +210,7 @@ class DefaultController extends Controller
 		
 		$default_usr_profile = new UserProfile();
 		$default_usr_calendar = new Calendar();
+		$default_usr_mailbox = new Mailbox();
 		$default_usr_interface = new BaseInterface();
 			$default_usr_interface_widget = new InterfaceWidget();
 			$default_usr_interface_widget->setWidth(1);
@@ -206,6 +223,7 @@ class DefaultController extends Controller
 		$default_usr->setProfile($default_usr_profile);
 		$default_usr->setBaseInterface($default_usr_interface);
 		$default_usr->setCalendar($default_usr_calendar);
+		$default_usr->setMailbox($default_usr_mailbox);
 		$default_usr->setPermissionsGroup($default_grp);
 		
 		
@@ -214,6 +232,7 @@ class DefaultController extends Controller
 		$em->persist($default_usr_interface_widget);
 		$em->persist($default_usr_interface);
 		$em->persist($default_usr_calendar);
+		$em->persist($default_usr_mailbox);
 		$em->persist($default_usr);
 		$em->flush();
 		

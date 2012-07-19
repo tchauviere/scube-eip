@@ -1,5 +1,6 @@
 .Application {
 	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+	min-height:200px;
 	/*padding:20px;*/
 }
 

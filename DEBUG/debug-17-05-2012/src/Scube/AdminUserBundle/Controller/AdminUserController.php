@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Scube\BaseBundle\Entity\User;
 use Scube\BaseBundle\Entity\UserProfile;
 use Scube\BaseBundle\Entity\Calendar;
+use Scube\BaseBundle\Entity\Mailbox;
 use Scube\BaseBundle\Entity\BaseInterface;
 use Scube\BaseBundle\Entity\PermissionsGroup;
 
@@ -47,17 +48,19 @@ class AdminUserController extends Controller
 				$interface = new BaseInterface();
 				/* Set calendar object */
 				$calendar = new Calendar();
-				
+				/* Set mailbox object */
+				$mailbox = new Mailbox();
 				
 				$user->setProfile($profile);
 				$user->setBaseInterface($interface);
 				$user->setCalendar($calendar);
-				
+				$user->setMailbox($mailbox);
 				
 				$em = $this->getDoctrine()->getEntityManager();
 				$em->persist($profile);
 				$em->persist($interface);
 				$em->persist($calendar);
+				$em->persist($mailbox);
 				$em->persist($user);
 				$em->flush();
 				

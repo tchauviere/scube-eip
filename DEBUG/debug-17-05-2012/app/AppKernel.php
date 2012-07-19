@@ -30,8 +30,9 @@ class AppKernel extends Kernel
 			new Scube\MyAppsBundle\ScubeMyAppsBundle(),
 			new Widgets\ConnectionsWidgetBundle\WidgetsConnectionsWidgetBundle(),
 			new Scube\ProfileViewerBundle\ScubeProfileViewerBundle(),
+			new Scube\MailboxBundle\ScubeMailboxBundle(),
 			/*APP_DELIMITER*/
-            
+   
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

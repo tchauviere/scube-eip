@@ -1,3 +1,6 @@
+<?php
+set_time_limit(120);
+?>
 <!DOCTYPE html>
 <html>
     <head>

@@ -1,3 +1,7 @@
+ScubeMailboxBundle:
+    resource: "@ScubeMailboxBundle/Resources/config/routing.yml"
+    prefix:   /
+
 ScubeCalendarBundle:
     resource: "@ScubeCalendarBundle/Resources/config/routing.yml"
     prefix:   /

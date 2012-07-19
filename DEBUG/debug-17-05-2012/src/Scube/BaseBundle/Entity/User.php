@@ -84,6 +84,12 @@ class User
      */
     protected $calendar;
 	
+	/**
+     * @ORM\OneToOne(targetEntity="Scube\BaseBundle\Entity\Mailbox")
+     * @ORM\JoinColumn(name="mailbox", referencedColumnName="id")
+     */
+    protected $mailbox;
+	
     public function __construct()
     {
     }
@@ -336,5 +342,25 @@ class User
     public function getCalendar()
     {
         return $this->calendar;
+    }
+
+    /**
+     * Set mailbox
+     *
+     * @param Scube\BaseBundle\Entity\Mailbox $mailbox
+     */
+    public function setMailbox(\Scube\BaseBundle\Entity\Mailbox $mailbox)
+    {
+        $this->mailbox = $mailbox;
+    }
+
+    /**
+     * Get mailbox
+     *
+     * @return Scube\BaseBundle\Entity\Mailbox 
+     */
+    public function getMailbox()
+    {
+        return $this->mailbox;
     }
 }
