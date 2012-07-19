@@ -11,6 +11,7 @@ use Scube\BaseBundle\Entity\BaseInterface;
 use Scube\BaseBundle\Entity\Widget;
 use Scube\BaseBundle\Entity\InterfaceWidget;
 use Scube\BaseBundle\Entity\Calendar;
+use Scube\BaseBundle\Entity\Mailbox;
 
 class BaseController extends Controller
 {
@@ -116,6 +117,8 @@ class BaseController extends Controller
 				$interface = new BaseInterface();
 				/* Set calendar object */
 				$calendar = new Calendar();
+				/* Set mailbox object */
+				$mailbox = new Mailbox();
 				
 				/* Set group object from database */
 				$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:PermissionsGroup');
@@ -125,12 +128,13 @@ class BaseController extends Controller
 				$user->setBaseInterface($interface);
 				$user->setPermissionsGroup($default_group);
 				$user->setCalendar($calendar);
-				
+				$user->setMailbox($mailbox);
 				
 				$em = $this->getDoctrine()->getEntityManager();
 				$em->persist($profile);
 				$em->persist($interface);
 				$em->persist($calendar);
+				$em->persist($mailbox);
 				$em->persist($user);
 				$em->flush();
 				
