@@ -69,7 +69,8 @@ class ProfileViewerController extends Controller
 							   $em->persist($news);
 							   $user_to_display->addNews($news);
                                $em->flush();
-							                                  
+							    if (\Scube\BaseBundle\Controller\BaseController::isMobile())
+									return $this->redirect($this->generateUrl('_homepage'));
 							   return $this->redirect($this->generateUrl('ScubeProfileViewerBundle_homepage', array("id_user"=>$user_to_display->getId())));
                        }
                }
