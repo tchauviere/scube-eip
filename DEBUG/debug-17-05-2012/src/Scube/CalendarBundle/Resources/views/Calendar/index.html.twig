@@ -1,0 +1,224 @@
+{% extends 'ScubeBaseBundle:Base:base_application.html.twig' %}
+
+{% block more_javascripts %}
+{% javascripts
+    '@ScubeCalendarBundle/Resources/public/js/fullcalendar.js'	
+	'@ScubeCalendarBundle/Resources/public/js/fullcalendar.min.js' 
+	'@ScubeCalendarBundle/Resources/public/js/gcal.js'
+	'@ScubeCalendarBundle/Resources/public/js/jquery-ui-1.8.17.custom.min.js'
+%}
+
+<script type="text/javascript" src="{{ asset_url }}"></script>
+
+{% endjavascripts %}
+
+{% stylesheets '@ScubeCalendarBundle/Resources/public/css/*'%}
+<link rel="stylesheet" href="{{ asset_url }}" />
+{% endstylesheets %}
+<style>
+	
+	#calendar 
+	{
+		margin:0 20px;
+	}
+	
+	
+	
+	#fade 
+	{ 
+		display: none;
+		background: #000;
+		position: fixed; left: 0; top: 0;
+		width: 100%; height: 100%;
+		opacity: .80;
+		z-index: 9999;
+	}
+
+	.popup_block
+	{
+		width:200px;
+		height:200px;
+		margin-left:-100px;
+		margin-top:-100px;
+		display: none;
+		background: #fff;
+		padding: 20px;
+		font-size: 12px;
+		position: absolute;
+		top: 50%; left: 50%;
+		z-index: 99999;
+		-webkit-box-shadow: 0px 0px 10px #000;
+		-moz-box-shadow: 0px 0px 10px #000;
+		box-shadow: 0px 0px 10px #000;
+		-webkit-border-radius: 10px;
+		-moz-border-radius: 10px;
+		border-radius: 10px;
+	}
+
+	img.btn_close 
+	{
+		float: right;
+		margin: -55px -55px 0 0;
+	}
+	
+	/*--Gérer la position fixed pour IE6--*/
+	*html #fade 
+	{
+		position: absolute;
+	}
+	
+	*html .popup_block 
+	{
+		position: absolute;
+	}
+	
+	#myForm label {
+		font-size:14px;
+		font-weight:bold;
+		text-align:center;
+		display:block;
+		margin:0 auto;
+		width:80%;
+	}
+	#myForm input {
+		display:block;
+		margin:5px auto;
+		width:80%;
+	}
+	#myForm input[type="button"], #myForm input[type="submit"] {
+		background-color: #92B417;
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		color: white;
+		font-weight: bold;
+		font-size: 16px;
+		border: none;
+		box-shadow: 0 1px 3px #999;
+		-moz-box-shadow: 0 1px 3px #999;
+		-webkit-box-shadow: 0 1px 3px #999;
+	}
+	#myForm input[type="button"] {
+		background-color: #94211A;
+	}
+	
+</style>
+
+
+
+<script>
+$(document).ready(function() {
+	
+		var date = new Date();
+		var d = date.getDate();
+		var m = date.getMonth();
+		var y = date.getFullYear();
+		var arrayEvents = new Array();
+		var arrayEdit = new Array();
+		
+		
+		
+		var calendar = $('#calendar').fullCalendar(
+		{
+			header: 
+			{
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,agendaWeek,agendaDay'
+			},
+			selectable: true,
+			selectHelper: true,
+			
+			
+		
+			select: function(start, end, allDay) 
+			{
+				/*$('#date').html("<p> Start on :" + start+ "</p> <p> End on :" + end + "</p>");*/
+				
+				$('#addEvent').fadeIn().prepend();
+
+				$('#myForm').submit(function(event) 
+					{
+						//
+						var title = $('#champ').val();
+						
+						if (title)
+						{
+							calendar.fullCalendar('renderEvent',
+							{
+							title: title,
+							start: start,
+							end: end,
+							allDay: allDay
+							}, false);
+				
+							arrayEvents.push(title, start.toString(), end.toString(), allDay);
+							$.post("{{path('CalendarBundle_addEvent')}}",{'array_events': arrayEvents});
+							arrayEvents = [];
+						}
+
+						//$('#champ').val("");
+							
+						$('#fade , .popup_block').fadeOut(function() 
+						{
+						$('#fade, a.close').remove(); 																
+						});
+						
+						event.stopPropagation();
+						/*BUG LA*/
+						//event.preventDefault();
+						//return false;
+					});
+					
+				//calendar.fullCalendar('unselect');				
+				
+				$('.CloseBlock').click(function() 
+				{
+					$('#fade , .popup_block').fadeOut(function() 
+					{
+						$('#fade, a.close').remove();
+					});
+				});
+			},
+			editable: false,
+			
+			events: [
+			{% for ev in user.getCalendar().getCalendarEvents() %}
+					{
+						title: "{{ ev.title}}",
+						start: new Date("{{ ev.start }}"),
+						end: new Date("{{ ev.end }}"),
+					},
+			{% endfor %}
+					]
+		});
+		
+	});
+</script>
+
+{% endblock %}
+
+
+
+{% block body %}
+{{ parent() }}
+
+<div class="Application">
+
+	<div id="addEvent" class="popup_block">
+		<p id="date"></p>
+		<form id="myForm"> 
+			<label>Event title</label> <input type="text" id="champ" /> 
+			<input type="submit" value="Submit Event"/> 
+			<input type="button" value="Cancel" class="CloseBlock"/> 
+		</form>
+	</div>
+	
+	<div id='calendar'>
+	</div>
+</div>
+
+
+
+
+
+{% endblock %}

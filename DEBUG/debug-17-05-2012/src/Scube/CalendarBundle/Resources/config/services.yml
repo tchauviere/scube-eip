@@ -1,0 +1,7 @@
+parameters:
+#    scube_calendar.example.class: Scube\CalendarBundle\Example
+
+services:
+#    scube_calendar.example:
+#        class: %scube_calendar.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
