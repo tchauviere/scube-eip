@@ -67,6 +67,12 @@ class User
     protected $connectionsGroups;
 	
 	/**
+     * @ORM\ManyToMany(targetEntity="Scube\BaseBundle\Entity\News")
+	 * @ORM\JoinTable(name="newsfeed")
+     */ 
+    protected $newsfeed;
+	
+	/**
      * @ORM\OneToOne(targetEntity="Scube\BaseBundle\Entity\UserProfile")
      * @ORM\JoinColumn(name="user_profile", referencedColumnName="id")
      */
@@ -284,5 +290,25 @@ class User
     public function getConnectionsGroups()
     {
         return $this->connectionsGroups;
+    }
+
+    /**
+     * Add newsfeed
+     *
+     * @param Scube\BaseBundle\Entity\News $newsfeed
+     */
+    public function addNews(\Scube\BaseBundle\Entity\News $newsfeed)
+    {
+        $this->newsfeed[] = $newsfeed;
+    }
+
+    /**
+     * Get newsfeed
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getNewsfeed()
+    {
+        return $this->newsfeed;
     }
 }
