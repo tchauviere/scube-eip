@@ -10,6 +10,7 @@ use Scube\BaseBundle\Entity\UserProfile;
 use Scube\BaseBundle\Entity\BaseInterface;
 use Scube\BaseBundle\Entity\Widget;
 use Scube\BaseBundle\Entity\InterfaceWidget;
+use Scube\BaseBundle\Entity\Calendar;
 
 class BaseController extends Controller
 {
@@ -113,6 +114,9 @@ class BaseController extends Controller
 				$profile = new UserProfile();
 				/* Set interface object */
 				$interface = new BaseInterface();
+				/* Set calendar object */
+				$calendar = new Calendar();
+				
 				/* Set group object from database */
 				$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:PermissionsGroup');
 				$default_group = $repository->findOneBy(array('name' => "default"));
@@ -120,11 +124,13 @@ class BaseController extends Controller
 				$user->setProfile($profile);
 				$user->setBaseInterface($interface);
 				$user->setPermissionsGroup($default_group);
+				$user->setCalendar($calendar);
 				
 				
 				$em = $this->getDoctrine()->getEntityManager();
 				$em->persist($profile);
 				$em->persist($interface);
+				$em->persist($calendar);
 				$em->persist($user);
 				$em->flush();
 				

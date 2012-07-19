@@ -25,12 +25,12 @@ class AppKernel extends Kernel
 			new Scube\AdminSettingsBundle\ScubeAdminSettingsBundle(),
 			new Scube\AdminLogsBundle\ScubeAdminLogsBundle(),
 			new Scube\ConnectionsBundle\ScubeConnectionsBundle(),
-			new Scube\AccountBundle\ScubeAccountBundle(),			
+			new Scube\AccountBundle\ScubeAccountBundle(),
+			new Scube\CalendarBundle\ScubeCalendarBundle(),
 			new Scube\MyAppsBundle\ScubeMyAppsBundle(),
 			new Widgets\ConnectionsWidgetBundle\WidgetsConnectionsWidgetBundle(),
 			new Scube\ProfileViewerBundle\ScubeProfileViewerBundle(),
 			/*APP_DELIMITER*/
-
             
         );
 

@@ -78,6 +78,12 @@ class User
      */
     protected $profile;
 	
+	/**
+     * @ORM\OneToOne(targetEntity="Scube\BaseBundle\Entity\Calendar")
+     * @ORM\JoinColumn(name="calendar", referencedColumnName="id")
+     */
+    protected $calendar;
+	
     public function __construct()
     {
     }
@@ -310,5 +316,25 @@ class User
     public function getNewsfeed()
     {
         return $this->newsfeed;
+    }
+
+    /**
+     * Set calendar
+     *
+     * @param Scube\BaseBundle\Entity\Calendar $calendar
+     */
+    public function setCalendar(\Scube\BaseBundle\Entity\Calendar $calendar)
+    {
+        $this->calendar = $calendar;
+    }
+
+    /**
+     * Get calendar
+     *
+     * @return Scube\BaseBundle\Entity\Calendar 
+     */
+    public function getCalendar()
+    {
+        return $this->calendar;
     }
 }

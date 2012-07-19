@@ -1,3 +1,7 @@
+ScubeCalendarBundle:
+    resource: "@ScubeCalendarBundle/Resources/config/routing.yml"
+    prefix:   /
+
 ScubeProfileViewerBundle:
     resource: "@ScubeProfileViewerBundle/Resources/config/routing.yml"
     prefix:   /
@@ -47,7 +51,6 @@ ScubeAdminLogsBundle:
     prefix:   /
 
 #APP_DELIMITER
-
 
 # Internal routing configuration to handle ESI
 #_internal:
