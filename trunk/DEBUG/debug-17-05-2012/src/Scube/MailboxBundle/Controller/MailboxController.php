@@ -55,6 +55,7 @@ class MailboxController extends Controller
 				   
 						/* CONVERSATION OF INTERLOCUTOR */
 						$conversations_inter = $user_to_load->getMailbox()->getConversations();
+						$conversation_inter = false;
 						foreach ($conversations_inter as $conv)
 						{
 							if ($conv->getInterlocutor() == $user)
