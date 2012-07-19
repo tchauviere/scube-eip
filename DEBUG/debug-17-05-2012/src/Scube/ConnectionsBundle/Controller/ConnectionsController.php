@@ -19,6 +19,10 @@ class ConnectionsController extends Controller
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
 		$user = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
 		
+		$em1 = $this->getDoctrine()->getEntityManager();
+		$query = $em1->createQuery("SELECT u FROM ScubeBaseBundle:User u");
+		$users_list = $query->getResult();
+		
 		$grp = new ConnectionsGroup();
 		
 		$form = $this->createFormBuilder($grp)
@@ -38,11 +42,13 @@ class ConnectionsController extends Controller
 							   $em->persist($grp);
 							   $user->addConnectionsGroup($grp);
                                $em->flush();
-							                                  
+							    if (\Scube\BaseBundle\Controller\BaseController::isMobile())
+									 return $this->render('ScubeBaseBundle:Base_Mobile:contacts.html.twig', array('user'=>$user, 'form' => $form->createView(), "success"=>true, 'users_list'=>$users_list));                             
                                return $this->render('ScubeConnectionsBundle:Connections:index.html.twig', array('user'=>$user, 'form' => $form->createView(), "success"=>true));
                        }
                }
-         
+         if (\Scube\BaseBundle\Controller\BaseController::isMobile())
+			return $this->render('ScubeBaseBundle:Base_Mobile:contacts.html.twig', array('user'=>$user, 'form' => $form->createView(), "success"=>false, 'users_list'=>$users_list));
 		 return $this->render('ScubeConnectionsBundle:Connections:index.html.twig', array('user'=>$user, 'form' => $form->createView(), "success"=>false));
     }
 	public function editGroupAction(Request $request, $id=0)
