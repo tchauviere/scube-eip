@@ -33,7 +33,7 @@ class BaseController extends Controller
 		if ($session->get('user'))
 		{
 			$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
-			$user = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
+			$user = $repository->findOneBy(array('id' => $session->get('user')->getId(), 'email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
 			
 			$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:ScubeSetting');
 			$dashboard_width = $repository->findOneBy(array('key' => "dashboard_cell_width"));

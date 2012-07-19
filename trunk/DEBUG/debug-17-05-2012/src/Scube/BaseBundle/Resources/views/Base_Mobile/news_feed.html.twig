@@ -1,6 +1,34 @@
 
 
-<div data-role="content">
-LOOOOOOOOOOL
-</div>
+
+{% if auth %}
+	<div data-role="collapsible" data-theme="b">
+		<h3>Express Yourself !</h3>
+		<form class="top_form" action="{{ path("ScubeProfileViewerBundle_newsfeed", {'id_user':user_to_display.getId()} )}}" method="post" {{ form_enctype(form) }}>
+			{{ form_widget(form._token) }}
+			{{ form_widget(form.content_text) }}
+			<input data-theme="a" type="submit" value="Post it !" />
+		</form>			
+	</div>
+	<ul data-role="listview" data-theme="c" style="margin-top: 20px;" data-split-icon="delete" data-split-theme="d">
+	{% for news in user_to_display.getNewsfeed()|reverse %}
+		<li>
+			{% if news.author.getProfile().getPicture() %}
+				<img style="width:20%;" src="{{ news.author.getProfile().getPicture() }}" alt="Profile Picture"/>
+			{% else %}
+				{% image '@ScubeBaseBundle/Resources/public/images/user.png' %}
+					<img style="width:20%;" src="{{ asset_url }}" alt="Profile Picture"/>
+				{% endimage %}
+			{% endif %}	
+			<h2><a href="{{ path("ScubeProfileViewerBundle_homepage", {'id_user':news.author.getId()} )}}" data-transition="slide">{{ news.author.getFirstname() }} {{ news.author.getSurname() }}</a></h2>
+			<p style="font-size: medium; white-space:normal;">{{ news.getContentText() }}</p>
+			<p style="margin-top: 5px;">Posted on : {{ news.getPostDate() | date() }}</p>
+
+		</li>
+	{% endfor %}	
+	</ul>
+{% else %}
+	<p class="error">You need permissions</p>
+{% endif %}
+
 
