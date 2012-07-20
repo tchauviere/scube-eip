@@ -66,7 +66,8 @@ class AdminUserController extends Controller
 				
 				\Scube\BaseBundle\Controller\BaseController::createUserDirectory($this->get('kernel'), $user);
 				
-				return $this->render('ScubeAdminUserBundle:AdminUser:add_user.html.twig', array('user'=>$user, 'form' => $form->createView(), "success"=>true));
+				/*return $this->render('ScubeAdminUserBundle:AdminUser:add_user.html.twig', array('user'=>$user, 'form' => $form->createView(), "success"=>true));*/
+				return $this->redirect($this->generateUrl('AdminUserBundle_homepage'));
 			}
 		}
 			
@@ -195,7 +196,8 @@ class AdminUserController extends Controller
 				$em->persist($grp);
 				$em->flush();
 			}
-			return $this->render('ScubeAdminUserBundle:AdminUser:add_group.html.twig', array('form' => $form->createView(), "success"=>true, "error"=>$error, "error_text"=>$error_text));
+			/*return $this->render('ScubeAdminUserBundle:AdminUser:add_group.html.twig', array('form' => $form->createView(), "success"=>true, "error"=>$error, "error_text"=>$error_text));*/
+			return $this->redirect($this->generateUrl('AdminUserBundle_groups'));
 		}
 		
 		
@@ -279,7 +281,6 @@ class AdminUserController extends Controller
 					$grp->addAdminApplication($app);
 				}
 				$em = $this->getDoctrine()->getEntityManager();
-				//$em->persist($grp);
 				$em->flush();
 			}
 			return $this->render('ScubeAdminUserBundle:AdminUser:edit_group.html.twig', array('grp'=>$grp, 'form' => $form->createView(), "success"=>true, "error"=>$error, "error_text"=>$error_text));
@@ -294,9 +295,22 @@ class AdminUserController extends Controller
     {
 		$em = $this->getDoctrine()->getEntityManager();
 		$grp = $em->getRepository('ScubeBaseBundle:PermissionsGroup')->find($id);
+		$grp_default = $em->getRepository('ScubeBaseBundle:PermissionsGroup')->findOneBy(array("name"=>"default"));
 	
 		if (!$grp) {
 			throw $this->createNotFoundException('No group found for id '.$id);
+		}
+		if (!$grp_default) {
+			throw $this->createNotFoundException('No group <default> found');
+		}
+		
+		$query = $em->createQuery("SELECT u FROM ScubeBaseBundle:User u");
+		$usr_list = $query->getResult();
+		
+		foreach ($usr_list as $usr)
+		{
+			if ($usr->getPermissionsGroup() == $grp)
+				$usr->setPermissionsGroup($grp_default);
 		}
 		
 		$em->remove($grp);
