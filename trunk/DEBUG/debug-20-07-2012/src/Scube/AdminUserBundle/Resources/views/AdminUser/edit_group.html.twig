@@ -1,0 +1,32 @@
+{% extends 'ScubeBaseBundle:Base:base_application.html.twig' %}
+
+
+{% block body %}
+{{ parent() }}
+
+<div class="Application">
+
+<table class="table_content">
+<tr>
+	<td class="sidebar_left">
+		<ul class="sidebar_navigation">
+			<li><a href="{{ path("AdminUserBundle_homepage")}}">Manage users</a></li>
+			<li><a href="{{ path("AdminUserBundle_groups")}}">Manage groups</a></li>
+		</ul>
+	</td>
+	<td class="sidebar_main">
+		<h1>Edit group {{grp.getName()}}</h1>
+		
+		{% if success %}
+			<p class="form_success">The group has been successfully updated.</p>
+		{% endif %}
+		<form action="{{ path("AdminUserBundle_group_edit", { 'id': grp.getId()})}}" method="post" {{ form_enctype(form) }}>
+			{{ form_widget(form) }}
+		
+			<input type="submit" value="Save" />
+		</form>
+	</td>
+</tr>
+</div>
+
+{% endblock %}

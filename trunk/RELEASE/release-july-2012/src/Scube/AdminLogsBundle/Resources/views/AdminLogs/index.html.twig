@@ -1,0 +1,44 @@
+{% extends 'ScubeBaseBundle:Base:base_application.html.twig' %}
+
+
+{% block body %}
+{{ parent() }}
+
+<div class="Application">
+
+<table class="table_content">
+<tr>
+	<td class="sidebar_left">
+		<ul class="sidebar_navigation">
+			<li><a href="#">Dev Logs</a></li>
+			<li><a href="#">Prod Logs</a></li>
+		</ul>
+	</td>
+	<td class="sidebar_main">
+		<h1>Logs Viewer</h1>
+		<table class="table_full_size">
+		<tr>
+			<td class="table_text">
+				{% if devlogs is defined %}
+					{% for entry in devlogs %}
+						{% if 'CRITICAL' in entry %}
+							<ul style='padding-bottom: 10px; list-style-type: none; border-bottom: 1px solid gray;'>
+								<li class='critical' style='color: red;  font-weight: bolder;'>{{ entry }}</li>
+							</ul>
+						{% else %}
+							<ul style='padding-bottom: 10px; list-style-type: none; border-bottom: 1px solid gray;'>
+								<li class='normal' style='color: green;'>{{ entry }}</li>
+							</ul>
+						{% endif %}
+					{% endfor %}
+				{% else %}
+					A problem occured while getting Log file. Please try again.
+				{% endif %}
+			</td>
+		</tr>
+		</table>
+	</td>
+</tr>
+</div>
+
+{% endblock %}

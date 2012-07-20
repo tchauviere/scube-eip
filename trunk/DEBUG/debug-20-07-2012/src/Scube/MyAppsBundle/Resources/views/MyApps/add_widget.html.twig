@@ -1,0 +1,79 @@
+{% extends 'ScubeBaseBundle:Base:base_application.html.twig' %}
+
+
+{% block body %}
+{{ parent() }}
+
+<div class="Application">
+
+<table class="table_content">
+<tr>
+	<td class="sidebar_left">
+		<ul class="sidebar_navigation">
+			<li><a href="{{ path("ScubeMyAppsBundle_homepage")}}">My Apps</a></li>
+			<li><a href="{{ path("ScubeMyAppsBundle_my_widgets")}}">My Widgets</a></li>
+			<li><a href="{{ path("ScubeMyAppsBundle_add_widget")}}">Clip new Widgets</a></li>
+		</ul>
+	</td>
+	<td class="sidebar_main">
+		<h1>Clip a new widget</h1>
+			
+			{% if success %}
+			
+			<p class="success">Please reload the main grid to perform. <a target="_parent" href="{{ path("_homepage") }}">Click here !</a></p>
+			
+			{% else %}
+			
+			<h3>Select a gray cell for position</h3>
+			<table id="grid_selector" style="margin:0 auto;">
+			
+				{% set pos_y = 0 %}
+				{% for y in array_coord %}
+					<tr>
+					{% set pos_x = 0 %}
+						{% for x in y %}
+						<td 
+							{% if x == 1 %}
+								class="miniGridSelectorRed"
+							{% else %}
+								class="miniGridSelectorGray"
+								onclick="changeSelectedCell(this, {{ pos_x }}, {{ pos_y }});"
+							{% endif %}
+							>
+						</td>
+						{% set pos_x = pos_x + 1 %}
+						{% endfor %}
+					</tr>
+					{% set pos_y = pos_y + 1 %}
+				{% endfor %}
+			</table>
+			
+			<h3>Select the widget you want to clip</h3>
+			<form action="{{ path('ScubeMyAppsBundle_add_widget') }}" method="post" {{ form_enctype(form) }}>
+				{{ form_widget(form) }}
+			
+				<input type="submit" value="Clip the widget now !" />
+			</form>
+			
+			{% endif %}
+		
+		
+
+	</td>
+</tr>
+</div>
+
+<script>
+
+function	changeSelectedCell(element, x, y)
+{
+	$("#form_pos_x").val(x);
+	$("#form_pos_y").val(y);
+	
+	$("#grid_selector .miniGridSelectorHover").removeClass("miniGridSelectorHover");
+	$(element).addClass("miniGridSelectorHover");
+}
+
+</script>
+
+{% endblock %}

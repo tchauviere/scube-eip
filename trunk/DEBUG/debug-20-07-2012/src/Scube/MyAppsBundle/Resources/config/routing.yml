@@ -1,0 +1,21 @@
+ScubeMyAppsBundle_homepage:
+    pattern:  /my_apps
+    defaults: { _controller: ScubeMyAppsBundle:MyApps:myApps }
+ScubeMyAppsBundle_my_widgets:
+    pattern:  /my_widgets
+    defaults: { _controller: ScubeMyAppsBundle:MyApps:myWidgets }
+ScubeMyAppsBundle_add_widget:
+    pattern:  /add_widget
+    defaults: { _controller: ScubeMyAppsBundle:MyApps:addWidget }
+ScubeMyAppsBundle_save_widget_position:
+    pattern:  /save_widget_position/{widget_id}/{pos_x}/{pos_y}
+    defaults: { _controller: ScubeMyAppsBundle:MyApps:saveWidgetPosition }
+ScubeMyAppsBundle_save_widget_position_noparam:
+    pattern:  /save_widget_position
+    defaults: { _controller: ScubeMyAppsBundle:MyApps:saveWidgetPosition }
+ScubeMyAppsBundle_delete_widget:
+    pattern:  /delete_widget/{id}
+    defaults: { _controller: ScubeMyAppsBundle:MyApps:deleteWidget }
+ScubeMyAppsBundle_delete_widget_noparam:
+    pattern:  /delete_widget
+    defaults: { _controller: ScubeMyAppsBundle:MyApps:deleteWidget }

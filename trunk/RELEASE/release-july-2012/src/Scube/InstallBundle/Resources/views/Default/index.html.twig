@@ -1,0 +1,20 @@
+{% extends 'ScubeBaseBundle:Base:base.html.twig' %}
+
+{% block title %}Installation - end{% endblock %}
+
+{% block body %}
+{{ parent() }}
+
+<h1>Your administrator account</h1>
+
+<div class="page_frame">
+<p style="text-align:center;">
+Your <strong>administrator</strong> account has been created.<br />
+<br />
+<strong>Email:</strong> scube@gmail.com <br />
+<strong>Password:</strong> scubeeip<br /><br />
+You can now <a href="{{path('_homepage')}}">Login</a> and begin your experience.
+</p>
+</div>
+
+{% endblock %}

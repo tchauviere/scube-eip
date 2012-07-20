@@ -1,0 +1,37 @@
+{% extends 'ScubeBaseBundle:Base:base_application.html.twig' %}
+
+
+{% block body %}
+{{ parent() }}
+
+<div class="Application">
+
+<table class="table_content">
+<tr>
+	<td class="sidebar_left">
+		<ul class="sidebar_navigation">
+			<li><a href="{{ path("AdminSettingsBundle_homepage")}}">Manage settings</a></li>
+		</ul>
+	</td>
+	<td class="sidebar_main">
+		<h1>Settings Manager</h1>
+		<table class="table_full_size">
+			{% for setting in settings_list %}
+			<tr>
+				<td>
+					<div class="table_title">{{setting.getKey()}}</div>
+				</td>
+				<td>
+					{{setting.getValue()}}
+				</td>
+				<td>
+					<a href="{{ path("AdminSettingsBundle_edit", { 'id': setting.getId()})}}">Edit</a>
+				</td>
+			</tr>
+			{% endfor %}
+		</table>
+	</td>
+</tr>
+</div>
+
+{% endblock %}
