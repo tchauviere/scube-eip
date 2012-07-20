@@ -1,0 +1,336 @@
+{% extends 'ScubeBaseBundle:Base:base_application.html.twig' %}
+
+
+{% block body %}
+{{ parent() }}
+
+<div class="Application">
+
+<table class="table_content">
+<tr>
+	<td class="sidebar_left">
+		<div id="search_input" style="text-align:center;padding-top:5px;">
+			
+			<input type="text" name="search_connection" id="search_connection" /> 
+		
+			{% image '@ScubeConnectionsBundle/Resources/public/images/search.png' %}
+				<img id="loaded" style="height:25px;" src="{{ asset_url }}" alt="Search" />
+			{% endimage %}
+			
+			{% image '@ScubeConnectionsBundle/Resources/public/images/ajax-loader.gif' %}
+				<img id="loading" style="height:25px;" src="{{ asset_url }}" alt="Search" />
+			{% endimage %}
+		</div>
+		<div id="search_group_filter">
+			 
+		
+			<a style="float:right" href="#" onclick="delete_filter();" >
+			{% image '@ScubeBaseBundle/Resources/public/images/remove.png' %}
+			<img width="16" src="{{ asset_url }}" alt="Remove"/></a>
+			{% endimage %}
+			</a>
+			
+			<div id="container_search_group_filter_name">
+			
+				<a style="float:left;" href="#" onclick="edit_group();" >
+				{% image '@ScubeBaseBundle/Resources/public/images/edit.png' %}
+				<img width="16" src="{{ asset_url }}" alt="Edit"/></a>
+				{% endimage %}
+				</a>
+				
+				<span id="search_group_filter_name"></span> 
+			
+			</div>
+			
+			<div id="form_edit_group"></div>
+			
+		</div>
+		
+		
+		
+		<ul id="search_list">
+			
+		</ul>
+	</td>
+	<td class="sidebar_main">
+		
+		
+		<div id="group_grid">
+			<h1>My connections</h1>
+			
+			{% if success %}
+				<p class="form_success">The group has been successfully added.</p>
+			{% endif %}
+			<form class="top_form" action="{{ path("ConnectionsBundle_homepage")}}" method="post" {{ form_enctype(form) }}>
+				
+				{{ form_widget(form._token) }}
+				{{ form_widget(form.name) }}
+			
+				<input type="submit" value="Create group" />
+			</form>
+			
+			<table id="connections_grid" class="table_full_size" style="border-spacing:5px;">
+			<tr>
+				{% for group in user.getConnectionsGroups() %}
+				
+					<td onclick="select_group({{group.getId()}});" class="cell_group" id="group_{{group.getId()}}">
+						<input type="hidden" value="{{group.getId()}}"/>
+						<div class="cell_group_remove">
+							<a href="{{path("ConnectionsBundle_remove_group", { 'id': group.getId()})}}" >
+							{% image '@ScubeBaseBundle/Resources/public/images/remove.png' %}
+							<img width="16" src="{{ asset_url }}" alt="Remove"/></a>
+							{% endimage %}
+							</a>
+						</div>
+						<div class="cell_group_name"><span id="cell_group_name_{{group.getId()}}">{{group.getName()}}</span> (<span id="cell_group_length_{{group.getId()}}">{{group.getUsers()|length}}</span>)</div>
+					</td>
+				
+					{% if loop.index % 4 == 0 %}
+						</tr><tr>
+					{% endif %}
+				
+				{% endfor %}
+			</tr>
+			</table>
+		
+		</div>
+		
+	</td>
+</tr>
+</div>
+
+<script>
+
+var group_selected = false;
+
+	$(document).ready(function() 
+	{
+		load_users_list(false);
+		$("#search_connection").keyup(function() 
+		{
+			load_users_list(group_selected);
+		});
+		
+		$(".cell_group").droppable({
+			tolerance:"pointer",
+			accept:"#search_list li",
+			over:function(event, ui) {$(this).addClass("cell_group_over");},
+			out:function(event, ui) {$(this).removeClass("cell_group_over");},
+			drop:function(event, ui) {
+					$(this).removeClass("cell_group_over");
+					drag_id = ui.draggable.attr('id');
+					drop_id = $(this).attr('id');
+					
+					$.ajax({
+					  url: "{{ path("ConnectionsBundle_add_user_in_group_noparam") }}/"+$("#"+drag_id+" input").val()+"/"+$("#"+drop_id+" input").val(),
+					  success: function(data) {	
+					  	group_id = $("#"+drop_id+" input").val();
+					  	$("#cell_group_length_"+group_id).html(parseInt($("#cell_group_length_"+group_id).html()) + 1);
+						load_users_list(group_selected);
+					  	/*location.reload(); */
+						}
+					});
+				}
+			});
+	});
+	
+function	load_users_list(group_id)
+{
+	var url = "{{ path("ConnectionsBundle_ajax_users_list_noparam") }}";
+	
+	if (group_id)
+		url = url + "/" + group_id;
+	else
+		url = url + "/0";
+	
+	if ($("#search_connection").val())
+		url = url + "/" + $("#search_connection").val();
+	else
+		url = url + "/0";
+	
+
+	$.ajax({
+			  url: url,
+			  beforeSend: function() {
+			  	$("#loaded").hide();
+				$("#loading").show();
+			  },
+			  success: function(data) {	
+			  	$("#search_list").html(data);
+				$("#search_list li").draggable({
+					revert:'invalid', 
+					helper:function( event ) {
+								return $( "<div>"+ $("#"+$(this).attr('id')+" span").html() +"</div>" );
+							}
+					});
+				$("#loaded").show();
+				$("#loading").hide();
+			  }
+			});
+}
+
+function	select_group(group_id)
+{
+	group_selected = group_id;
+	$("#connections_grid td").removeClass("cell_group_selected");
+	$("#group_"+group_id).addClass("cell_group_selected");
+	load_users_list(group_id);
+	$("#search_group_filter_name").html($("#cell_group_name_"+group_id).html());
+	$("#search_group_filter").show();
+	
+	$.ajax({
+			  url: "{{ path("ConnectionsBundle_edit_group_noparam") }}/" + group_id,
+			  success: function(data) {	
+			  	$("#form_edit_group").html(data);
+			  }
+			});
+}
+
+function	edit_group()
+{
+	$("#container_search_group_filter_name").hide();
+	$('#form_edit_group').show();
+}
+
+function	delete_filter()
+{
+	group_selected = false;
+	$("#connections_grid td").removeClass("cell_group_selected");
+	$("#container_search_group_filter_name").show();
+	$("#search_group_filter").hide();
+	$("#form_edit_group").hide();
+	
+	load_users_list();
+}	
+
+function	remove_connection_from_group(user_id, group_id)
+{
+	$.ajax({
+	  url: "{{ path("ConnectionsBundle_remove_user_from_group_noparam") }}/"+ user_id +"/"+ group_id,
+	  success: function(data) {	
+	  	$("#cell_group_length_"+group_id).html($("#search_list li").length - 1); 
+	  	load_users_list(group_id); 
+		}
+	});
+}
+
+</script>
+
+<style>
+	.top_form {
+		text-align:center;
+		margin-bottom:20px;
+	}
+	.top_form input {
+		display:inline;
+		margin:0;
+		width:30%;
+		border-radius:5px;
+	}
+	
+	#search_input img {
+		vertical-align:middle;
+	}
+	
+	.cell_group {
+		border-spacing:5px;
+		width:25%;
+		background-color:#CCC;
+		border-radius:5px;
+		box-shadow: 0 0 5px #555;
+		margin:5px;
+		cursor:pointer;
+	}
+	.cell_group_selected{
+		background-color:#999;
+	}
+	.cell_group_over {
+		background-color:#92B417;
+	}
+	.cell_group_name {
+		text-align:center;
+		font-size:14px;
+		text-decoration:none;
+		font-weight:bold;
+		margin:5px;
+	}
+	.cell_group_remove {
+		float:right;
+	}
+	
+	#search_connection {
+		border-radius:5px;
+		margin:0px;
+		width:70%;
+		display:inline;
+	}
+	#search_list {
+		padding-left:5px;
+	}
+	#search_list li {
+		list-style-type:none;
+		border-bottom:1px solid white;
+		padding:0;
+		cursor:pointer;
+	}
+	
+	#search_group_filter {
+		display:none;
+		text-align:center;
+		padding:5px;
+		vertical-align:middle;
+		font-size:16px;
+		font-weight:bold;
+		background-color:white;
+		border-radius:5px;
+		box-shadow: 0 0 5px #555;
+		margin:10px;
+	}
+	#search_group_filter img {
+		vertical-align:middle;
+	}
+	
+	#loading {
+		display:none;
+	}
+	
+	#form_edit_group {
+		display:none;
+	}
+	#form_edit_group_link {
+		display:none;
+	}
+	
+	.top_form_left input[type="text"] {
+		float:left;
+		width:80%;
+		display:block;
+		font-weight:bold;
+		border:none;
+		text-align:center;
+		font-size:16px;
+		font-weight:bold;
+		margin-left:16px;
+	}
+	.top_form_left input[type="checkbox"] {
+		float:right;
+		width:15%;
+		height:16px;
+		display:block;
+		margin:0px;
+	}
+	.top_form_left label {
+		height:16px;
+		font-size:10px;
+		float:left;
+		width:80%;
+		display:block;
+		text-align:left;
+		font-weight:normal;
+	}
+	
+</style>
+
+
+
+{% endblock %}

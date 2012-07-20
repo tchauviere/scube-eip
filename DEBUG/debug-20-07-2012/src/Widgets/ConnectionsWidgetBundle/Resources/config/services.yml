@@ -1,0 +1,7 @@
+parameters:
+#    widgets_connections_widget.example.class: Widgets\ConnectionsWidgetBundle\Example
+
+services:
+#    widgets_connections_widget.example:
+#        class: %widgets_connections_widget.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

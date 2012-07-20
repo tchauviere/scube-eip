@@ -1,0 +1,33 @@
+{% if list is empty %}
+There is no Videos
+<br />
+{% else %}
+{% for vid in list %}
+    		<div style="display:inline-block;">
+	<script type="text/javascript" src="http://www.supportduweb.com/page/js/flashobject.js"></script>
+    <div id="lecteur_21578" style="display:inline-block;">
+		<a href="http://www.macromedia.com/go/getflashplayer">Vous devez installer le Plugin FlashPlayer</a> - <a href="http://www.supportduweb.com/">Support du Web</a> - <a href="http://www.supportduweb.com/flv-player-lecteur-videos-flash-flv-mp4-mov-h264-gratuit-mettre-des-videos-sur-son-site.html">Lecteur videos flv flash</a>
+    </div>
+    <script type="text/javascript">
+    //<!--
+		var flashvars_21578 = {};
+		var params_21578 = {
+				quality: "high",
+				bgcolor: "#000000",
+				allowScriptAccess: "always",
+				allowFullScreen: "true",
+				wmode: "transparent",				flashvars: "fichier=http://localhost/{{ vid }}"
+			};
+		var attributes_21578 = {};
+        flashObject("http://flash.supportduweb.com/lecteur_flv/v1_27.swf", "lecteur_21578", "720", "405", "8", false, flashvars_21578, params_21578, attributes_21578);
+    //-->
+    </script>
+</div>
+{% endfor %}
+<br />
+{% endif %}
+{% if list is empty %}
+<a href="{{ path('ScubeManageFileBundle_upload') }}"> <input type="button" value="Upload a video"> </a>
+{% else %}
+<a href="{{ path('ScubeManageFileBundle_upload') }}"> <input type="button" value="Upload an other video"> </a>
+{% endif %}

@@ -1,0 +1,54 @@
+{% if auth %}
+	<div class="newsfeed_inputbox">
+		{% if success %}
+			<p class="form_success">The news has been successfully posted.</p>
+		{% endif %}
+		<form class="top_form" action="{{ path("ScubeProfileViewerBundle_newsfeed", {'id_user':user_to_display.getId()} )}}" method="post" {{ form_enctype(form) }}>
+			
+			{{ form_widget(form._token) }}
+			{{ form_widget(form.content_text) }}
+		
+			<input type="submit" value="Post it !" />
+		</form>
+	</div>
+	<div class="newsfeed_list">
+		{% for news in user_to_display.getNewsfeed()|reverse %}
+			<div class="news_post">
+				<table class="table_full_size">
+					<tr>
+					<td style="width:20%;">
+						{% if news.author.getProfile().getPicture() %}
+							<img style="width:100%;" src="{{ news.author.getProfile().getPicture() }}" alt="Profile Picture"/>
+						{% else %}
+							{% image '@ScubeBaseBundle/Resources/public/images/user.png' %}
+								<img style="width:100%;" src="{{ asset_url }}" alt="Profile Picture"/>
+							{% endimage %}
+						{% endif %}
+					</td>
+					
+					<td style="width:80%;">
+						{% if news.getAuthor() == user_connected or user_to_display == user_connected %}
+							{% image '@ScubeBaseBundle/Resources/public/images/remove.png' %}
+								<a style="float:right;" href="{{ path("ScubeProfileViewerBundle_newsfeed_remove", {'id_user':user_to_display.getId(), 'id_news':news.getId()} )}}">
+									<img style="width:16px;" src="{{ asset_url }}" alt="Remove this post"/>
+								</a>
+							{% endimage %}
+						{% endif %}
+						<p class="post_author">
+							<a href="{{ path("ScubeProfileViewerBundle_homepage", {'id_user':news.author.getId()} )}}">{{ news.author.getFirstname() }} {{ news.author.getSurname() }}</a>
+						</p>
+						<p class="post_content">
+							{{ news.getContentText() }}
+						</p>
+						<p class="post_date">
+							{{ news.getPostDate() | date() }}
+						</p>
+					</td>
+					</tr>
+				</table>
+			</div>
+		{% endfor %}
+	</div>
+{% else %}
+	<p class="error">You need permissions</p>
+{% endif %}

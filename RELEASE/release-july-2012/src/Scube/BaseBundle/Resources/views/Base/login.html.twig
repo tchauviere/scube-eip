@@ -1,0 +1,27 @@
+{% extends 'ScubeBaseBundle:Base:base.html.twig' %}
+
+{% block title %}Login in your Scube{% endblock %}
+
+{% block body %}
+{{ parent() }}
+
+<h1>Sign in</h1>
+
+<div class="page_frame">
+
+{% if error %}
+	<p class="form_error">Invalid email and/or password</p>
+{% endif %}
+
+<form action="{{ path('_homepage') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+
+    <input type="submit" value="Sign in" />
+</form>
+
+{% if allow_registration %}
+<p style="text-align:center;"><a href="{{ path('_register') }}">Not yet registered ? Click here.</a></p>
+{% endif %}
+</div>
+
+{% endblock %}

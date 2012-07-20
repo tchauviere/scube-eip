@@ -1,0 +1,7 @@
+CalendarBundle_homepage:
+    pattern:  /calendar
+    defaults: { _controller: ScubeCalendarBundle:Calendar:index }
+
+CalendarBundle_addEvent:
+    pattern:  /addEvent
+    defaults: { _controller: ScubeCalendarBundle:Calendar:addevent }

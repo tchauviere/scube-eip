@@ -1,0 +1,34 @@
+{% extends 'ScubeBaseBundle:Base:base_application.html.twig' %}
+
+
+{% block body %}
+{{ parent() }}
+
+<div class="Application">
+
+<table class="table_content">
+<tr>
+	<td class="sidebar_left">
+		{% include 'ScubeAccountBundle:Account:menu.html.twig' %}
+	</td>
+	<td class="sidebar_main">
+		<h1>Edit picture</h1>
+
+		{% if success %}
+			<p class="form_success">Your profile has been successfully updated.</p>
+		{% endif %}
+		
+		<p style="text-align:center;"><img width="120" src="{{ user.getProfile().getPicture() }}" alt="Your profile picture" /></p>
+		
+		<form action="{{ path('ScubeAccountBundle_edit_picture') }}" method="post" {{ form_enctype(form) }}>
+			{{ form_widget(form) }}
+		
+			<input type="submit" value="Upload picture" />
+		</form>
+	</td>
+</tr>
+</table>
+
+</div>
+
+{% endblock %}

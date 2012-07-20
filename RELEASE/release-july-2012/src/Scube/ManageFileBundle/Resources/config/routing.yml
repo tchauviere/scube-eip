@@ -1,0 +1,23 @@
+ScubeManageFileBundle_homepage:
+    pattern:  /document
+    defaults: { _controller: ScubeManageFileBundle:Default:index }
+
+ScubeManageFileBundle_show_pictures:
+    pattern:  /document/showPictures
+    defaults: { _controller: ScubeManageFileBundle:Default:showPictures }
+
+ScubeManageFileBundle_show_pdf:
+    pattern:  /document/showPdf
+    defaults: { _controller: ScubeManageFileBundle:Default:showPdf }
+
+ScubeManageFileBundle_show_videos:
+    pattern:  /document/showVideos
+    defaults: { _controller: ScubeManageFileBundle:Default:showVideos }
+
+ScubeManageFileBundle_upload:
+    pattern:  /document/upload
+    defaults: { _controller: 'ScubeManageFileBundle:Default:upload' }
+    
+ScubeManageFileBundle_delete:
+    pattern:  /document/delete
+    defaults: { _controller: 'ScubeManageFileBundle:Default:delete' }

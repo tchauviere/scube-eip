@@ -1,0 +1,3 @@
+ScubeInstallBundle_homepage:
+    pattern:  /install
+    defaults: { _controller: ScubeInstallBundle:Default:index }
