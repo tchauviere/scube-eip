@@ -37,7 +37,7 @@
 				
 				<div data-role="collapsible">
 				<h3>More</h3>
-				<a href="#" data-role="button" data-theme="a" data-icon="info">Send a message</a>
+				<a href="{{ path("ScubeMailboxBundle_homepage_conversation", {"id_user":user_to_display.getId()}) }}" data-transition="flip" data-role="button" data-theme="a" data-icon="info">Send a message</a>
 				<a href="#" data-role="button" data-theme="a" data-icon="star">Add in a group</a>
 				</div>
 				
@@ -51,7 +51,7 @@
 		<ul>
 			<li><a href="{{ path('_homepage') }}">Home</a></li>
 			<li><a href="{{ path('ConnectionsBundle_homepage') }}">Contacts</a></li>
-			<li><a href="#">Messages</a></li>
+			<li><a href="{{ path('ScubeMailboxBundle_ajax_users_list_noparam') }}">Messages</a></li>
 		</ul>
 	</div>
 </div>
