@@ -42,11 +42,13 @@ class AccountController extends Controller
 				{
 					$session->set('user', $user);
 				}
-				
+				if (\Scube\BaseBundle\Controller\BaseController::isMobile())
+					return $this->render('ScubeBaseBundle:Base_Mobile:edit_account.html.twig', array('form' => $form->createView(), "success"=>true));
 				return $this->render('ScubeAccountBundle:Account:edit_account.html.twig', array('form' => $form->createView(), "success"=>true));
 			}
 		}
-			
+		if (\Scube\BaseBundle\Controller\BaseController::isMobile())
+			return $this->render('ScubeBaseBundle:Base_Mobile:edit_account.html.twig', array('form' => $form->createView(), "success"=>false));	
 		return $this->render('ScubeAccountBundle:Account:edit_account.html.twig', array('form' => $form->createView(), "success"=>false));
     }
 	
@@ -78,11 +80,9 @@ class AccountController extends Controller
 				{
 					$session->set('user', $user);
 				}
-				
 				return $this->render('ScubeAccountBundle:Account:edit_email_password.html.twig', array('form' => $form->createView(), "success"=>true));
 			}
 		}
-			
 		return $this->render('ScubeAccountBundle:Account:edit_email_password.html.twig', array('form' => $form->createView(), "success"=>false));
     }
 	
@@ -166,7 +166,6 @@ class AccountController extends Controller
 				return $this->render('ScubeAccountBundle:Account:edit_picture.html.twig', array('user'=>$user, 'form' => $form->createView(), "success"=>true));
 			}
 		}
-			
 		return $this->render('ScubeAccountBundle:Account:edit_picture.html.twig', array('user'=>$user, 'form' => $form->createView(), "success"=>false));
     }
 }
