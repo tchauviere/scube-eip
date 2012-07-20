@@ -107,7 +107,8 @@ class MailboxController extends Controller
 			$form = $this->createFormBuilder($new_mail)
 			   ->add('message', 'textarea')
 			   ->getForm();
-			   
+			if (\Scube\BaseBundle\Controller\BaseController::isMobile())
+				return $this->render('ScubeBaseBundle:Base_Mobile:conversation.html.twig', array('user' => $user, 'conversation' => $conversation_to_load, 'form' => $form->createView()));
 			return $this->render('ScubeMailboxBundle:Mailbox:index.html.twig', array('user' => $user, 'conversation' => $conversation_to_load, 'form' => $form->createView()));
 		}
         return $this->render('ScubeMailboxBundle:Mailbox:index.html.twig', array('user' => $user, 'conversation' => false));
@@ -123,7 +124,8 @@ class MailboxController extends Controller
 		$em = $this->getDoctrine()->getEntityManager();
 		$query = $em->createQuery("SELECT u FROM ScubeBaseBundle:User u WHERE CONCAT(CONCAT(u.surname, ' '), u.firstname) LIKE :search OR CONCAT(CONCAT(u.firstname, ' '), u.surname) LIKE :search OR u.firstname LIKE :search OR u.surname LIKE :search ORDER BY u.firstname ASC")->setParameters(array('search' => $search));
 		$users_list = $query->getResult();
-		
+		if (\Scube\BaseBundle\Controller\BaseController::isMobile())
+			return $this->render('ScubeBaseBundle:Base_Mobile:messages.html.twig', array('users_list'=>$users_list));
 		return $this->render('ScubeMailboxBundle:Mailbox:users_list.html.twig', array('users_list'=>$users_list));
 	}
 }
