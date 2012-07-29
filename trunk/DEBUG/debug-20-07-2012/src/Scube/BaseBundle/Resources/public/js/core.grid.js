@@ -22,6 +22,7 @@ var fullscreen = false;
 var edit_mode = false;
 var admin_mode = false;
 var widgets_opacity = 0.7;
+var grid_scroller = false;
 
 function switch_edit_mode(value)
 {
@@ -154,10 +155,12 @@ function load_Grid()
 {
 	page_width = $(window).width();
 	page_height = $(window).height();
+	header_height = parseInt($("#header").height()) + parseInt($("#header").css('margin-top').replace("px", "")) + parseInt($("#header").css('margin-bottom').replace("px", ""));
 	cell_border = 10;
 	cell_width = Math.round((page_width - cell_border) / cells_per_line) - cell_border;
 	cell_height = cell_width;
 	
+	$("#GridContainer").css({"height": page_height - header_height})
 	$("#Grid").css({"margin":"0 "+cell_border+"px", "height":cell_width*nb_line + cell_border*nb_line})
 	
 	init_Widgets_Array();
@@ -225,20 +228,11 @@ function load_Grid()
 		add_WidgetOnGrid(id, Widgets[id]['pos_x'], Widgets[id]['pos_y'], Widgets[id]['width'], Widgets[id]['height']);
 	}
 	
-	/* 
-	malihu custom scrollbar function parameters: 
-	1) scroll type (values: "vertical" or "horizontal")
-	2) scroll easing amount (0 for no easing) 
-	3) scroll easing type 
-	4) extra bottom scrolling space for vertical scroll type only (minimum value: 1)
-	5) scrollbar height/width adjustment (values: "auto" or "fixed")
-	6) mouse-wheel support (values: "yes" or "no")
-	7) scrolling via buttons support (values: "yes" or "no")
-	8) buttons scrolling speed (values: 1-20, 1 being the slowest)
-	*/
-	$("#mcs_container").mCustomScrollbar("vertical",300,"easeOutCirc",1.05,"auto","yes","no",15);
-	$("#mcs_container").css({"width":page_width+"px","height":(page_height - $("#mcs_container").position().top)+"px"});
-	$("#mcs_container").mCustomScrollbar("vertical",300,"easeOutCirc",1.05,"auto","yes","no",15);
+	if (grid_scroller == false)
+		grid_scroller = $('#GridContainer').jScrollPane();
+	else
+		grid_scroller.data('jsp').reinitialise();
+	
 }
 
 function load_AdminGrid()
@@ -256,20 +250,10 @@ function load_AdminGrid()
 		}
 	}
 	
-	/* 
-	malihu custom scrollbar function parameters: 
-	1) scroll type (values: "vertical" or "horizontal")
-	2) scroll easing amount (0 for no easing) 
-	3) scroll easing type 
-	4) extra bottom scrolling space for vertical scroll type only (minimum value: 1)
-	5) scrollbar height/width adjustment (values: "auto" or "fixed")
-	6) mouse-wheel support (values: "yes" or "no")
-	7) scrolling via buttons support (values: "yes" or "no")
-	8) buttons scrolling speed (values: 1-20, 1 being the slowest)
-	*/
-	$("#mcs_container").mCustomScrollbar("vertical",300,"easeOutCirc",1.05,"auto","yes","no",15);
-	$("#mcs_container").css({"width":page_width+"px","height":(page_height - $("#mcs_container").position().top)+"px"});
-	$("#mcs_container").mCustomScrollbar("vertical",300,"easeOutCirc",1.05,"auto","yes","no",15);
+	if (grid_scroller == false)
+		grid_scroller = $('#GridContainer').jScrollPane();
+	else
+		grid_scroller.data('jsp').reinitialise();
 }
 
 function move_Widget(id, pos_x, pos_y)

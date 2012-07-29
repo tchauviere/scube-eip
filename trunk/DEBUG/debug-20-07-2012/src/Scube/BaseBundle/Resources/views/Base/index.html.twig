@@ -17,6 +17,8 @@
 	$(document).ready(function() 
 	{
 		load_Grid();
+		
+		
 		start_application_loader();
 		start_homebox_system('{{ path('_frame_profile') }}');
 		
@@ -28,6 +30,9 @@
 		
 		
 		start_checkbox_system();
+		
+		
+		
 	});
 
 	$(window).resize(function() 
@@ -46,7 +51,7 @@
 			  };
   var AdminWidgets = {
 				{% for app in user.getPermissionsGroup().getAdminApplications() %}
-					"cell_{{app.id}}":{"id":{{app.id}},"url":"{{ path(app.adminLink)}}","name":"{{ app.name}}"},
+					"admin_cell_{{app.id}}":{"id":{{app.id}},"url":"{{ path(app.adminLink)}}","name":"{{ app.name}}"},
 				{% endfor %}
 			  };
 			  
@@ -131,12 +136,6 @@ function	delete_widget_from_grid(id)
 
 <style>
 
-.fancybox-nav {
-	{% image '@ScubeBaseBundle/Resources/public/images/blank.gif' %}
-		background-image:transparent  url({{ asset_url }}); /* helps IE */
-	{% endimage %}
-}
-
 .cell_fullscreen {
 	{% image '@ScubeBaseBundle/Resources/public/images/fullscreen.png' %}
 		background:transparent url({{ asset_url }}) top left no-repeat;
@@ -175,6 +174,8 @@ body {
 	overflow:hidden;
 }
 
+
+
 </style>
 
 {% endblock %}
@@ -200,19 +201,8 @@ body {
 	{% endimage %}
 </div>
 
-<div id="mcs_container">
-	<div class="customScrollBox">
-		<div class="container">
-    		<div class="content">
-        		<div id="Grid">
-
-				</div>
-			</div>
-		</div>
-		<div class="dragger_container">
-    		<div class="dragger"></div>
-		</div>
-	</div>
+<div id="GridContainer">
+	<div id="Grid"></div>
 </div>
 
 {% endblock %}
