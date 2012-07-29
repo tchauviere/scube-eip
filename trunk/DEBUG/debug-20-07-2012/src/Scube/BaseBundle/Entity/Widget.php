@@ -40,6 +40,16 @@ class Widget
     protected $link;
 	
 	/**
+     * @ORM\Column(type="string", length="200")
+     */
+    protected $button_link;
+	
+	/**
+     * @ORM\Column(type="string", length="50")
+     */
+    protected $type;
+	
+	/**
      * @ORM\Column(type="integer")
      */
     protected $minWidth;
@@ -252,5 +262,45 @@ class Widget
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set button_link
+     *
+     * @param string $buttonLink
+     */
+    public function setButtonLink($buttonLink)
+    {
+        $this->button_link = $buttonLink;
+    }
+
+    /**
+     * Get button_link
+     *
+     * @return string 
+     */
+    public function getButtonLink()
+    {
+        return $this->button_link;
+    }
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string 
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }

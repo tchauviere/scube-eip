@@ -10,6 +10,7 @@
 }
 .empty_cell_hover {
 	background-color:#CCC;
+	cursor:pointer;
 }
 
 .plain_cell {
@@ -36,8 +37,9 @@
 }
 
 .cell_remove {
-	position:relative;
-	float:right;
+	position:absolute;
+	right:0px;
+	top:0;
 	margin:5px;
 	width:36px;
 	height:36px;
@@ -45,8 +47,9 @@
 }
 
 .cell_anchor {
-	position:relative;
-	float:left;
+	position:absolute;
+	left:0px;
+	top:0;
 	margin:5px;
 	width:36px;
 	height:36px;

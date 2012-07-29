@@ -70,12 +70,18 @@ function clean_grid()
 
 function add_WidgetOnGrid(id, pos_x, pos_y, width, height)
 {
-	$("#Grid").append("<div class='plain_cell widget AppBox' id='" + id + "'></div>");
+	if (Widgets[id]['type'] == "button")
+		$("#Grid").append("<div class='plain_cell widget AppBox' id='" + id + "' href='" + Widgets[id]['button_link'] + "'></div>");
+	else
+		$("#Grid").append("<div class='plain_cell widget' id='" + id + "'></div>");
 	if (edit_mode)
 		$("#"+id).append("<div class='cell_anchor'></div><div class='cell_remove'></div>");
 	else
-		$("#"+id).append("<div class='cell_fullscreen'>");
-		
+	{
+		if (Widgets[id]['fullscreen'])
+			$("#"+id).append("<div class='cell_fullscreen'>");
+	}
+	
 	$("#"+id+" .cell_fullscreen").click(function() {
 		
 		if (fullscreen)
@@ -99,8 +105,10 @@ function add_WidgetOnGrid(id, pos_x, pos_y, width, height)
 		}
 	});
 	
-	$("#"+id+" .cell_remove").click(function() {
+	$("#"+id+" .cell_remove").click(function(event) {
 		delete_widget_from_grid(id);
+		event.preventDefault();
+		event.stopPropagation();
 	});
 	
 	$("#"+id).css({'width':cell_width*width + (cell_border*(width-1)),
@@ -189,8 +197,8 @@ function load_Grid()
 					load_empty_cells();
 				  },
 				  function () {
-					$(this).removeClass("empty_cell_hover");
 					unload_empty_cells();
+					$(this).removeClass("empty_cell_hover");
 				  }
 				);
 			}
@@ -229,14 +237,20 @@ function load_Grid()
 	}
 	
 	if (grid_scroller == false)
-		grid_scroller = $('#GridContainer').jScrollPane();
+		grid_scroller = $('#GridContainer').jScrollPane({hideFocus:true});
 	else
 		grid_scroller.data('jsp').reinitialise();
-	
 }
 
 function load_AdminGrid()
 {
+	page_width = $(window).width();
+	page_height = $(window).height();
+	header_height = parseInt($("#header").height()) + parseInt($("#header").css('margin-top').replace("px", "")) + parseInt($("#header").css('margin-bottom').replace("px", ""));
+	cell_border = 10;
+	cell_width = Math.round((page_width - cell_border) / cells_per_line) - cell_border;
+	cell_height = cell_width;
+	
 	init_Widgets_Array();
 	
 	x=0;
@@ -251,7 +265,7 @@ function load_AdminGrid()
 	}
 	
 	if (grid_scroller == false)
-		grid_scroller = $('#GridContainer').jScrollPane();
+		grid_scroller = $('#GridContainer').jScrollPane({hideFocus:true});
 	else
 		grid_scroller.data('jsp').reinitialise();
 }

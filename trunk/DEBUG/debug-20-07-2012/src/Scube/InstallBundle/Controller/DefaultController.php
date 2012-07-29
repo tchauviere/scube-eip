@@ -99,7 +99,9 @@ class DefaultController extends Controller
 			$default_wid->setMaxWidth(1);
 			$default_wid->setMinHeight(1);
 			$default_wid->setMaxHeight(1);
-			$default_wid->setFullscreen(true);
+			$default_wid->setFullscreen(false);
+			$default_wid->setType("button");
+			$default_wid->setButtonLink("ConnectionsBundle_homepage");
 			$em = $this->getDoctrine()->getEntityManager();
 			$em->persist($default_wid);
 			$em->flush();

@@ -46,7 +46,7 @@
 
   var Widgets = {
 				{% for widget in user.getBaseInterface().getWidgets() %}
-					"cell_{{widget.id}}":{"id":{{widget.id}},"pos_x":{{widget.posX}},"pos_y":{{widget.posY}},"width":{{widget.width}},"height":{{widget.height}},"url":"{{ path(widget.widget.link)}}"},
+					"cell_{{widget.id}}":{"id":{{widget.id}},"pos_x":{{widget.posX}},"pos_y":{{widget.posY}},"width":{{widget.width}},"height":{{widget.height}},"url":"{{ path(widget.widget.link)}}","fullscreen":"{{ widget.widget.fullscreen }}","type":"{{ widget.widget.type }}","button_link":"{{ path(widget.widget.getButtonLink())}}"},
 				{% endfor %}
 			  };
   var AdminWidgets = {
@@ -60,25 +60,14 @@
 
 function	load_empty_cells()
 {
-	$(".empty_cell_hover").fancybox({
-		  padding: 0,
-		  openEffect : 'elastic',
-		  openSpeed  : 150,
-		  closeEffect : 'elastic',
-		  closeSpeed  : 150,
-		  autoScale:true,
-		  type:'iframe',
-		  helpers : {
-		  overlay : null
-		  },
-		  href:"{{ path("ScubeMyAppsBundle_add_widget")}}"
-	});
+	$(".empty_cell_hover").attr("href", "{{ path("ScubeMyAppsBundle_add_widget")}}");
+	$(".empty_cell_hover").addClass("AppBox");
 }
 
 function	unload_empty_cells()
 {
-	$(".empty_cell_hover").click(function() {
-		});
+	$(".empty_cell_hover").removeAttr("href");
+	$(".empty_cell_hover").removeClass("AppBox");
 }
 			  
 function	load_widget(id, force)
@@ -91,22 +80,7 @@ function	load_widget(id, force)
 		  },
 		  success: function(data) {			
 			$("#"+id+" .widget_content").html(data);
-			/*if ($("#"+id+" .widget_content .GridButton").length)
-				$("#"+id+" .widget_content").click(function() {
-					$("#"+id+" .widget_content").fancybox({
-						  padding: 0,
-						  openEffect : 'elastic',
-						  openSpeed  : 150,
-						  closeEffect : 'elastic',
-						  closeSpeed  : 150,
-						  autoScale:true,
-						  type:'iframe',
-						  helpers : {
-						  overlay : null
-						  },
-						  href:$("#"+id+" .widget_content .GridButton").attr("openapp")
-					});
-				});*/
+			$(".GridButton_title").fitText();
 		  }
 		});
 }
@@ -115,6 +89,7 @@ function	load_adminWidget(id, force)
 {
 	/* LE HREF DANS LA DIV PEUT POSER PROBLEME */
 	$("#"+id).append('<div class="widget_content AppBox" href="'+AdminWidgets[id]['url']+'"><div class="GridButton"><p class="GridButton_title">'+AdminWidgets[id]['name']+'</p></div></div>');
+	$(".GridButton_title").fitText();
 }
 
 function	save_moving_position(id, pos_x, pos_y)
@@ -128,7 +103,7 @@ function	delete_widget_from_grid(id)
 {
 	$.ajax({
 		  url: "{{ path("ScubeMyAppsBundle_delete_widget_noparam") }}/"+Widgets[id]['id'],
-		  success: function(data) {	location.reload(); }
+		  success: function(data) {	$("#"+id).fadeOut(500, function() {$("#"+id).remove();}); }
 		});
 }
 			  

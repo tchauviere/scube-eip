@@ -1,7 +1,9 @@
 .GridButton img
 {
-    width:128px;
-    height:128px;
+    /*width:128px;
+    height:128px;*/
+	width:70%;
+	height:70%;
     vertical-align:middle;
 }
 
@@ -10,6 +12,8 @@
 	text-align:center;
 	height:100%;
 	vertical-align:middle;
+	overflow:hidden;
+	cursor:pointer;
 }
 .GridButton_title {
 	text-align:center;
