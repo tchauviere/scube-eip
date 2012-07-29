@@ -155,7 +155,7 @@ class BaseController extends Controller
 		
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
 		$user = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));					
-		return $this->render('ScubeBaseBundle:Base:core.homebox.html.twig', array('user' => $user));
+		return $this->render('ScubeBaseBundle:Base:core_homebox.html.twig', array('user' => $user));
     }
 	
 	public static function createUserDirectory($kernel, $user)
