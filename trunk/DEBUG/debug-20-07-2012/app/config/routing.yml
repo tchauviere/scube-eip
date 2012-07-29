@@ -1,3 +1,7 @@
+ScubeAdminAppearanceBundle:
+    resource: "@ScubeAdminAppearanceBundle/Resources/config/routing.yml"
+    prefix:   /
+
 ScubeMailboxBundle:
     resource: "@ScubeMailboxBundle/Resources/config/routing.yml"
     prefix:   /

@@ -145,6 +145,19 @@ class DefaultController extends Controller
 		$em->persist($default_app8);
 		$em->flush();
 		
+		$default_app9 = new Application();
+		$default_app9->setName("Appearance manager for administrator");
+		$default_app9->setBundleName("");
+		$default_app9->setAdminBundleName("AdminAppearanceBundle");
+		$default_app9->setLink("");
+		$default_app9->setAdminLink("ScubeAdminAppearanceBundle_homepage");
+		$default_app9->setDescription("Manage appearance as your own");
+		$default_app9->setActivated(true);
+		$default_app9->setNecessary(true);
+		$em = $this->getDoctrine()->getEntityManager();
+		$em->persist($default_app9);
+		$em->flush();
+		
 		/* Default Settings */
 		$default_setting = new ScubeSetting();
 		$default_setting->setKey("allow_registration");
@@ -182,6 +195,7 @@ class DefaultController extends Controller
 		$default_grp->addAdminApplication($default_app2);
 		$default_grp->addAdminApplication($default_app3);
 		$default_grp->addAdminApplication($default_app4);
+		$default_grp->addAdminApplication($default_app9);
 		
 		$em = $this->getDoctrine()->getEntityManager();
 		$em->persist($default_grp);
