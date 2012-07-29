@@ -47,17 +47,19 @@ function	start_application(element)
 	$("#"+id+" iframe").load(function() {
 		$("#"+id).animate({
 				  'height':($(window).height() - $("#header").height())
-				  });
-    	$("#"+id+" img").remove();
-   		$("#"+id+" iframe").fadeIn();
-		$("#"+id).prepend(tpl_close + tpl_suspend);
+				  }, 800, function() {
+					  	$("#"+id+" img").remove();
+   						$("#"+id+" iframe").fadeIn();
+						$("#"+id).prepend(tpl_close + tpl_suspend);
+					  });
+    	
     });
 	
 }
 
 function	close_application(id_application)
 {
-	$("#"+id_application).slideUp('fast', function() {
+	$("#"+id_application).slideUp(800, function() {
 		$("#"+id_application).remove();
 		application_started = false;
 	});
