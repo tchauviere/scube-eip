@@ -14,6 +14,13 @@ function	start_application_loader()
 
 function	start_application(element)
 {
+	if (application_started)
+	{
+		var call = function() {start_application(element);};
+		close_application(application_started, call);
+		return;
+	}
+	
 	var rnd = Math.floor(Math.random()*1001);
 	var id = "Application_"+rnd
 	var tpl = "<div id='"+id+"' class='ApplicationFrame'></div>";
@@ -21,8 +28,7 @@ function	start_application(element)
 	var tpl_close = "<a class='ApplicationClose' href='#' onclick='close_application(\""+id+"\");'>"+$("#Application_closer").html()+"</div>";
 	var tpl_suspend = "<a class='ApplicationSuspend' href='#' onclick='suspend_application(\""+id+"\");'>"+$("#Application_suspender").html()+"</div>";
 	
-	if (application_started)
-		close_application(application_started);
+	
 	/*
 	if (applications_suspended[id] == true) {
 		unsuspend_application(id);
@@ -50,18 +56,20 @@ function	start_application(element)
 				  }, 800, function() {
 					  	$("#"+id+" img").remove();
    						$("#"+id+" iframe").fadeIn();
-						$("#"+id).prepend(tpl_close + tpl_suspend);
+						$("#"+id).prepend(tpl_close/* + tpl_suspend*/);
 					  });
     	
     });
 	
 }
 
-function	close_application(id_application)
+function	close_application(id_application, callbackFct)
 {
 	$("#"+id_application).slideUp(800, function() {
 		$("#"+id_application).remove();
 		application_started = false;
+		if (typeof(callbackFct) == "function")
+			callbackFct();
 	});
 }
 
