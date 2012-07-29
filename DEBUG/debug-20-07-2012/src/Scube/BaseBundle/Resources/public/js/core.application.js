@@ -63,6 +63,17 @@ function	start_application(element)
 	
 }
 
+function	refresh_application()
+{
+	if (application_started)
+	$("#"+application_started).css({
+				  'width':($(window).width() * 70)/100,
+				  'height':($(window).height() - $("#header").height()),
+				  'top':$("#header").height(),
+				  'left':($(window).width() / 2) - ((($(window).width() * 70)/100) / 2),
+				  });
+}
+
 function	close_application(id_application, callbackFct)
 {
 	$("#"+id_application).slideUp(800, function() {
