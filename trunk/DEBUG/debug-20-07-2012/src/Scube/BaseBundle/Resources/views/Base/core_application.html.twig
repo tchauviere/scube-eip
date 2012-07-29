@@ -15,7 +15,10 @@
 
 {% block more_javascripts %}{% endblock %}
 
-{% stylesheets '@ScubeBaseBundle/Resources/public/css/*'%}
+{% stylesheets 
+	'@ScubeBaseBundle/Resources/public/css/core.application.content.css' 
+	'@ScubeBaseBundle/Resources/public/css/core.form.css'
+%}
 <link rel="stylesheet" href="{{ asset_url }}" />
 {% endstylesheets %}
 

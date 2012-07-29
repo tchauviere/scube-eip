@@ -20,7 +20,14 @@
 {% block more_javascripts %}{% endblock %}
 
 {% stylesheets 
-	'@ScubeBaseBundle/Resources/public/css/*' 
+	'@ScubeBaseBundle/Resources/public/css/core.application.loader.css' 
+	'@ScubeBaseBundle/Resources/public/css/core.base.css'
+	'@ScubeBaseBundle/Resources/public/css/core.form.css'
+	'@ScubeBaseBundle/Resources/public/css/core.grid.css'
+	'@ScubeBaseBundle/Resources/public/css/core.header.css'
+	'@ScubeBaseBundle/Resources/public/css/core.homebox.css'
+	'@ScubeBaseBundle/Resources/public/css/core.scrollbar.css'
+	'@ScubeBaseBundle/Resources/public/css/core.widget.css'
 %}
 <link rel="stylesheet" href="{{ asset_url }}" />
 {% endstylesheets %}
