@@ -14,7 +14,7 @@
 				<img style="width:100%;" src="{{ user_to_display.getProfile().getPicture() }}" alt="Profile Picture"/>
 			{% else %}
 				{% image '@ScubeBaseBundle/Resources/public/images/user.png' %}
-					<img style="width:100%;" src="{{ asset_url }}" alt="Profile Picture"/>
+					<img style="width:100%;max-width:128px;margin:5px;" src="{{ asset_url }}" alt="Profile Picture"/>
 				{% endimage %}
 			{% endif %}
 		</div>
@@ -80,6 +80,7 @@
 
 .profile_picture {
 	margin:0px;
+	text-align:center;
 }
 
 .top_form {
