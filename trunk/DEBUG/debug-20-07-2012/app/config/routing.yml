@@ -1,3 +1,7 @@
+ScubeMediasBundle:
+    resource: "@ScubeMediasBundle/Resources/config/routing.yml"
+    prefix:   /
+
 ScubeAdminAppearanceBundle:
     resource: "@ScubeAdminAppearanceBundle/Resources/config/routing.yml"
     prefix:   /
@@ -40,10 +44,6 @@ ScubeInstallBundle:
 
 ScubeBaseBundle:
     resource: "@ScubeBaseBundle/Resources/config/routing.yml"
-    prefix:   /
-
-ScubeManageFileBundle:
-    resource: "@ScubeManageFileBundle/Resources/config/routing.yml"
     prefix:   /
 
 ScubeAdminAppsBundle:

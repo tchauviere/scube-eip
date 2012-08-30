@@ -148,7 +148,7 @@ class BaseController extends Controller
 			
 		return $this->render('ScubeBaseBundle:Base:register.html.twig', array("allow_registration"=>$allow_registration,'form' => $form->createView(), "success"=>false));
     }
-	
+	/* Ajax calls */
 	public function frame_profileAction(Request $request)
     {
 		$session = $this->getRequest()->getSession();
@@ -157,7 +157,10 @@ class BaseController extends Controller
 		$user = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));					
 		return $this->render('ScubeBaseBundle:Base:core_homebox.html.twig', array('user' => $user));
     }
+		
 	
+	
+	/* Core methods */
 	public static function createUserDirectory($kernel, $user)
 	{
 		$filename = $kernel->getRootDir(). '/../web/users/'.$user->getId();

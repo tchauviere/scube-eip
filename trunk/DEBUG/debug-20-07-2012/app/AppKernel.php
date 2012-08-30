@@ -18,7 +18,6 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
             new Scube\BaseBundle\ScubeBaseBundle(),
-			new Scube\ManageFileBundle\ScubeManageFileBundle(),
 			new Scube\AdminAppsBundle\ScubeAdminAppsBundle(),
             new Scube\InstallBundle\ScubeInstallBundle(),
             new Scube\AdminUserBundle\ScubeAdminUserBundle(),
@@ -32,6 +31,7 @@ class AppKernel extends Kernel
 			new Scube\ProfileViewerBundle\ScubeProfileViewerBundle(),
 			new Scube\MailboxBundle\ScubeMailboxBundle(),
 			new Scube\AdminAppearanceBundle\ScubeAdminAppearanceBundle(),
+			new Scube\MediasBundle\ScubeMediasBundle(),
 			/*APP_DELIMITER*/
             
         );
