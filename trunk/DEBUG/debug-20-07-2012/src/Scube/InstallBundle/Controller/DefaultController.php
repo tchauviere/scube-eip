@@ -223,6 +223,7 @@ class DefaultController extends Controller
 		$default_usr->setPassword("scubeeip");
 		$default_usr->setBirthday(new \DateTime());
 		$default_usr->setGender("male");
+		$default_usr->setOnline(false);
 		
 		$default_usr_profile = new UserProfile();
 		$default_usr_calendar = new Calendar();
