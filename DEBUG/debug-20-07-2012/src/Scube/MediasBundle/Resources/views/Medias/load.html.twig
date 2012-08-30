@@ -1,0 +1,9 @@
+<h1 style="color:white;text-shadow:none;">{{media.name}}</h1>
+
+<div id="vizualiser">
+{% if media.type == "picture" %}
+	<img style="vertical-align:bottom;display:inline;" src="{{media.path}}" alt="{{media.name}}" />
+{% elseif media.type == "document" %}
+	<iframe style="border:none;" src="{{media.path}}"></iframe>
+{%endif%}
+</div>

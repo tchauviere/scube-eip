@@ -49,6 +49,11 @@ class User
     protected $gender;
 	
 	/**
+     * @ORM\Column(type="boolean")
+     */
+    protected $online;
+	
+	/**
      * @ORM\OneToOne(targetEntity="Scube\BaseBundle\Entity\BaseInterface")
      * @ORM\JoinColumn(name="base_interface", referencedColumnName="id")
      */
@@ -89,6 +94,12 @@ class User
      * @ORM\JoinColumn(name="mailbox", referencedColumnName="id")
      */
     protected $mailbox;
+	
+	/**
+     * @ORM\ManyToMany(targetEntity="Scube\BaseBundle\Entity\MediaFolder")
+	 * @ORM\JoinTable(name="media_folders")
+     */ 
+    protected $media_folders;
 	
     public function __construct()
     {
@@ -362,5 +373,45 @@ class User
     public function getMailbox()
     {
         return $this->mailbox;
+    }
+
+    /**
+     * Set online
+     *
+     * @param boolean $online
+     */
+    public function setOnline($online)
+    {
+        $this->online = $online;
+    }
+
+    /**
+     * Get online
+     *
+     * @return boolean 
+     */
+    public function getOnline()
+    {
+        return $this->online;
+    }
+
+    /**
+     * Add media_folders
+     *
+     * @param Scube\BaseBundle\Entity\MediaFolder $mediaFolders
+     */
+    public function addMediaFolder(\Scube\BaseBundle\Entity\MediaFolder $mediaFolders)
+    {
+        $this->media_folders[] = $mediaFolders;
+    }
+
+    /**
+     * Get media_folders
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getMediaFolders()
+    {
+        return $this->media_folders;
     }
 }
