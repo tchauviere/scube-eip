@@ -28,12 +28,16 @@ class AppKernel extends Kernel
 			new Scube\CalendarBundle\ScubeCalendarBundle(),
 			new Scube\MyAppsBundle\ScubeMyAppsBundle(),
 			new Widgets\ConnectionsWidgetBundle\WidgetsConnectionsWidgetBundle(),
+			new Widgets\MediasWidgetBundle\WidgetsMediasWidgetBundle(),
+			new Widgets\MailboxWidgetBundle\WidgetsMailboxWidgetBundle(),
+			new Widgets\CalendarWidgetBundle\WidgetsCalendarWidgetBundle(),
 			new Scube\ProfileViewerBundle\ScubeProfileViewerBundle(),
 			new Scube\MailboxBundle\ScubeMailboxBundle(),
 			new Scube\AdminAppearanceBundle\ScubeAdminAppearanceBundle(),
 			new Scube\MediasBundle\ScubeMediasBundle(),
+			new Scube\FacebookBundle\ScubeFacebookBundle(),
 			/*APP_DELIMITER*/
-            
+     
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

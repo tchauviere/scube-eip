@@ -124,6 +124,7 @@ class BaseController extends Controller
 				$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:PermissionsGroup');
 				$default_group = $repository->findOneBy(array('name' => "default"));
 				
+				$user->setOnline(false);
 				$user->setProfile($profile);
 				$user->setBaseInterface($interface);
 				$user->setPermissionsGroup($default_group);

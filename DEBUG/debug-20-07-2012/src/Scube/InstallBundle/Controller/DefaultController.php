@@ -131,6 +131,22 @@ class DefaultController extends Controller
 		$em = $this->getDoctrine()->getEntityManager();
 		$em->persist($default_app7);
 		$em->flush();
+			/* Widgets de Calendar */
+			$default_wid2 = new Widget();
+			$default_wid2->setName("Calendar");
+			$default_wid2->setApplication($default_app7);
+			$default_wid2->setLink("WidgetsCalendarWidgetBundle_homepage");
+			$default_wid2->setBundleName("CalendarWidgetBundle");
+			$default_wid2->setMinWidth(1);
+			$default_wid2->setMaxWidth(1);
+			$default_wid2->setMinHeight(1);
+			$default_wid2->setMaxHeight(1);
+			$default_wid2->setFullscreen(false);
+			$default_wid2->setType("button");
+			$default_wid2->setButtonLink("CalendarBundle_homepage");
+			$em = $this->getDoctrine()->getEntityManager();
+			$em->persist($default_wid2);
+			$em->flush();
 		
 		$default_app8 = new Application();
 		$default_app8->setName("Mailbox");
@@ -144,6 +160,22 @@ class DefaultController extends Controller
 		$em = $this->getDoctrine()->getEntityManager();
 		$em->persist($default_app8);
 		$em->flush();
+			/* Widgets de Mailbox */
+			$default_wid3 = new Widget();
+			$default_wid3->setName("Mailbox");
+			$default_wid3->setApplication($default_app8);
+			$default_wid3->setLink("WidgetsMailboxWidgetBundle_homepage");
+			$default_wid3->setBundleName("MailboxWidgetBundle");
+			$default_wid3->setMinWidth(1);
+			$default_wid3->setMaxWidth(1);
+			$default_wid3->setMinHeight(1);
+			$default_wid3->setMaxHeight(1);
+			$default_wid3->setFullscreen(false);
+			$default_wid3->setType("button");
+			$default_wid3->setButtonLink("ScubeMailboxBundle_homepage");
+			$em = $this->getDoctrine()->getEntityManager();
+			$em->persist($default_wid3);
+			$em->flush();
 		
 		$default_app9 = new Application();
 		$default_app9->setName("Appearance manager for administrator");
@@ -157,6 +189,35 @@ class DefaultController extends Controller
 		$em = $this->getDoctrine()->getEntityManager();
 		$em->persist($default_app9);
 		$em->flush();
+		
+		$default_app10 = new Application();
+		$default_app10->setName("Medias");
+		$default_app10->setBundleName("MediasBundle");
+		$default_app10->setAdminBundleName("");
+		$default_app10->setLink("ScubeMediasBundle_homepage");
+		$default_app10->setAdminLink("");
+		$default_app10->setDescription("Upload and watch your media files");
+		$default_app10->setActivated(true);
+		$default_app10->setNecessary(true);
+		$em = $this->getDoctrine()->getEntityManager();
+		$em->persist($default_app10);
+		$em->flush();
+			/* Widgets de Mailbox */
+			$default_wid4 = new Widget();
+			$default_wid4->setName("Medias");
+			$default_wid4->setApplication($default_app10);
+			$default_wid4->setLink("WidgetsMediasWidgetBundle_homepage");
+			$default_wid4->setBundleName("MediasWidgetBundle");
+			$default_wid4->setMinWidth(1);
+			$default_wid4->setMaxWidth(1);
+			$default_wid4->setMinHeight(1);
+			$default_wid4->setMaxHeight(1);
+			$default_wid4->setFullscreen(false);
+			$default_wid4->setType("button");
+			$default_wid4->setButtonLink("ScubeMediasBundle_homepage");
+			$em = $this->getDoctrine()->getEntityManager();
+			$em->persist($default_wid4);
+			$em->flush();
 		
 		/* Default Settings */
 		$default_setting = new ScubeSetting();
@@ -190,6 +251,7 @@ class DefaultController extends Controller
 		$default_grp->addApplication($default_app6);
 		$default_grp->addApplication($default_app7);
 		$default_grp->addApplication($default_app8);
+		$default_grp->addApplication($default_app10);
 		
 		$default_grp->addAdminApplication($default_app);
 		$default_grp->addAdminApplication($default_app2);
@@ -209,6 +271,7 @@ class DefaultController extends Controller
 		$default_grp2->addApplication($default_app6);
 		$default_grp2->addApplication($default_app7);
 		$default_grp2->addApplication($default_app8);
+		$default_grp2->addApplication($default_app10);
 		
 		$em = $this->getDoctrine()->getEntityManager();
 		$em->persist($default_grp2);
@@ -229,13 +292,6 @@ class DefaultController extends Controller
 		$default_usr_calendar = new Calendar();
 		$default_usr_mailbox = new Mailbox();
 		$default_usr_interface = new BaseInterface();
-			$default_usr_interface_widget = new InterfaceWidget();
-			$default_usr_interface_widget->setWidth(1);
-			$default_usr_interface_widget->setHeight(1);
-			$default_usr_interface_widget->setPosX(1);
-			$default_usr_interface_widget->setPosY(1);
-			$default_usr_interface_widget->setWidget($default_wid);
-			$default_usr_interface->addInterfaceWidget($default_usr_interface_widget);
 		
 		$default_usr->setProfile($default_usr_profile);
 		$default_usr->setBaseInterface($default_usr_interface);
@@ -243,10 +299,45 @@ class DefaultController extends Controller
 		$default_usr->setMailbox($default_usr_mailbox);
 		$default_usr->setPermissionsGroup($default_grp);
 		
+		$default_usr_interface_widget = new InterfaceWidget();
+		$default_usr_interface_widget->setWidth(1);
+		$default_usr_interface_widget->setHeight(1);
+		$default_usr_interface_widget->setPosX(1);
+		$default_usr_interface_widget->setPosY(1);
+		$default_usr_interface_widget->setWidget($default_wid);
+		$default_usr_interface->addInterfaceWidget($default_usr_interface_widget);
+	
+		$default_usr_interface_widget2 = new InterfaceWidget();
+		$default_usr_interface_widget2->setWidth(1);
+		$default_usr_interface_widget2->setHeight(1);
+		$default_usr_interface_widget2->setPosX(5);
+		$default_usr_interface_widget2->setPosY(1);
+		$default_usr_interface_widget2->setWidget($default_wid2);
+		$default_usr_interface->addInterfaceWidget($default_usr_interface_widget2);
+	
+		$default_usr_interface_widget3 = new InterfaceWidget();
+		$default_usr_interface_widget3->setWidth(1);
+		$default_usr_interface_widget3->setHeight(1);
+		$default_usr_interface_widget3->setPosX(2);
+		$default_usr_interface_widget3->setPosY(1);
+		$default_usr_interface_widget3->setWidget($default_wid3);
+		$default_usr_interface->addInterfaceWidget($default_usr_interface_widget3);
+	
+		$default_usr_interface_widget4 = new InterfaceWidget();
+		$default_usr_interface_widget4->setWidth(1);
+		$default_usr_interface_widget4->setHeight(1);
+		$default_usr_interface_widget4->setPosX(4);
+		$default_usr_interface_widget4->setPosY(1);
+		$default_usr_interface_widget4->setWidget($default_wid4);
+		$default_usr_interface->addInterfaceWidget($default_usr_interface_widget4);
+		
 		
 		$em = $this->getDoctrine()->getEntityManager();
 		$em->persist($default_usr_profile);
 		$em->persist($default_usr_interface_widget);
+		$em->persist($default_usr_interface_widget2);
+		$em->persist($default_usr_interface_widget3);
+		$em->persist($default_usr_interface_widget4);
 		$em->persist($default_usr_interface);
 		$em->persist($default_usr_calendar);
 		$em->persist($default_usr_mailbox);

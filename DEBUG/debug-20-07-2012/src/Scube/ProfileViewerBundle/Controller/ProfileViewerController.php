@@ -78,6 +78,42 @@ class ProfileViewerController extends Controller
 			return $this->render('ScubeBaseBundle:Base_Mobile:news_feed.html.twig', array("user_connected"=>$user_connected, "user_to_display"=>$user_to_display, "auth"=>$auth, 'form' => $form->createView(), "success"=>false));
         return $this->render('ScubeProfileViewerBundle:ProfileViewer:newsfeed.html.twig', array("user_connected"=>$user_connected, "user_to_display"=>$user_to_display, "auth"=>$auth, 'form' => $form->createView(), "success"=>false));
     }
+	
+	public function postListAction(Request $request, $id_user)
+    {
+		$session = $this->getRequest()->getSession();
+		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
+		$user_connected = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
+		$user_to_display = $repository->find($id_user);
+		
+		if ($user_connected == $user_to_display)
+			$auth = true;
+		else
+		{
+			$groups = $user_to_display->getConnectionsGroups();
+			$auth = false;
+			foreach ($groups as $grp)
+			{
+				if ( ! $grp->getAuthProfileNews())
+					continue;
+				
+				foreach ($grp->getUsers() as $usr)
+				{
+					if ($user_connected == $usr)
+					{
+						$auth = true;
+						break ;
+					}
+				}
+				if ($auth)
+					break ;
+			}
+		}
+		
+		
+        return $this->render('ScubeProfileViewerBundle:ProfileViewer:post_list.html.twig', array("user_connected"=>$user_connected, "user_to_display"=>$user_to_display, "auth"=>$auth));
+    }
+	
 	public function newsfeedRemoveAction(Request $request, $id_user, $id_news)
     {
 		$session = $this->getRequest()->getSession();

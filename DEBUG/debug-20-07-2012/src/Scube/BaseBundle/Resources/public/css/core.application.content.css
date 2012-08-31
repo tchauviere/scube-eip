@@ -1,5 +1,6 @@
 html, body, .Application {
 	height:100%;
+	overflow:hidden;
 }
 
 body {
