@@ -51,6 +51,7 @@ class AdminUserController extends Controller
 				/* Set mailbox object */
 				$mailbox = new Mailbox();
 				
+				$user->setOnline(false);
 				$user->setProfile($profile);
 				$user->setBaseInterface($interface);
 				$user->setCalendar($calendar);
