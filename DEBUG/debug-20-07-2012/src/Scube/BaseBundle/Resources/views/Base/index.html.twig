@@ -105,7 +105,13 @@ function	delete_widget_from_grid(id)
 {
 	$.ajax({
 		  url: "{{ path("ScubeMyAppsBundle_delete_widget_noparam") }}/"+Widgets[id]['id'],
-		  success: function(data) {	$("#"+id).fadeOut(500, function() {$("#"+id).remove();}); }
+		  success: function(data) {	
+		  		$("#"+id).fadeOut(500, function() {
+					$("#"+id).remove();
+					WidgetsOnGrid[Widgets[id]['pos_y']][Widgets[id]['pos_x']] = 0;
+					delete Widgets[id];
+				}); 
+			}
 		});
 }
 			  
