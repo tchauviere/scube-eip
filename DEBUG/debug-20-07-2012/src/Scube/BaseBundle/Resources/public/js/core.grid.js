@@ -146,6 +146,8 @@ function add_WidgetOnGrid(id, pos_x, pos_y, width, height)
 
 function add_AdminWidgetOnGrid(id, pos_x, pos_y, width, height)
 {
+	if ($("#"+id).length)
+		$("#"+id).remove();
 	$("#Grid").append("<div class='plain_cell widget' id='" + id + "'></div>");
 	
 	$("#"+id).css({'width':cell_width*width + (cell_border*(width-1)),
@@ -332,7 +334,7 @@ function handleCellDrop( event, ui ) {
   
   if (drop_pos.pos_y >= limit_y) authorization = false;
   if (drop_pos.pos_x >= limit_x) authorization = false;
-  
+
   for (var i=drop_pos.pos_y; i!=limit_y; i++) {
 
 		for (var j=drop_pos.pos_x; j!=limit_x; j++) {
