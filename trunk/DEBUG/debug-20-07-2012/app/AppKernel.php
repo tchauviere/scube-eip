@@ -36,8 +36,9 @@ class AppKernel extends Kernel
 			new Scube\AdminAppearanceBundle\ScubeAdminAppearanceBundle(),
 			new Scube\MediasBundle\ScubeMediasBundle(),
 			new Scube\FacebookBundle\ScubeFacebookBundle(),
+			new Scube\AdminHelpBundle\ScubeAdminHelpBundle(),
 			/*APP_DELIMITER*/
-     
+            
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

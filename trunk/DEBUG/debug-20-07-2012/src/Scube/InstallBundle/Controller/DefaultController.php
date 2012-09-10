@@ -218,6 +218,19 @@ class DefaultController extends Controller
 			$em = $this->getDoctrine()->getEntityManager();
 			$em->persist($default_wid4);
 			$em->flush();
+			
+		$default_app11 = new Application();
+		$default_app11->setName("Help for administrator");
+		$default_app11->setBundleName("");
+		$default_app11->setAdminBundleName("AdminHelpBundle");
+		$default_app11->setLink("");
+		$default_app11->setAdminLink("ScubeAdminHelpBundle_homepage");
+		$default_app11->setDescription("View Scube's admin Help");
+		$default_app11->setActivated(true);
+		$default_app11->setNecessary(true);
+		$em = $this->getDoctrine()->getEntityManager();
+		$em->persist($default_app11);
+		$em->flush();
 		
 		/* Default Settings */
 		$default_setting = new ScubeSetting();
@@ -241,6 +254,20 @@ class DefaultController extends Controller
 		$em->persist($default_setting3);
 		$em->flush();
 		
+		$default_setting4 = new ScubeSetting();
+		$default_setting4->setKey("profile_picture_width");
+		$default_setting4->setValue("200");
+		$em = $this->getDoctrine()->getEntityManager();
+		$em->persist($default_setting4);
+		$em->flush();
+		
+		$default_setting5 = new ScubeSetting();
+		$default_setting5->setKey("profile_picture_height");
+		$default_setting5->setValue("200");
+		$em = $this->getDoctrine()->getEntityManager();
+		$em->persist($default_setting5);
+		$em->flush();
+		
 		/* Default Permissions Groups */
 		
 		// admin
@@ -258,6 +285,7 @@ class DefaultController extends Controller
 		$default_grp->addAdminApplication($default_app3);
 		$default_grp->addAdminApplication($default_app4);
 		$default_grp->addAdminApplication($default_app9);
+		$default_grp->addAdminApplication($default_app11);
 		
 		$em = $this->getDoctrine()->getEntityManager();
 		$em->persist($default_grp);
