@@ -1,3 +1,7 @@
+ScubeAdminHelpBundle:
+    resource: "@ScubeAdminHelpBundle/Resources/config/routing.yml"
+    prefix:   /
+
 WidgetsCalendarWidgetBundle:
     resource: "@WidgetsCalendarWidgetBundle/Resources/config/routing.yml"
     prefix:   /
