@@ -62,14 +62,22 @@ class BaseController extends Controller
 					$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
 					$LoggingUser = $form->getData();
 					$user = $repository->findOneBy(array('email' => $LoggingUser->getEmail(), 'password' => $LoggingUser->getPassword()));
-					if ($user)
+					$blocked = false;
+					if ($user && $user->getBlocked() == false)
 					{
+						/* Re-set last access date */
+						$em = $this->getDoctrine()->getEntityManager();
+						$user->setDateLastAccess(new \DateTime());
+						$em->flush();
+						
 						$session->set('user', $user);
 						return $this->redirect($this->generateUrl('_homepage'));
 					}
+					else
+						$blocked = true;
 					if ($this->isMobile())
 						return $this->render('ScubeBaseBundle:Base_Mobile:login.html.twig', array('allow_registration'=>$allow_registration, 'form' => $form->createView(), 'error' => true));
-					return $this->render('ScubeBaseBundle:Base:login.html.twig', array('allow_registration'=>$allow_registration, 'form' => $form->createView(), 'error' => true));
+					return $this->render('ScubeBaseBundle:Base:login.html.twig', array('allow_registration'=>$allow_registration, 'form' => $form->createView(), 'error' => true, 'blocked' => $blocked));
 				}
 			}
 			
@@ -125,6 +133,10 @@ class BaseController extends Controller
 				$default_group = $repository->findOneBy(array('name' => "default"));
 				
 				$user->setOnline(false);
+				$user->setBlocked(false);
+				$user->setDateRegister(new \DateTime());
+				$user->setDateLastAccess(new \DateTime());
+				$user->setLocale($this->getDoctrine()->getRepository('ScubeBaseBundle:ScubeSetting')->findOneBy(array('key' => "default_locale"))->getValue());
 				$user->setProfile($profile);
 				$user->setBaseInterface($interface);
 				$user->setPermissionsGroup($default_group);

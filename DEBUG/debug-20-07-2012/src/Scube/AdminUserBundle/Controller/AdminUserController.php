@@ -52,6 +52,11 @@ class AdminUserController extends Controller
 				$mailbox = new Mailbox();
 				
 				$user->setOnline(false);
+				$user->setBlocked(false);
+				$user->setDateRegister(new \DateTime());
+				$user->setDateLastAccess(new \DateTime());
+				$user->setLocale($this->getDoctrine()->getRepository('ScubeBaseBundle:ScubeSetting')->findOneBy(array('key' => "default_locale"))->getValue());
+				
 				$user->setProfile($profile);
 				$user->setBaseInterface($interface);
 				$user->setCalendar($calendar);
