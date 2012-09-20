@@ -268,6 +268,13 @@ class DefaultController extends Controller
 		$em->persist($default_setting5);
 		$em->flush();
 		
+		$default_setting6 = new ScubeSetting();
+		$default_setting6->setKey("default_locale");
+		$default_setting6->setValue("uk");
+		$em = $this->getDoctrine()->getEntityManager();
+		$em->persist($default_setting6);
+		$em->flush();
+		
 		/* Default Permissions Groups */
 		
 		// admin
@@ -315,6 +322,10 @@ class DefaultController extends Controller
 		$default_usr->setBirthday(new \DateTime());
 		$default_usr->setGender("male");
 		$default_usr->setOnline(false);
+		$default_usr->setBlocked(false);
+		$default_usr->setDateRegister(new \DateTime());
+		$default_usr->setDateLastAccess(new \DateTime());
+		$default_usr->setLocale($this->getDoctrine()->getRepository('ScubeBaseBundle:ScubeSetting')->findOneBy(array('key' => "default_locale"))->getValue());
 		
 		$default_usr_profile = new UserProfile();
 		$default_usr_calendar = new Calendar();

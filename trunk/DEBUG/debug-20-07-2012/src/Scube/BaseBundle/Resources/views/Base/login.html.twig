@@ -10,7 +10,11 @@
 <div class="page_frame">
 
 {% if error %}
-	<p class="form_error">Invalid email and/or password</p>
+	{% if blocked %}
+		<p class="form_error">Sorry, you have been blocked by the administrator.</p>
+	{% else %}
+		<p class="form_error">Invalid email and/or password</p>
+	{% endif %}
 {% endif %}
 
 <form action="{{ path('_homepage') }}" method="post" {{ form_enctype(form) }}>

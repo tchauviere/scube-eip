@@ -54,6 +54,26 @@ class User
     protected $online;
 	
 	/**
+     * @ORM\Column(type="boolean")
+     */
+    protected $blocked;
+	
+	/**
+     * @ORM\Column(type="date")
+     */
+    protected $date_register;
+	
+	/**
+     * @ORM\Column(type="datetime")
+     */
+    protected $date_last_access;
+	
+	/**
+     * @ORM\Column(type="string", length=5)
+     */
+    protected $locale;
+	
+	/**
      * @ORM\OneToOne(targetEntity="Scube\BaseBundle\Entity\BaseInterface")
      * @ORM\JoinColumn(name="base_interface", referencedColumnName="id")
      */
@@ -413,5 +433,85 @@ class User
     public function getMediaFolders()
     {
         return $this->media_folders;
+    }
+
+    /**
+     * Set blocked
+     *
+     * @param boolean $blocked
+     */
+    public function setBlocked($blocked)
+    {
+        $this->blocked = $blocked;
+    }
+
+    /**
+     * Get blocked
+     *
+     * @return boolean 
+     */
+    public function getBlocked()
+    {
+        return $this->blocked;
+    }
+
+    /**
+     * Set date_register
+     *
+     * @param date $dateRegister
+     */
+    public function setDateRegister($dateRegister)
+    {
+        $this->date_register = $dateRegister;
+    }
+
+    /**
+     * Get date_register
+     *
+     * @return date 
+     */
+    public function getDateRegister()
+    {
+        return $this->date_register;
+    }
+
+    /**
+     * Set date_last_access
+     *
+     * @param datetime $dateLastAccess
+     */
+    public function setDateLastAccess($dateLastAccess)
+    {
+        $this->date_last_access = $dateLastAccess;
+    }
+
+    /**
+     * Get date_last_access
+     *
+     * @return datetime 
+     */
+    public function getDateLastAccess()
+    {
+        return $this->date_last_access;
+    }
+
+    /**
+     * Set locale
+     *
+     * @param string $locale
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
+    }
+
+    /**
+     * Get locale
+     *
+     * @return string 
+     */
+    public function getLocale()
+    {
+        return $this->locale;
     }
 }
