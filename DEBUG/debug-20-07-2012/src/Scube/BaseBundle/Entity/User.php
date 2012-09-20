@@ -59,7 +59,7 @@ class User
     protected $blocked;
 	
 	/**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      */
     protected $date_register;
 	

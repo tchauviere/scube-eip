@@ -19,7 +19,7 @@ class AdminUserController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
 		$query = $em->createQuery("SELECT u FROM ScubeBaseBundle:User u ORDER BY u.email ASC");
 		$usr_list = $query->getResult();
-		return $this->render('ScubeAdminUserBundle:AdminUser:index.html.twig', array('usr_list'=>$usr_list));
+		return $this->render('ScubeAdminUserBundle:AdminUser:users.html.twig', array('usr_list'=>$usr_list));
     }
 	public function addUserAction(Request $request)
     {
