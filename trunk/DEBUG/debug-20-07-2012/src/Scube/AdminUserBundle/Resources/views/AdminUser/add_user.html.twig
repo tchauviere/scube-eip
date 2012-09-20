@@ -8,11 +8,8 @@
 
 <table class="table_content">
 <tr>
-	<td class="sidebar_left">
-		<ul class="sidebar_navigation">
-			<li><a href="{{ path("AdminUserBundle_homepage")}}">Manage users</a></li>
-			<li><a href="{{ path("AdminUserBundle_groups")}}">Manage groups</a></li>
-		</ul>
+	<td class="sidebar_left" style="width:15%;">
+		{% include 'ScubeAdminUserBundle:AdminUser:menu.html.twig' %}
 	</td>
 	<td class="sidebar_main">
 		<h1>Add user</h1>
