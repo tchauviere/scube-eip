@@ -15,7 +15,11 @@
 	</td>
 	<td class="sidebar_main">
 		<h1>Edit setting  {{setting.getKey()}} </h1>
-	
+		
+		<p class="result_table">
+			<a href="{{ path("AdminSettingsBundle_homepage")}}" class="button grey"><- Back to Settings</a>
+		</p>
+		
 		{% if success %}
 			<p class="form_success">The setting has been successfully updated.</p>
 		{% endif %}
