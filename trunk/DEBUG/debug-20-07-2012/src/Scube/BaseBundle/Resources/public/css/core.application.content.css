@@ -109,6 +109,18 @@ a:hover{
 	background-color:#8EB218;
 }
 
+
+div.confirmation_box {
+	display:none;
+	text-align:right;
+}
+div.confirmation_box span {
+	font-weight:bold;
+	color:#333;
+	font-size:11px;
+}
+
+
 /* = TABLES / Special design
  * ========================================================= */
 table.result_table {
@@ -227,6 +239,12 @@ a.button:hover {
 }
 
 /* Button sizes */
+.button.xsmall {
+	padding: 6px 8px;
+	font-size: 11px;
+	line-height: 8px;
+}
+
 .button.small {
 	padding: 8px 10px;
 	font-size: 11px;

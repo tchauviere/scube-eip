@@ -17,11 +17,16 @@ class PermissionsGroup
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
+	
     /**
      * @ORM\Column(type="string", unique="true", length=100)
      */
     protected $name;
+	
+	/**
+     * @ORM\Column(type="boolean")
+     */
+    protected $locked;
 	
 	/**
      * @ORM\ManyToMany(targetEntity="Scube\BaseBundle\Entity\Application")
@@ -128,5 +133,25 @@ class PermissionsGroup
     public function getAdminApplications()
     {
         return $this->admin_applications;
+    }
+
+    /**
+     * Set locked
+     *
+     * @param boolean $locked
+     */
+    public function setLocked($locked)
+    {
+        $this->locked = $locked;
+    }
+
+    /**
+     * Get locked
+     *
+     * @return boolean 
+     */
+    public function getLocked()
+    {
+        return $this->locked;
     }
 }

@@ -14,6 +14,10 @@
 	<td class="sidebar_main">
 		<h1>Edit group {{grp.getName()}}</h1>
 		
+		<p class="result_table">
+			<a href="{{ path("AdminUserBundle_groups")}}" class="button grey"><- Back to Groups</a>
+		</p>
+		
 		{% if success %}
 			<p class="form_success">The group has been successfully updated.</p>
 		{% endif %}
