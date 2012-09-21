@@ -88,6 +88,18 @@ if (!class_exists('SQLite3') && !in_array('sqlite', PDO::getAvailableDrivers()))
     $majorProblems[] = 'Install and enable the <strong>SQLite3</strong> or <strong>PDO_SQLite</strong> extension.';
 }
 
+if (!function_exists('imagecreatetruecolor')) {
+    $majorProblems[] = 'Install and enable the <strong>GD2</strong> extension.';
+}
+
+if (!function_exists('curl_exec')) {
+    $majorProblems[] = 'Install and enable the <strong>Curl</strong> extension.';
+}
+
+if (!function_exists('finfo_open')) {
+    $majorProblems[] = 'Install and enable the <strong>FileInfo</strong> extension.';
+}
+
 if (!function_exists('json_encode')) {
     $majorProblems[] = 'Install and enable the <strong>json</strong> extension.';
 }
