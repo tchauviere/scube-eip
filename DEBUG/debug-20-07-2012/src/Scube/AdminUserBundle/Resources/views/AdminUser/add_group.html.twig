@@ -12,7 +12,11 @@
 		{% include 'ScubeAdminUserBundle:AdminUser:menu.html.twig' %}
 	</td>
 	<td class="sidebar_main">
-		<h1>Add group</h1>
+		<h1>Create group</h1>
+		
+		<p class="result_table">
+			<a href="{{ path("AdminUserBundle_groups")}}" class="button grey"><- Back to Groups</a>
+		</p>
 		
 		{% if success %}
 			<p class="form_success">The group has been successfully added.</p>

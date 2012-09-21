@@ -29,13 +29,14 @@ class AdminUserController extends Controller
 		
 		$user = new User();
 		$form = $this->createFormBuilder($user)
-			->add('permissionsGroup', 'entity', array('class' => 'ScubeBaseBundle:PermissionsGroup', 'property' => 'name'))
+			->add('permissionsGroup', 'entity', array('class' => 'ScubeBaseBundle:PermissionsGroup', 'property' => 'name', 'label' => "Group"))
             ->add('Firstname', 'text')
             ->add('Surname', 'text')
 			->add('Email', 'email')
 			->add('Password', 'password')
 			->add('Birthday', 'birthday')
 			->add('Gender', 'choice', array('choices' => array('male' => 'Male', 'female' => 'Female')))
+			->add('Blocked', 'choice', array('choices' => array(false => 'No', true => 'Yes'), 'label' => "Blocked user (deny login)"))
             ->getForm();
 		
 		if ($request->getMethod() == 'POST') {
@@ -94,12 +95,13 @@ class AdminUserController extends Controller
 		$all_groups = $query->getResult();
 		
 		$form = $this->createFormBuilder($user)
-			->add('permissionsGroup', 'entity', array('class' => 'ScubeBaseBundle:PermissionsGroup', 'property' => 'name'))
+			->add('permissionsGroup', 'entity', array('class' => 'ScubeBaseBundle:PermissionsGroup', 'property' => 'name', 'label' => "Group"))
             ->add('Firstname', 'text')
             ->add('Surname', 'text')
 			->add('Email', 'email')
 			->add('Birthday', 'birthday')
 			->add('Gender', 'choice', array('choices' => array('male' => 'Male', 'female' => 'Female')))
+			->add('Blocked', 'choice', array('choices' => array(false => 'No', true => 'Yes'), 'label' => "Blocked user (deny login)"))
             ->getForm();
 		
 		if ($request->getMethod() == 'POST') {
@@ -172,6 +174,7 @@ class AdminUserController extends Controller
 			$edit_form = $form->getData();
 			
 			$grp = new PermissionsGroup();
+			$grp->setLocked(false);
 			
 			if (strlen($edit_form['name']) < 1)
 			{
@@ -292,8 +295,6 @@ class AdminUserController extends Controller
 			return $this->render('ScubeAdminUserBundle:AdminUser:edit_group.html.twig', array('grp'=>$grp, 'form' => $form->createView(), "success"=>true, "error"=>$error, "error_text"=>$error_text));
 		}
 		
-		
-		
 		return $this->render('ScubeAdminUserBundle:AdminUser:edit_group.html.twig', array('grp'=>$grp, 'form' => $form->createView(), "success"=>false, "error"=>$error, "error_text"=>$error_text));
     }
 	
@@ -301,26 +302,29 @@ class AdminUserController extends Controller
     {
 		$em = $this->getDoctrine()->getEntityManager();
 		$grp = $em->getRepository('ScubeBaseBundle:PermissionsGroup')->find($id);
-		$grp_default = $em->getRepository('ScubeBaseBundle:PermissionsGroup')->findOneBy(array("name"=>"default"));
-	
-		if (!$grp) {
-			throw $this->createNotFoundException('No group found for id '.$id);
-		}
-		if (!$grp_default) {
-			throw $this->createNotFoundException('No group <default> found');
-		}
-		
-		$query = $em->createQuery("SELECT u FROM ScubeBaseBundle:User u");
-		$usr_list = $query->getResult();
-		
-		foreach ($usr_list as $usr)
+		if ($grp->getLocked() == false)
 		{
-			if ($usr->getPermissionsGroup() == $grp)
-				$usr->setPermissionsGroup($grp_default);
-		}
+			$grp_default = $em->getRepository('ScubeBaseBundle:PermissionsGroup')->findOneBy(array("name"=>"default"));
 		
-		$em->remove($grp);
-		$em->flush();
+			if (!$grp) {
+				throw $this->createNotFoundException('No group found for id '.$id);
+			}
+			if (!$grp_default) {
+				throw $this->createNotFoundException('No group <default> found');
+			}
+			
+			$query = $em->createQuery("SELECT u FROM ScubeBaseBundle:User u");
+			$usr_list = $query->getResult();
+			
+			foreach ($usr_list as $usr)
+			{
+				if ($usr->getPermissionsGroup() == $grp)
+					$usr->setPermissionsGroup($grp_default);
+			}
+			
+			$em->remove($grp);
+			$em->flush();
+		}
 		return $this->redirect($this->generateUrl('AdminUserBundle_groups'));
     }
 }

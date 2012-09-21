@@ -13,26 +13,76 @@
 	</td>
 	<td class="sidebar_main">
 		<h1>Groups Manager</h1>
-		<p class="floating_right"><a href="{{ path("AdminUserBundle_group_add")}}">+ Add a group</a></p>
-	
-		<table class="table_full_size">
 		
-			{% for grp in grp_list %}
-			<tr>
-				<td>
-					<div class="table_title">{{grp.getName()}}</div>
-				</td>
-				<td>
-					<a href="{{ path("AdminUserBundle_group_edit", { 'id': grp.getId()})}}">Edit</a>
-				</td>
-				<td>
-					<a href="{{ path("AdminUserBundle_group_remove", { 'id': grp.getId()})}}">Remove</a>
-				</td>
-			</tr>
-			{% endfor %}
-		</table>
+		<p class="result_table">
+			<a href="{{ path("AdminUserBundle_group_add")}}" class="button green">+ Create Group</a>
+		</p>
+		
+		<div class="result_table_scroll">
+			<table class="table_full_size result_table">
+				
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Status</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					{% for grp in grp_list %}
+					<tr>
+						<td>
+							<div class="table_title">{{grp.getName()}}</div>
+						</td>
+						<td>
+							{% if grp.getLocked() %}
+								Locked
+							{% else %}
+								Removable
+							{% endif %}
+						</td>
+						<td>
+							<a href="{{ path("AdminUserBundle_group_edit", { 'id': grp.getId()})}}" class="button grey">Edit</a>
+							{% if grp.getLocked() == false %}
+							
+								<a href="#" onclick="$('#hidden_remove_{{grp.getId()}}').slideDown();" class="button red">Remove</a>
+								
+								<div id="hidden_remove_{{grp.getId()}}" class="confirmation_box">
+									<span>Sure ?</span> 
+									<a href="{{ path("AdminUserBundle_group_remove", { 'id': grp.getId()})}}" class="button red xsmall">Yes</a>
+									<a href="#" onclick="$('#hidden_remove_{{grp.getId()}}').slideUp();" class="button grey xsmall">Cancel</a> 
+								</div>
+							{% endif %}
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
 	</td>
 </tr>
+</table>
 </div>
+
+<script>
+
+function resize_table()
+{
+	available_height = $(".Application").height()	 - $(".sidebar_main h1").outerHeight(true) - $("p.result_table").outerHeight(true) + 11;
+	$('table.result_table').css("max-height", available_height);
+	$('div.result_table_scroll').css("height", available_height);
+}
+
+$(document).ready(function() 
+	{
+		resize_table();
+	});
+$(window).resize(function() 
+	{
+		resize_table();
+	});
+
+</script>
 
 {% endblock %}

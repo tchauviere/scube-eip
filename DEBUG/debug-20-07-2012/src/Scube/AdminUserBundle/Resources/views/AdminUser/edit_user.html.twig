@@ -13,7 +13,11 @@
 	</td>
 	<td class="sidebar_main">
 		<h1>Edit user {{user.getSurname()}} {{user.getFirstname()}}</h1>
-	
+		
+		<p class="result_table">
+			<a href="{{ path("AdminUserBundle_homepage")}}" class="button grey"><- Back to Users</a>
+		</p>
+		
 		{% if success %}
 			<p class="form_success">The user has been successfully updated.</p>
 		{% endif %}
