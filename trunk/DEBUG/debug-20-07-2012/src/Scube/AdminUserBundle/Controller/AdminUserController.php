@@ -154,10 +154,14 @@ class AdminUserController extends Controller
 		$query = $em->createQuery("SELECT a FROM ScubeBaseBundle:Application a ORDER BY a.name ASC");
 		$all_applications = $query->getArrayResult();
 		
+		$admin_app_list = array();
 		$app_list = array();
 		foreach ($all_applications as $app)
 		{
-			$app_list[$app['id']] = $app['name'];
+			if ($app['type'] == "admin")
+				$admin_app_list[$app['id']] = $app['name'];
+			else
+				$app_list[$app['id']] = $app['name'];
 		}
 		
 		$defaultData = array('name'=>"", 'apps'=>array(), 'admin_apps'=>array());
@@ -165,7 +169,7 @@ class AdminUserController extends Controller
 		$form = $this->createFormBuilder($defaultData)
             ->add('name', 'text')
 			->add('apps', 'choice', array('choices' => $app_list, 'multiple'  => true, 'required'    => false))
-			->add('admin_apps', 'choice', array('choices' => $app_list, 'multiple'  => true, 'required'    => false))
+			->add('admin_apps', 'choice', array('choices' => $admin_app_list, 'multiple'  => true, 'required'    => false))
             ->getForm();
 				
 		if ($request->getMethod() == 'POST') {
@@ -231,10 +235,14 @@ class AdminUserController extends Controller
 		$query = $em->createQuery("SELECT a FROM ScubeBaseBundle:Application a ORDER BY a.name ASC");
 		$all_applications = $query->getArrayResult();
 		
+		$admin_app_list = array();
 		$app_list = array();
 		foreach ($all_applications as $app)
 		{
-			$app_list[$app['id']] = $app['name'];
+			if ($app['type'] == "admin")
+				$admin_app_list[$app['id']] = $app['name'];
+			else
+				$app_list[$app['id']] = $app['name'];
 		}
 		
 		$apps = array();
@@ -254,7 +262,7 @@ class AdminUserController extends Controller
 		$form = $this->createFormBuilder($defaultData)
             ->add('name', 'text')
 			->add('apps', 'choice', array('choices' => $app_list, 'multiple'  => true, 'required'    => false))
-			->add('admin_apps', 'choice', array('choices' => $app_list, 'multiple'  => true, 'required'    => false))
+			->add('admin_apps', 'choice', array('choices' => $admin_app_list, 'multiple'  => true, 'required'    => false))
             ->getForm();
 				
 		if ($request->getMethod() == 'POST') {
