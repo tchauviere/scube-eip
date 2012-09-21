@@ -43,10 +43,10 @@
 							{% endif %}
 						</td>
 						<td>
-							<a href="{{ path("AdminUserBundle_group_edit", { 'id': grp.getId()})}}" class="button grey">Edit</a>
+							<a href="{{ path("AdminUserBundle_group_edit", { 'id': grp.getId()})}}" class="button grey small">Edit</a>
 							{% if grp.getLocked() == false %}
 							
-								<a href="#" onclick="$('#hidden_remove_{{grp.getId()}}').slideDown();" class="button red">Remove</a>
+								<a href="#" onclick="$('#hidden_remove_{{grp.getId()}}').slideDown();" class="button red small">Remove</a>
 								
 								<div id="hidden_remove_{{grp.getId()}}" class="confirmation_box">
 									<span>Sure ?</span> 
