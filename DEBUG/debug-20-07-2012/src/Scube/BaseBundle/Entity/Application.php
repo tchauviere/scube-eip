@@ -33,19 +33,14 @@ class Application
     protected $bundle_name;
 	
 	/**
-     * @ORM\Column(type="string", length=200)
+     * @ORM\Column(type="string", length=20)
      */
-    protected $admin_bundle_name;
+    protected $type;
 	
 	/**
      * @ORM\Column(type="string", length=200)
      */
     protected $link;
-	
-	/**
-     * @ORM\Column(type="string", length=200)
-     */
-    protected $admin_link;
 	
 	/**
      * @ORM\Column(type="text")
@@ -178,46 +173,6 @@ class Application
     }
 
     /**
-     * Set admin_bundle_name
-     *
-     * @param string $adminBundleName
-     */
-    public function setAdminBundleName($adminBundleName)
-    {
-        $this->admin_bundle_name = $adminBundleName;
-    }
-
-    /**
-     * Get admin_bundle_name
-     *
-     * @return string 
-     */
-    public function getAdminBundleName()
-    {
-        return $this->admin_bundle_name;
-    }
-
-    /**
-     * Set admin_link
-     *
-     * @param string $adminLink
-     */
-    public function setAdminLink($adminLink)
-    {
-        $this->admin_link = $adminLink;
-    }
-
-    /**
-     * Get admin_link
-     *
-     * @return string 
-     */
-    public function getAdminLink()
-    {
-        return $this->admin_link;
-    }
-
-    /**
      * Set activated
      *
      * @param boolean $activated
@@ -255,5 +210,25 @@ class Application
     public function getNecessary()
     {
         return $this->necessary;
+    }
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string 
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }

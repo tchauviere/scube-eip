@@ -53,7 +53,7 @@
 			  };
   var AdminWidgets = {
 				{% for app in user.getPermissionsGroup().getAdminApplications() %}
-					"admin_cell_{{app.id}}":{"id":{{app.id}},"url":"{{ path(app.adminLink)}}","name":"{{ app.name}}"},
+					"admin_cell_{{app.id}}":{"id":{{app.id}},"url":"{{ path(app.link)}}","name":"{{ app.name}}"},
 				{% endfor %}
 			  };
 			  

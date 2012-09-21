@@ -22,15 +22,12 @@ class DefaultController extends Controller
 
 	public function preprocessAction(Request $request)
 	{
-		/* /!!!\ Doit appellé par le script d'installation !!! -> Reset des champs */
-		
-		/* Default Application */
+		/* Default Applications */
 		$default_app = new Application();
-		$default_app->setName("Application manager for administrator");
-		$default_app->setBundleName("");
-		$default_app->setAdminBundleName("AdminAppsBundle");
-		$default_app->setLink("");
-		$default_app->setAdminLink("AdminAppsBundle_homepage");
+		$default_app->setName("Applications");
+		$default_app->setBundleName("AdminAppsBundle");
+		$default_app->setLink("AdminAppsBundle_homepage");
+		$default_app->setType("admin");
 		$default_app->setDescription("Manage installed applications on your server and install new applications now !");
 		$default_app->setActivated(true);
 		$default_app->setNecessary(true);
@@ -39,11 +36,10 @@ class DefaultController extends Controller
 		$em->flush();
 		
 		$default_app2 = new Application();
-		$default_app2->setName("User manager for administrator");
-		$default_app2->setBundleName("");
-		$default_app2->setAdminBundleName("AdminUserBundle");
-		$default_app2->setLink("");
-		$default_app2->setAdminLink("AdminUserBundle_homepage");
+		$default_app2->setName("Users & Groups");
+		$default_app2->setBundleName("AdminUserBundle");
+		$default_app2->setLink("AdminUserBundle_homepage");
+		$default_app2->setType("admin");
 		$default_app2->setDescription("Manage users, groups and permissions.");
 		$default_app2->setActivated(true);
 		$default_app2->setNecessary(true);
@@ -52,11 +48,10 @@ class DefaultController extends Controller
 		$em->flush();
 		
 		$default_app3 = new Application();
-		$default_app3->setName("Settings manager for administrator");
-		$default_app3->setBundleName("");
-		$default_app3->setAdminBundleName("AdminSettingsBundle");
-		$default_app3->setLink("");
-		$default_app3->setAdminLink("AdminSettingsBundle_homepage");
+		$default_app3->setName("Settings");
+		$default_app3->setBundleName("AdminSettingsBundle");
+		$default_app3->setLink("AdminSettingsBundle_homepage");
+		$default_app3->setType("admin");
 		$default_app3->setDescription("Manage setting values.");
 		$default_app3->setActivated(true);
 		$default_app3->setNecessary(true);
@@ -65,11 +60,10 @@ class DefaultController extends Controller
 		$em->flush();
 		
 		$default_app4 = new Application();
-		$default_app4->setName("Server Logs Manager for administrator");
-		$default_app4->setBundleName("");
-		$default_app4->setAdminBundleName("AdminLogsBundle");
-		$default_app4->setLink("");
-		$default_app4->setAdminLink("AdminLogsBundle_homepage");
+		$default_app4->setName("Reports");
+		$default_app4->setBundleName("AdminLogsBundle");
+		$default_app4->setLink("AdminLogsBundle_homepage");
+		$default_app4->setType("admin");
 		$default_app4->setDescription("View Scube's Logs and find errors");
 		$default_app4->setActivated(true);
 		$default_app4->setNecessary(true);
@@ -80,9 +74,8 @@ class DefaultController extends Controller
 		$default_app5 = new Application();
 		$default_app5->setName("Connections");
 		$default_app5->setBundleName("ConnectionsBundle");
-		$default_app5->setAdminBundleName("");
 		$default_app5->setLink("ConnectionsBundle_homepage");
-		$default_app5->setAdminLink("");
+		$default_app5->setType("normal");
 		$default_app5->setDescription("Organize your contacts");
 		$default_app5->setActivated(true);
 		$default_app5->setNecessary(true);
@@ -109,9 +102,8 @@ class DefaultController extends Controller
 		$default_app6 = new Application();
 		$default_app6->setName("Account");
 		$default_app6->setBundleName("AccountBundle");
-		$default_app6->setAdminBundleName("");
 		$default_app6->setLink("ScubeAccountBundle_homepage");
-		$default_app6->setAdminLink("");
+		$default_app6->setType("normal");
 		$default_app6->setDescription("Manage your account, profile and pictures");
 		$default_app6->setActivated(true);
 		$default_app6->setNecessary(true);
@@ -122,9 +114,8 @@ class DefaultController extends Controller
 		$default_app7 = new Application();
 		$default_app7->setName("Calendar");
 		$default_app7->setBundleName("CalendarBundle");
-		$default_app7->setAdminBundleName("");
 		$default_app7->setLink("CalendarBundle_homepage");
-		$default_app7->setAdminLink("");
+		$default_app7->setType("normal");
 		$default_app7->setDescription("Manage events in your personal calendar");
 		$default_app7->setActivated(true);
 		$default_app7->setNecessary(true);
@@ -151,9 +142,8 @@ class DefaultController extends Controller
 		$default_app8 = new Application();
 		$default_app8->setName("Mailbox");
 		$default_app8->setBundleName("MailboxBundle");
-		$default_app8->setAdminBundleName("");
 		$default_app8->setLink("ScubeMailboxBundle_homepage");
-		$default_app8->setAdminLink("");
+		$default_app8->setType("normal");
 		$default_app8->setDescription("Send messages to your contacts");
 		$default_app8->setActivated(true);
 		$default_app8->setNecessary(true);
@@ -178,11 +168,10 @@ class DefaultController extends Controller
 			$em->flush();
 		
 		$default_app9 = new Application();
-		$default_app9->setName("Appearance manager for administrator");
-		$default_app9->setBundleName("");
-		$default_app9->setAdminBundleName("AdminAppearanceBundle");
-		$default_app9->setLink("");
-		$default_app9->setAdminLink("ScubeAdminAppearanceBundle_homepage");
+		$default_app9->setName("Appearance");
+		$default_app9->setBundleName("AdminAppearanceBundle");
+		$default_app9->setLink("ScubeAdminAppearanceBundle_homepage");
+		$default_app9->setType("admin");
 		$default_app9->setDescription("Manage appearance as your own");
 		$default_app9->setActivated(true);
 		$default_app9->setNecessary(true);
@@ -193,9 +182,8 @@ class DefaultController extends Controller
 		$default_app10 = new Application();
 		$default_app10->setName("Medias");
 		$default_app10->setBundleName("MediasBundle");
-		$default_app10->setAdminBundleName("");
 		$default_app10->setLink("ScubeMediasBundle_homepage");
-		$default_app10->setAdminLink("");
+		$default_app10->setType("normal");
 		$default_app10->setDescription("Upload and watch your media files");
 		$default_app10->setActivated(true);
 		$default_app10->setNecessary(true);
@@ -220,11 +208,10 @@ class DefaultController extends Controller
 			$em->flush();
 			
 		$default_app11 = new Application();
-		$default_app11->setName("Help for administrator");
-		$default_app11->setBundleName("");
-		$default_app11->setAdminBundleName("AdminHelpBundle");
-		$default_app11->setLink("");
-		$default_app11->setAdminLink("ScubeAdminHelpBundle_homepage");
+		$default_app11->setName("Help");
+		$default_app11->setBundleName("AdminHelpBundle");
+		$default_app11->setLink("ScubeAdminHelpBundle_homepage");
+		$default_app11->setType("admin");
 		$default_app11->setDescription("View Scube's admin Help");
 		$default_app11->setActivated(true);
 		$default_app11->setNecessary(true);
@@ -357,49 +344,49 @@ class DefaultController extends Controller
 				
 				
 				$default_usr_interface_widget = new InterfaceWidget();
-		$default_usr_interface_widget->setWidth(1);
-		$default_usr_interface_widget->setHeight(1);
-		$default_usr_interface_widget->setPosX(1);
-		$default_usr_interface_widget->setPosY(1);
-		$default_usr_interface_widget->setWidget($this->getDoctrine()->getRepository('ScubeBaseBundle:Widget')->findOneBy(array('name' => "Connections")));
-		$interface->addInterfaceWidget($default_usr_interface_widget);
-	
-		$default_usr_interface_widget2 = new InterfaceWidget();
-		$default_usr_interface_widget2->setWidth(1);
-		$default_usr_interface_widget2->setHeight(1);
-		$default_usr_interface_widget2->setPosX(5);
-		$default_usr_interface_widget2->setPosY(1);
-		$default_usr_interface_widget2->setWidget($this->getDoctrine()->getRepository('ScubeBaseBundle:Widget')->findOneBy(array('name' => "Calendar")));
-		$interface->addInterfaceWidget($default_usr_interface_widget2);
-	
-		$default_usr_interface_widget3 = new InterfaceWidget();
-		$default_usr_interface_widget3->setWidth(1);
-		$default_usr_interface_widget3->setHeight(1);
-		$default_usr_interface_widget3->setPosX(2);
-		$default_usr_interface_widget3->setPosY(1);
-		$default_usr_interface_widget3->setWidget($this->getDoctrine()->getRepository('ScubeBaseBundle:Widget')->findOneBy(array('name' => "Mailbox")));
-		$interface->addInterfaceWidget($default_usr_interface_widget3);
-	
-		$default_usr_interface_widget4 = new InterfaceWidget();
-		$default_usr_interface_widget4->setWidth(1);
-		$default_usr_interface_widget4->setHeight(1);
-		$default_usr_interface_widget4->setPosX(4);
-		$default_usr_interface_widget4->setPosY(1);
-		$default_usr_interface_widget4->setWidget($this->getDoctrine()->getRepository('ScubeBaseBundle:Widget')->findOneBy(array('name' => "Medias")));
-		$interface->addInterfaceWidget($default_usr_interface_widget4);
+				$default_usr_interface_widget->setWidth(1);
+				$default_usr_interface_widget->setHeight(1);
+				$default_usr_interface_widget->setPosX(1);
+				$default_usr_interface_widget->setPosY(1);
+				$default_usr_interface_widget->setWidget($this->getDoctrine()->getRepository('ScubeBaseBundle:Widget')->findOneBy(array('name' => "Connections")));
+				$interface->addInterfaceWidget($default_usr_interface_widget);
+			
+				$default_usr_interface_widget2 = new InterfaceWidget();
+				$default_usr_interface_widget2->setWidth(1);
+				$default_usr_interface_widget2->setHeight(1);
+				$default_usr_interface_widget2->setPosX(5);
+				$default_usr_interface_widget2->setPosY(1);
+				$default_usr_interface_widget2->setWidget($this->getDoctrine()->getRepository('ScubeBaseBundle:Widget')->findOneBy(array('name' => "Calendar")));
+				$interface->addInterfaceWidget($default_usr_interface_widget2);
+			
+				$default_usr_interface_widget3 = new InterfaceWidget();
+				$default_usr_interface_widget3->setWidth(1);
+				$default_usr_interface_widget3->setHeight(1);
+				$default_usr_interface_widget3->setPosX(2);
+				$default_usr_interface_widget3->setPosY(1);
+				$default_usr_interface_widget3->setWidget($this->getDoctrine()->getRepository('ScubeBaseBundle:Widget')->findOneBy(array('name' => "Mailbox")));
+				$interface->addInterfaceWidget($default_usr_interface_widget3);
+			
+				$default_usr_interface_widget4 = new InterfaceWidget();
+				$default_usr_interface_widget4->setWidth(1);
+				$default_usr_interface_widget4->setHeight(1);
+				$default_usr_interface_widget4->setPosX(4);
+				$default_usr_interface_widget4->setPosY(1);
+				$default_usr_interface_widget4->setWidget($this->getDoctrine()->getRepository('ScubeBaseBundle:Widget')->findOneBy(array('name' => "Medias")));
+				$interface->addInterfaceWidget($default_usr_interface_widget4);
 		
 		
-		$em = $this->getDoctrine()->getEntityManager();
-		$em->persist($profile);
-		$em->persist($default_usr_interface_widget);
-		$em->persist($default_usr_interface_widget2);
-		$em->persist($default_usr_interface_widget3);
-		$em->persist($default_usr_interface_widget4);
-		$em->persist($interface);
-		$em->persist($calendar);
-		$em->persist($mailbox);
-		$em->persist($user);
-		$em->flush();
+				$em = $this->getDoctrine()->getEntityManager();
+				$em->persist($profile);
+				$em->persist($default_usr_interface_widget);
+				$em->persist($default_usr_interface_widget2);
+				$em->persist($default_usr_interface_widget3);
+				$em->persist($default_usr_interface_widget4);
+				$em->persist($interface);
+				$em->persist($calendar);
+				$em->persist($mailbox);
+				$em->persist($user);
+				$em->flush();
 				
 				\Scube\BaseBundle\Controller\BaseController::createUserDirectory($this->get('kernel'), $user);
 				
