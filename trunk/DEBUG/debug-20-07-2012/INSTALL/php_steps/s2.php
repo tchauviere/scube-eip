@@ -34,7 +34,7 @@ locale=\"en\"
 secret=\"01e324a59f7ff5232919a83d4ade681c2024d876\"\n";
 	    
 		$filename = "../../app/config/parameters.ini";
-		var_dump($_POST);
+		
 		if (is_writable($filename))
 		{
 			file_put_contents($filename, $new_parameters);
