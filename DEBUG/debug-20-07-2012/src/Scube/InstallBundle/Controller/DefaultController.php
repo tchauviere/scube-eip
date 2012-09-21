@@ -15,13 +15,13 @@ use Scube\BaseBundle\Entity\Calendar;
 use Scube\BaseBundle\Entity\Mailbox;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
+use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
 {
-    
-    public function indexAction()
-    {
+
+	public function preprocessAction(Request $request)
+	{
 		/* /!!!\ Doit appellé par le script d'installation !!! -> Reset des champs */
 		
 		/* Default Application */
@@ -312,80 +312,99 @@ class DefaultController extends Controller
 		$em->persist($default_grp2);
 		$em->flush();
 		
-		/* Default Administrator */
-		
-		$default_usr = new User();
-		$default_usr->setFirstname("Epitech");
-		$default_usr->setSurname("Paris");
-		$default_usr->setEmail("scube@gmail.com");
-		$default_usr->setPassword("scubeeip");
-		$default_usr->setBirthday(new \DateTime());
-		$default_usr->setGender("male");
-		$default_usr->setOnline(false);
-		$default_usr->setBlocked(false);
-		$default_usr->setDateRegister(new \DateTime());
-		$default_usr->setDateLastAccess(new \DateTime());
-		$default_usr->setLocale($this->getDoctrine()->getRepository('ScubeBaseBundle:ScubeSetting')->findOneBy(array('key' => "default_locale"))->getValue());
-		
-		$default_usr_profile = new UserProfile();
-		$default_usr_calendar = new Calendar();
-		$default_usr_mailbox = new Mailbox();
-		$default_usr_interface = new BaseInterface();
-		
-		$default_usr->setProfile($default_usr_profile);
-		$default_usr->setBaseInterface($default_usr_interface);
-		$default_usr->setCalendar($default_usr_calendar);
-		$default_usr->setMailbox($default_usr_mailbox);
-		$default_usr->setPermissionsGroup($default_grp);
-		
-		$default_usr_interface_widget = new InterfaceWidget();
+		return $this->redirect($this->generateUrl('ScubeInstallBundle_homepage'));
+	}
+    
+    public function indexAction(Request $request)
+    {
+		$user = new User();
+		$form = $this->createFormBuilder($user)
+            ->add('Firstname', 'text')
+            ->add('Surname', 'text')
+			->add('Email', 'email')
+			->add('Password', 'password')
+			->add('Birthday', 'birthday')
+			->add('Gender', 'choice', array('choices' => array('male' => 'Male', 'female' => 'Female')))
+            ->getForm();
+            
+		if ($request->getMethod() == 'POST') {
+			$form->bindRequest($request);
+	
+			if ($form->isValid()) {
+				/* Set profile object */
+				$profile = new UserProfile();
+				/* Set interface object */
+				$interface = new BaseInterface();
+				/* Set calendar object */
+				$calendar = new Calendar();
+				/* Set mailbox object */
+				$mailbox = new Mailbox();
+				
+				$user->setPermissionsGroup($this->getDoctrine()->getRepository('ScubeBaseBundle:PermissionsGroup')->findOneBy(array('name' => "administrator")));
+				$user->setOnline(false);
+				$user->setBlocked(false);
+				$user->setDateRegister(new \DateTime());
+				$user->setDateLastAccess(new \DateTime());
+				$user->setLocale($this->getDoctrine()->getRepository('ScubeBaseBundle:ScubeSetting')->findOneBy(array('key' => "default_locale"))->getValue());
+				
+				$user->setProfile($profile);
+				$user->setBaseInterface($interface);
+				$user->setCalendar($calendar);
+				$user->setMailbox($mailbox);
+				
+				
+				
+				$default_usr_interface_widget = new InterfaceWidget();
 		$default_usr_interface_widget->setWidth(1);
 		$default_usr_interface_widget->setHeight(1);
 		$default_usr_interface_widget->setPosX(1);
 		$default_usr_interface_widget->setPosY(1);
-		$default_usr_interface_widget->setWidget($default_wid);
-		$default_usr_interface->addInterfaceWidget($default_usr_interface_widget);
+		$default_usr_interface_widget->setWidget($this->getDoctrine()->getRepository('ScubeBaseBundle:Widget')->findOneBy(array('name' => "Connections")));
+		$interface->addInterfaceWidget($default_usr_interface_widget);
 	
 		$default_usr_interface_widget2 = new InterfaceWidget();
 		$default_usr_interface_widget2->setWidth(1);
 		$default_usr_interface_widget2->setHeight(1);
 		$default_usr_interface_widget2->setPosX(5);
 		$default_usr_interface_widget2->setPosY(1);
-		$default_usr_interface_widget2->setWidget($default_wid2);
-		$default_usr_interface->addInterfaceWidget($default_usr_interface_widget2);
+		$default_usr_interface_widget2->setWidget($this->getDoctrine()->getRepository('ScubeBaseBundle:Widget')->findOneBy(array('name' => "Calendar")));
+		$interface->addInterfaceWidget($default_usr_interface_widget2);
 	
 		$default_usr_interface_widget3 = new InterfaceWidget();
 		$default_usr_interface_widget3->setWidth(1);
 		$default_usr_interface_widget3->setHeight(1);
 		$default_usr_interface_widget3->setPosX(2);
 		$default_usr_interface_widget3->setPosY(1);
-		$default_usr_interface_widget3->setWidget($default_wid3);
-		$default_usr_interface->addInterfaceWidget($default_usr_interface_widget3);
+		$default_usr_interface_widget3->setWidget($this->getDoctrine()->getRepository('ScubeBaseBundle:Widget')->findOneBy(array('name' => "Mailbox")));
+		$interface->addInterfaceWidget($default_usr_interface_widget3);
 	
 		$default_usr_interface_widget4 = new InterfaceWidget();
 		$default_usr_interface_widget4->setWidth(1);
 		$default_usr_interface_widget4->setHeight(1);
 		$default_usr_interface_widget4->setPosX(4);
 		$default_usr_interface_widget4->setPosY(1);
-		$default_usr_interface_widget4->setWidget($default_wid4);
-		$default_usr_interface->addInterfaceWidget($default_usr_interface_widget4);
+		$default_usr_interface_widget4->setWidget($this->getDoctrine()->getRepository('ScubeBaseBundle:Widget')->findOneBy(array('name' => "Medias")));
+		$interface->addInterfaceWidget($default_usr_interface_widget4);
 		
 		
 		$em = $this->getDoctrine()->getEntityManager();
-		$em->persist($default_usr_profile);
+		$em->persist($profile);
 		$em->persist($default_usr_interface_widget);
 		$em->persist($default_usr_interface_widget2);
 		$em->persist($default_usr_interface_widget3);
 		$em->persist($default_usr_interface_widget4);
-		$em->persist($default_usr_interface);
-		$em->persist($default_usr_calendar);
-		$em->persist($default_usr_mailbox);
-		$em->persist($default_usr);
+		$em->persist($interface);
+		$em->persist($calendar);
+		$em->persist($mailbox);
+		$em->persist($user);
 		$em->flush();
-		
-		\Scube\BaseBundle\Controller\BaseController::createUserDirectory($this->get('kernel'), $default_usr);
-		
-		
-        return $this->render('ScubeInstallBundle:Default:index.html.twig', array('name' => false));
+				
+				\Scube\BaseBundle\Controller\BaseController::createUserDirectory($this->get('kernel'), $user);
+				
+				return $this->render('ScubeInstallBundle:Default:index.html.twig', array('form' => $form->createView(), 'success' => true));
+			}
+		}
+
+		return $this->render('ScubeInstallBundle:Default:index.html.twig', array('form' => $form->createView()));
     }
 }
