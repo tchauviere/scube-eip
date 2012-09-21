@@ -34,7 +34,7 @@ locale=\"en\"
 secret=\"01e324a59f7ff5232919a83d4ade681c2024d876\"\n";
 	    
 		$filename = "../../app/config/parameters.ini";
-		
+		var_dump($_POST);
 		if (is_writable($filename))
 		{
 			file_put_contents($filename, $new_parameters);
@@ -134,9 +134,9 @@ else if (!$error)
         </div>
     </div>
 
-            <div class="symfony-form-errors"></div><div class="symfony-form-row"><label for="distributionbundle_doctrine_step_password_password">
+            <div class="symfony-form-errors"></div><div class="symfony-form-row"><label for="distributionbundle_doctrine_step_password">
         Password
-            </label><div class="symfony-form-field"><input type="password" id="distributionbundle_doctrine_step_password_password" name="distributionbundle_doctrine_step[password]" /><div class="symfony-form-errors"></div></div></div>
+            </label><div class="symfony-form-field"><input type="text" id="distributionbundle_doctrine_step_password" name="distributionbundle_doctrine_step[password]" /><div class="symfony-form-errors"></div></div></div>
             </div>
         </div>
 
