@@ -60,9 +60,9 @@
   var	cells_per_line = {{ dashboard_width.value }}/*7*/;
   var	nb_line = {{ dashboard_height.value }}/*5*/;
 
-function	load_empty_cells()
+function	load_empty_cells(x, y)
 {
-	$(".empty_cell_hover").attr("href", "{{ path("ScubeMyAppsBundle_add_widget")}}");
+	$(".empty_cell_hover").attr("href", "{{ path("ScubeMyAppsBundle_add_widget")}}/" + x + "/" + y);
 	$(".empty_cell_hover").addClass("AppBox");
 }
 

@@ -27,18 +27,7 @@ class MyAppsController extends Controller
 		return $this->render('ScubeMyAppsBundle:MyApps:my_apps.html.twig', array('user' => $user, 'app_list' => $app_list));
     }
 	/* Widgets */
-	public function myWidgetsAction(Request $request)
-    {
-		$session = $this->getRequest()->getSession();
-		
-		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
-		$user = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
-		
-		$widget_list = $user->getBaseInterface()->getWidgets();
-		
-		return $this->render('ScubeMyAppsBundle:MyApps:my_widgets.html.twig', array('user' => $user, 'widget_list' => $widget_list));
-    }
-	public function addWidgetAction(Request $request)
+	public function addWidgetAction(Request $request, $default_x=NULL, $default_y=NULL)
     {
 		$session = $this->getRequest()->getSession();
 		
@@ -81,7 +70,7 @@ class MyAppsController extends Controller
 		
 		$widget = new InterfaceWidget();
 		
-		$defaultData = array('widget'=>false, 'pos_x'=>0, 'pos_y'=>0);
+		$defaultData = array('widget'=>false, 'pos_x'=>$default_x, 'pos_y'=>$default_y);
 		$form = $this->createFormBuilder($defaultData)
             ->add('widget', 'choice', array('choices' => $widgets_available_list))
             ->add('pos_x', 'hidden')
@@ -113,7 +102,7 @@ class MyAppsController extends Controller
 			return $this->render('ScubeMyAppsBundle:MyApps:add_widget.html.twig', array('user' => $user, 'success' => true));
 		}
 		
-		return $this->render('ScubeMyAppsBundle:MyApps:add_widget.html.twig', array('user' => $user, 'widget_list' => $widget_list, 'widgets_available' => $widgets_available, 'dashboard_width'=>$dashboard_width, 'dashboard_height'=>$dashboard_height, 'array_coord'=>$array_coord, 'form'=>$form->createView(), 'success'=>false));
+		return $this->render('ScubeMyAppsBundle:MyApps:add_widget.html.twig', array('user' => $user, 'widget_list' => $widget_list, 'widgets_available' => $widgets_available, 'dashboard_width'=>$dashboard_width, 'dashboard_height'=>$dashboard_height, 'array_coord'=>$array_coord, 'form'=>$form->createView(), 'success'=>false, 'default_x'=>$default_x, 'default_y'=>$default_y));
 		
     }
 	
