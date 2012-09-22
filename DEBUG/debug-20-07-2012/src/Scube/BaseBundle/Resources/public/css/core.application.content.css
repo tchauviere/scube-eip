@@ -82,7 +82,7 @@ a:hover{
 	color:#333;
 }
 
-.Application table td .table_full_size {
+.Application .table_full_size {
 	width:100%;
 }
 

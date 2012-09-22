@@ -196,7 +196,9 @@ function load_Grid()
 				$("#"+cell_id).hover(
 				  function () {
 					$(this).addClass("empty_cell_hover");
-					load_empty_cells();
+					/* Get x and y from cell id */
+					id_splitted = $(this).attr('id').split("_");
+					load_empty_cells(id_splitted[3], id_splitted[2]);
 				  },
 				  function () {
 					unload_empty_cells();
