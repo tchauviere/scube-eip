@@ -74,7 +74,44 @@ class DefaultController extends Controller {
 				'form' =>$form->createView()));
 	}
 
+	static public function getLoginURl($redirect_uri) //return le lien vers la page de connection de facebook, prend en parametre la page à rediriger après le login
+	{
+		$facebook = new Facebook(array(
+				'appId'  => $this->appId,
+				'cookie'  => true,
+				'secret' => $this->secret,
+		));
+
+		$_SESSION['fbUser'] = $facebook->getUser();
+		if (!$_SESSION['fbUser']) {
+			$_SESSION['fbAccessToken'] = null;
+			$_SESSION['fbUser'] = null;
+			$_SESSION['fbFriends'] = null;
+			$_SESSION['fbFeed'] = null;
+			$_SESSION['fbProfile'] = null;
+			$_SESSION['fbInbox'] = null;
+		}
+		
+		return $facebook->getLoginUrl(array('redirect_uri' => $redirect_uri,
+					'scope' => 'publish_stream, read_stream, read_mailbox'));
+	}
+	
 	public function logoutAction(Request $request)
+	{
+		logout("http://localhost".$request->getBaseUrl()."/facebook");
+		
+		$facebook = new Facebook(array(
+				'appId'  => $this->appId,
+				'secret' => $this->secret,
+		));
+		$fbUser = null;
+		$loginUrl = $facebook->getLoginUrl(array('redirect_uri' => $redirect_uri,
+				'scope' => 'publish_stream, read_stream, read_mailbox'));
+		return $this->render('ScubeFacebookBundle:Default:index.html.twig', array(	'loginUrl' => $loginUrl,
+				'fbUser' => $fbUser));
+	}
+
+	 static public function logout()
 	{
 		$facebook = new Facebook(array(
 				'appId'  => $this->appId,
@@ -87,14 +124,6 @@ class DefaultController extends Controller {
 		unset($_SESSION['fbProfile']);
 		unset($_SESSION['fbInbox']);
 		$facebook->destroySession();
-		$fbUser = null;
-		$error = '';
-		$loginUrl = $facebook->getLoginUrl(array('redirect_uri' => "http://localhost".$request->getBaseUrl()."/facebook",
-				'scope' => 'publish_stream, read_stream, read_mailbox'));
-
-		return $this->render('ScubeFacebookBundle:Default:index.html.twig', array(	'loginUrl' => $loginUrl,
-				'error' => $error,
-				'fbUser' => $fbUser));
 	}
 
 	public function postToFacebook($form, $access_token)
@@ -142,9 +171,9 @@ class DefaultController extends Controller {
 
 			// GRAPH API
 			// liste des infos disponibles -> https://developers.facebook.com/docs/reference/api/
-			$_SESSION['fbFeed'] = $this->getFeed();
-			$_SESSION['fbFriends'] = $this->getFriends();
-			$_SESSION['fbInbox'] = $this->getInbox();
+			$_SESSION['fbFeed'] = getFeed(true);
+			$_SESSION['fbFriends'] = getFriends(true);
+			$_SESSION['fbInbox'] = getInbox(true);
 			// GRAPH API END
 				
 		} catch (FacebookApiException $e) {
@@ -152,24 +181,35 @@ class DefaultController extends Controller {
 			$_SESSION['fbUser'] = null;
 		}
 	}
+	
+	//Pour toutes les methodes, si ($actu == true), alors on fait une requête facebook pour actualiser la variable, sinon, on renvoit juste la variable.
 
-	public function getFeed() {
+	static public function getFeed($actu = false) {
 		if ($_SESSION['fbAccessToken']) {
-			return json_decode(file_get_contents('https://graph.facebook.com/me/feed?access_token='.$_SESSION['fbAccessToken']), true);
+			if ($actu || $_SESSION['fbFeed'] == null) {
+				$_SESSION['fbFeed'] = json_decode(file_get_contents('https://graph.facebook.com/me/feed?access_token='.$_SESSION['fbAccessToken']), true);
+			}
+			return $_SESSION['fbFeed'];
 		}
 		return null;
 	}
 
-	public function getInbox() {
+	static public function getInbox($actu = false) {
 		if ($_SESSION['fbAccessToken']) {
-			return json_decode(file_get_contents('https://graph.facebook.com/me/inbox?access_token='.$_SESSION['fbAccessToken']), true);
+			if ($actu || $_SESSION['fbInbox'] == null) {
+				$_SESSION['fbInbox'] = json_decode(file_get_contents('https://graph.facebook.com/me/inbox?access_token='.$_SESSION['fbAccessToken']), true);
+			}
+			return $_SESSION['fbInbox'];
 		}
 		return null;
 	}
 
-	public function getFriends() {
+	static public function getFriends($actu = false) {
 		if ($_SESSION['fbAccessToken']) {
-			return json_decode(file_get_contents('https://graph.facebook.com/me/friends?access_token='.$_SESSION['fbAccessToken']), true);
+			if ($actu || $_SESSION['fbFriends'] == null) {
+				$_SESSION['fbFriends'] = json_decode(file_get_contents('https://graph.facebook.com/me/friends?access_token='.$_SESSION['fbAccessToken']), true);
+			}
+			return $_SESSION['fbFriends'];
 		}
 		return null;
 	}
