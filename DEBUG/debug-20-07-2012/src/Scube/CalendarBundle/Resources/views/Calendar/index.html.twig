@@ -6,6 +6,7 @@
 	'@ScubeCalendarBundle/Resources/public/js/fullcalendar.min.js' 
 	'@ScubeCalendarBundle/Resources/public/js/gcal.js'
 	'@ScubeCalendarBundle/Resources/public/js/jquery-ui-1.8.17.custom.min.js'
+	'@ScubeCalendarBundle/Resources/public/js/jquery-ui-timepicker-addon.js'
 %}
 
 <script type="text/javascript" src="{{ asset_url }}"></script>
@@ -17,12 +18,31 @@
 {% endstylesheets %}
 <style>
 	
+	
+	
 	#calendar 
 	{
 		margin:0 20px;
 	}
 	
-	
+	.fc-event-vert .fc-event-inner {
+border-width: 1px !important;
+padding: 10px 20 !important;
+order-left-color: none !important;
+}
+
+.fc-event-skin {
+border-color: #fff;
+background: #1E90FF !important;
+color: #fff !important;
+}
+	.fc td.fc-sun {
+  background: #8FBC8F;
+}
+		.fc td.fc-sat {
+  background: #8FBC8F;
+}
+
 	
 	#fade 
 	{ 
@@ -37,7 +57,6 @@
 	.popup_block
 	{
 		width:200px;
-		height:200px;
 		margin-left:-100px;
 		margin-top:-100px;
 		display: none;
@@ -114,72 +133,78 @@ $(document).ready(function() {
 		var y = date.getFullYear();
 		var arrayEvents = new Array();
 		var arrayEdit = new Array();
-		
+		var G_allDay = false;
 		
 		
 		var calendar = $('#calendar').fullCalendar(
 		{
-			header: 
-			{
+		header: {
 				left: 'prev,next today',
 				center: 'title',
 				right: 'month,agendaWeek,agendaDay'
 			},
 			selectable: true,
 			selectHelper: true,
-			
-			
-		
-			select: function(start, end, allDay) 
-			{
-				/*$('#date').html("<p> Start on :" + start+ "</p> <p> End on :" + end + "</p>");*/
-				
-				$('#addEvent').fadeIn().prepend();
-
-				$('#myForm').submit(function(event) 
-					{
-						//
-						var title = $('#champ').val();
-						
-						if (title)
+			select: function(start, end, allDay) {
+				var title = prompt('Event Title:');
+				if (title) {
+					calendar.fullCalendar('renderEvent',
 						{
-							calendar.fullCalendar('renderEvent',
-							{
 							title: title,
 							start: start,
 							end: end,
 							allDay: allDay
-							}, false);
+						},
+						true // make the event "stick"
+					);
+					arrayEvents.push(title, start.toString(), end.toString(), allDay);
+					$.post("{{path('CalendarBundle_addEvent')}}",{'array_events': arrayEvents});
+					arrayEvents = [];
+				}
+				calendar.fullCalendar('unselect');
+			},
+			
+			eventClick: function(event, element) 
+			{
+				$('#title').val(event.title);
 				
-							arrayEvents.push(title, start.toString(), end.toString(), allDay);
-							$.post("{{path('CalendarBundle_addEvent')}}",{'array_events': arrayEvents});
-							arrayEvents = [];
-						}
+				
+				$('#datepicker').val((event.start.getMonth() + 1) + '/' + event.start.getDate() + '/' + event.start.getFullYear());
+				
+				//	$('#startHour').val(event.start.getHours() + ':' + event.start.getMinutes());
+				//	$('#endHour').val(event.end.getHours() + ':' + event.end.getMinutes());
+				
+				$('#updateEvent').fadeIn().prepend();
+				
+				$('#myFormUpdate').submit(function(e)
+				{
 
-						//$('#champ').val("");
-							
-						$('#fade , .popup_block').fadeOut(function() 
-						{
-						$('#fade, a.close').remove(); 																
-						});
-						
-						event.stopPropagation();
-						/*BUG LA*/
-						//event.preventDefault();
-						//return false;
-					});
-					
-				//calendar.fullCalendar('unselect');				
+					var arrayTime = $('#startHour').val().split(':')
+					event.start.setHours(arrayTime[0]);
+				
+					event.title = "title change";
+					$('#calendar').fullCalendar('updateEvent', event);
+					// uptade a faire.
+				});
+				
+				
+				
 				
 				$('.CloseBlock').click(function() 
 				{
-					$('#fade , .popup_block').fadeOut(function() 
+				
+
+				$('#fade , .popup_block').fadeOut(function() 
 					{
+					
 						$('#fade, a.close').remove();
 					});
 				});
+				
 			},
+			
 			editable: false,
+
 			
 			events: [
 			{% for ev in user.getCalendar().getCalendarEvents() %}
@@ -187,6 +212,7 @@ $(document).ready(function() {
 						title: "{{ ev.title}}",
 						start: new Date("{{ ev.start }}"),
 						end: new Date("{{ ev.end }}"),
+						allDay: "{{ ev.allDay }}"
 					},
 			{% endfor %}
 					]
@@ -194,6 +220,14 @@ $(document).ready(function() {
 		
 	});
 </script>
+
+<script>
+	$(function() {
+		$( "#datepicker" ).datepicker();
+		$("#startHour").timepicker({});
+		$("#endHour").timepicker({});
+	});
+	</script>
 
 {% endblock %}
 
@@ -209,6 +243,20 @@ $(document).ready(function() {
 		<form id="myForm"> 
 			<label>Event title</label> <input type="text" id="champ" /> 
 			<input type="submit" value="Submit Event"/> 
+			<input type="button" value="Cancel" class="CloseBlock"/> 
+		</form>
+	</div>
+	
+	
+	<div id="updateEvent" class="popup_block">
+		<p id="date"></p>
+		<form id="myFormUpdate"> 
+			<label>Event title</label> <input type="text" id="title" />
+			<label>Date</label> <input type="text" id="datepicker" />
+			<label>Start hour</label> <input type="text" id="startHour" />
+			<label>End hour</label> <input type="text" id="endHour" />
+
+			<input type="submit" value="Update Event"/> 
 			<input type="button" value="Cancel" class="CloseBlock"/> 
 		</form>
 	</div>

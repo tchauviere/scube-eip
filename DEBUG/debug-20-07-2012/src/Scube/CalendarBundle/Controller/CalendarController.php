@@ -39,8 +39,11 @@ class CalendarController extends Controller
 		
 		$Event = new CalendarEvent();
 		$Event->setTitle($title);
-		$tr = true;
-		$Event->setAllDay($tr);
+	
+		if($allDay == "true")
+			$Event->setAllDay(1);
+			else
+		$Event->setAllDay(0);
 		
 		$Event->setStart($start);
 		$Event->setEnd($end);
@@ -50,6 +53,6 @@ class CalendarController extends Controller
 		$user->getCalendar()->addCalendarEvent($Event);
 		$em->flush();
 			
-		 return $this->render('ScubeCalendarBundle:Calendar:add_event.html.twig');
+		 return $this->render('ScubeCalendarBundle:Calendar:index.html.twig', array('user'=>$user));
 	}
 }
