@@ -111,8 +111,30 @@ class MediasController extends Controller
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
 		$user = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
 		
-		$media = $this->getDoctrine()->getRepository('ScubeBaseBundle:Media')->find($id);
-		return $this->render('ScubeMediasBundle:Medias:load.html.twig', array('media'=>$media));
+		//$media = $this->getDoctrine()->getRepository('ScubeBaseBundle:Media')->find($id);
+		
+		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:Media');
+		$media = $repository->find($id);
+		$folderId = $media->getMediaFolder()->getId();
+		
+		$media_list = $repository->findBy(array('media_folder'=>$folderId), array('id'=>'asc'));
+		$list_size = count($media_list);
+		$id_prev_media = '';
+		$id_next_media = '';
+
+		for ($i = 0; $i < $list_size; ++$i)
+		{
+			if ($media_list[$i]->getId() == $media->getId())
+			{
+				if ($i > 0)
+					$id_prev_media = $media_list[$i - 1]->getId();
+				if ($i + 1 < $list_size)
+					$id_next_media = $media_list[$i + 1]->getId();
+				break ;
+			}
+		}
+
+		return $this->render('ScubeMediasBundle:Medias:load.html.twig', array('media'=>$media, 'prev_media'=>$id_prev_media, 'next_media'=>$id_next_media));
     }
 	
 	public function deleteFolderAction(Request $request, $id)
