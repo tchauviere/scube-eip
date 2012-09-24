@@ -3,6 +3,14 @@
 <div id="vizualiser">
 {% if media.type == "picture" %}
 	<img style="vertical-align:bottom;display:inline;" src="{{media.path}}" alt="{{media.name}}" />
+	<center>
+		{% if prev_media != "" %}
+			<span><a href="#" onclick='load_media("{{ prev_media }}", "{{ "picture" }}");'> < </a></span>
+		{%endif%}
+		{% if next_media != "" %}
+			<span><a href="#" onclick='load_media("{{ next_media }}", "{{ "picture" }}");'> > </a></span>
+		{%endif%}		
+	</center>
 {% elseif media.type == "document" %}
 	<iframe style="border:none;" src="{{media.path}}"></iframe>
 {%endif%}
