@@ -1,3 +1,15 @@
 AdminLogsBundle_homepage:
     pattern:  /admin_logs
     defaults: { _controller: ScubeAdminLogsBundle:AdminLogs:index }
+
+AdminLogsBundle_prodlogs:
+    pattern:  /admin_logs/prod
+    defaults: { _controller: ScubeAdminLogsBundle:AdminLogs:prod }
+
+AdminLogsBundle_devlogs:
+    pattern:  /admin_logs/dev
+    defaults: { _controller: ScubeAdminLogsBundle:AdminLogs:dev }
+
+AdminLogsBundle_cleanlogs:
+    pattern:  /admin_logs/clean/{mode}
+    defaults: { _controller: ScubeAdminLogsBundle:AdminLogs:clean }
