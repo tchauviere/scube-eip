@@ -28,6 +28,7 @@ class DefaultController extends Controller
 		$default_app->setBundleName("AdminAppsBundle");
 		$default_app->setLink("AdminAppsBundle_homepage");
 		$default_app->setType("admin");
+		$default_app->setCategory("core");
 		$default_app->setDescription("Manage installed applications on your server and install new applications now !");
 		$default_app->setActivated(true);
 		$default_app->setNecessary(true);
@@ -40,6 +41,7 @@ class DefaultController extends Controller
 		$default_app2->setBundleName("AdminUserBundle");
 		$default_app2->setLink("AdminUserBundle_homepage");
 		$default_app2->setType("admin");
+		$default_app2->setCategory("core");
 		$default_app2->setDescription("Manage users, groups and permissions.");
 		$default_app2->setActivated(true);
 		$default_app2->setNecessary(true);
@@ -52,6 +54,7 @@ class DefaultController extends Controller
 		$default_app3->setBundleName("AdminSettingsBundle");
 		$default_app3->setLink("AdminSettingsBundle_homepage");
 		$default_app3->setType("admin");
+		$default_app3->setCategory("core");
 		$default_app3->setDescription("Manage setting values.");
 		$default_app3->setActivated(true);
 		$default_app3->setNecessary(true);
@@ -64,6 +67,7 @@ class DefaultController extends Controller
 		$default_app4->setBundleName("AdminLogsBundle");
 		$default_app4->setLink("AdminLogsBundle_homepage");
 		$default_app4->setType("admin");
+		$default_app4->setCategory("core");
 		$default_app4->setDescription("View Scube's Logs and find errors");
 		$default_app4->setActivated(true);
 		$default_app4->setNecessary(true);
@@ -76,6 +80,7 @@ class DefaultController extends Controller
 		$default_app5->setBundleName("ConnectionsBundle");
 		$default_app5->setLink("ConnectionsBundle_homepage");
 		$default_app5->setType("normal");
+		$default_app5->setCategory("core");
 		$default_app5->setDescription("Organize your contacts");
 		$default_app5->setActivated(true);
 		$default_app5->setNecessary(true);
@@ -104,6 +109,7 @@ class DefaultController extends Controller
 		$default_app6->setBundleName("AccountBundle");
 		$default_app6->setLink("ScubeAccountBundle_homepage");
 		$default_app6->setType("normal");
+		$default_app6->setCategory("core");
 		$default_app6->setDescription("Manage your account, profile and pictures");
 		$default_app6->setActivated(true);
 		$default_app6->setNecessary(true);
@@ -116,6 +122,7 @@ class DefaultController extends Controller
 		$default_app7->setBundleName("CalendarBundle");
 		$default_app7->setLink("CalendarBundle_homepage");
 		$default_app7->setType("normal");
+		$default_app7->setCategory("core");
 		$default_app7->setDescription("Manage events in your personal calendar");
 		$default_app7->setActivated(true);
 		$default_app7->setNecessary(true);
@@ -144,6 +151,7 @@ class DefaultController extends Controller
 		$default_app8->setBundleName("MailboxBundle");
 		$default_app8->setLink("ScubeMailboxBundle_homepage");
 		$default_app8->setType("normal");
+		$default_app8->setCategory("core");
 		$default_app8->setDescription("Send messages to your contacts");
 		$default_app8->setActivated(true);
 		$default_app8->setNecessary(true);
@@ -172,6 +180,7 @@ class DefaultController extends Controller
 		$default_app9->setBundleName("AdminAppearanceBundle");
 		$default_app9->setLink("ScubeAdminAppearanceBundle_homepage");
 		$default_app9->setType("admin");
+		$default_app9->setCategory("core");
 		$default_app9->setDescription("Manage appearance as your own");
 		$default_app9->setActivated(true);
 		$default_app9->setNecessary(true);
@@ -184,6 +193,7 @@ class DefaultController extends Controller
 		$default_app10->setBundleName("MediasBundle");
 		$default_app10->setLink("ScubeMediasBundle_homepage");
 		$default_app10->setType("normal");
+		$default_app10->setCategory("core");
 		$default_app10->setDescription("Upload and watch your media files");
 		$default_app10->setActivated(true);
 		$default_app10->setNecessary(true);
@@ -212,6 +222,7 @@ class DefaultController extends Controller
 		$default_app11->setBundleName("AdminHelpBundle");
 		$default_app11->setLink("ScubeAdminHelpBundle_homepage");
 		$default_app11->setType("admin");
+		$default_app11->setCategory("core");
 		$default_app11->setDescription("View Scube's admin Help");
 		$default_app11->setActivated(true);
 		$default_app11->setNecessary(true);

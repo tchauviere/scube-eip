@@ -38,6 +38,11 @@ class Application
     protected $type;
 	
 	/**
+     * @ORM\Column(type="string", length=50)
+     */
+    protected $category;
+	
+	/**
      * @ORM\Column(type="string", length=200)
      */
     protected $link;
@@ -230,5 +235,25 @@ class Application
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * Set category
+     *
+     * @param string $category
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+    }
+
+    /**
+     * Get category
+     *
+     * @return string 
+     */
+    public function getCategory()
+    {
+        return $this->category;
     }
 }

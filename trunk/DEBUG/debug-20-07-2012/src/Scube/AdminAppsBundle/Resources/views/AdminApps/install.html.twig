@@ -9,17 +9,16 @@
 <table class="table_content">
 <tr>
 	<td class="sidebar_left">
-		<ul class="sidebar_navigation">
-			<li><a href="{{ path("AdminAppsBundle_homepage")}}">Application list</a></li>
-			<li><a href="{{ path("AdminAppsBundle_install")}}">Install application</a></li>
-			<li><a href="{{ path("AdminAppsBundle_widget_homepage")}}">Widget List</a></li>
-			<li><a href="{{ path("AdminAppsBundle_widget_install")}}">Install widget</a></li>
-		</ul>
+		{% include 'ScubeAdminAppsBundle:AdminApps:menu.html.twig' %}
 	</td>
 	<td class="sidebar_main">
 		<h1>Install application</h1>
 		{% if success %}
 			<p class="form_success">Application has been successfully installed.</p>
+		{% endif %}
+		
+		{% if error %}
+			<p class="form_error">An error occured : {{ error }}</p>
 		{% endif %}
 		
 		<p>If your application is already installed, please uninstall before (for a reinstall process).</p>
