@@ -57,12 +57,6 @@ class AdminAppsController extends Controller
 				$bundle_path = "new Apps\\".$application->getBundleName()."\\Apps".$application->getBundleName()."(),\n";
 				$bundle_routing = "Apps".$application->getBundleName().":\n    resource: \"@Apps".$application->getBundleName()."/Resources/config/routing.yml\"\n    prefix:   /\n";
 			 }
-			 if ($application->getAdminBundleName())
-			 {
-				$this->rrmdir($this->get('kernel')->getRootDir()."/../src/Apps/".$application->getAdminBundleName());
-				$admin_bundle_path = "new Apps\\".$application->getAdminBundleName()."\\Apps".$application->getAdminBundleName()."(),\n";
-				$admin_bundle_routing = "Apps".$application->getAdminBundleName().":\n    resource: \"@Apps".$application->getAdminBundleName()."/Resources/config/routing.yml\"\n    prefix:   /\n";
-			 }
 			 
 			 /* DELETE BUNDLE FROM KERNEL */
 			 if (is_writable($this->get('kernel')->getRootDir()."/AppKernel.php"))
@@ -70,8 +64,6 @@ class AdminAppsController extends Controller
 				 $kernel_content = file_get_contents($this->get('kernel')->getRootDir()."/AppKernel.php");
 				 if ($application->getBundleName())
 					$kernel_content = str_replace($bundle_path, "", $kernel_content);
-				if ($application->getAdminBundleName())
-					$kernel_content = str_replace($admin_bundle_path, "", $kernel_content);
 					
 				file_put_contents($this->get('kernel')->getRootDir()."/AppKernel.php", $kernel_content);
 			 }
@@ -86,8 +78,6 @@ class AdminAppsController extends Controller
 				 $routing_content = file_get_contents($this->get('kernel')->getRootDir()."/config/routing.yml");
 				 if ($application->getBundleName())
 					$routing_content = str_replace($bundle_routing, "", $routing_content);
-				if ($application->getAdminBundleName())
-					$routing_content = str_replace($admin_bundle_routing, "", $routing_content);
 					
 				file_put_contents($this->get('kernel')->getRootDir()."/config/routing.yml", $routing_content);
 			 }
@@ -117,19 +107,34 @@ class AdminAppsController extends Controller
 	
 				$data = $form->getData();
 				$filename = "install_app_archive.zip";
+				$tmp_folder = $this->get('kernel')->getRootDir()."/../TEMPORARY/";
+				
+				/* REMOVE FILES IN TEMPORARY FOLDER */
+				if ( ($files = @scandir($tmp_folder)) && (count($files) > 2) )
+				{
+					foreach ($files as $f) 
+					{
+						if ($f != "." && $f != ".." && $f != ".svn")
+							$this->rrmdir($tmp_folder.$f);
+					}
+				}
 				
 				/* COPY OF THE INPUT FILE IN THE TEMPORARY FOLDER */
-				$form['zipped_application']->getData()->move($this->get('kernel')->getRootDir()."/../TEMPORARY/", $filename);
+				$form['zipped_application']->getData()->move($tmp_folder, $filename);
 				
 				/* Unzip application and put in the TEMPORARY FOLDER */
 				$zip = new \ZipArchive;
-				 $res = $zip->open($this->get('kernel')->getRootDir()."/../TEMPORARY/".$filename);
+				 $res = $zip->open($tmp_folder.$filename);
 				 if ($res === TRUE) {
-					 $zip->extractTo($this->get('kernel')->getRootDir()."/../TEMPORARY/install_app_archive");
+					 $zip->extractTo($tmp_folder."install_app_archive");
 					 $zip->close();
 					 
 					 /* READ THE MANIFEST TO FIND APPLICATION INFORMATIONS */
-					 $manifest_content = file_get_contents($this->get('kernel')->getRootDir()."/../TEMPORARY/install_app_archive/manifest.txt");
+					 if (!file_exists($tmp_folder."install_app_archive/manifest.txt")) {
+						 $error = "No manifest found for the application. Please write it and try again.";
+						 return $this->render('ScubeAdminAppsBundle:AdminApps:install.html.twig', array('form' => $form->createView(), 'success'=>false, 'error'=>$error));
+					 }
+					 $manifest_content = file_get_contents($tmp_folder."install_app_archive/manifest.txt");
 					 $manifest_line = explode("\n", $manifest_content);
 					 $manifest = array();
 					 foreach ($manifest_line as $line)
@@ -141,22 +146,36 @@ class AdminAppsController extends Controller
 						 	$manifest[$key] = trim($value);
 					 }
 					 
+					 /* PREVENT BUGS WITH ERROR MESSAGES */
+					 $same_name = $this->getDoctrine()->getRepository('ScubeBaseBundle:Application')->findOneBy(array('name' => $manifest['name']));
+					 if (empty($manifest['name']) || $same_name) {
+						 $error = "An application already exists with the same name in the database or the name is empty.";
+						 return $this->render('ScubeAdminAppsBundle:AdminApps:install.html.twig', array('form' => $form->createView(), 'success'=>false, 'error'=>$error));
+					 }
+					 $same_bundle_name = $this->getDoctrine()->getRepository('ScubeBaseBundle:Application')->findOneBy(array('bundle_name' => $manifest['bundle_name']));
+					 if (empty($manifest['bundle_name']) || $same_bundle_name) {
+						 $error = "An application already exists with the same bundle_name in the database or the bundle_name is empty.";
+						 return $this->render('ScubeAdminAppsBundle:AdminApps:install.html.twig', array('form' => $form->createView(), 'success'=>false, 'error'=>$error));
+					 }
+					 $same_link = $this->getDoctrine()->getRepository('ScubeBaseBundle:Application')->findOneBy(array('link' => $manifest['link']));
+					 if (empty($manifest['link']) || $same_link) {
+						 $error = "An application already exists with the same link in the database or the link is empty.";
+						 return $this->render('ScubeAdminAppsBundle:AdminApps:install.html.twig', array('form' => $form->createView(), 'success'=>false, 'error'=>$error));
+					 }
+					 
+					 if (file_exists($this->get('kernel')->getRootDir()."/../src/Apps/".$manifest['bundle_name'])) {
+						 $error = "An application already exists with the same name in src/Apps. Please remove the old version.";
+						 return $this->render('ScubeAdminAppsBundle:AdminApps:install.html.twig', array('form' => $form->createView(), 'success'=>false, 'error'=>$error));
+					 }
+					 
 					 /* MOVE BUNDLES INTO THE SRC FOLDER */
 					 if ($manifest['bundle_name'])
 					 {
-						 $res = rename($this->get('kernel')->getRootDir()."/../TEMPORARY/install_app_archive/".$manifest['bundle_name'], $this->get('kernel')->getRootDir()."/../src/Apps/".$manifest['bundle_name']);
+						 $res = rename($tmp_folder."install_app_archive/".$manifest['bundle_name'], $this->get('kernel')->getRootDir()."/../src/Apps/".$manifest['bundle_name']);
 						 if ($res == false)
 						 	throw $this->createNotFoundException('Unable to access to the folder ./src/Apps/ Please check permissions.');
 						$bundle_path = "new Apps\\".$manifest['bundle_name']."\\Apps".$manifest['bundle_name']."(),\n";
 						$bundle_routing = "Apps".$manifest['bundle_name'].":\n    resource: \"@Apps".$manifest['bundle_name']."/Resources/config/routing.yml\"\n    prefix:   /\n";
-					 }
-					 if ($manifest['admin_bundle_name'])
-					 {
-						 $res = rename($this->get('kernel')->getRootDir()."/../TEMPORARY/install_app_archive/".$manifest['admin_bundle_name'], $this->get('kernel')->getRootDir()."/../src/Apps/".$manifest['admin_bundle_name']);
-						 if ($res == false)
-						 	throw $this->createNotFoundException('Unable to access to the folder ./src/Apps/ Please check permissions.');
-						$admin_bundle_name = "new Apps\\".$manifest['admin_bundle_name']."\\Apps".$manifest['admin_bundle_name']."(),\n";
-						$admin_bundle_routing = "Apps".$manifest['admin_bundle_name'].":\n    resource: \"@Apps".$manifest['admin_bundle_name']."/Resources/config/routing.yml\"\n    prefix:   /\n";
 					 }
 					 
 					 /* KERNEL MODIFICATION */
@@ -165,8 +184,6 @@ class AdminAppsController extends Controller
 						 $kernel_content = file_get_contents($this->get('kernel')->getRootDir()."/AppKernel.php");
 						 if ($manifest['bundle_name'])
 						 	$kernel_content = str_replace("/*APP_DELIMITER*/", "/*APP_DELIMITER*/\n".$bundle_path, $kernel_content);
-						if ($manifest['admin_bundle_name'])
-						 	$kernel_content = str_replace("/*APP_DELIMITER*/", "/*APP_DELIMITER*/\n".$admin_bundle_name, $kernel_content);
 							
 						file_put_contents($this->get('kernel')->getRootDir()."/AppKernel.php", $kernel_content);
 					 }
@@ -181,8 +198,6 @@ class AdminAppsController extends Controller
 						 $routing_content = file_get_contents($this->get('kernel')->getRootDir()."/config/routing.yml");
 						 if ($manifest['bundle_name'])
 						 	$routing_content = str_replace("#APP_DELIMITER", "#APP_DELIMITER\n".$bundle_routing, $routing_content);
-						if ($manifest['admin_bundle_name'])
-						 	$routing_content = str_replace("#APP_DELIMITER", "#APP_DELIMITER\n".$admin_bundle_routing, $routing_content);
 							
 						file_put_contents($this->get('kernel')->getRootDir()."/config/routing.yml", $routing_content);
 					 }
@@ -192,19 +207,19 @@ class AdminAppsController extends Controller
 					 }
 					 
 					 /* REMOVE TEMPORARY FILES */
-					 if (file_exists($this->get('kernel')->getRootDir()."/../TEMPORARY/install_app_archive/"))
-					 	$this->rrmdir($this->get('kernel')->getRootDir()."/../TEMPORARY/install_app_archive/");
+					 if (file_exists($tmp_folder."install_app_archive/"))
+					 	$this->rrmdir($tmp_folder."install_app_archive/");
 						
-					 if (file_exists($this->get('kernel')->getRootDir()."/../TEMPORARY/".$filename))
-					 	unlink($this->get('kernel')->getRootDir()."/../TEMPORARY/".$filename);
+					 if (file_exists($tmp_folder.$filename))
+					 	unlink($tmp_folder.$filename);
 						
 					 /* CREATE THE APPLICATION OBJECT TO SAVE IT */
 					 $application = new Application();
 					 $application->setName($manifest['name']);
 					 $application->setBundleName($manifest['bundle_name']);
-					 $application->setAdminBundleName($manifest['admin_bundle_name']);
 					 $application->setLink($manifest['link']);
-					 $application->setAdminLink($manifest['admin_link']);
+					 $application->setType($manifest['type']);
+					 $application->setCategory($manifest['category']);
 					 $application->setDescription($manifest['description']);
 					 $application->setActivated($manifest['activated']);
 					 $application->setNecessary($manifest['necessary']);
@@ -219,7 +234,7 @@ class AdminAppsController extends Controller
 					throw $this->createNotFoundException('Unable to access to the folder ./TEMPORARY Please check permissions.');
 				 }
 			}
-		return $this->render('ScubeAdminAppsBundle:AdminApps:install.html.twig', array('form' => $form->createView(), 'success'=>false));
+		return $this->render('ScubeAdminAppsBundle:AdminApps:install.html.twig', array('form' => $form->createView(), 'success'=>false, 'error'=>false));
     }
 	
 	public function indexWidgetAction(Request $request)
@@ -401,6 +416,11 @@ class AdminAppsController extends Controller
 	
     function rrmdir($dir) 
 	{
+		if (!is_dir($dir)) {
+			unlink($dir);
+			return;
+		}
+		
 		foreach(array_merge(glob($dir . '/*'), glob($dir . '/.svn')) as $file) {
 			if(is_dir($file))
 				$this->rrmdir($file);
