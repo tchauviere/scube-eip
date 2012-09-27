@@ -111,8 +111,6 @@ class MediasController extends Controller
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
 		$user = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
 		
-		//$media = $this->getDoctrine()->getRepository('ScubeBaseBundle:Media')->find($id);
-		
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:Media');
 		$media = $repository->find($id);
 		$folderId = $media->getMediaFolder()->getId();
