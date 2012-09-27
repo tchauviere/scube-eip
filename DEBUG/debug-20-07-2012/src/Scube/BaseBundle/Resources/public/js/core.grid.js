@@ -34,7 +34,7 @@ function switch_edit_mode(value)
 		edit_mode = false;
 	else
 		edit_mode = true;
-	
+		
 	load_Grid();
 }
 
@@ -136,11 +136,22 @@ function add_WidgetOnGrid(id, pos_x, pos_y, width, height)
 							});
 	if (edit_mode)
 		$("#"+id).resizable({grid:cells_per_line}); 
-
-	for (var i=pos_y; i!=(pos_y+height); ++i) {
-		for (var j=pos_x; j!=(pos_x+width); ++j) {
-			WidgetsOnGrid[i][j] = id;
+	
+	/* Fill WidgetsOnGrid with width and height proportions */
+	var tmp_h = height;
+	var tmp_y = pos_y;
+	while (tmp_h != 0)
+	{
+		var tmp_w = width;
+		var tmp_x = pos_x;
+		while (tmp_w != 0)
+		{
+			WidgetsOnGrid[tmp_y][tmp_x] = id;
+			tmp_x++;
+			tmp_w--;
 		}
+		tmp_y++;
+		tmp_h--;
 	}
 }
 
@@ -172,6 +183,7 @@ function load_Grid()
 	
 	$("#GridContainer").css({"height": page_height - header_height})
 	$("#Grid").css({"margin":"0 "+cell_border+"px", "height":cell_width*nb_line + cell_border*nb_line})
+	
 	
 	init_Widgets_Array();
 	
@@ -290,12 +302,14 @@ function move_Widget(id, pos_x, pos_y)
 
   limit_y = parseInt(pos_y) + parseInt(Widgets[id]['height']);
   limit_x = parseInt(pos_x) + parseInt(Widgets[id]['width']);
+  
 	/* Set the new positions on grid */
 	for (var i=pos_y; i!=limit_y; ++i) {
 		for (var j=pos_x; j!=limit_x; ++j) {
 			WidgetsOnGrid[i][j] = id;
 		}
 	}
+	
 	$('#'+id).animate( {
       left: cell_width*pos_x + cell_border*pos_x+'px',
       top: cell_height*pos_y + cell_border*pos_y+'px',
