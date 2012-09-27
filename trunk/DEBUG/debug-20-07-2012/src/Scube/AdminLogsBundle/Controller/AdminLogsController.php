@@ -80,6 +80,7 @@ class AdminLogsController extends Controller
 		
 		for ($i = 0; !empty($tabLogs[$i]) ; $i++)
 		{
+			$tab[$i]['id'] = $i;
 			$tab[$i]['date'] = $this->getLogDate($tabLogs[$i]);
 			$tab[$i]['type'] = $this->getLogErrorType($tabLogs[$i]);
 			$tab[$i]['msg'] = $this->getLogMessage($tabLogs[$i]);
@@ -108,6 +109,12 @@ class AdminLogsController extends Controller
 	{
 		$tmp = explode(":", $line);
 		$errorType = $tmp[3];
+		if (strpos($errorType, "\\"))
+		{
+			$tmp = explode("\\", $errorType);
+			$pos = count($tmp) - 1;
+			$errorType = $tmp[$pos];
+		}
 		return $errorType;
 	}
 	
