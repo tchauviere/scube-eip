@@ -31,7 +31,7 @@
 			{% endfor %}
 			{% if userExists == false %}
 				<li>
-					<a href="{{ path('ScubeProfileViewerBundle_homepage', { 'id_user': userInList.getId() }) }}" data-transition="slide">{{userInList.getFirstName()}} {{userInList.getSurname()}}</a>
+					<a href="{{ path('ScubeProfileViewerBundle_infos', { 'id_user': userInList.getId() }) }}" data-transition="slide">{{userInList.getFirstName()}} {{userInList.getSurname()}}</a>
 				</li>
 			{% endif %}
 		{% endfor %}

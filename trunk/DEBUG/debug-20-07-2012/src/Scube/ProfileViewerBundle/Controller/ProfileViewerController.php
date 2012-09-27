@@ -167,7 +167,8 @@ class ProfileViewerController extends Controller
 					break ;
 			}
 		}
-		
+		if (\Scube\BaseBundle\Controller\BaseController::isMobile())
+			return $this->render('ScubeBaseBundle:Base_Mobile:view_profile.html.twig', array("user_connected"=>$user_connected, "user_to_display"=>$user_to_display, "auth"=>$auth));
         return $this->render('ScubeProfileViewerBundle:ProfileViewer:infos.html.twig', array("user_connected"=>$user_connected, "user_to_display"=>$user_to_display, "auth"=>$auth));
     }
 	public function picsAction(Request $request, $id_user)
