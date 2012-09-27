@@ -101,7 +101,7 @@ function	load_media(id, type) {
 				$("#vizualiser").html($("#media_loader").html());
 		  },
 		  success: function(data) {	
-		  	allocated_height = $(".sidebar_main").height() - $(".sidebar_main h1").height() - parseInt($(".sidebar_main h1").css("margin-top")) - parseInt($(".sidebar_main h1").css("margin-bottom"))  - parseInt($(".sidebar_main h1").css("padding-bottom")) - parseInt($(".sidebar_main h1").css("padding-top")) - 1;/* 1= border */
+		  	allocated_height = $(".sidebar_main").height() - $(".sidebar_main h1").height() - parseInt($(".sidebar_main h1").css("margin-top")) - parseInt($(".sidebar_main h1").css("margin-bottom"))  - parseInt($(".sidebar_main h1").css("padding-bottom")) - parseInt($(".sidebar_main h1").css("padding-top")) - 33;/* 1= border */
 			
 		  	$(".sidebar_main").css({
 				"background-color":"black"
