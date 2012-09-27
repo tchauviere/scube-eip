@@ -19,7 +19,7 @@
 	<td class="sidebar_main">
 		<h1>Logs Viewer : Development Logs</h1>
 			
-				<p class="result_table">
+				<div id="top_infos" class="result_table" style="padding-bottom: 15px;">
 				<table class="table_full_size result_table">
 				<tr>
 					<td style="text-align: center; color: black; width: 25%">
@@ -45,11 +45,12 @@
 					</td>
 					
 					<td style="color: black; text-align: center; margin-top: 10px; width: 25%;">
-						<a href="{{ path("AdminLogsBundle_cleanlogs", {'mode' : mode}) }}" class="button green">Clear Logs</a>
+						<a href="{{ path("AdminLogsBundle_cleanlogs", {'mode' : mode}) }}" class="button red">Clear Logs</a>
 					</td>
 				</tr>
 			</table>
-			</p>
+			</div>
+		
 		
 		{% if error %}
 			</br>
@@ -66,16 +67,27 @@
 					</thead>
 					
 					<tbody>
-						{% for log in logsFull %}
+						{% for log in logsFull | reverse %}
 						<tr>
 							<td>
-								<div class="table_text">{{ log.date }}</div>
+								<div class="table_text" style="text-align: center;">{{ log.date }}</div>
 							</td>
 							<td>
-								<div class="table_text">{{ log.type }}</div>
+								<div class="table_text" style="text-align: center;">{{ log.type }}</div>
 							</td>
-							<td>
-								<div class="table_text">{{ log.msg }}</div>
+							<td style="text-align: center">
+								<a href="#" onclick="$('#detail_{{log.id}}').slideDown();" class="button green">View Details</a>
+							</td>
+						</tr>
+						<tr>
+							<td id="detail_{{log.id}}" class="detail_line" colspan="3">
+								<div class="message_log" style="margin-top: 15px; color: black; font-size: small; text-alignment: justify; line-height: 1.2em;">
+									{{ log.msg }}
+								</div>
+								<div class="close_button" style="text-align: right; margin-right: 5%; margin-top: 10px; margin-bottom: 10px;">
+									<a href="#" onclick="$('#detail_{{log.id}}').slideUp();" class="button red">Close Details</a>
+								</div>
+								
 							</td>
 						</tr>
 						{% endfor %}
@@ -94,7 +106,7 @@
 
 function resize_table()
 {
-	available_height = $(".Application").height()	 - $(".sidebar_main h1").outerHeight(true) - $("p.result_table").outerHeight(true) + 11;
+	available_height = $(".Application").height()	 - $(".sidebar_main h1").outerHeight(true) - $("#top_infos").outerHeight(true);
 	$('table.result_table').css("max-height", available_height);
 	$('div.result_table_scroll').css("height", available_height);
 }
@@ -107,9 +119,9 @@ $(window).resize(function()
 	{
 		resize_table();
 	});
-
-	
+		
 </script>
 
+<style>.detail_line{display: none;}</style>
 
 {% endblock %}
