@@ -12,7 +12,7 @@
 			<li data-role="list-divider">{{group.getName()}}</li>
 			{% for userInGroup in group.getUsers() %}
 				<li>
-					<a href="{{ path('ScubeProfileViewerBundle_homepage', { 'id_user': userInGroup.getId() }) }}" data-transition="slide">{{userInGroup.getFirstName()}} {{userInGroup.getSurname()}}</a>
+					<a href="{{ path('ScubeProfileViewerBundle_infos', { 'id_user': userInGroup.getId() }) }}" data-transition="slide">{{userInGroup.getFirstName()}} {{userInGroup.getSurname()}}</a>
                 </li>
 			{% endfor %}
 		{% endfor %}
