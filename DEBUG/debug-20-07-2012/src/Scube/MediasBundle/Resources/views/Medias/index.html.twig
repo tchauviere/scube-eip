@@ -18,7 +18,7 @@
 						<span><a href="#" onclick='load_media("{{ media.id }}", "{{ media.type }}");'>{{ media.name }}</a></span>
 						<a style="float:right;" href="{{ path('ScubeMediasBundle_delete_media', { 'id': media.getId()}) }}"  >
 						{% image '@ScubeBaseBundle/Resources/public/images/remove.png' %}
-						<img width="16" src="{{ asset_url }}" alt="Remove"/></a>
+							<img width="16" src="{{ asset_url }}" alt="Remove"/></a>
 						{% endimage %}
 						</a> 
 					</li>
@@ -30,7 +30,7 @@
 						<a href="{{ path("ScubeMediasBundle_homepage_folder", { 'id': ifolder.getId()})}}">{{ ifolder.name }}</a>
 						<a style="float:right;" href="{{ path('ScubeMediasBundle_delete_folder', { 'id': ifolder.getId()}) }}"  >
 						{% image '@ScubeBaseBundle/Resources/public/images/remove.png' %}
-						<img width="16" src="{{ asset_url }}" alt="Remove"/></a>
+							<img width="16" src="{{ asset_url }}" alt="Remove"/></a>
 						{% endimage %}
 						</a> 
 					</li>
@@ -101,7 +101,7 @@ function	load_media(id, type) {
 				$("#vizualiser").html($("#media_loader").html());
 		  },
 		  success: function(data) {	
-		  	allocated_height = $(".sidebar_main").height() - $(".sidebar_main h1").height() - parseInt($(".sidebar_main h1").css("margin-top")) - parseInt($(".sidebar_main h1").css("margin-bottom"))  - parseInt($(".sidebar_main h1").css("padding-bottom")) - parseInt($(".sidebar_main h1").css("padding-top")) - 33;/* 1= border */
+		  	allocated_height = $(".sidebar_main").height() - $(".sidebar_main h1").height() - parseInt($(".sidebar_main h1").css("margin-top")) - parseInt($(".sidebar_main h1").css("margin-bottom"))  - parseInt($(".sidebar_main h1").css("padding-bottom")) - parseInt($(".sidebar_main h1").css("padding-top")) - 50;/* 1= border */
 			
 		  	$(".sidebar_main").css({
 				"background-color":"black"

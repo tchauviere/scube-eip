@@ -76,7 +76,9 @@ class MediasController extends Controller
 					case "jpeg": $type="picture"; break;
 					case "png": $type="picture"; break;
 					/* Videos */
-					//case "avi": $type="video"; break;
+					case "avi": $type="video"; break;
+					case "3gp": $type="video"; break;
+					case "mp4": $type="video"; break;
 					/* Docs */
 					case "pdf": $type="document"; break;
 					
@@ -114,25 +116,31 @@ class MediasController extends Controller
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:Media');
 		$media = $repository->find($id);
 		$folderId = $media->getMediaFolder()->getId();
-		
+		//On recupere tous les medias presents dans le repertoire
 		$media_list = $repository->findBy(array('media_folder'=>$folderId), array('id'=>'asc'));
 		$list_size = count($media_list);
-		$id_prev_media = '';
-		$id_next_media = '';
-
+		$prev_media['id'] = '';
+		$next_media['id'] = '';
+		//On recupere le media d'avant et d'apres
 		for ($i = 0; $i < $list_size; ++$i)
 		{
 			if ($media_list[$i]->getId() == $media->getId())
 			{
 				if ($i > 0)
-					$id_prev_media = $media_list[$i - 1]->getId();
+				{
+					$prev_media['id'] = $media_list[$i - 1]->getId();
+					$prev_media['type'] = $media_list[$i - 1]->getType();
+				}
 				if ($i + 1 < $list_size)
-					$id_next_media = $media_list[$i + 1]->getId();
+				{
+					$next_media['id'] = $media_list[$i + 1]->getId();
+					$next_media['type'] = $media_list[$i + 1]->getType();
+				}
 				break ;
 			}
 		}
-
-		return $this->render('ScubeMediasBundle:Medias:load.html.twig', array('media'=>$media, 'prev_media'=>$id_prev_media, 'next_media'=>$id_next_media));
+		
+		return $this->render('ScubeMediasBundle:Medias:load.html.twig', array('media'=>$media, 'prev_media'=>$prev_media, 'next_media'=>$next_media));
     }
 	
 	public function deleteFolderAction(Request $request, $id)
