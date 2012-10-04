@@ -5,3 +5,24 @@ CalendarBundle_homepage:
 CalendarBundle_addEvent:
     pattern:  /addEvent
     defaults: { _controller: ScubeCalendarBundle:Calendar:addevent }
+
+CalendarBundle_deleteEvent:
+    pattern:  /deleteEvent
+    defaults: { _controller: ScubeCalendarBundle:Calendar:deleteevent }
+
+CalendarBundle_editEvent:
+    pattern: /editEvent
+    defaults: { _controller: ScubeCalendarBundle:Calendar:editevent }
+
+CalendarBundle_displayEventToAccept:
+    pattern: /displayEventToAccept
+    defaults: { _controller: ScubeCalendarBundle:Calendar:displayeventtoaccept }
+
+CalendarBundle_acceptEvent:
+    pattern: /acceptEvent
+    defaults: { _controller: ScubeCalendarBundle:Calendar:acceptevent }
+
+CalendarBundle_refuseEvent:
+    pattern: /refuseEvent
+    defaults: { _controller: ScubeCalendarBundle:Calendar:refuseevent }
+
