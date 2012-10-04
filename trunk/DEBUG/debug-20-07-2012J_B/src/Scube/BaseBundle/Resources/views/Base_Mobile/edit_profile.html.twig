@@ -1,0 +1,33 @@
+{% extends 'ScubeBaseBundle:Base_Mobile:base.html.twig' %}
+
+
+{% block body %}
+{{ parent() }}
+{% block back_btns %}{% endblock %}
+
+<div data-role="content" data-theme="b">
+	<h1>Edit profile</h1>
+
+	{% if success %}
+		<p class="form_success">Your profile has been successfully updated.</p>
+	{% endif %}
+	<form data-transition="fade" action="{{ path('ScubeAccountBundle_edit_profile') }}" method="post" {{ form_enctype(form) }}>
+		{{ form_widget(form) }}
+
+		<input type="submit" value="Save profile" />
+	</form>
+</div>
+
+<div data-role="footer"  data-position="fixed" data-theme="b">
+	<div data-role="navbar">
+		<ul>
+			<li><a href="{{ path('_homepage') }}">Home</a></li>
+			<li><a href="{{ path('ConnectionsBundle_homepage') }}">Contacts</a></li>
+			<li><a href="{{ path('ScubeMailboxBundle_ajax_users_list_noparam') }}">Messages</a></li>
+		</ul>
+	</div>
+</div>
+
+
+
+{% endblock %}

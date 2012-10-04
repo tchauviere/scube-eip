@@ -1,0 +1,40 @@
+{% extends 'ScubeBaseBundle:Base:core_application.html.twig' %}
+
+
+{% block body %}
+{{ parent() }}
+
+<div class="Application">
+
+<table class="table_content">
+<tr>
+	<td class="sidebar_left">
+		{% include 'ScubeAdminAppsBundle:AdminApps:menu.html.twig' %}
+	</td>
+	<td class="sidebar_main">
+		<h1>Widgets Manager</h1>
+	
+		<table>
+		
+			{% for widget in widget_list %}
+			<tr>
+				<td>
+					<div class="table_title">{{widget.getName()}}</div>
+					<div class="table_text">
+					{% if widget.getApplication() %}
+						Linked to {{widget.getApplication().getName()}}
+					{% endif %}
+					</div>
+				</td>
+				<td>
+					<a href="{{ path("AdminAppsBundle_widget_remove", { 'id': widget.getId()})}}">Uninstall</a>
+				</td>
+			</tr>
+			{% endfor %}
+		</table>
+	</td>
+</tr>
+</div>
+</table>
+
+{% endblock %}

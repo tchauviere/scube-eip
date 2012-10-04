@@ -1,0 +1,108 @@
+{% extends 'ScubeProfileViewerBundle:ProfileViewer:structure.html.twig' %}
+
+
+{% block mainframe %}
+	{% if auth %}
+		<div class="newsfeed_inputbox">
+			{% if success %}
+				<p class="form_success">The news has been successfully posted.</p>
+			{% endif %}
+			<form class="top_form" action="{{ path("ScubeProfileViewerBundle_newsfeed", {'id_user':user_to_display.getId()} )}}" method="post" {{ form_enctype(form) }}>
+				
+				{{ form_widget(form._token) }}
+				{{ form_widget(form.content_text) }}
+			
+				<input type="submit" value="Post it !" />
+			</form>
+		</div>
+		<div class="newsfeed_list">
+			
+		</div>
+	{% else %}
+		<p class="error">You need permissions</p>
+	{% endif %}
+	
+<style>
+
+.top_form {
+	text-align:center;
+	margin-bottom:20px;
+	vertical-align:middle;
+}
+.top_form input[type="submit"] {
+	display:inline;
+	margin:0;
+	width:20%;
+	height:50px;
+	vertical-align:middle;
+	border-radius:0px;
+}
+.top_form textarea {
+	display:inline;
+	margin:0;
+	width:75%;
+	height:50px;
+	vertical-align:middle;
+}
+
+.newsfeed_list {
+	overflow-y:scroll;
+}
+
+.news_post {
+	width:90%;
+	margin:10px auto;
+	background-color:white;
+	border-radius:5px;
+	box-shadow: 0 0 5px #555;
+}
+.post_author {
+	padding-left:10px;
+}
+.post_content {
+	padding-left:10px;
+}
+.post_date {
+	margin-top:20px;
+	margin-bottom:5px;
+	margin-right:10px;
+	text-align:right;
+	color:#999;
+	font-size:0.8em;
+}
+	
+</style>
+
+<script>
+
+function resize_newsfeed()
+{
+	available_height = $(".Application").height()	 - $(".sidebar_main h1").outerHeight(true) - $(".newsfeed_inputbox").outerHeight(true) - 22;
+	$('.newsfeed_list').css("height", available_height);
+}
+
+$(document).ready(function() 
+	{
+		resize_newsfeed();
+		refresh_news();
+		var news_timer=setInterval("refresh_news()", 10000);
+	});
+$(window).resize(function() 
+	{
+		resize_newsfeed();
+	});
+	
+function refresh_news()
+{
+	$.ajax({
+			  url: "{{ path("ScubeProfileViewerBundle_postlist", {'id_user':user_to_display.getId()} )}}",
+			  success: function(data) {
+			  	$(".newsfeed_list").html(data);
+			  }
+			});
+}
+
+	
+</script>
+
+{% endblock %}
