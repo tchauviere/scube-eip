@@ -1,0 +1,353 @@
+{% extends 'ScubeBaseBundle:Base:core_application.html.twig' %}
+
+{% block more_javascripts %}
+{% javascripts
+    '@ScubeCalendarBundle/Resources/public/js/fullcalendar.js'	
+	'@ScubeCalendarBundle/Resources/public/js/fullcalendar.min.js' 
+	'@ScubeCalendarBundle/Resources/public/js/gcal.js'
+	'@ScubeCalendarBundle/Resources/public/js/jquery-ui-1.8.17.custom.min.js'
+	'@ScubeCalendarBundle/Resources/public/js/jquery-ui-timepicker-addon.js'
+%}
+
+<script type="text/javascript" src="{{ asset_url }}"></script>
+
+{% endjavascripts %}
+
+{% stylesheets '@ScubeCalendarBundle/Resources/public/css/*'%}
+<link rel="stylesheet" href="{{ asset_url }}" />
+{% endstylesheets %}
+<style>
+	
+	
+	
+	#calendar 
+	{
+		margin:0 20px;
+	}
+	
+	.fc-event-vert .fc-event-inner {
+border-width: 1px !important;
+padding: 10px 20 !important;
+order-left-color: none !important;
+}
+
+.fc-event-skin {
+border-color: #fff;
+background: #1E90FF !important;
+color: #fff !important;
+}
+	.fc td.fc-sun {
+  background: #8FBC8F;
+}
+		.fc td.fc-sat {
+  background: #8FBC8F;
+}
+
+	
+	#fade 
+	{ 
+		display: none;
+		background: #000;
+		position: fixed; left: 0; top: 0;
+		width: 100%; height: 100%;
+		opacity: .80;
+		z-index: 9999;
+	}
+
+	.popup_block
+	{
+		width:200px;
+		margin-left:-100px;
+		margin-top:-100px;
+		display: none;
+		background: #fff;
+		padding: 20px;
+		font-size: 12px;
+		position: absolute;
+		top: 50%; left: 50%;
+		z-index: 99999;
+		-webkit-box-shadow: 0px 0px 10px #000;
+		-moz-box-shadow: 0px 0px 10px #000;
+		box-shadow: 0px 0px 10px #000;
+		-webkit-border-radius: 10px;
+		-moz-border-radius: 10px;
+		border-radius: 10px;
+	}
+
+	img.btn_close 
+	{
+		float: right;
+		margin: -55px -55px 0 0;
+	}
+	
+	/*--Gérer la position fixed pour IE6--*/
+	*html #fade 
+	{
+		position: absolute;
+	}
+	
+	*html .popup_block 
+	{
+		position: absolute;
+	}
+	
+	#myForm label {
+		font-size:14px;
+		font-weight:bold;
+		text-align:center;
+		display:block;
+		margin:0 auto;
+		width:80%;
+	}
+	#myForm input {
+		display:block;
+		margin:5px auto;
+		width:80%;
+	}
+	#myForm input[type="button"], #myForm input[type="submit"] {
+		background-color: #92B417;
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		color: white;
+		font-weight: bold;
+		font-size: 16px;
+		border: none;
+		box-shadow: 0 1px 3px #999;
+		-moz-box-shadow: 0 1px 3px #999;
+		-webkit-box-shadow: 0 1px 3px #999;
+	}
+	#myForm input[type="button"] {
+		background-color: #94211A;
+	}
+	
+</style>
+
+
+
+<script>
+$(document).ready(function() {
+	
+		var date = new Date();
+		var d = date.getDate();
+		var m = date.getMonth();
+		var y = date.getFullYear();
+		var arrayEvents = new Array();
+		var arrayEdit = new Array();
+		var G_allDay = false;
+		var id = 1;
+		
+		var calendar = $('#calendar').fullCalendar(
+		{
+		businessHours :{start: 8, end: 18, limitDisplay: true },
+		 timeslotsPerHour : 4,
+		header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,agendaWeek,agendaDay'
+			},
+			selectable: true,
+			selectHelper: true,
+			
+			 eventRender : function(calEvent, $event) {
+
+		},
+			
+		select: function(start, end, allDay) 
+		{
+		var $dialogContent = $("#event_edit_container");
+		resetForm($dialogContent);
+		var startField = $dialogContent.find("select[name='start']").val(start);
+		var endField = $dialogContent.find("select[name='end']").val(end);
+		var titleField = $dialogContent.find("input[name='title']");
+		var bodyField = $dialogContent.find("textarea[name='body']");
+		var groupField = $dialogContent.find("select[name='group']");
+
+         $dialogContent.dialog(
+		 {
+            modal: true,
+            title: "New Calendar Event",
+            close: function() {
+               $dialogContent.dialog("destroy");
+               $dialogContent.hide();
+               calendar.fullCalendar("removeUnsavedEvents");
+            },
+            buttons: {
+               save : function() {
+                  
+				  if (titleField.val()) 
+					{
+					alert(start);
+					alert(groupField.val());
+					arrayEvents.push(titleField.val(), start.toString(), end.toString(), allDay, groupField.val());
+					$.post("{{path('CalendarBundle_addEvent')}}",{'array_events': arrayEvents});
+					arrayEvents = [];
+						calendar.fullCalendar('renderEvent',
+						{
+							id : id,
+							title: titleField.val(),
+							start: start,
+							end: end,
+							allDay: allDay,
+							body : "salut"
+						},
+						true
+					);
+				}
+				 $dialogContent.dialog("close");
+               },
+               cancel : function() 
+			   {
+                  $dialogContent.dialog("close");
+               }
+            }
+         }).show();
+		},
+			
+		eventClick: function(calEvent, $event) 
+		{
+			if (calEvent.readOnly) 
+			{
+				return;
+			}
+         var $dialogContent = $("#event_edit_container");
+         resetForm($dialogContent);
+         var startField = $dialogContent.find("select[name='start']").val(calEvent.start);
+         var endField = $dialogContent.find("select[name='end']").val(calEvent.end);
+         var titleField = $dialogContent.find("input[name='title']").val(calEvent.title);
+         var bodyField = $dialogContent.find("textarea[name='body']");
+         bodyField.val(calEvent.body);
+         $dialogContent.dialog(
+		 {
+            modal: true,
+            title: "Edit - " + calEvent.title,
+            close: function()
+			{
+               $dialogContent.dialog("destroy");
+               $dialogContent.hide();
+               $('#calendar').fullCalendar("removeUnsavedEvents");
+            },
+            buttons: 
+			{
+               save : function() {
+
+                 // calEvent.start = new Date(startField.val());
+                  //calEvent.end = new Date(endField.val());
+                  calEvent.title = titleField.val();
+                  //calEvent.body = bodyField.val();
+
+                  calendar.fullCalendar("updateEvent", calEvent);
+                  $dialogContent.dialog("close");
+				  
+				  /*faire la requete au controller*/
+               },
+               "delete" : function() 
+			   {
+			    $('#calendar').fullCalendar("removeEvents", calEvent.id);
+				arrayEvents.push(calEvent.id);
+				$.post("{{path('CalendarBundle_deleteEvent')}}",{'delete_event': arrayEvents});
+				arrayEvents = [];
+               
+				
+				
+                $dialogContent.dialog("close");
+               },
+               cancel : function() 
+			   {
+                  $dialogContent.dialog("close");
+               }
+            }
+         }).show();
+
+         var startField = $dialogContent.find("select[name='start']").val(calEvent.start);
+         var endField = $dialogContent.find("select[name='end']").val(calEvent.end);
+         $dialogContent.find(".date_holder").text(calendar.fullCalendar("formatDate", calEvent.start));
+         setupStartAndEndTimeFields(startField, endField, calEvent, calendar.weekCalendar("getTimeslotTimes", calEvent.start));
+         $(window).resize().resize(); //fixes a bug in modal overlay size ??
+				
+		},		
+	
+			events: [
+			{% for ev in user.getCalendar().getCalendarEvents() %}
+					{
+						id : "{{ ev.id }}",
+						title: "{{ ev.title}}",
+						start: new Date("{{ ev.start }}"),
+						end: new Date("{{ ev.end }}"),
+						allDay: "{{ ev.allDay }}"
+					},
+			{% endfor %}
+					]
+		});
+		function resetForm($dialogContent) 
+		{
+			$dialogContent.find("input").val("");
+			$dialogContent.find("textarea").val("");
+		}		
+	});
+</script>
+
+<script>
+	$(function() {
+		$( "#datepicker" ).datepicker();
+		$("#startHour").timepicker({});
+		$("#endHour").timepicker({});
+	});
+	</script>
+
+{% endblock %}
+
+
+
+{% block body %}
+{{ parent() }}
+
+<div class="Application">
+
+	<div > <p> You have {{ user.getCalendar().getCalendarEventsToAccept()| length  }} event(s) to accept</p>
+	<form action="{{ path("CalendarBundle_displayEventToAccept")}}" method="post">
+			<input type="submit" value="Display" />
+		</form>
+	</div>
+	<div id='calendar'></div>
+	<div id="event_edit_container">
+		<form>
+			<input type="hidden" />
+			<ul>
+				<li>
+					<span>Date: </span><span class="date_holder"></span> 
+				</li>
+				<li>
+					<label for="start">Start Time: </label>
+					<select name="start">
+			
+					</select>
+				</li>
+				<li>
+					<label for="end">End Time: </label><select name="end"><option value="">Select End Time</option>
+					
+					</select>
+				</li>
+					<li>
+					<label for="group">Group: </label><select name="group"><option value="">Select group</option>
+					{% for group in user.getConnectionsGroups() %}
+					
+						<option value={{ group.getName() }} > {{ group.getName() }}</option>
+					{% endfor %}
+					</select>
+				</li>
+				<li>
+					<label for="title">Title: </label><input type="text" name="title" />
+				</li>
+				<li>
+					<label for="body">Body: </label><textarea name="body"></textarea>
+				</li>
+			</ul>
+		</form>
+	</div>
+</div>
+
+
+
+
+
+{% endblock %}

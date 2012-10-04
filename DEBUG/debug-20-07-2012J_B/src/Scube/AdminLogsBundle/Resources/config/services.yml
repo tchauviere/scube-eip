@@ -1,0 +1,7 @@
+parameters:
+#    scube_admin_logs.example.class: Scube\AdminLogsBundle\Example
+
+services:
+#    scube_admin_logs.example:
+#        class: %scube_admin_logs.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

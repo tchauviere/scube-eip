@@ -1,0 +1,3 @@
+WidgetsMailboxWidgetBundle_homepage:
+    pattern:  /mailbox_widget
+    defaults: { _controller: WidgetsMailboxWidgetBundle:Default:index }

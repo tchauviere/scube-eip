@@ -1,0 +1,7 @@
+AdminSettingsBundle_homepage:
+    pattern:  /admin_settings
+    defaults: { _controller: ScubeAdminSettingsBundle:AdminSettings:index }
+
+AdminSettingsBundle_edit:
+    pattern:  /admin_settings_edit/{id}
+    defaults: { _controller: ScubeAdminSettingsBundle:AdminSettings:edit }
