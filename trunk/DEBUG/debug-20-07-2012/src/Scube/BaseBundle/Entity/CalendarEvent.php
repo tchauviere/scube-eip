@@ -45,6 +45,18 @@ class CalendarEvent
      */
     private $allday;
 
+	/**
+     * @ORM\OneToOne(targetEntity="Scube\BaseBundle\Entity\User")
+     * @ORM\JoinColumn(name="user", referencedColumnName="id")
+     */
+	private $userCreator;
+
+	/**
+     * @ORM\ManyToMany(targetEntity="Scube\BaseBundle\Entity\User")
+     * @ORM\JoinColumn(name="user", referencedColumnName="id")
+     */
+	private $guestList;
+	 
     /**
      * Get id
      *
@@ -133,5 +145,49 @@ class CalendarEvent
     public function getAllday()
     {
         return $this->allday;
+    }
+    public function __construct()
+    {
+        $this->guestList = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Set userCreator
+     *
+     * @param Scube\BaseBundle\Entity\User $userCreator
+     */
+    public function setUserCreator(\Scube\BaseBundle\Entity\User $userCreator)
+    {
+        $this->userCreator = $userCreator;
+    }
+
+    /**
+     * Get userCreator
+     *
+     * @return Scube\BaseBundle\Entity\User 
+     */
+    public function getUserCreator()
+    {
+        return $this->userCreator;
+    }
+
+    /**
+     * Add guestList
+     *
+     * @param Scube\BaseBundle\Entity\User $guestList
+     */
+    public function addUser(\Scube\BaseBundle\Entity\User $guestList)
+    {
+        $this->guestList[] = $guestList;
+    }
+
+    /**
+     * Get guestList
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getGuestList()
+    {
+        return $this->guestList;
     }
 }

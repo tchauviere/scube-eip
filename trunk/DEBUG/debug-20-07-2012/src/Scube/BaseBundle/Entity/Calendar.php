@@ -24,6 +24,12 @@ class Calendar
      */ 
     protected $calendar_events;
 	
+	/**
+     * @ORM\ManyToMany(targetEntity="Scube\BaseBundle\Entity\CalendarEventToAccept")
+	 * @ORM\JoinTable(name="calendar_events_to_accept")
+     */ 
+    protected $calendar_events_to_accept;
+	
 	public function __construct()
     {
         $this->calendar_events = new \Doctrine\Common\Collections\ArrayCollection();
@@ -57,5 +63,35 @@ class Calendar
     public function getCalendarEvents()
     {
         return $this->calendar_events;
+    }
+
+    /**
+     * Add calendar_events_to_accept
+     *
+     * @param Scube\BaseBundle\Entity\CalendarEventToAccept $calendarEventsToAccept
+     */
+    public function addCalendarEventToAccept(\Scube\BaseBundle\Entity\CalendarEventToAccept $calendarEventsToAccept)
+    {
+        $this->calendar_events_to_accept[] = $calendarEventsToAccept;
+    }
+
+    /**
+     * Get calendar_events_to_accept
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getCalendarEventsToAccept()
+    {
+        return $this->calendar_events_to_accept;
+    }
+
+    /**
+     * Get calendar_event_to_accept
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getCalendarEventToAccept()
+    {
+        return $this->calendar_event_to_accept;
     }
 }

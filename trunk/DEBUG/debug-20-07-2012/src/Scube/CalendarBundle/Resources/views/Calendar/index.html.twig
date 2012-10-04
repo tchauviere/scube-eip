@@ -134,10 +134,12 @@ $(document).ready(function() {
 		var arrayEvents = new Array();
 		var arrayEdit = new Array();
 		var G_allDay = false;
-		
+		var id = 1;
 		
 		var calendar = $('#calendar').fullCalendar(
 		{
+		businessHours :{start: 8, end: 18, limitDisplay: true },
+		 timeslotsPerHour : 4,
 		header: {
 				left: 'prev,next today',
 				center: 'title',
@@ -145,70 +147,129 @@ $(document).ready(function() {
 			},
 			selectable: true,
 			selectHelper: true,
-			select: function(start, end, allDay) {
-				var title = prompt('Event Title:');
-				if (title) {
-					calendar.fullCalendar('renderEvent',
-						{
-							title: title,
-							start: start,
-							end: end,
-							allDay: allDay
-						},
-						true // make the event "stick"
-					);
-					arrayEvents.push(title, start.toString(), end.toString(), allDay);
+			
+			 eventRender : function(calEvent, $event) {
+
+		},
+			
+		select: function(start, end, allDay) 
+		{
+		var $dialogContent = $("#event_edit_container");
+		resetForm($dialogContent);
+		var startField = $dialogContent.find("select[name='start']").val(start);
+		var endField = $dialogContent.find("select[name='end']").val(end);
+		var titleField = $dialogContent.find("input[name='title']");
+		var bodyField = $dialogContent.find("textarea[name='body']");
+		var groupField = $dialogContent.find("select[name='group']");
+
+         $dialogContent.dialog(
+		 {
+            modal: true,
+            title: "New Calendar Event",
+            close: function() {
+               $dialogContent.dialog("destroy");
+               $dialogContent.hide();
+               calendar.fullCalendar("removeUnsavedEvents");
+            },
+            buttons: {
+               save : function() {
+                  
+				  if (titleField.val()) 
+					{
+					alert(start);
+					alert(groupField.val());
+					arrayEvents.push(titleField.val(), start.toString(), end.toString(), allDay, groupField.val());
 					$.post("{{path('CalendarBundle_addEvent')}}",{'array_events': arrayEvents});
 					arrayEvents = [];
+						calendar.fullCalendar('renderEvent',
+						{
+							id : id,
+							title: titleField.val(),
+							start: start,
+							end: end,
+							allDay: allDay,
+							body : "salut"
+						},
+						true
+					);
 				}
-				calendar.fullCalendar('unselect');
-			},
+				 $dialogContent.dialog("close");
+               },
+               cancel : function() 
+			   {
+                  $dialogContent.dialog("close");
+               }
+            }
+         }).show();
+		},
 			
-			eventClick: function(event, element) 
+		eventClick: function(calEvent, $event) 
+		{
+			if (calEvent.readOnly) 
 			{
-				$('#title').val(event.title);
-				
-				
-				$('#datepicker').val((event.start.getMonth() + 1) + '/' + event.start.getDate() + '/' + event.start.getFullYear());
-				
-				//	$('#startHour').val(event.start.getHours() + ':' + event.start.getMinutes());
-				//	$('#endHour').val(event.end.getHours() + ':' + event.end.getMinutes());
-				
-				$('#updateEvent').fadeIn().prepend();
-				
-				$('#myFormUpdate').submit(function(e)
-				{
+				return;
+			}
+         var $dialogContent = $("#event_edit_container");
+         resetForm($dialogContent);
+         var startField = $dialogContent.find("select[name='start']").val(calEvent.start);
+         var endField = $dialogContent.find("select[name='end']").val(calEvent.end);
+         var titleField = $dialogContent.find("input[name='title']").val(calEvent.title);
+         var bodyField = $dialogContent.find("textarea[name='body']");
+         bodyField.val(calEvent.body);
+         $dialogContent.dialog(
+		 {
+            modal: true,
+            title: "Edit - " + calEvent.title,
+            close: function()
+			{
+               $dialogContent.dialog("destroy");
+               $dialogContent.hide();
+               $('#calendar').fullCalendar("removeUnsavedEvents");
+            },
+            buttons: 
+			{
+               save : function() {
 
-					var arrayTime = $('#startHour').val().split(':')
-					event.start.setHours(arrayTime[0]);
-				
-					event.title = "title change";
-					$('#calendar').fullCalendar('updateEvent', event);
-					// uptade a faire.
-				});
-				
-				
-				
-				
-				$('.CloseBlock').click(function() 
-				{
-				
+                 // calEvent.start = new Date(startField.val());
+                  //calEvent.end = new Date(endField.val());
+                  calEvent.title = titleField.val();
+                  //calEvent.body = bodyField.val();
 
-				$('#fade , .popup_block').fadeOut(function() 
-					{
-					
-						$('#fade, a.close').remove();
-					});
-				});
+                  calendar.fullCalendar("updateEvent", calEvent);
+                  $dialogContent.dialog("close");
+				  
+				  /*faire la requete au controller*/
+               },
+               "delete" : function() 
+			   {
+			    $('#calendar').fullCalendar("removeEvents", calEvent.id);
+				arrayEvents.push(calEvent.id);
+				$.post("{{path('CalendarBundle_deleteEvent')}}",{'delete_event': arrayEvents});
+				arrayEvents = [];
+               
 				
-			},
-			
-			editable: false,
+				
+                $dialogContent.dialog("close");
+               },
+               cancel : function() 
+			   {
+                  $dialogContent.dialog("close");
+               }
+            }
+         }).show();
 
-			
+         var startField = $dialogContent.find("select[name='start']").val(calEvent.start);
+         var endField = $dialogContent.find("select[name='end']").val(calEvent.end);
+         $dialogContent.find(".date_holder").text(calendar.fullCalendar("formatDate", calEvent.start));
+         setupStartAndEndTimeFields(startField, endField, calEvent, calendar.weekCalendar("getTimeslotTimes", calEvent.start));
+         $(window).resize().resize(); //fixes a bug in modal overlay size ??
+				
+		},		
+	
 			events: [
 			{% for ev in user.getCalendar().getCalendarEvents() %}
 					{
+						id : "{{ ev.id }}",
 						title: "{{ ev.title}}",
 						start: new Date("{{ ev.start }}"),
 						end: new Date("{{ ev.end }}"),
@@ -217,7 +278,11 @@ $(document).ready(function() {
 			{% endfor %}
 					]
 		});
-		
+		function resetForm($dialogContent) 
+		{
+			$dialogContent.find("input").val("");
+			$dialogContent.find("textarea").val("");
+		}		
 	});
 </script>
 
@@ -238,30 +303,46 @@ $(document).ready(function() {
 
 <div class="Application">
 
-	<div id="addEvent" class="popup_block">
-		<p id="date"></p>
-		<form id="myForm"> 
-			<label>Event title</label> <input type="text" id="champ" /> 
-			<input type="submit" value="Submit Event"/> 
-			<input type="button" value="Cancel" class="CloseBlock"/> 
+	<div > <p> You have {{ user.getCalendar().getCalendarEventsToAccept()| length  }} event(s) to accept</p>
+	<form action="{{ path("CalendarBundle_displayEventToAccept")}}" method="post">
+			<input type="submit" value="Display" />
 		</form>
 	</div>
-	
-	
-	<div id="updateEvent" class="popup_block">
-		<p id="date"></p>
-		<form id="myFormUpdate"> 
-			<label>Event title</label> <input type="text" id="title" />
-			<label>Date</label> <input type="text" id="datepicker" />
-			<label>Start hour</label> <input type="text" id="startHour" />
-			<label>End hour</label> <input type="text" id="endHour" />
-
-			<input type="submit" value="Update Event"/> 
-			<input type="button" value="Cancel" class="CloseBlock"/> 
+	<div id='calendar'></div>
+	<div id="event_edit_container">
+		<form>
+			<input type="hidden" />
+			<ul>
+				<li>
+					<span>Date: </span><span class="date_holder"></span> 
+				</li>
+				<li>
+					<label for="start">Start Time: </label>
+					<select name="start">
+			
+					</select>
+				</li>
+				<li>
+					<label for="end">End Time: </label><select name="end"><option value="">Select End Time</option>
+					
+					</select>
+				</li>
+					<li>
+					<label for="group">Group: </label><select name="group"><option value="">Select group</option>
+					{% for group in user.getConnectionsGroups() %}
+					
+						<option value={{ group.getName() }} > {{ group.getName() }}</option>
+					{% endfor %}
+					</select>
+				</li>
+				<li>
+					<label for="title">Title: </label><input type="text" name="title" />
+				</li>
+				<li>
+					<label for="body">Body: </label><textarea name="body"></textarea>
+				</li>
+			</ul>
 		</form>
-	</div>
-	
-	<div id='calendar'>
 	</div>
 </div>
 
