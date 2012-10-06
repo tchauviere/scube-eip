@@ -156,11 +156,14 @@ $(document).ready(function() {
 		{
 		var $dialogContent = $("#event_edit_container");
 		resetForm($dialogContent);
-		var startField = $dialogContent.find("select[name='start']").val(start);
-		var endField = $dialogContent.find("select[name='end']").val(end);
+
+
+		var startField = $dialogContent.find("input[name='start']").val(start.getHours() + ':' + start.getMinutes());
+		var endField = $dialogContent.find("input[name='end']").val(end.getHours() + ':' + end.getMinutes());
 		var titleField = $dialogContent.find("input[name='title']");
 		var bodyField = $dialogContent.find("textarea[name='body']");
 		var groupField = $dialogContent.find("select[name='group']");
+
 
          $dialogContent.dialog(
 		 {
@@ -176,8 +179,7 @@ $(document).ready(function() {
                   
 				  if (titleField.val()) 
 					{
-					alert(start);
-					alert(groupField.val());
+					/*set hour !*/
 					arrayEvents.push(titleField.val(), start.toString(), end.toString(), allDay, groupField.val());
 					$.post("{{path('CalendarBundle_addEvent')}}",{'array_events': arrayEvents});
 					arrayEvents = [];
@@ -205,17 +207,35 @@ $(document).ready(function() {
 			
 		eventClick: function(calEvent, $event) 
 		{
-			if (calEvent.readOnly) 
-			{
-				return;
-			}
+		 var isTime = false;	
          var $dialogContent = $("#event_edit_container");
          resetForm($dialogContent);
-         var startField = $dialogContent.find("select[name='start']").val(calEvent.start);
-         var endField = $dialogContent.find("select[name='end']").val(calEvent.end);
+         var startField = $dialogContent.find("input[name='start']").val("");
+       	 var endField = $dialogContent.find("input[name='end']").val("");
+       	 
+       	 var labelStart = $dialogContent.find("label[name='lblStart']").hide();
+		 var labelEnd = $dialogContent.find("label[name='lblEnd']").hide();
+		 endField.hide();
+		 startField.hide();
+
+		 console.log(calEvent.start);
+		 console.log(calEvent.end);
+
+         if (calEvent.start.getHours() && calEvent.end.getHours())
+         {
+         	labelEnd.show();
+         	labelStart.show();
+         	startField.show();
+         	endField.show();
+
+         	isTime = true;
+         	startField = $dialogContent.find("input[name='start']").val(calEvent.start.getHours() + ':' + calEvent.start.getMinutes());
+         	endField = $dialogContent.find("input[name='end']").val(calEvent.end.getHours() + ':' + calEvent.end.getMinutes());
+         }
          var titleField = $dialogContent.find("input[name='title']").val(calEvent.title);
          var bodyField = $dialogContent.find("textarea[name='body']");
          bodyField.val(calEvent.body);
+
          $dialogContent.dialog(
 		 {
             modal: true,
@@ -228,17 +248,27 @@ $(document).ready(function() {
             },
             buttons: 
 			{
-               save : function() {
+               save : function() 
+               {
+               		if (isTime)
+               		{
+               			var tabEnd = endField.val().split(':');
+               			var tabStart = startField.val().split(':');
 
-                 // calEvent.start = new Date(startField.val());
-                  //calEvent.end = new Date(endField.val());
-                  calEvent.title = titleField.val();
-                  //calEvent.body = bodyField.val();
+               			calEvent.end.setHours(tabEnd[0]);
+               			calEvent.start.setHours(tabStart[0]);
+               			
+               			calEvent.end.setMinutes(tabEnd[1]);
+               			calEvent.start.setMinutes(tabStart[1]);
+               		}
+                calEvent.title = titleField.val();
 
-                  calendar.fullCalendar("updateEvent", calEvent);
-                  $dialogContent.dialog("close");
-				  
-				  /*faire la requete au controller*/
+                calendar.fullCalendar("updateEvent", calEvent);
+				arrayEvents.push(calEvent.id, calEvent.title, calEvent.start.toString(), calEvent.end.toString());
+				
+				$.post("{{path('CalendarBundle_editEvent')}}",{'edit_event': arrayEvents});
+				arrayEvents = [];
+                $dialogContent.dialog("close");
                },
                "delete" : function() 
 			   {
@@ -248,7 +278,6 @@ $(document).ready(function() {
 				arrayEvents = [];
                
 				
-				
                 $dialogContent.dialog("close");
                },
                cancel : function() 
@@ -256,14 +285,7 @@ $(document).ready(function() {
                   $dialogContent.dialog("close");
                }
             }
-         }).show();
-
-         var startField = $dialogContent.find("select[name='start']").val(calEvent.start);
-         var endField = $dialogContent.find("select[name='end']").val(calEvent.end);
-         $dialogContent.find(".date_holder").text(calendar.fullCalendar("formatDate", calEvent.start));
-         setupStartAndEndTimeFields(startField, endField, calEvent, calendar.weekCalendar("getTimeslotTimes", calEvent.start));
-         $(window).resize().resize(); //fixes a bug in modal overlay size ??
-				
+         }).show();				
 		},		
 	
 			events: [
@@ -313,19 +335,18 @@ $(document).ready(function() {
 		<form>
 			<input type="hidden" />
 			<ul>
+			<li>
+					<label for="title">Title: </label><input type="text" name="title" />
+				</li>
 				<li>
 					<span>Date: </span><span class="date_holder"></span> 
 				</li>
-				<li>
-					<label for="start">Start Time: </label>
-					<select name="start">
-			
-					</select>
+				<li name="startTime">
+					<label name="lblStart">Start Time</label> <input type="text" name="start" id="startHour" />
 				</li>
 				<li>
-					<label for="end">End Time: </label><select name="end"><option value="">Select End Time</option>
-					
-					</select>
+					<label name="lblEnd">End Time : </label> <input type="text" name="end" id="endHour" />
+				
 				</li>
 					<li>
 					<label for="group">Group: </label><select name="group"><option value="">Select group</option>
@@ -333,11 +354,8 @@ $(document).ready(function() {
 					
 						<option value={{ group.getName() }} > {{ group.getName() }}</option>
 					{% endfor %}
-					</select>
 				</li>
-				<li>
-					<label for="title">Title: </label><input type="text" name="title" />
-				</li>
+				
 				<li>
 					<label for="body">Body: </label><textarea name="body"></textarea>
 				</li>
@@ -345,9 +363,6 @@ $(document).ready(function() {
 		</form>
 	</div>
 </div>
-
-
-
 
 
 {% endblock %}

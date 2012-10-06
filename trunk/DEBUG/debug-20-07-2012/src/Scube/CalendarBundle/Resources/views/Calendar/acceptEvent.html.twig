@@ -1,28 +1,82 @@
 {% extends 'ScubeBaseBundle:Base:core_application.html.twig' %}
-
 {% block body %}
+
 {{ parent() }}
 
 <div class="Application">
 
-	<div > <p> You have {{ user.getCalendar().getCalendarEventsToAccept()| length  }} event(s) to accept</p></div>
-	<div id="event_accept">
-		<form>
-			<input type="hidden" />
-			<ul>
-				{% for event in user.getCalendar().getCalendarEventsToAccept() %}
-				<li> 
-				{{ event.getEvent().getTitle() }}
-				<input type=submit>
-				</li>
-				{% endfor %}
-			</ul>
-		</form>		
-	</div>
+<table class="table_content">
+<tr>
+	<td class="sidebar_left" style="width:15%;">
+		{% include 'ScubeCalendarBundle:Calendar:menu.html.twig' %}
+	</td>
+	<td class="sidebar_main">
+		<h1>Calendar Event Manager</h1>
+		
+		<div class="result_table_scroll">
+			<table class="table_full_size result_table">
+				<thead>
+					<tr>
+						<th>Event Name</th>
+						<th>Status</th>
+						<th>Creator</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					{% for event in user.getCalendar().getCalendarEventsToAccept() %}
+					<tr>
+						<td>
+							{{ event.getEvent().getTitle() }}
+						</td>
+						<td>
+						
+						</td>
+						<td>
+							{{ event.getUserCreator().getFirstname() }}
+						</td>
+						<td>
+						<a href="{{ path("CalendarBundle_acceptEvent", { 'id': event.getId()})}}" class="button grey">Accept</a>
+							<a href="#" onclick="$('#hidden_remove_{{event.getId()}}').slideDown();" class="button red">Refuse</a>
+							
+							<div id="hidden_remove_{{event.getId()}}" class="confirmation_box">
+								<span>Sure ?</span> 
+								<a href="{{ path("CalendarBundle_refuseEvent", { 'id': event.getId()})}}" class="button red xsmall">Yes</a>
+								<a href="#" onclick="$('#hidden_remove_{{event.getId()}}').slideUp();" class="button grey xsmall">Cancel</a> 
+							</div>
+						</td>
+						
+					</tr>
+					{% endfor %}
+				</tbody>
+				
+			</table>
+		</div>
+	</td>
+</tr>
+</table>
 </div>
 
+<script>
 
+function resize_table()
+{
+	available_height = $(".Application").height()	 - $(".sidebar_main h1").outerHeight(true) - $("p.result_table").outerHeight(true) + 11;
+	$('table.result_table').css("max-height", available_height);
+	$('div.result_table_scroll').css("height", available_height);
+}
 
+$(document).ready(function() 
+	{
+		resize_table();
+	});
+$(window).resize(function() 
+	{
+		resize_table();
+	});
 
+</script>
 
 {% endblock %}
+

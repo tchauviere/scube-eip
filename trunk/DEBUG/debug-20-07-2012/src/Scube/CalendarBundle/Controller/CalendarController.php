@@ -21,12 +21,51 @@ class CalendarController extends Controller
         return $this->render('ScubeCalendarBundle:Calendar:index.html.twig', array('user'=>$user));
     }
 	
-	public function acceptEventAction()
+	public function acceptEventAction($id)
 	{
+		$session = $this->getRequest()->getSession();
+		
+		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
+		$user = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
+		
+		$em = $this->getDoctrine()->getEntityManager();
+		$eventToAccept = $em->getRepository('ScubeBaseBundle:CalendarEventToAccept')->find($id);
+
+		if (!$eventToAccept) 
+		{
+			throw $this->createNotFoundException('No event found for id '.$id);
+		}
+
+		$Event = new CalendarEvent();
+		$Event->setTitle($eventToAccept->getEvent()->getTitle() + " (" + $eventToAccept->getEvent()->getFirstname() + " )");
+		$Event->setAllDay($eventToAccept->getEvent()->getAllDay());		
+		$Event->setStart($eventToAccept->getEvent()->getStart());
+		$Event->setEnd($eventToAccept->getEvent()->getEnd());
+
+		$em->persist($Event);
+		$user->getCalendar()->addCalendarEvent($Event);
+		$em->flush();
+		$this->refuseeventAction($id);
+
+		return  $this->render('ScubeCalendarBundle:Calendar:index.html.twig', array('user'=>$user));
 	}
 	
-	public function refuseeventAction()
+	public function refuseeventAction($id)
 	{
+		$em = $this->getDoctrine()->getEntityManager();
+		$event = $em->getRepository('ScubeBaseBundle:CalendarEventToAccept')->find($id);
+		
+		$session = $this->getRequest()->getSession();
+		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
+		$user = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
+		
+		if (!$event) {
+			throw $this->createNotFoundException('No event found for id '.$id);
+		}
+		
+		$em->remove($event);
+		$em->flush();
+		return  $this->render('ScubeCalendarBundle:Calendar:acceptEvent.html.twig', array('user'=>$user));
 	}
 	
 	public function displayeventtoacceptAction()
@@ -46,7 +85,7 @@ class CalendarController extends Controller
 		$title = $array['1'];
 		$start = $array['2'];
 		$end = $array['3'];
-		$allday = $array['4'];
+		//$allday = $array['4'];
 		
 		$session = $this->getRequest()->getSession();
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
@@ -61,13 +100,14 @@ class CalendarController extends Controller
 		
 		$event->setTitle($title);
 	
-		if($allDay == "true")
+		/*if($allDay == "true")
 			$event->setAllDay(1);
 			else
 		$event->setAllDay(0);
-		
+		*/
 		$event->setStart($start);
 		$event->setEnd($end);
+		
 		$em->flush();
 		
 		 return $this->render('ScubeCalendarBundle:Calendar:index.html.twig', array('user'=>$user));
@@ -148,14 +188,15 @@ class CalendarController extends Controller
 			if ($connectionGroup)
 			{
 				$listUser = $connectionGroup->getUsers();
-				$EventToAccept = new CalendarEventToAccept();
-
-				$EventToAccept->setUserCreator($user);
-				$EventToAccept->setEvent($Event);
-				$em->persist($EventToAccept);
-				$em->flush();
+				/*ici*/
 				foreach ($listUser as $guest)
 				{
+					$EventToAccept = new CalendarEventToAccept();
+
+					$EventToAccept->setUserCreator($user);
+					$EventToAccept->setEvent($Event);
+					$em->persist($EventToAccept);
+					$em->flush();
 					//$guest->getCalendar()->addCalendarEvent($Event);
 					$guest->getCalendar()->addCalendarEventToAccept($EventToAccept);
 				}
