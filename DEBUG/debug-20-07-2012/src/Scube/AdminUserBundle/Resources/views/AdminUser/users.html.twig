@@ -12,22 +12,22 @@
 		{% include 'ScubeAdminUserBundle:AdminUser:menu.html.twig' %}
 	</td>
 	<td class="sidebar_main">
-		<h1>Users Manager</h1>
+		<h1>{% trans %}Users Manager{% endtrans %}</h1>
 		
 		<p class="result_table">
-			<a href="{{ path("AdminUserBundle_user_add")}}" class="button green">+ Create user</a>
+			<a href="{{ path("AdminUserBundle_user_add")}}" class="button green">+ {% trans %}Create user{% endtrans %}</a>
 		</p>
 		
 		<div class="result_table_scroll">
 			<table class="table_full_size result_table">
 				<thead>
 					<tr>
-						<th>Name</th>
-						<th>Status</th>
-						<th>Group</th>
-						<th>Member for</th>
-						<th>Last access</th>
-						<th>Actions</th>
+						<th>{% trans %}Name{% endtrans %}</th>
+						<th>{% trans %}Status{% endtrans %}</th>
+						<th>{% trans %}Group{% endtrans %}</th>
+						<th>{% trans %}Member for{% endtrans %}</th>
+						<th>{% trans %}Last access{% endtrans %}</th>
+						<th>{% trans %}Actions{% endtrans %}</th>
 					</tr>
 				</thead>
 				
@@ -40,9 +40,9 @@
 						</td>
 						<td>
 							{% if usr.getBlocked %}
-								Blocked
+								{% trans %}Blocked{% endtrans %}
 							{% else %}
-								Active
+								{% trans %}Active{% endtrans %}
 							{% endif %}
 						</td>
 						<td>
@@ -55,14 +55,16 @@
 							{{ usr.getDateLastAccess()|ago }}
 						</td>
 						<td>
-							<a href="{{ path("AdminUserBundle_user_edit", { 'id': usr.getId()})}}" class="button grey">Edit</a>
-							<a href="#" onclick="$('#hidden_remove_{{usr.getId()}}').slideDown();" class="button red">Remove</a>
+							<a href="{{ path("AdminUserBundle_user_edit", { 'id': usr.getId()})}}" class="button grey">{% trans %}Edit{% endtrans %}</a>
 							
+							{% if current_usr.getId() != usr.getId() %}
+							<a href="#" onclick="$('#hidden_remove_{{usr.getId()}}').slideDown();" class="button red">{% trans %}Remove{% endtrans %}</a>
 							<div id="hidden_remove_{{usr.getId()}}" class="confirmation_box">
-								<span>Sure ?</span> 
-								<a href="{{ path("AdminUserBundle_user_remove", { 'id': usr.getId()})}}" class="button red xsmall">Yes</a>
-								<a href="#" onclick="$('#hidden_remove_{{usr.getId()}}').slideUp();" class="button grey xsmall">Cancel</a> 
+								<span>{% trans %}Sure{% endtrans %} ?</span> 
+								<a href="{{ path("AdminUserBundle_user_remove", { 'id': usr.getId()})}}" class="button red xsmall">{% trans %}Yes{% endtrans %}</a>
+								<a href="#" onclick="$('#hidden_remove_{{usr.getId()}}').slideUp();" class="button grey xsmall">{% trans %}Cancel{% endtrans %}</a> 
 							</div>
+							{% endif %}
 						</td>
 					</tr>
 					{% endfor %}
@@ -87,6 +89,14 @@ function resize_table()
 $(document).ready(function() 
 	{
 		resize_table();
+		
+		{% if add is defined %}
+			add_notification('success', '{% trans %}User added successfully{% endtrans %}');
+		{% endif %}
+		
+		{% if remove is defined %}
+			add_notification('success', '{% trans %}User removed successfully{% endtrans %}');
+		{% endif %}
 	});
 $(window).resize(function() 
 	{

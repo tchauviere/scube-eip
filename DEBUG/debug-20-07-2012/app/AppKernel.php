@@ -17,6 +17,7 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
+			new Scube\CoreBundle\ScubeCoreBundle(),
             new Scube\BaseBundle\ScubeBaseBundle(),
 			new Scube\AdminAppsBundle\ScubeAdminAppsBundle(),
             new Scube\InstallBundle\ScubeInstallBundle(),
@@ -38,6 +39,7 @@ class AppKernel extends Kernel
 			new Scube\FacebookBundle\ScubeFacebookBundle(),
 			new Scube\AdminHelpBundle\ScubeAdminHelpBundle(),
 			/*APP_DELIMITER*/
+
             
         );
 

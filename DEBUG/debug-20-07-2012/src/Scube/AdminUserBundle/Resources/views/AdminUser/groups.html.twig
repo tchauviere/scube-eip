@@ -77,6 +77,14 @@ function resize_table()
 $(document).ready(function() 
 	{
 		resize_table();
+		
+		{% if add is defined %}
+			add_notification('success', 'Group added successfully');
+		{% endif %}
+		
+		{% if remove is defined %}
+			add_notification('success', 'Group removed successfully');
+		{% endif %}
 	});
 $(window).resize(function() 
 	{

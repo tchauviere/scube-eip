@@ -2,8 +2,10 @@
 
 namespace Scube\AdminUserBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+//use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+
+use Scube\CoreBundle\Controller\CoreController;
 
 use Scube\BaseBundle\Entity\User;
 use Scube\BaseBundle\Entity\UserProfile;
@@ -12,17 +14,31 @@ use Scube\BaseBundle\Entity\Mailbox;
 use Scube\BaseBundle\Entity\BaseInterface;
 use Scube\BaseBundle\Entity\PermissionsGroup;
 
-class AdminUserController extends Controller
+class AdminUserController extends CoreController
 {
-    public function indexAction(Request $request)
+	
+    public function indexAction()
     {
-        $em = $this->getDoctrine()->getEntityManager();
-		$query = $em->createQuery("SELECT u FROM ScubeBaseBundle:User u ORDER BY u.email ASC");
-		$usr_list = $query->getResult();
-		return $this->render('ScubeAdminUserBundle:AdminUser:users.html.twig', array('usr_list'=>$usr_list));
+		$this->preprocessApplication();
+		
+		$usr_list = $this->getDoctrine()
+					  	 ->getEntityManager()
+					  	 ->createQuery("SELECT u FROM ScubeBaseBundle:User u ORDER BY u.email ASC")
+					  	 ->getResult();
+		
+		$parameters = array('usr_list'=>$usr_list, 'current_usr'=>$this->user);
+		
+		if ($this->getRequest()->get('add'))
+			$parameters['add'] = true;
+		if ($this->getRequest()->get('remove'))
+			$parameters['remove'] = true;
+						 
+		return $this->render('ScubeAdminUserBundle:AdminUser:users.html.twig', $parameters);
     }
 	public function addUserAction(Request $request)
     {
+		$this->preprocessApplication();
+		
 		$em = $this->getDoctrine()->getEntityManager();
 		$query = $em->createQuery("SELECT g FROM ScubeBaseBundle:PermissionsGroup g ORDER BY g.name ASC");
 		$all_groups = $query->getResult();
@@ -36,7 +52,8 @@ class AdminUserController extends Controller
 			->add('Password', 'password')
 			->add('Birthday', 'birthday')
 			->add('Gender', 'choice', array('choices' => array('male' => 'Male', 'female' => 'Female')))
-			->add('Blocked', 'choice', array('choices' => array(false => 'No', true => 'Yes'), 'label' => "Blocked user (deny login)"))
+			->add('Blocked', 'choice', array('choices' => array(false => 'No', true => 'Yes'), 'label' => "Blocking"))
+			->add('Locale', 'choice', array('choices' => array('en' => 'English', 'fr' => 'French'), 'label' => "Language"))
             ->getForm();
 		
 		if ($request->getMethod() == 'POST') {
@@ -73,8 +90,7 @@ class AdminUserController extends Controller
 				
 				\Scube\BaseBundle\Controller\BaseController::createUserDirectory($this->get('kernel'), $user);
 				
-				/*return $this->render('ScubeAdminUserBundle:AdminUser:add_user.html.twig', array('user'=>$user, 'form' => $form->createView(), "success"=>true));*/
-				return $this->redirect($this->generateUrl('AdminUserBundle_homepage'));
+				return $this->redirect($this->generateUrl('AdminUserBundle_homepage', array('add'=>true)));
 			}
 		}
 			
@@ -82,6 +98,7 @@ class AdminUserController extends Controller
 	}
 	public function editUserAction(Request $request, $id)
     {
+		$this->preprocessApplication();
 		$user = $this->getDoctrine()
 						->getRepository('ScubeBaseBundle:User')
 						->find($id);
@@ -94,6 +111,14 @@ class AdminUserController extends Controller
 		$query = $em->createQuery("SELECT g FROM ScubeBaseBundle:PermissionsGroup g ORDER BY g.name ASC");
 		$all_groups = $query->getResult();
 		
+		$parameters = array('user'=>$user, 'success'=>false);
+		
+		$read_only_block = false;
+		if ($user->getId() == $this->user->getId()) {
+			$parameters['user_is_me'] = true;
+			$read_only_block = true;
+		}
+		
 		$form = $this->createFormBuilder($user)
 			->add('permissionsGroup', 'entity', array('class' => 'ScubeBaseBundle:PermissionsGroup', 'property' => 'name', 'label' => "Group"))
             ->add('Firstname', 'text')
@@ -101,8 +126,10 @@ class AdminUserController extends Controller
 			->add('Email', 'email')
 			->add('Birthday', 'birthday')
 			->add('Gender', 'choice', array('choices' => array('male' => 'Male', 'female' => 'Female')))
-			->add('Blocked', 'choice', array('choices' => array(false => 'No', true => 'Yes'), 'label' => "Blocked user (deny login)"))
+			->add('Blocked', 'choice', array('read_only'=>$read_only_block, 'choices' => array(false => 'No', true => 'Yes'), 'label' => "Blocking"))
+			->add('Locale', 'choice', array('choices' => array('en' => 'English', 'fr' => 'French'), 'label' => "Language"))
             ->getForm();
+		
 		
 		if ($request->getMethod() == 'POST') {
 			$form->bindRequest($request);
@@ -110,43 +137,67 @@ class AdminUserController extends Controller
 			if ($form->isValid()) {
 			
 				$em = $this->getDoctrine()->getEntityManager();
+				
+				if (isset($parameters['user_is_me']))
+					$user->setBlocked(false);
+					
 				$em->flush();
 				
-				return $this->render('ScubeAdminUserBundle:AdminUser:edit_user.html.twig', array('user'=>$user, 'form' => $form->createView(), "success"=>true));
+				$parameters['form'] = $form->createView();	
+				$parameters['success'] = true;	
+				return $this->render('ScubeAdminUserBundle:AdminUser:edit_user.html.twig', $parameters);
 			}
 		}
-			
-		return $this->render('ScubeAdminUserBundle:AdminUser:edit_user.html.twig', array('user'=>$user, 'form' => $form->createView(), "success"=>false));
+		
+		$parameters['form'] = $form->createView();
+		return $this->render('ScubeAdminUserBundle:AdminUser:edit_user.html.twig', $parameters);
 	}
 	public function removeUserAction(Request $request, $id)
     {
+		$this->preprocessApplication();
+		
 		$em = $this->getDoctrine()->getEntityManager();
 		$user = $em->getRepository('ScubeBaseBundle:User')->find($id);
-	
+
 		if (!$user) {
 			throw $this->createNotFoundException('No user found for id '.$id);
 		}
 		
+		if ($user->getId() == $this->user->getId()) {
+			throw $this->createNotFoundException('Unable to delete youself');
+		}
+				
 		\Scube\BaseBundle\Controller\BaseController::removeUserDirectory($this->get('kernel'), $user);
 		
 		$em->remove($user);
 		$em->flush();
-		
-		
-		
-		return $this->redirect($this->generateUrl('AdminUserBundle_homepage'));
+				
+		return $this->redirect($this->generateUrl('AdminUserBundle_homepage', array('remove'=>true)));
     }
 	
 	public function groupsAction(Request $request)
     {
-        $em = $this->getDoctrine()->getEntityManager();
-		$query = $em->createQuery("SELECT g FROM ScubeBaseBundle:PermissionsGroup g ORDER BY g.name ASC");
-		$grp_list = $query->getResult();
-		return $this->render('ScubeAdminUserBundle:AdminUser:groups.html.twig', array('grp_list'=>$grp_list));
+		$this->preprocessApplication();
+		
+		$grp_list = $this->getDoctrine()
+						 ->getEntityManager()
+						 ->createQuery("SELECT g FROM ScubeBaseBundle:PermissionsGroup g ORDER BY g.name ASC")
+						 ->getResult();
+		
+		$parameters = array('grp_list'=>$grp_list);
+		
+		if ($this->getRequest()->get('add'))
+			$parameters['add'] = true;
+		if ($this->getRequest()->get('remove'))
+			$parameters['remove'] = true;
+			
+		return $this->render('ScubeAdminUserBundle:AdminUser:groups.html.twig', $parameters);
     }
 	
 	public function addGroupAction(Request $request)
     {
+		$this->preprocessApplication();
+		
 		$error = false;
 		$error_text = "";
 		
@@ -209,8 +260,8 @@ class AdminUserController extends Controller
 				$em->persist($grp);
 				$em->flush();
 			}
-			/*return $this->render('ScubeAdminUserBundle:AdminUser:add_group.html.twig', array('form' => $form->createView(), "success"=>true, "error"=>$error, "error_text"=>$error_text));*/
-			return $this->redirect($this->generateUrl('AdminUserBundle_groups'));
+			
+			return $this->redirect($this->generateUrl('AdminUserBundle_groups', array('add'=>true)));
 		}
 		
 		
@@ -220,6 +271,7 @@ class AdminUserController extends Controller
 
 	public function editGroupAction(Request $request, $id)
     {
+		$this->preprocessApplication();
 		$error = false;
 		$error_text = "";
 		
@@ -259,8 +311,13 @@ class AdminUserController extends Controller
 		
 		$defaultData = array('name'=>$grp->getName(), 'apps'=>$apps, 'admin_apps'=>$admin_apps);
 		
+		$read_only_name = false;
+		if ($grp->getLocked()) {
+			$read_only_name = true;
+		}
+		
 		$form = $this->createFormBuilder($defaultData)
-            ->add('name', 'text')
+            ->add('name', 'text', array('read_only'=>$read_only_name))
 			->add('apps', 'choice', array('choices' => $app_list, 'multiple'  => true, 'required'    => false))
 			->add('admin_apps', 'choice', array('choices' => $admin_app_list, 'multiple'  => true, 'required'    => false))
             ->getForm();
@@ -276,9 +333,9 @@ class AdminUserController extends Controller
 				$error_text = "Please enter a valid name (at least 1 character)";
 				return $this->render('ScubeAdminUserBundle:AdminUser:edit_group.html.twig', array('grp'=>$grp, 'form' => $form->createView(), "success"=>false, "error"=>$error, "error_text"=>$error_text));
 			}
-			else
+			else if (!$read_only_name)
 				$grp->setName($edit_form['name']);
-			
+				
 			if (!$error)
 			{
 				$grp->setApplication(new \Doctrine\Common\Collections\ArrayCollection());
@@ -308,6 +365,7 @@ class AdminUserController extends Controller
 	
 	public function removeGroupAction(Request $request, $id)
     {
+		$this->preprocessApplication();
 		$em = $this->getDoctrine()->getEntityManager();
 		$grp = $em->getRepository('ScubeBaseBundle:PermissionsGroup')->find($id);
 		if ($grp->getLocked() == false)
@@ -333,6 +391,6 @@ class AdminUserController extends Controller
 			$em->remove($grp);
 			$em->flush();
 		}
-		return $this->redirect($this->generateUrl('AdminUserBundle_groups'));
+		return $this->redirect($this->generateUrl('AdminUserBundle_groups', array('remove'=>true)));
     }
 }

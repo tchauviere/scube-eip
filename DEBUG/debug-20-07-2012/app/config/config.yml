@@ -4,7 +4,7 @@ imports:
 
 framework:
     #esi:             ~
-    #translator:      { fallback: %locale% }
+    translator:      { fallback: en }
     secret:          %secret%
     charset:         UTF-8
     router:          { resource: "%kernel.root_dir%/config/routing.yml" }
@@ -60,7 +60,7 @@ jms_security_extra:
     secure_all_services: false
 
 services:
-    foo.twig.extension:
+    twig.extension.baseExtension:
         class: Scube\BaseBundle\Twig\Extension\BaseBundleExtension
         tags:
             -  { name: twig.extension }

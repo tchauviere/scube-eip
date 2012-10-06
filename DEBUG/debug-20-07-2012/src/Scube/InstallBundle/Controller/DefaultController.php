@@ -268,7 +268,7 @@ class DefaultController extends Controller
 		
 		$default_setting6 = new ScubeSetting();
 		$default_setting6->setKey("default_locale");
-		$default_setting6->setValue("uk");
+		$default_setting6->setValue("en");
 		$em = $this->getDoctrine()->getEntityManager();
 		$em->persist($default_setting6);
 		$em->flush();
