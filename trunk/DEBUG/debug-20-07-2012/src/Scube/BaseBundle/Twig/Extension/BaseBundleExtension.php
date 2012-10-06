@@ -7,8 +7,11 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 class BaseBundleExtension extends \Twig_Extension
 {
+    protected $translator;
+
     public function __construct()
     {
+        
     }
 
     /**
@@ -31,32 +34,40 @@ class BaseBundleExtension extends \Twig_Extension
     {
         $delta = time() - $dateTime->getTimestamp();
         if ($delta < 0)
-            throw new \InvalidArgumentException("createdAgo is unable to handle dates in the future");
+            throw new \InvalidArgumentException("Ago is unable to handle dates in the future");
 
         $duration = "";
+		
+		$unity = array(
+						's'=>"second",
+						'm'=>"minute",
+						'h'=>"hour",
+						'd'=>"day",
+					   );
+		
         if ($delta < 60)
         {
             // Seconds
             $time = $delta;
-            $duration = $time . " second" . (($time > 1) ? "s" : "") . " ago";
+            $duration = $time . " ". $unity['s'] . (($time > 1) ? "s" : "");
         }
         else if ($delta <= 3600)
         {
             // Mins
             $time = floor($delta / 60);
-            $duration = $time . " minute" . (($time > 1) ? "s" : "") . " ago";
+            $duration = $time . " ". $unity['m'] . (($time > 1) ? "s" : "");
         }
         else if ($delta <= 86400)
         {
             // Hours
             $time = floor($delta / 3600);
-            $duration = $time . " hour" . (($time > 1) ? "s" : "") . " ago";
+            $duration = $time . " ". $unity['h'] . (($time > 1) ? "s" : "");
         }
         else
         {
             // Days
             $time = floor($delta / 86400);
-            $duration = $time . " day" . (($time > 1) ? "s" : "") . " ago";
+            $duration = $time . " ". $unity['d'] . (($time > 1) ? "s" : "");
         }
 
         return $duration;

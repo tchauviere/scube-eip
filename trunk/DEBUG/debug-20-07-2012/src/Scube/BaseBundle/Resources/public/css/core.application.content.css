@@ -294,3 +294,20 @@ a.button:hover {
 .button.grey {
 	background-color: #333;
 }
+
+
+
+/* Notifications */
+.notification {
+	position:absolute;
+	top:0px;
+	right:40px;
+}
+.success {
+	color:#8EB218;
+	font-size:1.2em;
+	font-weight:bold;
+}
+.error {
+	color:#94211A;
+}

@@ -21,6 +21,11 @@
 		{% if success %}
 			<p class="form_success">The user has been successfully updated.</p>
 		{% endif %}
+		
+		{% if user_is_me is defined %}
+			<p class="form_error">You can't block youself, the option has been disabled.</p>
+		{% endif %}
+		
 		<form action="{{ path("AdminUserBundle_user_edit", { 'id': user.getId()})}}" method="post" {{ form_enctype(form) }}>
 			{{ form_widget(form) }}
 		

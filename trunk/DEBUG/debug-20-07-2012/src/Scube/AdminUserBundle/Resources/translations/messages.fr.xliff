@@ -3,8 +3,80 @@
     <file source-language="en" datatype="plaintext" original="file.ext">
         <body>
             <trans-unit id="1">
-                <source>Symfony2 is great</source>
-                <target>J'aime Symfony2</target>
+                <source>Users Manager</source>
+                <target>Gestionnaire d'utilisateurs</target>
+            </trans-unit>
+			<trans-unit id="2">
+                <source>Create user</source>
+                <target>Ajouter un utilisateur</target>
+            </trans-unit>
+			<trans-unit id="3">
+                <source>Name</source>
+                <target>Nom</target>
+            </trans-unit>
+			<trans-unit id="4">
+                <source>Status</source>
+                <target>Statut</target>
+            </trans-unit>
+			<trans-unit id="5">
+                <source>Group</source>
+                <target>Groupe</target>
+            </trans-unit>
+			<trans-unit id="6">
+                <source>Member for</source>
+                <target>Membre depuis</target>
+            </trans-unit>
+			<trans-unit id="7">
+                <source>Last access</source>
+                <target>Dernier accès</target>
+            </trans-unit>
+			<trans-unit id="8">
+                <source>Actions</source>
+                <target>Actions</target>
+            </trans-unit>
+			<trans-unit id="9">
+                <source>Blocked</source>
+                <target>Bloqué</target>
+            </trans-unit>
+			<trans-unit id="10">
+                <source>Active</source>
+                <target>Actif</target>
+            </trans-unit>
+			<trans-unit id="11">
+                <source>Edit</source>
+                <target>Modifier</target>
+            </trans-unit>
+			<trans-unit id="12">
+                <source>Remove</source>
+                <target>Supprimer</target>
+            </trans-unit>
+			<trans-unit id="13">
+                <source>Sure</source>
+                <target>Valider</target>
+            </trans-unit>
+			<trans-unit id="14">
+                <source>Yes</source>
+                <target>Oui</target>
+            </trans-unit>
+			<trans-unit id="15">
+                <source>Cancel</source>
+                <target>Annuler</target>
+            </trans-unit>
+			<trans-unit id="16">
+                <source>User added successfully</source>
+                <target>Utilisateur ajouté avec succès</target>
+            </trans-unit>
+			<trans-unit id="17">
+                <source>User removed successfully</source>
+                <target>Utilisateur supprimé avec succès</target>
+            </trans-unit>
+			<trans-unit id="18">
+                <source>Users</source>
+                <target>Utilisateurs</target>
+            </trans-unit>
+			<trans-unit id="19">
+                <source>Groups</source>
+                <target>Groupes</target>
             </trans-unit>
         </body>
     </file>
