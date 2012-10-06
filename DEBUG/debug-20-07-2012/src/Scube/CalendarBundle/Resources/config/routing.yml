@@ -19,10 +19,10 @@ CalendarBundle_displayEventToAccept:
     defaults: { _controller: ScubeCalendarBundle:Calendar:displayeventtoaccept }
 
 CalendarBundle_acceptEvent:
-    pattern: /acceptEvent
+    pattern: /acceptEvent/{id}
     defaults: { _controller: ScubeCalendarBundle:Calendar:acceptevent }
 
 CalendarBundle_refuseEvent:
-    pattern: /refuseEvent
+    pattern: /refuseEvent/{id}
     defaults: { _controller: ScubeCalendarBundle:Calendar:refuseevent }
 
