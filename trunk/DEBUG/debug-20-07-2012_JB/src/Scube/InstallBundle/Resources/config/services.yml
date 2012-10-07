@@ -1,7 +1,0 @@
-parameters:
-#    scube_install.example.class: Scube\InstallBundle\Example
-
-services:
-#    scube_install.example:
-#        class: %scube_install.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]

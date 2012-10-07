@@ -1,7 +1,0 @@
-parameters:
-#    scube_base.example.class: Scube\BaseBundle\Example
-
-services:
-#    scube_base.example:
-#        class: %scube_base.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]

@@ -1,3 +1,0 @@
-WidgetsConnectionsWidgetBundle_homepage:
-    pattern:  /connections_widget
-    defaults: { _controller: WidgetsConnectionsWidgetBundle:Default:index }

@@ -1,7 +1,0 @@
-parameters:
-#    scube_profile_viewer.example.class: Scube\ProfileViewerBundle\Example
-
-services:
-#    scube_profile_viewer.example:
-#        class: %scube_profile_viewer.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]

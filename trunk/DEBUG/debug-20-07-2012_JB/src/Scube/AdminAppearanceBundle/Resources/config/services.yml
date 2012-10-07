@@ -1,7 +1,0 @@
-parameters:
-#    scube_admin_appearance.example.class: Scube\AdminAppearanceBundle\Example
-
-services:
-#    scube_admin_appearance.example:
-#        class: %scube_admin_appearance.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
