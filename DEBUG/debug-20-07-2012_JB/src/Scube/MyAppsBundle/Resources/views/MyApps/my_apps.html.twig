@@ -1,0 +1,61 @@
+{% extends 'ScubeBaseBundle:Base:core_application.html.twig' %}
+
+
+{% block body %}
+{{ parent() }}
+
+<div class="Application">
+
+	<h1>My Apps</h1>
+	
+	<div class="result_table_scroll" style="width:90%;margin:0 auto;">
+		<table class="table_full_size result_table">
+		<tbody>
+			{% for app in app_list %}
+			<tr>
+				<td>
+					<div class="table_title">{{app.getName()}}</div>
+				</td>
+				<td>
+					<div class="table_text">{{app.getDescription()}}</div>
+				</td>
+				<td style="background-color:white;">
+					<a href="{{ path(app.getlink()) }}" class="button green medium">start !</a>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+		</table>
+	</div>
+</div>
+
+<script>
+
+function resize_table()
+{
+	available_height = $(".Application").height()	 - $(".Application h1").outerHeight(true);
+	$('table.result_table').css("max-height", available_height);
+	$('div.result_table_scroll').css("height", available_height);
+}
+
+$(document).ready(function() 
+	{
+		resize_table();
+	});
+$(window).resize(function() 
+	{
+		resize_table();
+	});
+
+</script>
+
+<style>
+
+table.result_table td {
+	padding:10px;
+}
+
+</style>
+
+
+{% endblock %}

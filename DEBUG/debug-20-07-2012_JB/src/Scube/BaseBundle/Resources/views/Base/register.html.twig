@@ -1,0 +1,29 @@
+{% extends 'ScubeBaseBundle:Base:core_base.html.twig' %}
+
+{% block title %}Register now !{% endblock %}
+
+{% block body %}
+{{ parent() }}
+
+<h1>Register</h1>
+
+<div class="page_frame">
+
+{% if allow_registration %}
+	{% if success %}
+		<p class="form_success">Your account has been successfully created. <a href="{{ path('_homepage') }}">You can now login here !</a></p>
+	{% else %}
+	<form action="{{ path('_register') }}" method="post" {{ form_enctype(form) }}>
+		{{ form_widget(form) }}
+	
+		<input type="submit" value="Register now !" />
+	</form>
+	{% endif %}
+{% else %}
+	<p class="form_error">Registration not activated</p>
+{% endif %}
+
+
+</div>
+
+{% endblock %}
