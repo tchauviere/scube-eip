@@ -1,0 +1,126 @@
+{% extends 'ScubeBaseBundle:Base:core_application.html.twig' %}
+
+
+
+
+{% block body %}
+{{ parent() }}
+
+
+<div class="Application">
+	<table class="table_content">
+		<tr>
+			<td class="sidebar_left">
+				<ul class="sidebar_navigation">
+				{% include 'ScubeAdminLogsBundle:AdminLogs:menu.html.twig' %}
+				</ul>
+			</td>
+			<td class="sidebar_main">
+				<h1>Logs Viewer : Overview</h1>
+
+					<div class="result_table" id="top_infos" style="padding-bottom: 15px;">
+					<table class="table_full_size result_table">
+						<tr>
+							<td style="text-align: center; color: black; width: 25%">
+								{% if mode == "PROD" %}
+									{% image '@ScubeAdminLogsBundle/Resources/public/images/prod_mod.png' %}
+										<img style="margin-top: 10px; margin-bottom: 10px;" width="64px" height="64px" src="{{ asset_url }}" alt="Production" title="Production" />
+									{% endimage %}
+								{% else %}
+									{% image '@ScubeAdminLogsBundle/Resources/public/images/dev_mod.png' %}
+										<img style="margin-top: 10px; margin-bottom: 10px;" width="64px" height="64px" src="{{ asset_url }}" alt="Development" title="Development" />	
+									{% endimage %}
+								{% endif %}
+							</td>
+						
+							<td style="text-align: center; color: black; width: 50%;">
+								
+								{% if mode == "PROD" %}
+									Running mode : Production
+								{% else %}
+									Running mode : Development
+								{% endif %}
+								
+							</td>
+						
+							<td style="color: black; text-align: center; margin-top: 10px; width: 25%;">
+								<a href="{{ path("AdminLogsBundle_cleanlogs", {'mode' : mode}) }}" class="button red">Clear Logs</a>
+							</td>
+						</tr>
+					</table>
+					</div>
+					
+				
+					{% if error %}
+						</br>
+						<center>Log file is empty or doesn't exist !</center>
+					{% else %}
+						<div class="result_table_scroll">
+							<table class="table_full_size result_table">
+								<thead>
+									<tr>
+										<th>Date</th>
+										<th>Error type</th>
+										<th>Message</th>
+									</tr>
+								</thead>
+								
+								<tbody>
+									{% for log in logsPrev | reverse %}
+									<tr>
+										<td>
+											<div class="table_text" style="text-align: center;">{{ log.date }}</div>
+										</td>
+										<td>
+											<div class="table_text" style="text-align: center;">{{ log.type }}</div>
+										</td>
+										<td style="text-align: center">
+											<a href="#" onclick="$('#detail_{{log.id}}').slideDown();" class="button green">View Details</a>
+										</td>
+									</tr>
+									<tr>
+										<td id="detail_{{log.id}}" class="detail_line" colspan="3">
+											<div class="message_log" style="margin-top: 15px; color: black; font-size: small; text-alignment: justify; line-height: 1.2em;">
+												{{ log.msg }}
+											</div>
+											<div class="close_button" style="text-align: right; margin-right: 5%; margin-top: 10px; margin-bottom: 10px;">
+												<a href="#" onclick="$('#detail_{{log.id}}').slideUp();" class="button red">Close Details</a>
+											</div>
+											
+										</td>
+									</tr>
+									{% endfor %}
+								</tbody>
+								
+							</table>
+								
+						</div>
+					{% endif %}
+			</td>
+		</tr>
+	</table>
+</div>
+
+<script>
+
+function resize_table()
+{
+	available_height = $(".Application").height()	 - $(".sidebar_main h1").outerHeight(true) - $("#top_infos").outerHeight(true);
+	$('table.result_table').css("max-height", available_height);
+	$('div.result_table_scroll').css("height", available_height);
+}
+
+$(document).ready(function() 
+	{
+		resize_table();
+	});
+$(window).resize(function() 
+	{
+		resize_table();
+	});
+
+</script>
+
+<style>.detail_line{display: none;}</style>
+
+{% endblock %}

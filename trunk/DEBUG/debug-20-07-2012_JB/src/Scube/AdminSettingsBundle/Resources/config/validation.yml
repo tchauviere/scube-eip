@@ -1,0 +1,9 @@
+# ScubeAdminBundle/Resources/config/validation.yml
+Scube\BaseBundle\Entity\ScubeSetting:
+    properties:
+        key:
+            - MinLength: { limit: 1, message: "Your Setting's key  must have at least {{ limit }} characters." }
+            - MaxLength: { limit: 150, message: "Your Setting's key is too long. It must have less than {{ limit }} characters." }
+        value:
+            - MinLength: { limit: 1, message: "Your Setting's value  must have at least {{ limit }} characters." }
+            - MaxLength: { limit: 250, message: "Your Settings's value is too long. It must have less than {{ limit }} characters." }

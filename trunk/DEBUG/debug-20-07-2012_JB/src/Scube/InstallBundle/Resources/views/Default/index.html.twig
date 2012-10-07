@@ -1,0 +1,23 @@
+{% extends 'ScubeBaseBundle:Base:core_base.html.twig' %}
+
+{% block title %}Installation - First User Creation{% endblock %}
+
+{% block body %}
+{{ parent() }}
+
+<h1>Your administrator account</h1>
+
+<div class="page_frame">
+	{% if success is defined %}
+		<p style="text-align:center;" class="success">Your administrator account has been created</p>
+		<p style="text-align:center;">You can now <a href="{{path('_homepage')}}">login</a> and begin your experience</p>
+	{% else %}
+	<form action="{{ path("ScubeInstallBundle_homepage")}}" method="post" {{ form_enctype(form) }}>
+		{{ form_widget(form) }}
+		
+		<input type="submit" value="Create Adminstrator" />
+	</form>
+	{% endif %}
+</div>
+
+{% endblock %}

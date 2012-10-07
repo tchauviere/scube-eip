@@ -1,0 +1,7 @@
+parameters:
+#    widgets_medias_widget.example.class: Widgets\MediasWidgetBundle\Example
+
+services:
+#    widgets_medias_widget.example:
+#        class: %widgets_medias_widget.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
