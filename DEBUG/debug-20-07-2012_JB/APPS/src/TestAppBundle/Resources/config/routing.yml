@@ -1,3 +1,0 @@
-AppsTestAppBundle_homepage:
-    pattern:  /apptest
-    defaults: { _controller: AppsTestAppBundle:Default:index }

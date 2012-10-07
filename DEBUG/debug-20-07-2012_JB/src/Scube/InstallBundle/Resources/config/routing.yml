@@ -1,6 +1,0 @@
-ScubeInstallBundle_homepage:
-    pattern:  /install
-    defaults: { _controller: ScubeInstallBundle:Default:index }
-ScubeInstallBundle_preprocess:
-    pattern:  /preprocess_install
-    defaults: { _controller: ScubeInstallBundle:Default:preprocess }

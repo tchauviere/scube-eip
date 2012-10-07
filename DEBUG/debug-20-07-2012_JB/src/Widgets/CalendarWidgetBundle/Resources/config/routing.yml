@@ -1,3 +1,0 @@
-WidgetsCalendarWidgetBundle_homepage:
-    pattern:  /calendar_widget
-    defaults: { _controller: WidgetsCalendarWidgetBundle:Default:index }

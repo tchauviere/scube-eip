@@ -1,5 +1,0 @@
-{% for usr in users_list %}
-	<li>
-		<a href="{{ path("ScubeMailboxBundle_homepage_conversation", {"id_user":usr.getId()}) }}">{{usr.getFirstname()}} {{usr.getSurname()}}</a>
-	</li>
-{% endfor %}

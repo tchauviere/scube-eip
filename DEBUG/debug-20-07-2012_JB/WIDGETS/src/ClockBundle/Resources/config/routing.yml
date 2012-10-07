@@ -1,6 +1,0 @@
-WidgetsClockBundle_homepage:
-    pattern:  /widgets/clockwidget
-    defaults: { _controller: WidgetsClockBundle:Default:index }
-WidgetsClockBundle_clock:
-    pattern:  /widgets/clockwidget_clock
-    defaults: { _controller: WidgetsClockBundle:Default:clock }
