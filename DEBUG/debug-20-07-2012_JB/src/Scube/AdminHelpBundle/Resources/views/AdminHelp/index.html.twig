@@ -1,1 +1,22 @@
-Help bundle
+{% extends 'ScubeBaseBundle:Base:core_application.html.twig' %}
+
+
+{% block body %}
+{{ parent() }}
+
+<div class="Application">
+
+<table class="table_content">
+<tr>
+	<td class="sidebar_left">
+		{% include 'ScubeAdminHelpBundle:AdminHelp:menu.html.twig' %}
+	</td>
+	<td class="sidebar_main">
+
+
+	</td>
+</tr>
+</div>
+</table>
+
+{% endblock %}
