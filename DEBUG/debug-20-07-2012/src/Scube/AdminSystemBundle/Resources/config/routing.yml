@@ -1,0 +1,15 @@
+ScubeAdminSystemBundle_homepage:
+    pattern:  /system
+    defaults: { _controller: ScubeAdminSystemBundle:AdminSystem:index }
+
+ScubeAdminSystemBundle_dbSettings:
+    pattern:  /system/dbsettings
+    defaults: { _controller: ScubeAdminSystemBundle:AdminSystem:dbsettings }
+
+ScubeAdminSystemBundle_mtnSettings:
+    pattern:  /system/mtnsettings
+    defaults: { _controller: ScubeAdminSystemBundle:AdminSystem:mtnsettings }
+
+ScubeAdminSystemBundle_modifyAllowedUsers:
+    pattern:  /system/mtnsettings/modify
+    defaults: { _controller: ScubeAdminSystemBundle:AdminSystem:modifyallowedusers }

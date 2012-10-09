@@ -1,0 +1,30 @@
+{% extends 'ScubeBaseBundle:Base:core_application.html.twig' %}
+
+
+
+
+{% block body %}
+{{ parent() }}
+
+
+<div class="Application">
+	<table class="table_content">
+		<tr>
+			<td class="sidebar_left">
+				<ul class="sidebar_navigation">
+				{% include 'ScubeAdminSystemBundle:Adminsystem:menu.html.twig' %}
+				</ul>
+			</td>
+			<td class="sidebar_main">
+				<h1>System Settings : Allowed user list</h1>
+					<div class="header-text" style="margin-left: 5px; margin-right: 5px; background-color: #94211A; border-radius: 10px; padding-top: 10px; padding-bottom: 10px; text-align: center; color: white; font-weight: bold;">
+						Use this application with caution. Unexperimented persons shouldn't modify those parameters.
+					</div>
+			</td>
+		</tr>
+	</table>
+</div>
+
+
+
+{% endblock %}

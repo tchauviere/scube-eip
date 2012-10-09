@@ -65,9 +65,15 @@ class BaseController extends Controller
 					$blocked = false;
 					if ($user && $user->getBlocked() == false)
 					{
+					
+						/* Re-set user ip */
+						$userIp = $this->getRequest()->getClientIp();
+						$user->setIp($userIp);
+					
 						/* Re-set last access date */
 						$em = $this->getDoctrine()->getEntityManager();
 						$user->setDateLastAccess(new \DateTime());
+						
 						$em->flush();
 						
 						$session->set('user', $user);
@@ -132,6 +138,9 @@ class BaseController extends Controller
 				$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:PermissionsGroup');
 				$default_group = $repository->findOneBy(array('name' => "default"));
 				
+				/* Get user IP */
+				$userIp = $this->getRequest()->getClientIp();
+				
 				$user->setOnline(false);
 				$user->setBlocked(false);
 				$user->setDateRegister(new \DateTime());
@@ -142,6 +151,7 @@ class BaseController extends Controller
 				$user->setPermissionsGroup($default_group);
 				$user->setCalendar($calendar);
 				$user->setMailbox($mailbox);
+				$user->setIp($userIp);
 				
 				$em = $this->getDoctrine()->getEntityManager();
 				$em->persist($profile);
