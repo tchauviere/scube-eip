@@ -74,6 +74,11 @@ class User
     protected $locale;
 	
 	/**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    protected $ip;
+	
+	/**
      * @ORM\OneToOne(targetEntity="Scube\BaseBundle\Entity\BaseInterface")
      * @ORM\JoinColumn(name="base_interface", referencedColumnName="id")
      */
@@ -513,5 +518,25 @@ class User
     public function getLocale()
     {
         return $this->locale;
+    }
+
+    /**
+     * Set ip
+     *
+     * @param string $ip
+     */
+    public function setIp($ip)
+    {
+        $this->ip = $ip;
+    }
+
+    /**
+     * Get ip
+     *
+     * @return string 
+     */
+    public function getIp()
+    {
+        return $this->ip;
     }
 }

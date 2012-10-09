@@ -2,6 +2,10 @@ ScubeCoreBundle:
     resource: "@ScubeCoreBundle/Resources/config/routing.yml"
     prefix:   /
 
+ScubeAdminSystemBundle:
+    resource: "@ScubeAdminSystemBundle/Resources/config/routing.yml"
+    prefix:   /
+
 ScubeAdminHelpBundle:
     resource: "@ScubeAdminHelpBundle/Resources/config/routing.yml"
     prefix:   /
