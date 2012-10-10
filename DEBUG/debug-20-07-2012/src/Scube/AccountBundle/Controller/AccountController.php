@@ -136,7 +136,7 @@ class AccountController extends Controller
 		$form = $this->createFormBuilder($profile)
 			->add('picture', 'file')
             ->getForm();
-			
+
 		if ($request->getMethod() == 'POST') {
 			$form->bindRequest($request);
 	
@@ -155,12 +155,81 @@ class AccountController extends Controller
 					return $this->render('ScubeAccountBundle:Account:edit_picture.html.twig', array('user'=>$user, 'form' => $form->createView(), "success"=>false));
 				
 				$extension = $form['picture']->getData()->guessExtension();
-				$final_filename = rand().'.'.$extension;
+				$final_filename = uniqid(rand()).'.'.$extension;
 				
 				$form['picture']->getData()->move($path_destination, $final_filename);
 				
 				$em = $this->getDoctrine()->getEntityManager();
 				$profile->setPicture($this->get('request')->getBasePath() . "/" . \Scube\BaseBundle\Controller\BaseController::getUserDirectoryPath($user) . $folder_pics . "/".$final_filename);
+				$em->flush();
+				
+			$form = $this->createFormBuilder($profile)
+            ->getForm();
+
+				return $this->render('ScubeAccountBundle:Account:crop_picture.html.twig', array('user'=>$user, 'form' => $form->createView(), "success"=>true));
+			}
+		}
+		return $this->render('ScubeAccountBundle:Account:edit_picture.html.twig', array('user'=>$user, 'form' => $form->createView(), "success"=>false));
+    }
+
+	public function cropProfilePictureAction(Request $request)
+    {
+		$session = $this->getRequest()->getSession();
+		
+		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
+		$user = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
+		
+		$profile = $user->getProfile();
+		$picture = $profile->getPicture();
+
+		$form = $this->createFormBuilder($profile)
+			->add('picture', 'file')
+            ->getForm();
+		
+		if ($request->getMethod() == 'POST') {
+			$form->bindRequest($request);
+			
+			if ($form->isValid()) {
+
+				$folder_pics = "/profile_pics";
+				
+				$path_destination = \Scube\BaseBundle\Controller\BaseController::getUserDirectory($this->get('kernel'), $user);
+				if ($path_destination)
+				{
+					$path_destination = $path_destination . $folder_pics;
+					if (!file_exists($path_destination) || !is_dir($path_destination))
+						mkdir($path_destination);
+				}
+				else
+					return $this->render('ScubeAccountBundle:Account:edit_picture.html.twig', array('user'=>$user, 'form' => $form->createView(), "success"=>false));
+
+				
+				$x = $_POST['x'];
+				$y = $_POST['y'];
+				$w = $_POST['w'];
+				$h = $_POST['h'];
+				
+				$path = $this->get('kernel')->getRootDir()."/../..".$picture;
+				$handle = imagecreatefromjpeg($path);
+				$dimension = getimagesize($path);
+
+				$height		= 120;
+				$scaley 	= $dimension[1] / $height;
+				$width		= $dimension[0] / $scaley;
+				$scalex		= $dimension[0] / $width;
+
+				$diffx		= $x * $scalex;
+				$diffy		= $y * $scaley;
+
+				$diffh		= $h * $scaley;
+				$diffw		= $w * $scalex;
+
+				$pic = imagecreatetruecolor($w, $h);
+				imagecopyresized($pic, $handle, 0, 0, $diffx, $diffy, $w, $h, $diffw, $diffh);
+				imagejpeg($pic, $path);
+				
+				$em = $this->getDoctrine()->getEntityManager();
+				$profile->setPicture($picture);
 				$em->flush();
 				
 				return $this->render('ScubeAccountBundle:Account:edit_picture.html.twig', array('user'=>$user, 'form' => $form->createView(), "success"=>true));
@@ -170,4 +239,5 @@ class AccountController extends Controller
     }
 }
 
-// TEST
+
+/*  /debug-20-07-2012/web/users/1/profile_pics/18323.jpg   */
