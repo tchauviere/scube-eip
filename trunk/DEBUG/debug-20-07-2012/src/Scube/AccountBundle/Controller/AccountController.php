@@ -169,3 +169,5 @@ class AccountController extends Controller
 		return $this->render('ScubeAccountBundle:Account:edit_picture.html.twig', array('user'=>$user, 'form' => $form->createView(), "success"=>false));
     }
 }
+
+// TEST
