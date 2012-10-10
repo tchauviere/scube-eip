@@ -1,6 +1,16 @@
 {% extends 'ScubeBaseBundle:Base:core_application.html.twig' %}
 
+{% block more_javascripts %}
+{% javascripts
+	'@ScubeAccountBundle/Resources/public/js/jquery.min.js'
+%}
 
+<script type="text/javascript" src="{{ asset_url }}"></script>
+
+{% endjavascripts %}
+
+		
+		{% endblock %}
 {% block body %}
 {{ parent() }}
 
@@ -18,17 +28,17 @@
 			<p class="form_success">Your profile has been successfully updated.</p>
 		{% endif %}
 		
-		<p style="text-align:center;"><img width="120" src="{{ user.getProfile().getPicture() }}" alt="Your profile picture" /></p>
+		<img align="center" height="120" src="{{ user.getProfile().getPicture() }}" alt="Your profile picture"/>
 		
 		<form action="{{ path('ScubeAccountBundle_edit_picture') }}" method="post" {{ form_enctype(form) }}>
 			{{ form_widget(form) }}
 		
 			<input type="submit" value="Upload picture" />
 		</form>
+		
 	</td>
 </tr>
 </table>
 
 </div>
-
 {% endblock %}
