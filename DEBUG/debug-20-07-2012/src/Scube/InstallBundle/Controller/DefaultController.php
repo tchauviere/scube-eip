@@ -230,6 +230,19 @@ class DefaultController extends Controller
 		$em->persist($default_app11);
 		$em->flush();
 		
+		$default_app12 = new Application();
+		$default_app12->setName("System");
+		$default_app12->setBundleName("AdminSystemBundle");
+		$default_app12->setLink("ScubeAdminSystemBundle_homepage");
+		$default_app12->setType("admin");
+		$default_app12->setCategory("core");
+		$default_app12->setDescription("Scube System Maintenance");
+		$default_app12->setActivated(true);
+		$default_app12->setNecessary(true);
+		$em = $this->getDoctrine()->getEntityManager();
+		$em->persist($default_app12);
+		$em->flush();
+		
 		/* Default Settings */
 		$default_setting = new ScubeSetting();
 		$default_setting->setKey("allow_registration");
