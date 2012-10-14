@@ -170,6 +170,38 @@
                 <source>Associated administrator applications</source>
                 <target>Applications administrateur associées</target>
             </trans-unit>
+			<trans-unit id="43">
+                <source>No</source>
+                <target>Non</target>
+            </trans-unit>
+			<trans-unit id="44">
+                <source>Male</source>
+                <target>Homme</target>
+            </trans-unit>
+			<trans-unit id="45">
+                <source>Female</source>
+                <target>Femme</target>
+            </trans-unit>
+			<trans-unit id="46">
+                <source>French</source>
+                <target>Français</target>
+            </trans-unit>
+			<trans-unit id="47">
+                <source>English</source>
+                <target>Anglais</target>
+            </trans-unit>
+			<trans-unit id="48">
+                <source>Email already used by another user</source>
+                <target>Courriel déjà utilisé par un autre utilisateur</target>
+            </trans-unit>
+			<trans-unit id="49">
+                <source>Please enter a valid name (at least 1 character)</source>
+                <target>Veuillez entrer un nom de groupe valide (au moins 1 caractère)</target>
+            </trans-unit>
+			<trans-unit id="50">
+                <source>Group name already used</source>
+                <target>Nom de groupe déjà utilisé</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

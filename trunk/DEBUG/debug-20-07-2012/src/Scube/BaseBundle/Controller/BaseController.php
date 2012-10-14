@@ -47,6 +47,8 @@ class BaseController extends Controller
 		else
 		{
 			$allow_registration = $this->getDoctrine()->getRepository('ScubeBaseBundle:ScubeSetting')->findOneBy(array('key' => "allow_registration"));
+			$blocked = false;
+			$error = false;
 			$user = new User();
 		
 			$form = $this->createFormBuilder($user)
@@ -62,10 +64,8 @@ class BaseController extends Controller
 					$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
 					$LoggingUser = $form->getData();
 					$user = $repository->findOneBy(array('email' => $LoggingUser->getEmail(), 'password' => $LoggingUser->getPassword()));
-					$blocked = false;
 					if ($user && $user->getBlocked() == false)
 					{
-					
 						/* Re-set user ip */
 						$userIp = $this->getRequest()->getClientIp();
 						$user->setIp($userIp);
@@ -79,19 +79,22 @@ class BaseController extends Controller
 						$session->set('user', $user);
 						return $this->redirect($this->generateUrl('_homepage'));
 					}
-					else
+					else if ($user && $user->getBlocked() == true)
 						$blocked = true;
+					else
+						$error = true;
+						
 					if ($this->isMobile())
-						return $this->render('ScubeBaseBundle:Base_Mobile:login.html.twig', array('allow_registration'=>$allow_registration, 'form' => $form->createView(), 'error' => true));
-					return $this->render('ScubeBaseBundle:Base:login.html.twig', array('allow_registration'=>$allow_registration, 'form' => $form->createView(), 'error' => true, 'blocked' => $blocked));
+						return $this->render('ScubeBaseBundle:Base_Mobile:login.html.twig', array('allow_registration'=>$allow_registration, 'form' => $form->createView(), 'error' => $error, 'blocked' => $blocked));
+					return $this->render('ScubeBaseBundle:Base:login.html.twig', array('allow_registration'=>$allow_registration, 'form' => $form->createView(), 'error' => $error, 'blocked' => $blocked));
 				}
 			}
 			
 			if (!$allow_registration || $allow_registration->getValue() == "0")
 				$allow_registration = false;
 			if ($this->isMobile())
-				return $this->render('ScubeBaseBundle:Base_Mobile:login.html.twig', array('allow_registration'=>$allow_registration, 'form' => $form->createView(), "error"=>false));
-			return $this->render('ScubeBaseBundle:Base:login.html.twig', array('allow_registration'=>$allow_registration, 'form' => $form->createView(), "error"=>false));
+				return $this->render('ScubeBaseBundle:Base_Mobile:login.html.twig', array('allow_registration'=>$allow_registration, 'form' => $form->createView(), 'error' => $error, 'blocked' => $blocked));
+			return $this->render('ScubeBaseBundle:Base:login.html.twig', array('allow_registration'=>$allow_registration, 'form' => $form->createView(), 'error' => $error, 'blocked' => $blocked));
 		}
     }
 	public function logoutAction(Request $request)
@@ -125,6 +128,15 @@ class BaseController extends Controller
 			$form->bindRequest($request);
 	
 			if ($form->isValid()) {
+				
+				$test_email_user = $this->getDoctrine()->getRepository('ScubeBaseBundle:User')->findOneBy(array('email' => $user->getEmail()));
+				if ($test_email_user)
+				{
+					if ($this->isMobile())
+						return $this->render('ScubeBaseBundle:Base_Mobile:register.html.twig', array("allow_registration"=>$allow_registration,'form' => $form->createView(),"success"=>false,"error_email"=>true));
+					return $this->render('ScubeBaseBundle:Base:register.html.twig', array("allow_registration"=>$allow_registration,'form' => $form->createView(),"success"=>false,"error_email"=>true));
+				}
+					
 				/* Set profile object */
 				$profile = new UserProfile();
 				/* Set interface object */

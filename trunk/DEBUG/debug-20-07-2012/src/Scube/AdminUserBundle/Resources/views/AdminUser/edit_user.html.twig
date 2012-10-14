@@ -22,6 +22,10 @@
 			<p class="form_success">{% trans %}The user has been successfully updated{% endtrans %}.</p>
 		{% endif %}
 		
+		{% if error_email is defined %}
+			<p class="form_error">{% trans %}Email already used by another user{% endtrans %}</p>
+		{% endif %}
+		
 		{% if user_is_me is defined %}
 			<p class="form_error">{% trans %}You can't block youself, the option has been disabled{% endtrans %}.</p>
 		{% endif %}
