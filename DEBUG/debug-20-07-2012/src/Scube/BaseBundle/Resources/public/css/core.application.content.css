@@ -18,6 +18,11 @@ a:hover{
 .Application {
 }
 
+.Application p {
+	margin:0 5px;
+	padding:5px 0;
+}
+
 .Application h1 {
 	text-shadow:0px 1px 1px white;
 	text-align:center;
@@ -167,14 +172,6 @@ thead.table-head-color-2 {
 	background-color: #929e78;
 }
 
-p.result_table {
-	margin-left:2px;
-}
-
-div.result_table_scroll {
-	overflow-y:scroll;
-}
-
 /* #BUTTONS
  * ===================================================================== */
 .buttons {
@@ -310,4 +307,13 @@ a.button:hover {
 }
 .error {
 	color:#94211A;
+}
+
+/* Scroller */
+div.scroll_container {
+	overflow-y: scroll;
+}
+div.btn_line {
+	margin:0 2px;
+	padding:5px 0;
 }
