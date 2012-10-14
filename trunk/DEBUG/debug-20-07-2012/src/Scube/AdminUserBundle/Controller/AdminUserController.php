@@ -219,8 +219,8 @@ class AdminUserController extends CoreController
 		
 		$form = $this->createFormBuilder($defaultData)
             ->add('name', 'text')
-			->add('apps', 'choice', array('choices' => $app_list, 'multiple'  => true, 'required'    => false))
-			->add('admin_apps', 'choice', array('choices' => $admin_app_list, 'multiple'  => true, 'required'    => false))
+			->add('apps', 'choice', array('choices' => $app_list, 'multiple'  => true, 'required'    => false, 'label' => "Associated applications"))
+			->add('admin_apps', 'choice', array('choices' => $admin_app_list, 'multiple'  => true, 'required'    => false, 'label' => "Associated administrator applications"))
             ->getForm();
 				
 		if ($request->getMethod() == 'POST') {
@@ -318,8 +318,8 @@ class AdminUserController extends CoreController
 		
 		$form = $this->createFormBuilder($defaultData)
             ->add('name', 'text', array('read_only'=>$read_only_name))
-			->add('apps', 'choice', array('choices' => $app_list, 'multiple'  => true, 'required'    => false))
-			->add('admin_apps', 'choice', array('choices' => $admin_app_list, 'multiple'  => true, 'required'    => false))
+			->add('apps', 'choice', array('choices' => $app_list, 'multiple'  => true, 'required'    => false, 'label' => "Associated applications"))
+			->add('admin_apps', 'choice', array('choices' => $admin_app_list, 'multiple'  => true, 'required'    => false, 'label' => "Associated administrator applications"))
             ->getForm();
 				
 		if ($request->getMethod() == 'POST') {
