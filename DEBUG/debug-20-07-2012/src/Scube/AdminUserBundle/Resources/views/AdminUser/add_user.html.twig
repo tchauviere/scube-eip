@@ -18,6 +18,10 @@
 			<a href="{{ path("AdminUserBundle_homepage")}}" class="button grey"><- {% trans %}Back to Users{% endtrans %}</a>
 		</div>
 		
+		{% if error_email is defined %}
+			<p class="form_error">{% trans %}Email already used by another user{% endtrans %}</p>
+		{% endif %}
+		
 		<div class="scroll_container" rel="scroller">
 			<form action="{{ path("AdminUserBundle_user_add")}}" method="post" {{ form_enctype(form) }}>
 				{{ form_widget(form) }}

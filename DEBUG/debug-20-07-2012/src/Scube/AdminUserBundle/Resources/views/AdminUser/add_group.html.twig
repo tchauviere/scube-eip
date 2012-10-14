@@ -17,6 +17,10 @@
 			<a href="{{ path("AdminUserBundle_groups")}}" class="button grey"><- {% trans %}Back to Groups{% endtrans %}</a>
 		</div>
 		
+		{% if error is defined and error %}
+			<p class="form_error">{{ error_text }}</p>
+		{% endif %}
+		
 		<div class="scroll_container" rel="scroller">
 			<form action="{{ path("AdminUserBundle_group_add")}}" method="post" {{ form_enctype(form) }}>
 				{{ form_widget(form) }}

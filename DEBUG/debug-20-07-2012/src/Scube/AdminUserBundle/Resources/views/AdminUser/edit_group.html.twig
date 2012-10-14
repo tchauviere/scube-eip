@@ -22,6 +22,10 @@
 			<p class="form_success">{% trans %}The group has been successfully updated{% endtrans %}.</p>
 		{% endif %}
 		
+		{% if error is defined and error %}
+			<p class="form_error">{{ error_text }}</p>
+		{% endif %}
+		
 		<div class="scroll_container" rel="scroller">
 			<form action="{{ path("AdminUserBundle_group_edit", { 'id': grp.getId()})}}" method="post" {{ form_enctype(form) }}>
 				{{ form_widget(form) }}
