@@ -52,13 +52,24 @@ a:hover{
 	list-style-type:none;
 }
 .Application .table_content .sidebar_left .sidebar_navigation li {
-	text-align:right;
-	padding:10px 20px;
+	text-align:left;
+	padding:0;
 }
-.Application .table_content .sidebar_left .sidebar_navigation li a{
+.Application .table_content .sidebar_left .sidebar_navigation li a {
 	text-decoration:none;
+	padding:10px 20px;
+	line-height:20px;
+	font-size:15px;
+	display:block;
 	color:#333;
+}
+.Application .table_content .sidebar_left .sidebar_navigation li a:hover {
+	color:black;
 	text-shadow:0px 1px 1px white;
+}
+.Application .table_content .sidebar_left .sidebar_navigation li a.active {
+	background-color:#DADADA;
+	border-left:5px solid #4878AC;
 }
 
 .Application .table_content .sidebar_main{
