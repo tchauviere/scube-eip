@@ -26,15 +26,21 @@ class AdminHelpController extends CoreController
 		$this->preprocessApplication();
 		$em = $this->getDoctrine()->getEntityManager();
 		$app_list = $this->getMenu();
+		$default_locale = $this->getDoctrine()->getRepository('ScubeBaseBundle:ScubeSetting')->findOneBy(array('key' => "default_locale"));
 		$lang = $this->user->getLocale();
 
 		if (file_exists($this->get('kernel')->getRootDir()."/../src/Scube/" . $id ."/Resources/views/". substr($id, 0, strlen($id) - strlen("Bundle")) . "/help_". $lang  .".html.twig"))
 		{
 				$helpPath = "Scube" . $id . ":" . substr($id, 0, strlen($id) - strlen("Bundle")) . ":help_". $lang  .".html.twig";
 		}
+		else if (file_exists($this->get('kernel')->getRootDir()."/../src/Scube/" . $id ."/Resources/views/". substr($id, 0, strlen($id) - strlen("Bundle")) . "/help_". $default_locale->getValue()  .".html.twig"))
+		{
+				$helpPath = "Scube" . $id . ":" . substr($id, 0, strlen($id) - strlen("Bundle")) . ":help_". $default_locale->getValue()  .".html.twig";
+		}
 		else
 			$helpPath = "ScubeAdminHelpBundle:AdminHelp:noHelp.html.twig";
-        return $this->render('ScubeAdminHelpBundle:AdminHelp:displayHelp.html.twig', array('helpFile'=>$helpPath, 'app_list'=>$app_list));
+		$id = substr($id, 0, strlen($id) - strlen("Bundle"));
+        return $this->render('ScubeAdminHelpBundle:AdminHelp:displayHelp.html.twig', array('id'=>$id, 'helpFile'=>$helpPath, 'app_list'=>$app_list));
 	}
 	
 	private function getMenu()
