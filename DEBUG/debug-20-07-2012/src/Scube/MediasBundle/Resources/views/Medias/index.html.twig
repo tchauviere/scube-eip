@@ -54,8 +54,16 @@
 						
 				<form action="{{ path('ScubeMediasBundle_homepage_folder', { 'id': folder.getId()}) }}" method="post" {{ form_enctype(form) }}>
 					{{ form_widget(form) }}
-				
+					<input type="hidden" name="ext_media" value="false" />
 					<input type="submit" value="Upload media" />
+				</form>
+				<br />
+				<hr />
+				<br />
+				<form action="{{ path('ScubeMediasBundle_homepage_folder', { 'id': folder.getId()}) }}" method="post" {{ form_enctype(form_external_video) }}>
+					{{ form_widget(form_external_video) }}
+					<input type="hidden" name="ext_media" value="true" />
+					<input type="submit" value="Add an external video" />
 				</form>
 			</div>
 			

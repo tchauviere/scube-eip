@@ -9,27 +9,6 @@
 <div id="vizualiser">
 {% if media.type == "picture" %}
 	<img style="vertical-align:bottom;display:inline;" src="{{media.path}}" alt="{{media.name}}" />
-	<hr />
-	<center>
-		{% if prev_media.id != "" %}
-			<span>
-				<a href="#" onclick='load_media("{{ prev_media.id }}", "{{ prev_media.type }}");'>
-					{% image '@ScubeBaseBundle/Resources/public/images/arrow-left-previous-32.png' %}
-						<img src="{{ asset_url }}" alt="Previous" title="Previous" />
-					{% endimage %}
-				</a>
-			</span>
-		{%endif%}
-		{% if next_media.id != "" %}
-			<span>
-				<a href="#" onclick='load_media("{{ next_media.id }}", "{{ next_media.type }}");'>
-					{% image '@ScubeBaseBundle/Resources/public/images/arrow-right-next-32.png' %}
-						<img src="{{ asset_url }}" alt="Next" title="Next" />
-					{% endimage %}
-				</a>
-			</span>
-		{%endif%}		
-	</center>
 {% elseif media.type == "document" %}
 	<iframe style="border:none;" src="{{media.path}}"></iframe>
 {% elseif media.type == "video" %}
@@ -53,6 +32,10 @@
     //-->
     </script>
 	</div>
+{% elseif (media.type == "youtube" or media.type == "dailymotion" or media.type == "vimeo") %}
+	{{ embedded_url | raw }}
+{%endif%}
+{% if media.type != "document" %}
 	<hr />
 	<center>
 		{% if prev_media.id != "" %}

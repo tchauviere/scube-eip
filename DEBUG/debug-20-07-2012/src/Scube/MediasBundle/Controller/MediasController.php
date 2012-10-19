@@ -34,14 +34,19 @@ class MediasController extends Controller
 			->add('name', 'text')
 			->add('path', 'file')
             ->getForm();
-			
-		if ($request->getMethod() == 'POST') {
+            
+        $form_external_video = $this->createFormBuilder($media)
+			->add('name', 'text')
+			->add('path', 'text', array('label' => 'URL'))
+            ->getForm();
+
+       	if ($request->getMethod() == 'POST') {
 			$form->bindRequest($request);
+			$form_external_video->bindRequest($request);
 			$form_folder->bindRequest($request);
+
 			/* Folder creation */
 			if ($form_folder->isValid()) {
-				
-				
 				
 				$em = $this->getDoctrine()->getEntityManager();
 				
@@ -51,61 +56,131 @@ class MediasController extends Controller
 				$em->persist($media_folder);
 				$em->flush();
 				
-				return $this->render('ScubeMediasBundle:Medias:index.html.twig', array('user'=>$user, 'form' => $form->createView(), 'form_folder' => $form_folder->createView(), 'folder'=>$selected_folder, "success"=>true));
+				return $this->render('ScubeMediasBundle:Medias:index.html.twig', array('user'=>$user, 'form' => $form->createView(), 'form_external_video' => $form_external_video->createView(), 'form_folder' => $form_folder->createView(), 'folder'=>$selected_folder, "success"=>true));
 			}
 			
 			/* File upload */
-			if ($form->isValid()) {
-				$folder = "/medias";
-				
-				$path_destination = \Scube\BaseBundle\Controller\BaseController::getUserDirectory($this->get('kernel'), $user);
-				if ($path_destination)
-				{
-					$path_destination = $path_destination . $folder;
-					if (!file_exists($path_destination) || !is_dir($path_destination))
-						mkdir($path_destination);
-				}
-				else
-					return $this->render('ScubeMediasBundle:Medias:index.html.twig', array('user'=>$user, 'form' => $form->createView(), 'form_folder' => $form_folder->createView(), 'folder'=>$selected_folder, "success"=>false));
-				
-				$extension = $form['path']->getData()->guessExtension();
-				
-				switch ($extension) {
-					/* Pictures */
-					case "jpg": $type="picture"; break;
-					case "jpeg": $type="picture"; break;
-					case "png": $type="picture"; break;
-					/* Videos */
-					case "avi": $type="video"; break;
-					case "3gp": $type="video"; break;
-					case "mp4": $type="video"; break;
-					/* Docs */
-					case "pdf": $type="document"; break;
+			if ($request->get('ext_media') == 'false')
+			{
+				if ($form->isValid()) {
+					$folder = "/medias";
 					
-					default: return $this->render('ScubeMediasBundle:Medias:index.html.twig', array('user'=>$user, 'form' => $form->createView(), 'form_folder' => $form_folder->createView(), 'folder'=>$selected_folder, "success"=>false));
+					$path_destination = \Scube\BaseBundle\Controller\BaseController::getUserDirectory($this->get('kernel'), $user);
+					if ($path_destination)
+					{
+						$path_destination = $path_destination . $folder;
+						if (!file_exists($path_destination) || !is_dir($path_destination))
+							mkdir($path_destination);
+					}
+					else
+						return $this->render('ScubeMediasBundle:Medias:index.html.twig', array('user'=>$user, 'form' => $form->createView(), 'form_external_video' => $form_external_video->createView(), 'form_folder' => $form_folder->createView(), 'folder'=>$selected_folder, "success"=>false));
+					
+					$extension = $form['path']->getData()->guessExtension();
+					
+					switch ($extension) {
+						/* Pictures */
+						case "jpg": $type="picture"; break;
+						case "jpeg": $type="picture"; break;
+						case "png": $type="picture"; break;
+						/* Videos */
+						case "3gp": $type="video"; break;
+						/* Docs */
+						case "pdf": $type="document"; break;
+						
+						default: return $this->render('ScubeMediasBundle:Medias:index.html.twig', array('user'=>$user, 'form' => $form->createView(), 'form_external_video' => $form_external_video->createView(), 'form_folder' => $form_folder->createView(), 'folder'=>$selected_folder, "success"=>false));
+					}
+					
+					$final_filename = uniqid().'.'.$extension;
+					
+					$form['path']->getData()->move($path_destination, $final_filename);
+					
+					$em = $this->getDoctrine()->getEntityManager();
+					
+					$media->setPath($this->get('request')->getBasePath() . "/" . \Scube\BaseBundle\Controller\BaseController::getUserDirectoryPath($user) . $folder . "/".$final_filename);
+					$media->setDate(new \Datetime());
+					$media->setType($type);
+					$media->setMediaFolder($selected_folder);
+					
+					$selected_folder->addMedia($media);
+					$em->persist($media);
+					$em->flush();
+					return $this->render('ScubeMediasBundle:Medias:index.html.twig', array('user'=>$user, 'form' => $form->createView(), 'form_external_video' => $form_external_video->createView(), 'form_folder' => $form_folder->createView(), 'folder'=>$selected_folder, "success"=>true));
 				}
-				
-				$final_filename = uniqid().'.'.$extension;
-				
-				$form['path']->getData()->move($path_destination, $final_filename);
-				
-				$em = $this->getDoctrine()->getEntityManager();
-				
-				$media->setPath($this->get('request')->getBasePath() . "/" . \Scube\BaseBundle\Controller\BaseController::getUserDirectoryPath($user) . $folder . "/".$final_filename);
-				$media->setDate(new \Datetime());
-				$media->setType($type);
-				$media->setMediaFolder($selected_folder);
-				
-				$selected_folder->addMedia($media);
-				$em->persist($media);
-				$em->flush();
-				
-				return $this->render('ScubeMediasBundle:Medias:index.html.twig', array('user'=>$user, 'form' => $form->createView(), 'form_folder' => $form_folder->createView(), 'folder'=>$selected_folder, "success"=>true));
+			}
+			/* Add external video links */
+			elseif ($request->get('ext_media') == 'true')
+			{
+				if ($form_external_video->isValid())
+				{
+					$em = $this->getDoctrine()->getEntityManager();
+					
+					$url = $form_external_video['path']->getData();
+	
+					preg_match('@^(?:http://)?([^/]+)@i', $url, $matches);
+					$host = $matches[1];
+					preg_match('/[^.]+\.[^.]+$/', $host, $domain);
+					
+					if (isset($domain[0]))
+					{
+						switch ($domain[0]) {
+							case "youtube.com": $type="youtube"; break;
+							case "dailymotion.com": $type="dailymotion"; break;
+							case "vimeo.com": $type="vimeo"; break;
+							
+							default: return $this->render('ScubeMediasBundle:Medias:index.html.twig', array('user'=>$user, 'form' => $form->createView(), 'form_external_video' => $form_external_video->createView(), 'form_folder' => $form_folder->createView(), 'folder'=>$selected_folder, "success"=>false));
+						}
+					}
+					else
+						return $this->render('ScubeMediasBundle:Medias:index.html.twig', array('user'=>$user, 'form' => $form->createView(), 'form_external_video' => $form_external_video->createView(), 'form_folder' => $form_folder->createView(), 'folder'=>$selected_folder, "success"=>false));
+					$media->setPath($url);
+					$media->setDate(new \Datetime());
+					$media->setType($type);
+					$media->setMediaFolder($selected_folder);
+										
+					$selected_folder->addMedia($media);
+					$em->persist($media);
+					$em->flush();
+					return $this->render('ScubeMediasBundle:Medias:index.html.twig', array('user'=>$user, 'form' => $form->createView(), 'form_external_video' => $form_external_video->createView(), 'form_folder' => $form_folder->createView(), 'folder'=>$selected_folder, "success"=>true));
+				}
 			}
 		}
-		return $this->render('ScubeMediasBundle:Medias:index.html.twig', array('user'=>$user, 'form' => $form->createView(), 'form_folder' => $form_folder->createView(), 'folder'=>$selected_folder, "success"=>false));
+		return $this->render('ScubeMediasBundle:Medias:index.html.twig', array('user'=>$user, 'form' => $form->createView(), 'form_external_video' => $form_external_video->createView(), 'form_folder' => $form_folder->createView(), 'folder'=>$selected_folder, "success"=>false));
     }
 	
+    private function buildEmbeddedUrl($media)
+    {
+		$url = $media->getPath();
+		$type = $media->getType();
+		$built_url = '';
+		if ($type == 'youtube')
+		{
+			$params = stristr($url, 'v=');
+			parse_str($params, $param_tab);
+			$video_id = $param_tab['v'];
+			$built_url = '<iframe width="640" height="360"
+						src="http://www.youtube.com/embed/'.$video_id.'?autoplay=1&rel=0"
+						frameborder="0" allowfullscreen></iframe>';
+		}
+		elseif ($type == 'dailymotion')
+		{
+			$video_id = strtok(basename($url), '_');
+			$built_url = '<iframe width="640" height="360"
+						src="http://www.dailymotion.com/embed/video/'.$video_id.'?logo=0&autoPlay=1&related=0"
+						frameborder="0"></iframe>';
+		}
+		elseif ($type == 'vimeo')
+		{
+			$video_id = basename($url);
+			if (isset($video_id))
+			{
+				$built_url = '<iframe width="640" height="360"
+						src="http://player.vimeo.com/video/'.$video_id.'?autoplay=1"
+						frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
+			}
+		}
+		return $built_url;
+    }
+    
 	public function loadAction(Request $request, $id)
     {
        $session = $this->getRequest()->getSession();
@@ -115,12 +190,18 @@ class MediasController extends Controller
 		
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:Media');
 		$media = $repository->find($id);
+		$type = $media->getType();
 		$folderId = $media->getMediaFolder()->getId();
 		//On recupere tous les medias presents dans le repertoire
 		$media_list = $repository->findBy(array('media_folder'=>$folderId), array('id'=>'asc'));
 		$list_size = count($media_list);
 		$prev_media['id'] = '';
 		$next_media['id'] = '';
+		
+		$embedded_url = '';
+		if ($type == 'youtube' || $type == 'dailymotion' || $type == 'vimeo')
+			$embedded_url = $this->buildEmbeddedUrl($media);
+			
 		//On recupere le media d'avant et d'apres
 		for ($i = 0; $i < $list_size; ++$i)
 		{
@@ -140,7 +221,7 @@ class MediasController extends Controller
 			}
 		}
 		
-		return $this->render('ScubeMediasBundle:Medias:load.html.twig', array('media'=>$media, 'prev_media'=>$prev_media, 'next_media'=>$next_media));
+		return $this->render('ScubeMediasBundle:Medias:load.html.twig', array('media'=>$media, 'prev_media'=>$prev_media, 'next_media'=>$next_media, 'embedded_url'=>$embedded_url));
     }
 	
 	public function deleteFolderAction(Request $request, $id)
@@ -175,8 +256,9 @@ class MediasController extends Controller
 		$folder = $media->getMediaFolder();
 		
 		$em = $this->getDoctrine()->getEntityManager();
-		
-		unlink(\Scube\BaseBundle\Controller\BaseController::getUserDirectory($this->get('kernel'), $user). "/medias/".basename($media->getPath()));
+		$type = $media->getType();
+		if ($type == 'picture' || $type == 'video' || $type == 'document')
+			unlink(\Scube\BaseBundle\Controller\BaseController::getUserDirectory($this->get('kernel'), $user). "/medias/".basename($media->getPath()));
 		$em->remove($media);
 		$em->flush();
 		return $this->redirect($this->generateUrl('ScubeMediasBundle_homepage_folder', array('id'=>$folder->getId())));
