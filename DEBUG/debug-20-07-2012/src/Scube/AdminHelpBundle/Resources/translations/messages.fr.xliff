@@ -3,8 +3,28 @@
     <file source-language="en" datatype="plaintext" original="file.ext">
         <body>
             <trans-unit id="1">
-                <source>Symfony2 is great</source>
-                <target>J'aime Symfony2</target>
+                <source>Help for administrator</source>
+                <target>Aide à l'administrateur</target>
+            </trans-unit>
+			<trans-unit id="2">
+                <source>Dear Administrator</source>
+                <target>Cher Administrateur</target>
+            </trans-unit>
+			<trans-unit id="3">
+                <source>This application has been created in order to help you for taking control of your Scube Network</source>
+                <target>Cette application a pour vocation de vous aider dans la prise en main de votre réseau Scube</target>
+            </trans-unit>
+			<trans-unit id="4">
+                <source>Please find in the right side the application helps</source>
+                <target>Veuillez cliquer sur l'aide d'une application à droite afin mieux comprendre son fonctionnement</target>
+            </trans-unit>
+			<trans-unit id="5">
+                <source>Application Helper</source>
+                <target>Aide des applications</target>
+            </trans-unit>
+			<trans-unit id="6">
+                <source>There is no help for this application</source>
+                <target>Aucune aide n'est disponible pour cette application</target>
             </trans-unit>
         </body>
     </file>
