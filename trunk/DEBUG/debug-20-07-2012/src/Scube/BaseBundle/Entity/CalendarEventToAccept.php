@@ -30,6 +30,8 @@ class CalendarEventToAccept
      */
     protected $event;
 
+   
+
     /**
      * Get id
      *
