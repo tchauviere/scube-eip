@@ -12,9 +12,26 @@
 		<ul id="media_list">
 		
 			{% if folder %}
-				<li style="border-bottom:1px solid #333;"><strong>Select a media</strong> (<a href="{{ path("ScubeMediasBundle_homepage")}}">back</a>)</li>
+				<li style="border-bottom:1px solid #333;"><strong>Select a media</strong> (<a href="{{ path("ScubeMediasBundle_homepage_folder", { 'id': folder.getId()})}}">Back to folder</a> - <a href="{{ path("ScubeMediasBundle_homepage")}}">Back to main page</a>)</li>
 				{% for media in folder.getMediasFolder() %}
 					<li>
+						{% if media.type == 'picture' %}
+							{% image '@ScubeBaseBundle/Resources/public/images/medias_icone_picture.png' %}
+								<img width="25" src="{{ asset_url }}" alt="Picture"/></a>
+							{% endimage %}
+						{% elseif (media.type == 'youtube' or media.type == 'dailymotion' or media.type == 'vimeo') %}
+							{% image '@ScubeBaseBundle/Resources/public/images/medias_icone_video.png' %}
+								<img width="25" src="{{ asset_url }}" alt="Picture"/></a>
+							{% endimage %}
+						{% elseif media.type == 'document' %}
+							{% image '@ScubeBaseBundle/Resources/public/images/medias_icone_document.png' %}
+								<img width="25" src="{{ asset_url }}" alt="Picture"/></a>
+							{% endimage %}
+						{% elseif media.type == 'music' %}
+							{% image '@ScubeBaseBundle/Resources/public/images/medias_icone_music.png' %}
+								<img width="25" src="{{ asset_url }}" alt="Picture"/></a>
+							{% endimage %}
+						{% endif %}
 						<span><a href="#" onclick='load_media("{{ media.id }}", "{{ media.type }}");'>{{ media.name }}</a></span>
 						<a style="float:right;" href="{{ path('ScubeMediasBundle_delete_media', { 'id': media.getId()}) }}"  >
 						{% image '@ScubeBaseBundle/Resources/public/images/remove.png' %}
