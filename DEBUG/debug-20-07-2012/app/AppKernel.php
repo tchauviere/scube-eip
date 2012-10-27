@@ -23,7 +23,6 @@ class AppKernel extends Kernel
             new Scube\InstallBundle\ScubeInstallBundle(),
             new Scube\AdminUserBundle\ScubeAdminUserBundle(),
 			new Scube\AdminSettingsBundle\ScubeAdminSettingsBundle(),
-			new Scube\AdminLogsBundle\ScubeAdminLogsBundle(),
 			new Scube\ConnectionsBundle\ScubeConnectionsBundle(),
 			new Scube\AccountBundle\ScubeAccountBundle(),
 			new Scube\CalendarBundle\ScubeCalendarBundle(),

@@ -82,10 +82,6 @@ ScubeAdminSettingsBundle:
     resource: "@ScubeAdminSettingsBundle/Resources/config/routing.yml"
     prefix:   /
 
-ScubeAdminLogsBundle:
-    resource: "@ScubeAdminLogsBundle/Resources/config/routing.yml"
-    prefix:   /
-
 #APP_DELIMITER
 
 # Internal routing configuration to handle ESI
