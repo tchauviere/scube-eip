@@ -16,7 +16,7 @@
 				</ul>
 			</td>
 			<td class="sidebar_main">
-				<h1>System Settings : Maintenance settings</h1>
+				<h1>System Settings : Maintenance settings : Remove Permissions</h1>
 				
 				
 				<div class="result_table" id="top_infos" style="padding-bottom: 15px;">
@@ -32,9 +32,16 @@
 								
 								<div style="margin-top: 10px; margin-bottom: 10px;">
 									Authorized users under maintenance mode :</br>
-									<a href="#" class="button green">Modify List</a>
 								</div>
 								
+							</td>
+							
+							<td>
+								<div class="ui-widget" style="color: black;">
+									<div class="btn" style="margin-left: 35%;">
+										<a href="{{ path('ScubeAdminSystemBundle_grantAccess') }}" class="button green">Add Someone</a>
+									</div>
+								</div>
 							</td>
 						</tr>
 					</table>
@@ -47,6 +54,7 @@
 								<th>Firstname</th>
 								<th>Lastname</th>
 								<th>IP address</th>
+								<th>Action</th>
 							</tr>
 						</thead>
 						
@@ -60,9 +68,21 @@
 									<div class="table_text" style="text-align: center;">{{ allowedUser.getSurname }}</div>
 								</td>
 								<td style="text-align: center">
+								{% if allowedUser.getIp != NULL %}
 									<div class="table_text" style="text-align: center;">{{ allowedUser.getIp }}</div>
+								{% else %}
+									<div class="table_text" style="text-align: center;">Unknown</div>
+								{% endif %}
+								</td>
+								<td style="text-align: center">
+									<a href="#" onclick="$('#detail_{{ allowedUser.getId() }}').slideDown();" class="button grey">Remove</a>
+									<div id="detail_{{ allowedUser.getId() }}" class="confirmation_box" style="text-align: center;">
+										<a href="{{ path("ScubeAdminSystemBundle_modifyAllowedUsers", {'mode' : "delete", 'id' : allowedUser.getId()} ) }}" class="button grey xsmall">Confirm</a>
+										<a href="#" onclick="$('#detail_{{ allowedUser.getId() }}').slideUp();" class="button red xsmall">Cancel</a>
+									</div>
 								</td>
 							</tr>
+				
 							{% endfor %}
 						</tbody>
 					</table>	
@@ -91,6 +111,5 @@ $(window).resize(function()
 	});
 
 </script>
-
 
 {% endblock %}

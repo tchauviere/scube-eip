@@ -79,6 +79,11 @@ class User
     protected $ip;
 	
 	/**
+     * @ORM\Column(type="boolean")
+     */
+    protected $mtn_token;
+	
+	/**
      * @ORM\OneToOne(targetEntity="Scube\BaseBundle\Entity\BaseInterface")
      * @ORM\JoinColumn(name="base_interface", referencedColumnName="id")
      */
@@ -538,5 +543,25 @@ class User
     public function getIp()
     {
         return $this->ip;
+    }
+
+    /**
+     * Set mtn_token
+     *
+     * @param boolean $mtnToken
+     */
+    public function setMtnToken($mtnToken)
+    {
+        $this->mtn_token = $mtnToken;
+    }
+
+    /**
+     * Get mtn_token
+     *
+     * @return boolean 
+     */
+    public function getMtnToken()
+    {
+        return $this->mtn_token;
     }
 }
