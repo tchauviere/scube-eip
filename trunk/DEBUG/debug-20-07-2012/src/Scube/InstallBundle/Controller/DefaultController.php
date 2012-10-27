@@ -63,19 +63,6 @@ class DefaultController extends Controller
 		$em->persist($default_app3);
 		$em->flush();
 		
-		$default_app4 = new Application();
-		$default_app4->setName("Reports");
-		$default_app4->setBundleName("AdminLogsBundle");
-		$default_app4->setLink("AdminLogsBundle_homepage");
-		$default_app4->setType("admin");
-		$default_app4->setCategory("core");
-		$default_app4->setDescription("View Scube's Logs and find errors");
-		$default_app4->setActivated(true);
-		$default_app4->setNecessary(true);
-		$em = $this->getDoctrine()->getEntityManager();
-		$em->persist($default_app4);
-		$em->flush();
-		
 		$default_app5 = new Application();
 		$default_app5->setName("Connections");
 		$default_app5->setBundleName("ConnectionsBundle");
@@ -322,7 +309,6 @@ class DefaultController extends Controller
 		$default_grp->addAdminApplication($default_app);
 		$default_grp->addAdminApplication($default_app2);
 		$default_grp->addAdminApplication($default_app3);
-		$default_grp->addAdminApplication($default_app4);
 		$default_grp->addAdminApplication($default_app9);
 		$default_grp->addAdminApplication($default_app11);
 		
