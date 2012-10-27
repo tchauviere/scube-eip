@@ -22,10 +22,6 @@ WidgetsMediasWidgetBundle:
     resource: "@WidgetsMediasWidgetBundle/Resources/config/routing.yml"
     prefix:   /
 
-ScubeFacebookBundle:
-    resource: "@ScubeFacebookBundle/Resources/config/routing.yml"
-    prefix:   /
-
 ScubeMediasBundle:
     resource: "@ScubeMediasBundle/Resources/config/routing.yml"
     prefix:   /
