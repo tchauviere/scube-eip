@@ -35,7 +35,6 @@ class AppKernel extends Kernel
 			new Scube\MailboxBundle\ScubeMailboxBundle(),
 			new Scube\AdminAppearanceBundle\ScubeAdminAppearanceBundle(),
 			new Scube\MediasBundle\ScubeMediasBundle(),
-			new Scube\FacebookBundle\ScubeFacebookBundle(),
 			new Scube\AdminHelpBundle\ScubeAdminHelpBundle(),
 			new Scube\AdminSystemBundle\ScubeAdminSystemBundle(),
 			/*APP_DELIMITER*/
