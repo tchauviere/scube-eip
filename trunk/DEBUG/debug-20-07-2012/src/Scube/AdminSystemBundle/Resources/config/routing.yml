@@ -6,10 +6,34 @@ ScubeAdminSystemBundle_dbSettings:
     pattern:  /system/dbsettings
     defaults: { _controller: ScubeAdminSystemBundle:AdminSystem:dbsettings }
 
+ScubeAdminSystemBundle_switchMode:
+    pattern:  /system/switchmode/{whichmode}
+    defaults: { _controller: ScubeAdminSystemBundle:AdminSystem:switchmode }
+
 ScubeAdminSystemBundle_mtnSettings:
     pattern:  /system/mtnsettings
     defaults: { _controller: ScubeAdminSystemBundle:AdminSystem:mtnsettings }
 
+ScubeAdminSystemBundle_grantAccess:
+    pattern:  /system/mtnsettings/grantaccess
+    defaults: { _controller: ScubeAdminSystemBundle:AdminSystem:grantaccess }
+
 ScubeAdminSystemBundle_modifyAllowedUsers:
-    pattern:  /system/mtnsettings/modify
-    defaults: { _controller: ScubeAdminSystemBundle:AdminSystem:modifyallowedusers }
+    pattern:  /system/mtnsettings/{mode}/{id}
+    defaults: { _controller: ScubeAdminSystemBundle:AdminSystem:modifyalloweduser }
+
+ScubeAdminSystemBundle_getJsonList:
+    pattern:  /system/mtnsettings/jsonlist
+    defaults: { _controller: ScubeAdminSystemBundle:AdminSystem:getjsonlist }
+
+ScubeAdminSystemBundle_prodlogs:
+    pattern:  /system/admin_logs/prod
+    defaults: { _controller: ScubeAdminSystemBundle:AdminSystem:prod }
+
+ScubeAdminSystemBundle_devlogs:
+    pattern:  /system/admin_logs/dev
+    defaults: { _controller: ScubeAdminSystemBundle:AdminSystem:dev }
+
+ScubeAdminSystemBundle_cleanlogs:
+    pattern:  /system/admin_logs/clean/{mode}
+    defaults: { _controller: ScubeAdminSystemBundle:AdminSystem:clean }

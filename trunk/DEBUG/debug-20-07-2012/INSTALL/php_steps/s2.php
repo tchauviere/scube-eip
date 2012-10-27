@@ -32,6 +32,19 @@ mailer_user=\"\"
 mailer_password=\"\"
 locale=\"en\"
 secret=\"01e324a59f7ff5232919a83d4ade681c2024d876\"\n";
+
+		$tmp_for_DB = "../tmpDB.scb";
+		$DB_infos = $_POST['distributionbundle_doctrine_step_driver']."\\".
+					$_POST['distributionbundle_doctrine_step_host']."\\".
+					$_POST['distributionbundle_doctrine_step_port']."\\".
+					$_POST['distributionbundle_doctrine_step_name']."\\".
+					$_POST['distributionbundle_doctrine_step_user']."\\".
+					$_POST['distributionbundle_doctrine_step_password']."\\";
+
+		$handle = fopen($tmp_for_DB, "w");
+		
+		file_put_contents($tmp_for_DB, $DB_infos);
+		
 	    
 		$filename = "../../app/config/parameters.ini";
 		

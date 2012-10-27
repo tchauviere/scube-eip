@@ -13,6 +13,7 @@ use Scube\BaseBundle\Entity\InterfaceWidget;
 use Scube\BaseBundle\Entity\ConnectionsGroup;
 use Scube\BaseBundle\Entity\Calendar;
 use Scube\BaseBundle\Entity\Mailbox;
+use Scube\BaseBundle\Entity\DbSettings;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -286,12 +287,31 @@ class DefaultController extends Controller
 		$em->persist($default_setting6);
 		$em->flush();
 		
+		/* Push in DB, DbSettings */
+		
+		$tmp_for_DB = $this->container->get('kernel')->getRootDir()."/../INSTALL/tmpDB.scb";
+		$content = file_get_contents($tmp_for_DB);
+		$DB_Array = explode("\\", $content);
+		
+		$db_settings = new DbSettings();
+		$db_settings->setDriver($DB_Array[0]);
+		$db_settings->setHost($DB_Array[1]);
+		$db_settings->setPort($DB_Array[2]);
+		$db_settings->setDbName($DB_Array[3]);
+		$db_settings->setUser($DB_Array[4]);
+		$db_settings->setPassword($DB_Array[5]);
+
+		$em = $this->getDoctrine()->getEntityManager();
+		$em->persist($db_settings);
+		$em->flush();
+		
 		/* Default Permissions Groups */
 		
 		// admin
 		$default_grp = new PermissionsGroup();
 		$default_grp->setName("administrator");
 		$default_grp->setLocked(true);
+		$default_grp->setMtnToken(true);
 		
 		$default_grp->addApplication($default_app5);
 		$default_grp->addApplication($default_app6);
@@ -314,6 +334,7 @@ class DefaultController extends Controller
 		$default_grp2 = new PermissionsGroup();
 		$default_grp2->setName("default");
 		$default_grp2->setLocked(true);
+		$default_grp2->setMtnToken(false);
 		
 		$default_grp2->addApplication($default_app5);
 		$default_grp2->addApplication($default_app6);
@@ -353,17 +374,24 @@ class DefaultController extends Controller
 				/* Set mailbox object */
 				$mailbox = new Mailbox();
 				
+				/* set user ip */
+				$userIp = $this->getRequest()->getClientIp();
+				$user->setIp($userIp);
+				
+				
 				$user->setPermissionsGroup($this->getDoctrine()->getRepository('ScubeBaseBundle:PermissionsGroup')->findOneBy(array('name' => "administrator")));
 				$user->setOnline(false);
 				$user->setBlocked(false);
 				$user->setDateRegister(new \DateTime());
 				$user->setDateLastAccess(new \DateTime());
 				$user->setLocale($this->getDoctrine()->getRepository('ScubeBaseBundle:ScubeSetting')->findOneBy(array('key' => "default_locale"))->getValue());
+				$user->setMtnToken(true);
 				
 				$user->setProfile($profile);
 				$user->setBaseInterface($interface);
 				$user->setCalendar($calendar);
 				$user->setMailbox($mailbox);
+				
 				
 				
 				

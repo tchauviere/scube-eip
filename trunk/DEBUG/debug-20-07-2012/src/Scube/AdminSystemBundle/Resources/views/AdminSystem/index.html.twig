@@ -38,11 +38,37 @@
 						</tr>
 					</table>
 				</div>
+				
+				<div class="head-msg" style="text-align: justify">
+				
+				{% if globalerror is defined and globalerror %}
+					An error occured. It's seems that your maintenance mode file is not here or unreadable. Please verify
+					that you can find it in %ROOT%/app/maintenance/mtn.scb (Put 1 char in it for maintenance mode or leave blank for online mode)
+			
+				
+				{% elseif alreadyonline is defined and alreadyonline %}
+					Your Scube is already online !
+			
+				
+				{% elseif alreadyoffline is defined and alreadyoffline %}
+					Your Scube is already offline !
+			
+				
+				{% elseif passedonline is defined and passedonline %}
+					Your Scube is now Online !
+			
+				
+				{% elseif passedoffline is defined and passedoffline %}
+					Your Scube is now Offline !
+					
+				{% endif %}
+				
+				</div>
 					
 					<div class="maintenance-buttons" style="margin-top: 15px; margin-left: 5px; margin-right: 5px; background-color: #D3D4D5; border-radius: 10px; padding-top: 10px; padding-bottom: 10px; text-align: center;">
 						Maintenance Mode ON/OFF:</br>
-						<a href="#" class="button red">Put Offline</a>
-						<a href="#" class="button green">Put Online</a>
+						<a href="{{ path("ScubeAdminSystemBundle_switchMode", {'whichmode' : 'offline'}) }}" class="button red">Put Offline</a>
+						<a href="{{ path("ScubeAdminSystemBundle_switchMode", {'whichmode' : 'online'}) }}" class="button green">Put Online</a>
 					</div>
 			</td>
 		</tr>
