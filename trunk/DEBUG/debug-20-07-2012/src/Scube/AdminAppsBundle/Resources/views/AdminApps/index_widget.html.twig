@@ -12,26 +12,40 @@
 		{% include 'ScubeAdminAppsBundle:AdminApps:menu.html.twig' %}
 	</td>
 	<td class="sidebar_main">
-		<h1>Widgets Manager</h1>
-	
-		<table>
+		<h1>{% trans %}Widgets Manager{% endtrans %}</h1>
 		
-			{% for widget in widget_list %}
-			<tr>
-				<td>
-					<div class="table_title">{{widget.getName()}}</div>
-					<div class="table_text">
-					{% if widget.getApplication() %}
-						Linked to {{widget.getApplication().getName()}}
-					{% endif %}
-					</div>
-				</td>
-				<td>
-					<a href="{{ path("AdminAppsBundle_widget_remove", { 'id': widget.getId()})}}">Uninstall</a>
-				</td>
-			</tr>
-			{% endfor %}
-		</table>
+		<div class="btn_line">
+			<a href="{{ path("AdminAppsBundle_widget_install")}}" class="button green">+ {% trans %}Manual install{% endtrans %}</a>
+		</div>
+		
+		<div class="scroll_container" rel="scroller">
+			<table class="table_full_size result_table">
+				<thead>
+					<tr>
+						<th>{% trans %}Name{% endtrans %}</th>
+						<th>{% trans %}Actions{% endtrans %}</th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					{% for widget in widget_list %}
+					<tr>
+						<td>
+							<div class="table_title">{{widget.getName()}}</div>
+							<div class="table_text">
+							{% if widget.getApplication() %}
+								{% trans %}Linked to{% endtrans %} {{widget.getApplication().getName()}}
+							{% endif %}
+							</div>
+						</td>
+						<td>
+							<a href="{{ path("AdminAppsBundle_widget_remove", { 'id': widget.getId()})}}" class="button red">{% trans %}Uninstall{% endtrans %}</a>
+						</td>
+					</tr>
+					{% endfor %}
+				<tbody>
+			</table>
+		</div>
 	</td>
 </tr>
 </div>
