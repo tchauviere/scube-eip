@@ -37,9 +37,9 @@ class AppKernel extends Kernel
 			new Scube\MediasBundle\ScubeMediasBundle(),
 			new Scube\AdminHelpBundle\ScubeAdminHelpBundle(),
 			new Scube\AdminSystemBundle\ScubeAdminSystemBundle(),
+            new Scube\TorrentBundle\ScubeTorrentBundle(),
 			/*APP_DELIMITER*/
 
-            
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

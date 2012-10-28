@@ -231,6 +231,19 @@ class DefaultController extends Controller
 		$em->persist($default_app12);
 		$em->flush();
 		
+		$default_app13 = new Application();
+		$default_app13->setName("Torrent");
+		$default_app13->setBundleName("TorrentBundle");
+		$default_app13->setLink("ScubeTorrentBundle_homepage");
+		$default_app13->setType("normal");
+		$default_app13->setCategory("core");
+		$default_app13->setDescription("Upload and share your torrent files");
+		$default_app13->setActivated(true);
+		$default_app13->setNecessary(true);
+		$em = $this->getDoctrine()->getEntityManager();
+		$em->persist($default_app13);
+		$em->flush();
+		
 		/* Default Settings */
 		$default_setting = new ScubeSetting();
 		$default_setting->setKey("allow_registration");
@@ -305,6 +318,7 @@ class DefaultController extends Controller
 		$default_grp->addApplication($default_app7);
 		$default_grp->addApplication($default_app8);
 		$default_grp->addApplication($default_app10);
+		$default_grp->addApplication($default_app13);
 		
 		$default_grp->addAdminApplication($default_app);
 		$default_grp->addAdminApplication($default_app2);
@@ -327,6 +341,7 @@ class DefaultController extends Controller
 		$default_grp2->addApplication($default_app7);
 		$default_grp2->addApplication($default_app8);
 		$default_grp2->addApplication($default_app10);
+		$default_grp2->addApplication($default_app13);
 		
 		$em = $this->getDoctrine()->getEntityManager();
 		$em->persist($default_grp2);
