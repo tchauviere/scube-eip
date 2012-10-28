@@ -131,6 +131,12 @@ class User
      */ 
     protected $media_folders;
 	
+	/**
+     * @ORM\ManyToMany(targetEntity="Scube\BaseBundle\Entity\TorrentFolder")
+	 * @ORM\JoinTable(name="torrent_folders")
+     */ 
+    protected $torrent_folders;
+	
     public function __construct()
     {
     }
@@ -423,6 +429,26 @@ class User
     public function getOnline()
     {
         return $this->online;
+    }
+
+    /**
+     * Add torrent_folders
+     *
+     * @param Scube\BaseBundle\Entity\TorrentFolder $torrentFolders
+     */
+    public function addTorrentFolder(\Scube\BaseBundle\Entity\TorrentFolder $torrentFolders)
+    {
+        $this->torrent_folders[] = $torrentFolders;
+    }
+
+    /**
+     * Get torrent_folders
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getTorrentFolders()
+    {
+        return $this->torrent_folders;
     }
 
     /**

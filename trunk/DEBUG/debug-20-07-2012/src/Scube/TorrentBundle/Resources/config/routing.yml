@@ -1,0 +1,12 @@
+ScubeTorrentBundle_homepage:
+    pattern:  /torrent
+    defaults: { _controller: ScubeTorrentBundle:Torrent:index }
+ScubeTorrentBundle_homepage_folder:
+    pattern:  /torrents/{id}
+    defaults: { _controller: ScubeTorrentBundle:Torrent:index }
+ScubeTorrentBundle_delete_folder:
+    pattern:  /torrents_delete_folder/{id}
+    defaults: { _controller: ScubeTorrentBundle:Torrent:deleteFolder }
+ScubeTorrentBundle_delete_torrent:
+    pattern:  /torrents_delete_torrent/{id}
+    defaults: { _controller: ScubeTorrentBundle:Torrent:deleteTorrent }

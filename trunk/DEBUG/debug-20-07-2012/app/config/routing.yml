@@ -1,3 +1,7 @@
+ScubeTorrentBundle:
+    resource: "@ScubeTorrentBundle/Resources/config/routing.yml"
+    prefix:   /
+
 ScubeCoreBundle:
     resource: "@ScubeCoreBundle/Resources/config/routing.yml"
     prefix:   /
