@@ -3,8 +3,136 @@
     <file source-language="en" datatype="plaintext" original="file.ext">
         <body>
             <trans-unit id="1">
-                <source>Symfony2 is great</source>
-                <target>J'aime Symfony2</target>
+                <source>Applications Manager</source>
+                <target>Gestionnaire d'applications</target>
+            </trans-unit>
+			<trans-unit id="2">
+                <source>Manual install</source>
+                <target>Installation manuelle</target>
+            </trans-unit>
+			<trans-unit id="3">
+                <source>Name</source>
+                <target>Nom</target>
+            </trans-unit>
+			<trans-unit id="4">
+                <source>Type</source>
+                <target>Type</target>
+            </trans-unit>
+			<trans-unit id="5">
+                <source>Category</source>
+                <target>Categorie</target>
+            </trans-unit>
+			<trans-unit id="6">
+                <source>Actions</source>
+                <target>Actions</target>
+            </trans-unit>
+			<trans-unit id="7">
+                <source>Desactivate</source>
+                <target>Désactiver</target>
+            </trans-unit>
+			<trans-unit id="8">
+                <source>Activate</source>
+                <target>Activer</target>
+            </trans-unit>
+			<trans-unit id="9">
+                <source>Uninstall</source>
+                <target>Désinstaller</target>
+            </trans-unit>
+			<trans-unit id="10">
+                <source>Applications</source>
+                <target>Applications</target>
+            </trans-unit>
+			<trans-unit id="11">
+                <source>Widgets</source>
+                <target>Widgets</target>
+            </trans-unit>
+			<trans-unit id="12">
+                <source>Install application</source>
+                <target>Installation d'application</target>
+            </trans-unit>
+			<trans-unit id="13">
+                <source>Application has been successfully installed</source>
+                <target>L'application a été installée avec succès</target>
+            </trans-unit>
+			<trans-unit id="14">
+                <source>An error occured</source>
+                <target>Une erreur est survenue</target>
+            </trans-unit>
+			<trans-unit id="15">
+                <source>If your application is already installed, please uninstall before (for a reinstall process)</source>
+                <target>Si l'application est déjà installée, merci de bien vouloir la désinstaller avant (pour une réinstallation)</target>
+            </trans-unit>
+			<trans-unit id="16">
+                <source>Install now</source>
+                <target>Lancer l'installation</target>
+            </trans-unit>
+			<trans-unit id="17">
+                <source>Zipped application</source>
+                <target>Application zippée</target>
+            </trans-unit>
+			<trans-unit id="18">
+                <source>No manifest found for the application. Please write it and try again.</source>
+                <target>Aucun manifeste n'a été trouvé pour l'application. Merci de bien vouloir l'intégrer à l'archive.</target>
+            </trans-unit>
+			<trans-unit id="19">
+                <source>An application already exists with the same name in the database or the name is empty.</source>
+                <target>Une application possède le même nom ou alors le nom est vide.</target>
+            </trans-unit>
+			<trans-unit id="20">
+                <source>An application already exists with the same bundle_name in the database or the bundle_name is empty.</source>
+                <target>Une application possède le même nom de bundle (bundle_name) ou ce dernier est vide.</target>
+            </trans-unit>
+			<trans-unit id="21">
+                <source>An application already exists with the same link in the database or the link is empty.</source>
+                <target>Une application possède le même lien ou le lien est vide</target>
+            </trans-unit>
+			<trans-unit id="22">
+                <source>An application already exists with the same name in src/Apps. Please remove the old version.</source>
+                <target>Apparemment, une autre version de votre application existe déjà. Veuillez la désinstaller.</target>
+            </trans-unit>
+			<trans-unit id="23">
+                <source>Install now</source>
+                <target>Lancer l'installation</target>
+            </trans-unit>
+			<trans-unit id="24">
+                <source>Widgets Manager</source>
+                <target>Gestionnaire de widgets</target>
+            </trans-unit>
+			<trans-unit id="25">
+                <source>Linked to</source>
+                <target>Lié à</target>
+            </trans-unit>
+			<trans-unit id="26">
+                <source>If your widget is already installed, please uninstall before (for a reinstall process)</source>
+                <target>Si le widget est déjà installé, merci de bien vouloir le désinstaller avant (pour une réinstallation)</target>
+            </trans-unit>
+			<trans-unit id="27">
+                <source>Install widget</source>
+                <target>Installation de widget</target>
+            </trans-unit>
+			<trans-unit id="28">
+                <source>Zipped widget</source>
+                <target>Widget zippé</target>
+            </trans-unit>
+			<trans-unit id="29">
+                <source>No manifest found for the widget. Please write it and try again.</source>
+                <target>Aucun manifeste n'a été trouvé pour le widget. Merci de bien vouloir l'intégrer à l'archive.</target>
+            </trans-unit>
+			<trans-unit id="30">
+                <source>A widget already exists with the same name in the database or the name is empty.</source>
+                <target>Un widget possède le même nom ou alors le nom est vide.</target>
+            </trans-unit>
+			<trans-unit id="31">
+                <source>A widget already exists with the same bundle_name in the database or the bundle_name is empty.</source>
+                <target>Un widget possède le même nom de bundle (bundle_name) ou ce dernier est vide.</target>
+            </trans-unit>
+			<trans-unit id="32">
+                <source>A widget already exists with the same link in the database or the link is empty.</source>
+                <target>Un widget possède le même lien ou le lien est vide</target>
+            </trans-unit>
+			<trans-unit id="33">
+                <source>A widget already exists with the same name in src/Widgets. Please remove the old version.</source>
+                <target>Apparemment, une autre version de votre widget existe déjà. Veuillez la désinstaller.</target>
             </trans-unit>
         </body>
     </file>

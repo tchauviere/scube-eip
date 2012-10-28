@@ -12,20 +12,20 @@
 		{% include 'ScubeAdminAppsBundle:AdminApps:menu.html.twig' %}
 	</td>
 	<td class="sidebar_main">
-		<h1>Apps Manager</h1>
+		<h1>{% trans %}Applications Manager{% endtrans %}</h1>
 		
-		<p class="result_table">
-			<a href="{{ path("AdminAppsBundle_install")}}" class="button green">+ Manual install</a>
-		</p>
+		<div class="btn_line">
+			<a href="{{ path("AdminAppsBundle_install")}}" class="button green">+ {% trans %}Manual install{% endtrans %}</a>
+		</div>
 		
-		<div class="result_table_scroll">
+		<div class="scroll_container" rel="scroller">
 			<table class="table_full_size result_table">
 				<thead>
 					<tr>
-						<th>Name</th>
-						<th>Type</th>
-						<th>Category</th>
-						<th>Actions</th>
+						<th>{% trans %}Name{% endtrans %}</th>
+						<th>{% trans %}Type{% endtrans %}</th>
+						<th>{% trans %}Category{% endtrans %}</th>
+						<th>{% trans %}Actions{% endtrans %}</th>
 					</tr>
 				</thead>
 				
@@ -44,13 +44,13 @@
 						</td>
 						<td>
 							{% if app.getNecessary() == false and app.getActivated() %}
-								<a href="{{ path("AdminAppsBundle_activate", { 'id': app.getId(), 'val':0 })}}" class="button yellow">Desactivate</a>
+								<a href="{{ path("AdminAppsBundle_activate", { 'id': app.getId(), 'val':0 })}}" class="button yellow">{% trans %}Desactivate{% endtrans %}</a>
 							{% elseif app.getNecessary() == false and app.getActivated() == false %}
-								<a href="{{ path("AdminAppsBundle_activate", { 'id': app.getId(), 'val':1 })}}" class="button yellow">Activate</a>
+								<a href="{{ path("AdminAppsBundle_activate", { 'id': app.getId(), 'val':1 })}}" class="button yellow">{% trans %}Activate{% endtrans %}</a>
 							{%endif%}
 							
 							{% if app.getNecessary() == false %}
-								<a href="{{ path("AdminAppsBundle_remove", { 'id': app.getId()})}}" class="button red">Uninstall</a>
+								<a href="{{ path("AdminAppsBundle_remove", { 'id': app.getId()})}}" class="button red">{% trans %}Uninstall{% endtrans %}</a>
 							{%endif%}
 						</td>
 					</tr>
@@ -62,24 +62,5 @@
 </tr>
 </div>
 </table>
-<script>
-
-function resize_table()
-{
-	available_height = $(".Application").height()	 - $(".sidebar_main h1").outerHeight(true) - $("p.result_table").outerHeight(true) + 11;
-	$('table.result_table').css("max-height", available_height);
-	$('div.result_table_scroll').css("height", available_height);
-}
-
-$(document).ready(function() 
-	{
-		resize_table();
-	});
-$(window).resize(function() 
-	{
-		resize_table();
-	});
-
-</script>
 
 {% endblock %}
