@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Scube\BaseBundle\Entity\DbSettings
  *
- * @ORM\Table()
+ * @ORM\Table(name="db_settings")
  * @ORM\Entity
  */
 class DbSettings

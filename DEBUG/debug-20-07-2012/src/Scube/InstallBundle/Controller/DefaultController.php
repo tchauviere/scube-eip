@@ -325,6 +325,7 @@ class DefaultController extends Controller
 		$default_grp->addAdminApplication($default_app3);
 		$default_grp->addAdminApplication($default_app9);
 		$default_grp->addAdminApplication($default_app11);
+		$default_grp->addAdminApplication($default_app12);
 		
 		$em = $this->getDoctrine()->getEntityManager();
 		$em->persist($default_grp);
