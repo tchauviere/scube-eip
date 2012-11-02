@@ -46,7 +46,7 @@ class CoreController extends Controller
 		
 		if (file_exists($file))
 		{
-			if (filesize($file) >= 1 && !$this->user->getMtnToken())
+			if (filesize($file) >= 1 && !$this->user->getMaintenancePermission())
 				throw new \Exception('Site under maintenance mode. Please try again in a while :)');
 		}
 	}

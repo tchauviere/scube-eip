@@ -81,7 +81,7 @@ class User
 	/**
      * @ORM\Column(type="boolean")
      */
-    protected $mtn_token;
+    protected $maintenance_permission;
 	
 	/**
      * @ORM\OneToOne(targetEntity="Scube\BaseBundle\Entity\BaseInterface")
@@ -572,22 +572,22 @@ class User
     }
 
     /**
-     * Set mtn_token
+     * Set maintenance_permission
      *
-     * @param boolean $mtnToken
+     * @param boolean $maintenancePermission
      */
-    public function setMtnToken($mtnToken)
+    public function setMaintenancePermission($maintenancePermission)
     {
-        $this->mtn_token = $mtnToken;
+        $this->maintenance_permission = $maintenancePermission;
     }
 
     /**
-     * Get mtn_token
+     * Get maintenance_permission
      *
      * @return boolean 
      */
-    public function getMtnToken()
+    public function getMaintenancePermission()
     {
-        return $this->mtn_token;
+        return $this->maintenance_permission;
     }
 }

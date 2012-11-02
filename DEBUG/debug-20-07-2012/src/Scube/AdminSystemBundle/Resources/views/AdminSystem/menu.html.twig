@@ -1,5 +1,7 @@
-<li><a href="{{ path("ScubeAdminSystemBundle_homepage")}}">Maintenance</a></li>
-<li><a href="{{ path("ScubeAdminSystemBundle_dbSettings")}}">Database Settings</a></li>
-<li><a href="{{ path("ScubeAdminSystemBundle_mtnSettings")}}">Maintenance Settings</a></li>
-<li><a href="{{ path("ScubeAdminSystemBundle_devlogs")}}">Development Logs</a></li>
-<li><a href="{{ path("ScubeAdminSystemBundle_prodlogs")}}">Production Logs</a></li>
+<ul class="sidebar_navigation">
+	<li><a href="{{ path("ScubeAdminSystemBundle_homepage")}}">{% trans %}Overview{% endtrans %}</a></li>
+	<li><a href="{{ path("ScubeAdminSystemBundle_maintenance")}}">{% trans %}Maintenance{% endtrans %}</a></li>
+	<li><a href="{{ path("ScubeAdminSystemBundle_reports")}}">{% trans %}Reports{% endtrans %}</a></li>
+	<li><a href="{{ path("ScubeAdminSystemBundle_database")}}">{% trans %}Database{% endtrans %}</a></li>
+	<li><a href="{{ path("ScubeAdminSystemBundle_cache")}}">{% trans %}Cache{% endtrans %}</a></li>
+</ul>

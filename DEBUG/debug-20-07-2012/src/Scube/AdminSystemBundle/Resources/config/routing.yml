@@ -2,38 +2,33 @@ ScubeAdminSystemBundle_homepage:
     pattern:  /system
     defaults: { _controller: ScubeAdminSystemBundle:AdminSystem:index }
 
-ScubeAdminSystemBundle_dbSettings:
-    pattern:  /system/dbsettings
-    defaults: { _controller: ScubeAdminSystemBundle:AdminSystem:dbsettings }
+ScubeAdminSystemBundle_database:
+    pattern:  /system/database
+    defaults: { _controller: ScubeAdminSystemBundle:AdminSystem:database }
 
-ScubeAdminSystemBundle_switchMode:
-    pattern:  /system/switchmode/{whichmode}
-    defaults: { _controller: ScubeAdminSystemBundle:AdminSystem:switchmode }
+ScubeAdminSystemBundle_maintenance:
+    pattern:  /system/maintenance
+    defaults: { _controller: ScubeAdminSystemBundle:AdminSystem:maintenance }
+ScubeAdminSystemBundle_maintenance_grant:
+    pattern:  /system/maintenance/grant/{id}
+    defaults: { _controller: ScubeAdminSystemBundle:AdminSystem:maintenanceGrant }
+ScubeAdminSystemBundle_maintenance_ungrant:
+    pattern:  /system/maintenance/ungrant/{id}
+    defaults: { _controller: ScubeAdminSystemBundle:AdminSystem:maintenanceUngrant }
+ScubeAdminSystemBundle_maintenance_switch_activation:
+    pattern:  /system/maintenance/switch
+    defaults: { _controller: ScubeAdminSystemBundle:AdminSystem:maintenanceSwitchActivation }
 
-ScubeAdminSystemBundle_mtnSettings:
-    pattern:  /system/mtnsettings
-    defaults: { _controller: ScubeAdminSystemBundle:AdminSystem:mtnsettings }
+ScubeAdminSystemBundle_reports:
+    pattern:  /system/reports
+    defaults: { _controller: ScubeAdminSystemBundle:AdminSystem:reports }
+ScubeAdminSystemBundle_reports_clear:
+    pattern:  /system/reports/clear
+    defaults: { _controller: ScubeAdminSystemBundle:AdminSystem:reportsClear }
 
-ScubeAdminSystemBundle_grantAccess:
-    pattern:  /system/mtnsettings/grantaccess
-    defaults: { _controller: ScubeAdminSystemBundle:AdminSystem:grantaccess }
-
-ScubeAdminSystemBundle_modifyAllowedUsers:
-    pattern:  /system/mtnsettings/{mode}/{id}
-    defaults: { _controller: ScubeAdminSystemBundle:AdminSystem:modifyalloweduser }
-
-ScubeAdminSystemBundle_getJsonList:
-    pattern:  /system/mtnsettings/jsonlist
-    defaults: { _controller: ScubeAdminSystemBundle:AdminSystem:getjsonlist }
-
-ScubeAdminSystemBundle_prodlogs:
-    pattern:  /system/admin_logs/prod
-    defaults: { _controller: ScubeAdminSystemBundle:AdminSystem:prod }
-
-ScubeAdminSystemBundle_devlogs:
-    pattern:  /system/admin_logs/dev
-    defaults: { _controller: ScubeAdminSystemBundle:AdminSystem:dev }
-
-ScubeAdminSystemBundle_cleanlogs:
-    pattern:  /system/admin_logs/clean/{mode}
-    defaults: { _controller: ScubeAdminSystemBundle:AdminSystem:clean }
+ScubeAdminSystemBundle_cache:
+    pattern:  /system/cache
+    defaults: { _controller: ScubeAdminSystemBundle:AdminSystem:cache }
+ScubeAdminSystemBundle_cache_clear:
+    pattern:  /system/cache/clear
+    defaults: { _controller: ScubeAdminSystemBundle:AdminSystem:cacheClear }
