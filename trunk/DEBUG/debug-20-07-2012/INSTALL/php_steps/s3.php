@@ -5,17 +5,20 @@ set_time_limit(120);
 <h1>Step 3: Preparation of the environment</h1>
 
 <?php
+
+$filename = "../../app/config/parameters.ini";
+
 if (isset($_POST['path']))
 {
 	$path_php = $_POST['path'];
 	$path_php = str_replace('.exe', '', $path_php);
 	$test_php = $path_php.' -v';
-	
+
 	print("<p style='color:black'>PHP Path : <span style='color:blue;'>".$path_php."</span></p>");
 	print("<p style='color:black'>Test PHP : <span style='color:blue;'>".$test_php."</span></p>");
 	
 	$check1 = strstr($path_php, 'php');
-	
+/*
 	while ($check1 != 'php' && strlen($check1) > 2)
 	{
 		$size = strlen($check1);
@@ -27,12 +30,12 @@ if (isset($_POST['path']))
 	}
 	$valueReturn = '';
 	if ($check1 != "php"){}
-	else
+	else*/
 		$valueReturn = shell_exec($test_php);
-	if (!$valueReturn)
+	if (!$valueReturn || !is_writable($filename))
 	{
 		?>
-        	<p class="error">Your binary is wrong. Please try another.</p>
+        	<p class="error">Your binary is wrong. Please try another. (your parameters file can also be unwritable)</p>
         	<div class="button_line">
                 <a class="button_reload" href="#" onclick="step_3();"><img src="images/reload.png" alt="Reload" /> Try another binary</a>
             </div>
@@ -40,6 +43,9 @@ if (isset($_POST['path']))
 	}
 	else
 	{
+		
+		file_put_contents($filename, 'php_exec="'.$path_php.'"', FILE_APPEND);
+
 		$assetic = shell_exec($path_php.' ../../app/console assetic:dump');
 		$drop = shell_exec($path_php.' ../../app/console doctrine:schema:drop --force');
 		$doc      = shell_exec($path_php.' ../../app/console doctrine:schema:update --force');
