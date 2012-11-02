@@ -164,6 +164,7 @@ class BaseController extends Controller
 				$user->setCalendar($calendar);
 				$user->setMailbox($mailbox);
 				$user->setIp($userIp);
+				$user->setMaintenancePermission(false);
 				
 				$em = $this->getDoctrine()->getEntityManager();
 				$em->persist($profile);

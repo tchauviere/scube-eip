@@ -287,24 +287,6 @@ class DefaultController extends Controller
 		$em->persist($default_setting6);
 		$em->flush();
 		
-		/* Push in DB, DbSettings */
-		
-		$tmp_for_DB = $this->container->get('kernel')->getRootDir()."/../INSTALL/tmpDB.scb";
-		$content = file_get_contents($tmp_for_DB);
-		$DB_Array = explode("\\", $content);
-		
-		$db_settings = new DbSettings();
-		$db_settings->setDriver($DB_Array[0]);
-		$db_settings->setHost($DB_Array[1]);
-		$db_settings->setPort($DB_Array[2]);
-		$db_settings->setDbName($DB_Array[3]);
-		$db_settings->setUser($DB_Array[4]);
-		$db_settings->setPassword($DB_Array[5]);
-
-		$em = $this->getDoctrine()->getEntityManager();
-		$em->persist($db_settings);
-		$em->flush();
-		
 		/* Default Permissions Groups */
 		
 		// admin
@@ -387,7 +369,7 @@ class DefaultController extends Controller
 				$user->setDateRegister(new \DateTime());
 				$user->setDateLastAccess(new \DateTime());
 				$user->setLocale($this->getDoctrine()->getRepository('ScubeBaseBundle:ScubeSetting')->findOneBy(array('key' => "default_locale"))->getValue());
-				$user->setMtnToken(true);
+				$user->setMaintenancePermission(true);
 				
 				$user->setProfile($profile);
 				$user->setBaseInterface($interface);

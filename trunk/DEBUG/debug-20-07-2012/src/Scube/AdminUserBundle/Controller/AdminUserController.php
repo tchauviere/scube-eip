@@ -76,6 +76,7 @@ class AdminUserController extends CoreController
 				$user->setOnline(false);
 				$user->setDateRegister(new \DateTime());
 				$user->setDateLastAccess(new \DateTime());
+				$user->setMaintenancePermission(false);
 				
 				$user->setProfile($profile);
 				$user->setBaseInterface($interface);
