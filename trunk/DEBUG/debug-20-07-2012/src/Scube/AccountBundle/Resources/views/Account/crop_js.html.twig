@@ -1,0 +1,114 @@
+
+{% javascripts
+	'@ScubeBaseBundle/Resources/public/js/jquery.jcrop.min.js' 
+%}
+<script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+{% stylesheets 
+	'@ScubeBaseBundle/Resources/public/css/jquery.jcrop.min.css' 
+%}
+<link rel="stylesheet" href="{{ asset_url }}" />
+{% endstylesheets %}
+
+<style>
+/*
+.jcrop-holder { text-align: left; }
+
+.jcrop-vline, .jcrop-hline
+{
+	font-size: 0;
+	position: absolute;
+	background: white url('Jcrop.gif') top left repeat;
+}
+.jcrop-vline { height: 100%; width: 1px !important; }
+.jcrop-hline { width: 100%; height: 1px !important; }
+.jcrop-handle {
+	font-size: 1px;
+	width: 7px !important;
+	height: 7px !important;
+	border: 1px #eee solid;
+	background-color: #333;
+	*width: 9px;
+	*height: 9px;
+}
+
+.jcrop-tracker { width: 100%; height: 100%; }
+
+.custom .jcrop-vline,
+.custom .jcrop-hline
+{
+	background: yellow;
+}
+.custom .jcrop-handle
+{
+	border-color: black;
+	background-color: #C7BB00;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}*/
+
+.crop_area {
+	background-color:#F1F1F1;
+	border:1px solid #DADADA;
+	margin:5px 10px;
+	text-align:center;
+}
+.crop_middle {
+	display:inline-block;
+	margin:5px;
+	vertical-align:middle;
+}
+
+</style>
+
+
+
+		<script>
+		$(window).load
+		(
+			function()
+			{ 			
+				var jcrop_api = $('#cropbox').Jcrop
+				(
+					{
+						minSize: [{{ image_width }}, {{ image_height }}],
+						onSelect: setCoords,
+						onChange: showPreview,
+						aspectRatio: 1,
+						allowMove: 1,
+						boxHeight: 200 
+					},
+					function()
+					{
+				        var bounds = this.getBounds();
+				        boundx = bounds[0];
+				        boundy = bounds[1];
+				        jcrop_api = this;
+			      	}
+				);
+				
+				function setCoords(coords)
+				{
+					$('#form_x').val(coords.x);
+					$('#form_y').val(coords.y);
+					$('#form_w').val(coords.w);
+					$('#form_h').val(coords.h);
+				};
+			
+			
+				function showPreview(coords)
+				{
+					var rx = {{ image_width }} / coords.w;
+					var ry = {{ image_height }} / coords.h;
+
+					$('#preview').css({
+						width: Math.round(rx * boundx) + 'px',
+						height: Math.round(ry * boundy) + 'px',
+						marginLeft: '-' + Math.round(rx * coords.x) + 'px',
+						marginTop: '-' + Math.round(ry * coords.y) + 'px'
+					});
+				}
+			}
+		);
+</script>

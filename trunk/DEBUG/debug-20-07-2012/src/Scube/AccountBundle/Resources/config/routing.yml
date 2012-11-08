@@ -10,6 +10,3 @@ ScubeAccountBundle_edit_profile:
 ScubeAccountBundle_edit_picture:
     pattern:  /edit_picture
     defaults: { _controller: ScubeAccountBundle:Account:editPicture }
-ScubeAccountBundle_crop_profile_picture:
-    pattern:  /crop_profile_picture
-    defaults: { _controller: ScubeAccountBundle:Account:cropProfilePicture }

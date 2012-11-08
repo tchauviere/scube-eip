@@ -1,16 +1,22 @@
 {% extends 'ScubeBaseBundle:Base:core_application.html.twig' %}
 
 {% block more_javascripts %}
-{% javascripts
-	'@ScubeAccountBundle/Resources/public/js/jquery.min.js'
-%}
+	{% if crop_needed is defined and crop_needed %}
+		{% include 'ScubeAccountBundle:Account:crop_js.html.twig' %}
+	{% endif %}
 
-<script type="text/javascript" src="{{ asset_url }}"></script>
+	<style>
+	.browse_image {
+		margin:0 auto;
+		text-align:center;
+	}
+	.browse_image input, .browse_image label {
+		width:100%;
+	}
+	</style>
 
-{% endjavascripts %}
+{% endblock %}
 
-		
-		{% endblock %}
 {% block body %}
 {{ parent() }}
 
@@ -27,14 +33,47 @@
 		{% if success %}
 			<p class="form_success">Your profile has been successfully updated.</p>
 		{% endif %}
-		
-		<img align="center" height="120" src="{{ user.getProfile().getPicture() }}" alt="Your profile picture"/>
-		
-		<form action="{{ path('ScubeAccountBundle_edit_picture') }}" method="post" {{ form_enctype(form) }}>
-			{{ form_widget(form) }}
-		
-			<input type="submit" value="Upload picture" />
-		</form>
+
+		{% if error %}
+			<p class="form_error">{{error_msg}}</p>
+		{% endif %}
+
+		<div class="scroll_container" rel="scroller">
+
+			{% if crop_needed is defined and crop_needed %}
+					
+				<div class="crop_area">
+					<p class="form_error">Your image need to be cropped for replacing current</p>
+
+					<div class="crop_middle">
+						<p>Area to crop</p>
+						<img style="display:inline-block;" src="{{ crop_url }}?{{time}}" alt="Your profile picture" id="cropbox"/>
+					</div>
+					<div class="crop_middle">
+						<p>Preview</p>
+						<div style="display:inline-block;width:{{ image_width }}px;height:{{ image_height }}px;overflow:hidden;">
+							<img align="center" src="{{ crop_url }}?{{time}}" alt="Your profile picture" id="preview"/>
+						</div>
+					</div>
+					<form action="{{ path('ScubeAccountBundle_edit_picture') }}" method="post" {{ form_enctype(form_crop) }}>
+						{{ form_widget(form_crop) }}
+						<input type="submit" value="Resize" />
+					</form>
+				</div>
+			{% endif %}
+			
+			<div class="browse_image">
+				<img style="display:inline-block;vertical-align:middle;width:{{ image_width }}px;height:{{ image_height }}px;" src="{{ user.getProfile().getPicture() }}?{{time}}" alt="Your profile picture"/>
+
+				<form style="display:inline-block;vertical-align:middle;margin-left:10px;" action="{{ path('ScubeAccountBundle_edit_picture') }}" method="post" {{ form_enctype(form) }}>
+					{{ form_widget(form) }}
+				
+					<input type="submit" value="Upload picture" />
+				</form>
+				<div class="breaker"></div>
+			</div>
+
+		</div>
 		
 	</td>
 </tr>
