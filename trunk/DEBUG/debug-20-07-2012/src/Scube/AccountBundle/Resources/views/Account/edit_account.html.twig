@@ -12,15 +12,15 @@
 		{% include 'ScubeAccountBundle:Account:menu.html.twig' %}
 	</td>
 	<td class="sidebar_main">
-		<h1>Edit account</h1>
+		<h1>{% trans %}Edit account{% endtrans %}</h1>
 
 		{% if success %}
-			<p class="form_success">Your account has been successfully updated. For a full update, <a target="_parent" href="{{ path('_homepage') }}">please refresh your desktop here</a>.</p>
+			<p class="form_success">{% trans %}Your account has been successfully updated{% endtrans %}. {% trans %}For a full update{% endtrans %}, <a target="_parent" href="{{ path('_homepage') }}">{% trans %}please refresh your desktop{% endtrans %}</a>.</p>
 		{% endif %}
 		<form action="{{ path('ScubeAccountBundle_homepage') }}" method="post" {{ form_enctype(form) }}>
 			{{ form_widget(form) }}
 		
-			<input type="submit" value="Save account" />
+			<input type="submit" value="{% trans %}Save{% endtrans %}" />
 		</form>
 	</td>
 </tr>

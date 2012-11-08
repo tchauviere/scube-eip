@@ -28,14 +28,14 @@
 		{% include 'ScubeAccountBundle:Account:menu.html.twig' %}
 	</td>
 	<td class="sidebar_main">
-		<h1>Edit picture</h1>
+		<h1>{% trans %}Edit picture{% endtrans %}</h1>
 
 		{% if success %}
-			<p class="form_success">Your profile has been successfully updated.</p>
+			<p class="form_success">{% trans %}Your picture has been successfully updated{% endtrans %}.</p>
 		{% endif %}
 
 		{% if error %}
-			<p class="form_error">{{error_msg}}</p>
+			<p class="form_error">{{error_msg|trans}}</p>
 		{% endif %}
 
 		<div class="scroll_container" rel="scroller">
@@ -43,21 +43,21 @@
 			{% if crop_needed is defined and crop_needed %}
 					
 				<div class="crop_area">
-					<p class="form_error">Your image need to be cropped for replacing current</p>
+					<p class="form_error">{% trans %}Your picture need to be cropped for replacing current{% endtrans %}</p>
 
 					<div class="crop_middle">
-						<p>Area to crop</p>
+						<p>{% trans %}Area to crop{% endtrans %}</p>
 						<img style="display:inline-block;" src="{{ crop_url }}?{{time}}" alt="Your profile picture" id="cropbox"/>
 					</div>
 					<div class="crop_middle">
-						<p>Preview</p>
+						<p>{% trans %}Preview{% endtrans %}</p>
 						<div style="display:inline-block;width:{{ image_width }}px;height:{{ image_height }}px;overflow:hidden;">
 							<img align="center" src="{{ crop_url }}?{{time}}" alt="Your profile picture" id="preview"/>
 						</div>
 					</div>
 					<form action="{{ path('ScubeAccountBundle_edit_picture') }}" method="post" {{ form_enctype(form_crop) }}>
 						{{ form_widget(form_crop) }}
-						<input type="submit" value="Resize" />
+						<input type="submit" value="{% trans %}Crop picture{% endtrans %}" />
 					</form>
 				</div>
 			{% endif %}
@@ -68,7 +68,7 @@
 				<form style="display:inline-block;vertical-align:middle;margin-left:10px;" action="{{ path('ScubeAccountBundle_edit_picture') }}" method="post" {{ form_enctype(form) }}>
 					{{ form_widget(form) }}
 				
-					<input type="submit" value="Upload picture" />
+					<input type="submit" value="{% trans %}Upload picture{% endtrans %}" />
 				</form>
 				<div class="breaker"></div>
 			</div>

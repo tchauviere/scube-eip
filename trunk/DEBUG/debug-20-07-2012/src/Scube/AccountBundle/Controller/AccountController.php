@@ -2,27 +2,26 @@
 
 namespace Scube\AccountBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Scube\CoreBundle\Controller\CoreController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Scube\BaseBundle\Entity\User;
 use Scube\BaseBundle\Entity\UserProfile;
 
-class AccountController extends Controller
+class AccountController extends CoreController
 {
     /* Account Edition Form */
 	public function editAccountAction(Request $request)
     {
+    	$this->preprocessApplication();
+
 		$session = $this->getRequest()->getSession();
 		
-		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
-		$user = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
+		$user = $this->user;
 		
 		$form = $this->createFormBuilder($user)
             ->add('Firstname', 'text')
             ->add('Surname', 'text')
-			/*->add('Email', 'email')
-			->add('Password', 'password')*/
 			->add('Birthday', 'birthday')
 			->add('Gender', 'choice', array('choices' => array('male' => 'Male', 'female' => 'Female')))
             ->getForm();
@@ -55,10 +54,10 @@ class AccountController extends Controller
 	/* Email and password Edition Form */
 	public function editEmailPasswordAction(Request $request)
     {
+    	$this->preprocessApplication();
 		$session = $this->getRequest()->getSession();
 		
-		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
-		$user = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
+		$user = $this->user;
 		
 		$form = $this->createFormBuilder($user)
 			->add('Email', 'email')
@@ -89,10 +88,10 @@ class AccountController extends Controller
 	/* Profile Edition Form */
 	public function editProfileAction(Request $request)
     {
+    	$this->preprocessApplication();
 		$session = $this->getRequest()->getSession();
 		
-		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
-		$user = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
+		$user = $this->user;
 		
 		$profile = $user->getProfile();
 		
@@ -126,11 +125,11 @@ class AccountController extends Controller
 	/* Email and password Edition Form */
 	public function editPictureAction(Request $request)
     {
+    	$this->preprocessApplication();
 		$session = $this->getRequest()->getSession();
 		
-		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
-		$default_picture = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()))->getProfile()->getPicture();
-		$user = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
+		$default_picture = $this->user->getProfile()->getPicture();
+		$user = $this->user;
 		
 		$profile = $user->getProfile();
 
@@ -198,8 +197,15 @@ class AccountController extends Controller
 					$parameters['user'] = $user;
 					return $this->render('ScubeAccountBundle:Account:edit_picture.html.twig', $parameters);
 				}
-					
 				
+				if (!$form['picture']->getData()->getSize()) {
+					$parameters['error'] = true;
+					$parameters['error_msg'] = "Accepted extensions are jpg, png, gif and bmp.";
+					$user->getProfile()->setPicture($default_picture);
+					$parameters['user'] = $user;
+					return $this->render('ScubeAccountBundle:Account:edit_picture.html.twig', $parameters);
+				}
+
 				$authorised_extensions = array('png', 'jpg', 'jpeg', 'bmp', 'gif');
 				$extension = strtolower($form['picture']->getData()->guessExtension());
 
@@ -224,7 +230,7 @@ class AccountController extends Controller
 				list($width, $height) = getimagesize($full_path);
 				if ($width < $min_width || $height < $min_height) {
 					$parameters['error'] = true;
-					$parameters['error_msg'] = "Minimum width is ".$min_width." and minimum height is ".$min_height;
+					$parameters['error_msg'] = $this->get('translator')->trans("Minimum dimension is").' '.$min_width.'x'.$min_height;
 					$user->getProfile()->setPicture($default_picture);
 					$parameters['user'] = $user;
 					unlink($full_path);

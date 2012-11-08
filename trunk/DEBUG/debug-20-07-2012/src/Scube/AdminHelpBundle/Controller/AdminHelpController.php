@@ -20,6 +20,7 @@ class AdminHelpController extends CoreController
 	public function getHelpAction(Request $request, $id)
 	{
 		$this->preprocessApplication();
+		
 		$current_app = $this->getDoctrine()->getRepository('ScubeBaseBundle:Application')->find($id);
 		$default_locale = $this->getDoctrine()->getRepository('ScubeBaseBundle:ScubeSetting')->findOneBy(array('key' => "default_locale"));
 		$lang = $this->user->getLocale();
