@@ -200,12 +200,12 @@ class AccountController extends Controller
 				}
 					
 				
-				$authorised_extensions = array('png', 'jpg', 'jpeg');
+				$authorised_extensions = array('png', 'jpg', 'jpeg', 'bmp', 'gif');
 				$extension = strtolower($form['picture']->getData()->guessExtension());
 
 				if (!in_array($extension, $authorised_extensions)) {
 					$parameters['error'] = true;
-					$parameters['error_msg'] = "Accepted extensions are jpg and png.";
+					$parameters['error_msg'] = "Accepted extensions are jpg, png, gif and bmp.";
 					$user->getProfile()->setPicture($default_picture);
 					$parameters['user'] = $user;
 					return $this->render('ScubeAccountBundle:Account:edit_picture.html.twig', $parameters);
