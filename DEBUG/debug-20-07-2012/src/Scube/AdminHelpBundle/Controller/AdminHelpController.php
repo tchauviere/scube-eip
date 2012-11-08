@@ -2,7 +2,6 @@
 
 namespace Scube\AdminHelpBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 use Scube\BaseBundle\Entity\Application;

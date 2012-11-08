@@ -2,18 +2,21 @@
 
 namespace Scube\AdminAppsBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+
+use Scube\CoreBundle\Controller\CoreController;
 
 use Scube\BaseBundle\Entity\User;
 use Scube\BaseBundle\Entity\Application;
 use Scube\BaseBundle\Entity\Widget;
 
-class AdminAppsController extends Controller
+class AdminAppsController extends CoreController
 {
     
     public function indexAction(Request $request)
     {
+    	$this->preprocessApplication();
+
 		$em = $this->getDoctrine()->getEntityManager();
 		$query = $em->createQuery("SELECT a FROM ScubeBaseBundle:Application a ORDER BY a.name ASC");
 		$app_list = $query->getResult();
@@ -22,6 +25,8 @@ class AdminAppsController extends Controller
 	
 	public function activateAction(Request $request, $id, $val)
     {
+    	$this->preprocessApplication();
+
 		$em = $this->getDoctrine()->getEntityManager();
 		$application = $em->getRepository('ScubeBaseBundle:Application')->find($id);
 	
@@ -39,6 +44,8 @@ class AdminAppsController extends Controller
 	
 	public function removeAction(Request $request, $id)
     {
+    	$this->preprocessApplication();
+
 		$url_redirect = $this->generateUrl('AdminAppsBundle_homepage'); // doit etre mis ici et surtout pas apres la modification du routing (sinon gros gros bug)
 		
 		$em = $this->getDoctrine()->getEntityManager();
@@ -95,6 +102,8 @@ class AdminAppsController extends Controller
 	
 	public function installAction(Request $request)
     {
+    	$this->preprocessApplication();
+
 		$url_redirect = $this->generateUrl('AdminAppsBundle_homepage'); // doit etre mis ici et surtout pas apres la modification du routing (sinon gros gros bug)
 		
 		$defaultData = array();
@@ -239,6 +248,8 @@ class AdminAppsController extends Controller
 	
 	public function indexWidgetAction(Request $request)
     {
+    	$this->preprocessApplication();
+
 		$em = $this->getDoctrine()->getEntityManager();
 		$query = $em->createQuery("SELECT a FROM ScubeBaseBundle:Widget a ORDER BY a.name ASC");
 		$widget_list = $query->getResult();
@@ -247,6 +258,8 @@ class AdminAppsController extends Controller
 	
 	public function installWidgetAction(Request $request)
     {
+    	$this->preprocessApplication();
+
 		$url_redirect = $this->generateUrl('AdminAppsBundle_widget_homepage'); // doit etre mis ici et surtout pas apres la modification du routing (sinon gros gros bug)
 		
 		$defaultData = array();
@@ -401,6 +414,8 @@ class AdminAppsController extends Controller
     }
 	public function removeWidgetAction(Request $request, $id)
     {
+    	$this->preprocessApplication();
+    	
 		$url_redirect = $this->generateUrl('AdminAppsBundle_widget_homepage'); // doit etre mis ici et surtout pas apres la modification du routing (sinon gros gros bug)
 		
 		$em = $this->getDoctrine()->getEntityManager();

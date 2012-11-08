@@ -235,10 +235,6 @@ class AdminSystemController extends CoreController
 	}
 
 
-
-
-
-
 	/*
 	 * Convert parameters.ini into array
 	 */
