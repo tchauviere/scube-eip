@@ -15,6 +15,12 @@ a:hover{
 	color:#4878ac;
 }
 
+.breaker {
+	width:100%;
+	clear:both;
+	height:0px;
+}
+
 .Application {
 }
 
