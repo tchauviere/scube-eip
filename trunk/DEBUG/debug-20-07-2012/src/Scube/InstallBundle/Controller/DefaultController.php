@@ -243,6 +243,19 @@ class DefaultController extends Controller
 		$em = $this->getDoctrine()->getEntityManager();
 		$em->persist($default_app13);
 		$em->flush();
+
+		$default_app14 = new Application();
+		$default_app14->setName("MyApps");
+		$default_app14->setBundleName("MyAppsBundle");
+		$default_app14->setLink("ScubeMyAppsBundle_homepage");
+		$default_app14->setType("normal");
+		$default_app14->setCategory("core");
+		$default_app14->setDescription("Manage your applications and widgets");
+		$default_app14->setActivated(true);
+		$default_app14->setNecessary(true);
+		$em = $this->getDoctrine()->getEntityManager();
+		$em->persist($default_app14);
+		$em->flush();
 		
 		/* Default Settings */
 		$default_setting = new ScubeSetting();
@@ -301,6 +314,7 @@ class DefaultController extends Controller
 		$default_grp->addApplication($default_app8);
 		$default_grp->addApplication($default_app10);
 		$default_grp->addApplication($default_app13);
+		$default_grp->addApplication($default_app14);
 		
 		$default_grp->addAdminApplication($default_app);
 		$default_grp->addAdminApplication($default_app2);
