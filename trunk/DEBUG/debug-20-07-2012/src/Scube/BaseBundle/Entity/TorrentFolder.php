@@ -107,4 +107,14 @@ class TorrentFolder
     {
         return $this->torrents_folder;
     }
+
+    /**
+     * Get torrents_folder
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getTorrentsFolder()
+    {
+        return $this->torrents_folder;
+    }
 }

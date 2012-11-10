@@ -17,11 +17,14 @@
 		{% if success %}
 			<p class="form_success">{% trans %}Your account has been successfully updated{% endtrans %}. {% trans %}For a full update{% endtrans %}, <a target="_parent" href="{{ path('_homepage') }}">{% trans %}please refresh your desktop{% endtrans %}</a>.</p>
 		{% endif %}
-		<form action="{{ path('ScubeAccountBundle_homepage') }}" method="post" {{ form_enctype(form) }}>
-			{{ form_widget(form) }}
-		
-			<input type="submit" value="{% trans %}Save{% endtrans %}" />
-		</form>
+
+		<div class="scroll_container" rel="scroller">
+			<form action="{{ path('ScubeAccountBundle_homepage') }}" method="post" {{ form_enctype(form) }}>
+				{{ form_widget(form) }}
+			
+				<input type="submit" value="{% trans %}Save{% endtrans %}" />
+			</form>
+		</div>
 	</td>
 </tr>
 </table>
