@@ -21,6 +21,12 @@ class Mail
      * @ORM\Column(type="datetime")
      */
     protected $mailing_date;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Scube\BaseBundle\Entity\User")
+     * @ORM\JoinColumn(name="user", referencedColumnName="id")
+     */
+    protected $author;
 	
 	/**
      * @ORM\Column(type="string", length=5)
@@ -101,5 +107,25 @@ class Mail
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set author
+     *
+     * @param Scube\BaseBundle\Entity\User $author
+     */
+    public function setAuthor(\Scube\BaseBundle\Entity\User $author)
+    {
+        $this->author = $author;
+    }
+
+    /**
+     * Get author
+     *
+     * @return Scube\BaseBundle\Entity\User 
+     */
+    public function getAuthor()
+    {
+        return $this->author;
     }
 }

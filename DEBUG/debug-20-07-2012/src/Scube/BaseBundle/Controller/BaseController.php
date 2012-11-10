@@ -66,12 +66,17 @@ class BaseController extends Controller
 					$user = $repository->findOneBy(array('email' => $LoggingUser->getEmail(), 'password' => $LoggingUser->getPassword()));
 					if ($user && $user->getBlocked() == false)
 					{
+						$em = $this->getDoctrine()->getEntityManager();
+
 						/* Re-set user ip */
 						$userIp = $this->getRequest()->getClientIp();
 						$user->setIp($userIp);
+
+						/* User is now online */
+						$user->setOnline(true);
 					
 						/* Re-set last access date */
-						$em = $this->getDoctrine()->getEntityManager();
+						
 						$user->setDateLastAccess(new \DateTime());
 						
 						$em->flush();
@@ -99,6 +104,14 @@ class BaseController extends Controller
     }
 	public function logoutAction(Request $request)
     {
+    	$session = $this->getRequest()->getSession();
+    	$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
+    	$user = $repository->findOneBy(array('id' => $session->get('user')->getId(), 'email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
+
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$user->setOnline(false);
+    	$em->flush();
+
 		$this->getRequest()->getSession()->remove('user');
 		return $this->redirect($this->generateUrl('_homepage'));
     }

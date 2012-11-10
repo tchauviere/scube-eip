@@ -3,8 +3,56 @@
     <file source-language="en" datatype="plaintext" original="file.ext">
         <body>
             <trans-unit id="1">
-                <source>Symfony2 is great</source>
-                <target>J'aime Symfony2</target>
+                <source>My discussions</source>
+                <target>Mes discussions</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>Write new mail</source>
+                <target>Rédiger</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>Show offline people</source>
+                <target>Afficher ceux hors ligne</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>Hide offline people</source>
+                <target>Cacher ceux hors ligne</target>
+            </trans-unit>
+            <trans-unit id="5">
+                <source>wrote</source>
+                <target>a écrit</target>
+            </trans-unit>
+            <trans-unit id="6">
+                <source>Mailbox</source>
+                <target>Boîte de réception</target>
+            </trans-unit>
+            <trans-unit id="7">
+                <source>Please select at least one participant</source>
+                <target>Veuillez sélectionner au moins un participant</target>
+            </trans-unit>
+            <trans-unit id="8">
+                <source>Select participants</source>
+                <target>Sélection des participants</target>
+            </trans-unit>
+            <trans-unit id="9">
+                <source>Cancel</source>
+                <target>Annuler</target>
+            </trans-unit>
+            <trans-unit id="10">
+                <source>Go to conversation</source>
+                <target>Aller à la conversation</target>
+            </trans-unit>
+            <trans-unit id="11">
+                <source>Mail</source>
+                <target>Message</target>
+            </trans-unit>
+            <trans-unit id="12">
+                <source>Participants are</source>
+                <target>Les participants sont</target>
+            </trans-unit>
+            <trans-unit id="13">
+                <source>Send</source>
+                <target>Envoyer</target>
             </trans-unit>
         </body>
     </file>

@@ -63,7 +63,13 @@
 			{% endif %}
 			
 			<div class="browse_image">
-				<img style="display:inline-block;vertical-align:middle;width:{{ image_width }}px;height:{{ image_height }}px;" src="{{ user.getProfile().getPicture() }}?{{time}}" alt="Your profile picture"/>
+				{% if  user.getProfile().getPicture() %}
+					<img style="display:inline-block;vertical-align:middle;width:{{ image_width }}px;height:{{ image_height }}px;" src="{{ user.getProfile().getPicture() }}?{{time}}" alt="Your profile picture"/>
+				{% else %}
+					{% image '@ScubeBaseBundle/Resources/public/images/default_picture.png'	%}
+						<img style="display:inline-block;vertical-align:middle;width:{{ image_width }}px;height:{{ image_height }}px;" src="{{ asset_url }}" alt="Default profile picture"/>
+					{% endimage %}
+				{% endif %}
 
 				<form style="display:inline-block;vertical-align:middle;margin-left:10px;" action="{{ path('ScubeAccountBundle_edit_picture') }}" method="post" {{ form_enctype(form) }}>
 					{{ form_widget(form) }}

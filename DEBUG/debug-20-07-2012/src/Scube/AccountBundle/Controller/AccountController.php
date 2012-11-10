@@ -24,6 +24,7 @@ class AccountController extends CoreController
             ->add('Surname', 'text')
 			->add('Birthday', 'birthday')
 			->add('Gender', 'choice', array('choices' => array('male' => 'Male', 'female' => 'Female')))
+			->add('Locale', 'choice', array('choices' => array('en' => 'English', 'fr' => 'French'), 'label' => "Language"))
             ->getForm();
 			
 		if ($request->getMethod() == 'POST') {
@@ -97,7 +98,7 @@ class AccountController extends CoreController
 		
 		$form = $this->createFormBuilder($profile)
 			->add('status', 'choice', array("required"=>false, 'choices' => array('single' => 'Single', 'married' => 'Married')))
-			->add('language', 'choice', array("required"=>false, 'choices' => array('en' => 'English', 'fr' => 'Francais')))
+			//->add('language', 'choice', array("required"=>false, 'choices' => array('en' => 'English', 'fr' => 'Francais')))
 			->add('phone_number', 'text', array("required"=>false))
 			->add('native_city', 'text', array("required"=>false))
 			->add('city', 'text', array("required"=>false))
