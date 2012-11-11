@@ -94,7 +94,7 @@ class FacebookController extends Controller
 	public function createFacebookObject()
 	{
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:Social_Networks');
-		$fb_settings = $repository->findOneBy(array('name' => 'facebook');
+		$fb_settings = $repository->findOneBy(array('name' => 'facebook'));
 	
 		//$appId = '113002988858656';
 		//$secret = 'c906e0c740e95395d71a56f3d68dd390';
