@@ -1,0 +1,5 @@
+#Routing for testing FacebookController functionalities -> Useless for anything else
+ScubeFacebookBundle_index:
+    pattern:  /facebook
+    defaults: { _controller: ScubeFacebookBundle:Facebook:index }
+
