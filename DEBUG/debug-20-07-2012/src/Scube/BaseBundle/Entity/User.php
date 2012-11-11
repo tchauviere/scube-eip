@@ -49,6 +49,11 @@ class User
     protected $gender;
 	
 	/**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    protected $fb_id;
+	
+	/**
      * @ORM\Column(type="boolean")
      */
     protected $online;
@@ -589,5 +594,25 @@ class User
     public function getMaintenancePermission()
     {
         return $this->maintenance_permission;
+    }
+	
+	 /**
+     * Set fb_id
+     *
+     * @param string $fbId
+     */
+    public function setFbId($fbId)
+    {
+        $this->fb_id = $fbId;
+    }
+
+    /**
+     * Get fb_id
+     *
+     * @return string 
+     */
+    public function getFbId()
+    {
+        return $this->fb_id;
     }
 }
