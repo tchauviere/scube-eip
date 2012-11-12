@@ -27,6 +27,12 @@ class MediaFolder
      * @ORM\Column(type="datetime")
      */
     protected $date;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Scube\BaseBundle\Entity\User")
+     * @ORM\JoinColumn(name="user", referencedColumnName="id")
+     */
+    protected $owner;
 	
 	/**
      * @ORM\ManyToMany(targetEntity="Scube\BaseBundle\Entity\Media")
@@ -106,5 +112,25 @@ class MediaFolder
     public function getMediasFolder()
     {
         return $this->medias_folder;
+    }
+
+    /**
+     * Set owner
+     *
+     * @param Scube\BaseBundle\Entity\User $owner
+     */
+    public function setOwner(\Scube\BaseBundle\Entity\User $owner)
+    {
+        $this->owner = $owner;
+    }
+
+    /**
+     * Get owner
+     *
+     * @return Scube\BaseBundle\Entity\User 
+     */
+    public function getOwner()
+    {
+        return $this->owner;
     }
 }
