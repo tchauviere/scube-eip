@@ -88,6 +88,13 @@ a:hover{
 	margin:15px 10px;
 	text-align:left;
 }
+.Application .table_content .sidebar_main h2{
+	padding-bottom:0px;
+	margin:15px 30px;
+	text-align:left;
+	font-size:18px;
+	color:#333;
+}
 
 
 /* Application TABLE */
