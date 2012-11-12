@@ -4,6 +4,7 @@
 
 	<h1>{% trans %}Your medias{% endtrans %}</h1>
 
+	<div class="scroll_container" rel="scroller">
 	{% for media in last_medias %}
 		<div class="last-medias-line">
 			<a href="#" onclick='load_media("{{ media.id }}", "{{ media.type }}");'>
@@ -39,5 +40,6 @@
 			</a>
 		</div>
 	{% endfor %}
+	</div>
 
 {% endblock %}
