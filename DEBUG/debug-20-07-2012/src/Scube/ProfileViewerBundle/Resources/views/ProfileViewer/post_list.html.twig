@@ -3,17 +3,17 @@
 		<div class="news_post">
 			<table class="table_full_size">
 				<tr>
-				<td style="width:20%;">
+				<td style="width:10%;">
 					{% if news.author.getProfile().getPicture() %}
 						<img style="width:100%;" src="{{ news.author.getProfile().getPicture() }}" alt="Profile Picture"/>
 					{% else %}
-						{% image '@ScubeBaseBundle/Resources/public/images/user.png' %}
+						{% image '@ScubeBaseBundle/Resources/public/images/default_picture.png' %}
 							<img style="width:100%;" src="{{ asset_url }}" alt="Profile Picture"/>
 						{% endimage %}
 					{% endif %}
 				</td>
 				
-				<td style="width:80%;">
+				<td style="width:90%;">
 					{% if news.getAuthor() == user_connected or user_to_display == user_connected %}
 						{% image '@ScubeBaseBundle/Resources/public/images/remove.png' %}
 							<a style="float:right;" href="{{ path("ScubeProfileViewerBundle_newsfeed_remove", {'id_user':user_to_display.getId(), 'id_news':news.getId()} )}}">

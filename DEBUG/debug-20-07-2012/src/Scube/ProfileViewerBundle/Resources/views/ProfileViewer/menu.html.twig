@@ -1,14 +1,14 @@
 <div class="profile_picture">
 	{% if user_to_display.getProfile().getPicture() %}
-		<img style="width:100%;" src="{{ user_to_display.getProfile().getPicture() }}" alt="Profile Picture"/>
+		<img style="width:100%;max-width:200px;" src="{{ user_to_display.getProfile().getPicture() }}" alt="Profile Picture"/>
 	{% else %}
-		{% image '@ScubeBaseBundle/Resources/public/images/user.png' %}
-			<img style="width:100%;max-width:128px;margin:5px;" src="{{ asset_url }}" alt="Profile Picture"/>
+		{% image '@ScubeBaseBundle/Resources/public/images/default_picture.png' %}
+			<img style="width:100%;max-width:200px;" src="{{ asset_url }}" alt="Profile Picture"/>
 		{% endimage %}
 	{% endif %}
 </div>
 <ul class="sidebar_navigation">
-	<li><a href="{{ path("ScubeProfileViewerBundle_newsfeed", {'id_user':user_to_display.getId()} )}}">Newsfeed</a></li>
-	<li><a href="{{ path("ScubeProfileViewerBundle_infos", {'id_user':user_to_display.getId()} )}}">Informations</a></li>
-	<li><a href="{{ path("ScubeProfileViewerBundle_pics", {'id_user':user_to_display.getId()} )}}">Pictures</a></li>
+	<li><a href="{{ path("ScubeProfileViewerBundle_newsfeed", {'id_user':user_to_display.getId()} )}}">{% trans %}Newsfeed{% endtrans %}</a></li>
+	<li><a href="{{ path("ScubeProfileViewerBundle_infos", {'id_user':user_to_display.getId()} )}}">{% trans %}Informations{% endtrans %}</a></li>
+	<li><a href="{{ path("ScubeProfileViewerBundle_pics", {'id_user':user_to_display.getId()} )}}">{% trans %}Pictures{% endtrans %}</a></li>
 </ul>
