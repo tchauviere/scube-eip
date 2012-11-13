@@ -256,6 +256,19 @@ class DefaultController extends Controller
 		$em = $this->getDoctrine()->getEntityManager();
 		$em->persist($default_app14);
 		$em->flush();
+
+		$default_app15 = new Application();
+		$default_app15->setName("Profile");
+		$default_app15->setBundleName("ProfileViewerBundle");
+		$default_app15->setLink("ScubeProfileViewerBundle_homepage");
+		$default_app15->setType("normal");
+		$default_app15->setCategory("core");
+		$default_app15->setDescription("Watch profile of users");
+		$default_app15->setActivated(true);
+		$default_app15->setNecessary(true);
+		$em = $this->getDoctrine()->getEntityManager();
+		$em->persist($default_app15);
+		$em->flush();
 		
 		/* Default Settings */
 		$default_setting = new ScubeSetting();
@@ -315,6 +328,7 @@ class DefaultController extends Controller
 		$default_grp->addApplication($default_app10);
 		$default_grp->addApplication($default_app13);
 		$default_grp->addApplication($default_app14);
+		$default_grp->addApplication($default_app15);
 		
 		$default_grp->addAdminApplication($default_app);
 		$default_grp->addAdminApplication($default_app2);
@@ -340,6 +354,7 @@ class DefaultController extends Controller
 		$default_grp2->addApplication($default_app10);
 		$default_grp2->addApplication($default_app13);
 		$default_grp2->addApplication($default_app14);
+		$default_grp2->addApplication($default_app15);
 		
 		$em = $this->getDoctrine()->getEntityManager();
 		$em->persist($default_grp2);

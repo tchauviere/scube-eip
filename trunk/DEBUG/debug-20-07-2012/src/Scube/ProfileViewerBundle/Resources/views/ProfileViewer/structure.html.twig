@@ -13,9 +13,11 @@
 	</td>
 	<td class="sidebar_main">
 		<h1>
-			{% image '@ScubeProfileViewerBundle/Resources/public/images/online.png' %}
-			<img width="16" src="{{ asset_url }}" alt="Online"/></a>
-			{% endimage %}
+			{% if user_to_display.getOnline() %}
+				{% image '@ScubeProfileViewerBundle/Resources/public/images/online.png' %}
+				<img width="16" src="{{ asset_url }}" alt="Online"/></a>
+				{% endimage %}
+			{% endif %}
 			{{user_to_display.firstname}} {{user_to_display.surname}}
 		</h1>
 		<div id="profileviewer_mainframe">
