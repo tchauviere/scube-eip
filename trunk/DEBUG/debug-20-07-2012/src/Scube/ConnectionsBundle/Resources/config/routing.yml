@@ -1,9 +1,6 @@
 ConnectionsBundle_homepage:
     pattern:  /connections
     defaults: { _controller: ScubeConnectionsBundle:Connections:index }
-ConnectionsBundle_widget:
-    pattern:  /connections_widget
-    defaults: { _controller: ScubeConnectionsBundle:Connections:widget }
 ConnectionsBundle_ajax_users_list:
     pattern:  /connections_ajax_users_list/{group_id}/{search}
     defaults: { _controller: ScubeConnectionsBundle:Connections:UsersList}
