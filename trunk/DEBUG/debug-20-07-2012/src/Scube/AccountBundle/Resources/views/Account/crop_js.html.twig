@@ -64,51 +64,67 @@
 
 
 
-		<script>
-		$(window).load
-		(
-			function()
-			{ 			
-				var jcrop_api = $('#cropbox').Jcrop
-				(
-					{
-						minSize: [{{ image_width }}, {{ image_height }}],
-						onSelect: setCoords,
-						onChange: showPreview,
-						aspectRatio: 1,
-						allowMove: 1,
-						boxHeight: 200 
-					},
-					function()
-					{
-				        var bounds = this.getBounds();
-				        boundx = bounds[0];
-				        boundy = bounds[1];
-				        jcrop_api = this;
-			      	}
-				);
-				
-				function setCoords(coords)
-				{
-					$('#form_x').val(coords.x);
-					$('#form_y').val(coords.y);
-					$('#form_w').val(coords.w);
-					$('#form_h').val(coords.h);
-				};
-			
-			
-				function showPreview(coords)
-				{
-					var rx = {{ image_width }} / coords.w;
-					var ry = {{ image_height }} / coords.h;
+<script>
 
-					$('#preview').css({
-						width: Math.round(rx * boundx) + 'px',
-						height: Math.round(ry * boundy) + 'px',
-						marginLeft: '-' + Math.round(rx * coords.x) + 'px',
-						marginTop: '-' + Math.round(ry * coords.y) + 'px'
-					});
-				}
-			}
+var crop_min_width = {{ image_width }};
+var crop_min_height = {{ image_height }};
+
+$(window).load
+(
+	function()
+	{ 			
+		var jcrop_api = $('#cropbox').Jcrop
+		(
+			{
+				minSize: [{{ image_width }}, {{ image_height }}],
+				onSelect: setCoords,
+				onChange: showPreview,
+				aspectRatio: 1,
+				allowMove: 1,
+				boxHeight: 200 
+			},
+			function()
+			{
+		        var bounds = this.getBounds();
+		        boundx = bounds[0];
+		        boundy = bounds[1];
+		        jcrop_api = this;
+	      	}
 		);
+		
+		function setCoords(coords)
+		{
+			$('#form_x').val(coords.x);
+			$('#form_y').val(coords.y);
+			$('#form_w').val(coords.w);
+			$('#form_h').val(coords.h);
+		};
+	
+	
+		function showPreview(coords)
+		{
+			var rx = {{ image_width }} / coords.w;
+			var ry = {{ image_height }} / coords.h;
+
+			$('#preview').css({
+				width: Math.round(rx * boundx) + 'px',
+				height: Math.round(ry * boundy) + 'px',
+				marginLeft: '-' + Math.round(rx * coords.x) + 'px',
+				marginTop: '-' + Math.round(ry * coords.y) + 'px'
+			});
+		}
+	}
+);
+
+$("#crop_submit").live('click', function(event) {
+	crop_current_width = parseInt(Math.round($('#form_w').val()));
+	crop_current_height = parseInt(Math.round($('#form_h').val()));
+	if (crop_current_width < crop_min_width || crop_current_height < crop_min_height) {
+		alert("{% trans %}You must select an area to crop{% endtrans %}");
+		event.preventDefault();
+		event.stopPropagation();
+	}
+});
+	
+
 </script>

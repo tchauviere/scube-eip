@@ -118,6 +118,10 @@
                 <source>Minimum dimension is</source>
                 <target>La taille minimum de la photo est</target>
             </trans-unit>
+            <trans-unit id="30">
+                <source>You must select an area to crop</source>
+                <target>Vous devez sélectionner une zone de découpage</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
