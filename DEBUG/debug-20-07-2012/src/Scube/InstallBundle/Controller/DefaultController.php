@@ -339,6 +339,7 @@ class DefaultController extends Controller
 		$default_grp2->addApplication($default_app8);
 		$default_grp2->addApplication($default_app10);
 		$default_grp2->addApplication($default_app13);
+		$default_grp2->addApplication($default_app14);
 		
 		$em = $this->getDoctrine()->getEntityManager();
 		$em->persist($default_grp2);

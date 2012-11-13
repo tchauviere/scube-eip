@@ -57,7 +57,7 @@
 					</div>
 					<form action="{{ path('ScubeAccountBundle_edit_picture') }}" method="post" {{ form_enctype(form_crop) }}>
 						{{ form_widget(form_crop) }}
-						<input type="submit" value="{% trans %}Crop picture{% endtrans %}" />
+						<input id="crop_submit" type="submit" value="{% trans %}Crop picture{% endtrans %}" />
 					</form>
 				</div>
 			{% endif %}
