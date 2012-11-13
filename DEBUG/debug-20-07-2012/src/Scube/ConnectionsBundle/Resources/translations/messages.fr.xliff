@@ -3,8 +3,20 @@
     <file source-language="en" datatype="plaintext" original="file.ext">
         <body>
             <trans-unit id="1">
-                <source>Symfony2 is great</source>
-                <target>J'aime Symfony2</target>
+                <source>My connections</source>
+                <target>Mes connexions</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>Create group</source>
+                <target>Créer le groupe</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>Give access to</source>
+                <target>Donner l'accès à</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>The group has been added successfully</source>
+                <target>Le groupe a été créé avec succès</target>
             </trans-unit>
         </body>
     </file>
