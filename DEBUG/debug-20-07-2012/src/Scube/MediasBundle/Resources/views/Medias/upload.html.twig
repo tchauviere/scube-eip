@@ -1,0 +1,32 @@
+{% extends 'ScubeMediasBundle:Medias:medias_core.html.twig' %}
+
+{% block media_page %}
+	
+	<h1>{% trans %}Upload{% endtrans %} {{ folder.getName() }}</h1>
+	
+	{% if success %}
+		<p class="form_success">{% trans %}Media added successfully{% endtrans %}</p>
+	{% endif %}
+
+	<div class="scroll_container" rel="scroller">
+		<div id="target_area">
+			<h2>{% trans %}Upload file{% endtrans %}</h2>
+			<p style="text-align:center;color:#666;font-size:14px;">{% trans %}Accepted formats are{% endtrans %} pdf, png, jpg</p>
+			<form action="{{ path('ScubeMediasBundle_upload', { 'id': folder.getId()}) }}" method="post" {{ form_enctype(form) }}>
+				{{ form_widget(form) }}
+				<input type="hidden" name="ext_media" value="false" />
+				<input type="submit" value="{% trans %}Upload media{% endtrans %}" />
+			</form>
+			<br />
+			<hr />
+			<br />
+			<h2>{% trans %}Use existing video{% endtrans %}</h2>
+			<p style="text-align:center;color:#666;font-size:14px;">{% trans %}Set the url of your video{% endtrans %} (Youtube, Dailymotion, Vimeo)</p>
+			<form action="{{ path('ScubeMediasBundle_upload', { 'id': folder.getId()}) }}" method="post" {{ form_enctype(form_external_video) }}>
+				{{ form_widget(form_external_video) }}
+				<input type="hidden" name="ext_media" value="true" />
+				<input type="submit" value="{% trans %}Add an external video{% endtrans %}" />
+			</form>
+		</div>
+	</div>
+{% endblock %}
