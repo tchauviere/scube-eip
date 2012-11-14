@@ -3,8 +3,40 @@
     <file source-language="en" datatype="plaintext" original="file.ext">
         <body>
             <trans-unit id="1">
-                <source>Symfony2 is great</source>
-                <target>J'aime Symfony2</target>
+                <source>Lock</source>
+                <target>Verrou</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>Admin</source>
+                <target>Admin</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>My infos</source>
+                <target>Mes infos</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>Logout</source>
+                <target>Déconnexion</target>
+            </trans-unit>
+            <trans-unit id="5">
+                <source>Applications</source>
+                <target>Applications</target>
+            </trans-unit>
+            <trans-unit id="6">
+                <source>Users and Groups</source>
+                <target>Utilisateurs et Groupes</target>
+            </trans-unit>
+            <trans-unit id="7">
+                <source>Appearance</source>
+                <target>Apparence</target>
+            </trans-unit>
+            <trans-unit id="8">
+                <source>Help</source>
+                <target>Aide</target>
+            </trans-unit>
+            <trans-unit id="9">
+                <source>System</source>
+                <target>Système</target>
             </trans-unit>
         </body>
     </file>

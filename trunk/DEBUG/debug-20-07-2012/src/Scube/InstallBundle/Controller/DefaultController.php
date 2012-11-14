@@ -38,7 +38,7 @@ class DefaultController extends Controller
 		$em->flush();
 		
 		$default_app2 = new Application();
-		$default_app2->setName("Users & Groups");
+		$default_app2->setName("Users and Groups");
 		$default_app2->setBundleName("AdminUserBundle");
 		$default_app2->setLink("AdminUserBundle_homepage");
 		$default_app2->setType("admin");

@@ -7,7 +7,7 @@
 			{% image '@ScubeBaseBundle/Resources/public/images/profile.png' %}
 			<br /><img src="{{ asset_url }}" alt="My profile"/><br />
 			{% endimage %}
-			Profile</a>
+			{% trans %}Profile{% endtrans %}</a>
 		</td>
 		<td class="td_top">
 			<div class="start_menu_btn">
@@ -16,14 +16,14 @@
 						<td class="td_top" >
 							<a class="AppBox start_menu_mini_btn" href="{{ path('ScubeMyAppsBundle_homepage') }}">
 							{% image '@ScubeBaseBundle/Resources/public/images/applications.png' %}
-							<br /><img src="{{ asset_url }}" alt="My apps" title="My Apps" />
+							<br /><img src="{{ asset_url }}" alt="{% trans %}My apps{% endtrans %}" title="{% trans %}My Apps{% endtrans %}" />
 							{% endimage %}
 							</a>
 						</td>
 						<td class="td_top">
 							<a class="AppBox start_menu_mini_btn" href="{{ path('ScubeMailboxBundle_homepage') }}">
 							{% image '@ScubeBaseBundle/Resources/public/images/inbox.png' %}
-							<br /><img src="{{ asset_url }}" alt="Mailbox" title="Mailbox" />
+							<br /><img src="{{ asset_url }}" alt="{% trans %}Mailbox{% endtrans %}" title="{% trans %}Mailbox{% endtrans %}" />
 							{% endimage %}
 							</a>
 						</td>
@@ -32,14 +32,14 @@
 						<td class="td_top">
 							<a class="AppBox start_menu_mini_btn" href="{{ path('ConnectionsBundle_homepage') }}">
 							{% image '@ScubeBaseBundle/Resources/public/images/connections.png' %}
-							<br /><img src="{{ asset_url }}" alt="Connections" title="Connections" />
+							<br /><img src="{{ asset_url }}" alt="{% trans %}Connections{% endtrans %}" title="{% trans %}Connections{% endtrans %}" />
 							{% endimage %}
 							</a>
 						</td>
 						<td class="td_top">
 							<a class="AppBox start_menu_mini_btn" href="{{ path('ScubeMediasBundle_homepage') }}">
 							{% image '@ScubeBaseBundle/Resources/public/images/medias.png' %}
-							<br /><img src="{{ asset_url }}" alt="Medias" title="Medias" />
+							<br /><img src="{{ asset_url }}" alt="{% trans %}Medias{% endtrans %}" title="{% trans %}Medias{% endtrans %}" />
 							{% endimage %}
 							</a>
 						</td>
@@ -54,14 +54,14 @@
 			{% image '@ScubeBaseBundle/Resources/public/images/myinfos.png' %}
 			<br /><img src="{{ asset_url }}" alt="My infos"/><br />
 			{% endimage %}
-			My infos</a>
+			{% trans %}My infos{% endtrans %}</a>
 		</td>
 		<td>
 			<a class="start_menu_btn red_btn" href="{{ path('_logout') }}">
 			{% image '@ScubeBaseBundle/Resources/public/images/shutdown.png' %}
 			<br /><img src="{{ asset_url }}" alt="Logout"/><br />
 			{% endimage %}
-			Logout</a>
+			{% trans %}Logout{% endtrans %}</a>
 		</td>
 	</tr>
 </table>
