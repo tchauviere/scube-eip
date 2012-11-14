@@ -82,12 +82,6 @@ class AdminUserController extends CoreController
 				$user->setCalendar($calendar);
 				$user->setMailbox($mailbox);
 				
-				//Default Maintenance Token depending on group selected
-				if ($form["permissionsGroup"]->getData()->getName() == "administrator")
-					$user->setMtnToken(true);
-				else
-					$user->setMtnToken(false);
-				
 				$em = $this->getDoctrine()->getEntityManager();
 				$em->persist($profile);
 				$em->persist($interface);
