@@ -18,6 +18,10 @@
                 <source>The group has been added successfully</source>
                 <target>Le groupe a été créé avec succès</target>
             </trans-unit>
+            <trans-unit id="5">
+                <source>Go to profile</source>
+                <target>Voir le profil</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
