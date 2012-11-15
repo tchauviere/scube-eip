@@ -22,7 +22,7 @@
 	
 	#calendar 
 	{
-		margin:0 20px;
+		margin:0 30px;
 	}
 	
 	.fc-event-vert .fc-event-inner {
@@ -119,6 +119,18 @@ color: #fff !important;
 	#myForm input[type="button"] {
 		background-color: #94211A;
 	}
+
+	#event_edit_container {
+		display:none;
+	}
+	#event_edit_container ul {
+		list-style-type:none;
+		margin:0;
+		padding:0;
+	}
+	#event_edit_container label, #event_edit_container input {
+		width:100%;
+	}
 	
 </style>
 
@@ -168,36 +180,35 @@ $(document).ready(function() {
          $dialogContent.dialog(
 		 {
             modal: true,
-            title: "New Calendar Event",
+            title: "{% trans %}New Calendar Event{% endtrans %}",
             close: function() {
                $dialogContent.dialog("destroy");
                $dialogContent.hide();
                calendar.fullCalendar("removeUnsavedEvents");
             },
             buttons: {
-               save : function() {
+               "{% trans %}Save{% endtrans %}" : function() {
                   
-				  if (titleField.val()) 
-					{
-					/*set hour !*/
-					arrayEvents.push(titleField.val(), start.toString(), end.toString(), allDay, groupField.val());
-					$.post("{{path('CalendarBundle_addEvent')}}",{'array_events': arrayEvents});
-					arrayEvents = [];
-						calendar.fullCalendar('renderEvent',
-						{
-							id : id,
-							title: titleField.val(),
-							start: start,
-							end: end,
-							allDay: allDay,
-							body : "salut"
-						},
-						true
-					);
-				}
-				 $dialogContent.dialog("close");
+						if (titleField.val()) {
+							/*set hour !*/
+							arrayEvents.push(titleField.val(), start.toString(), end.toString(), allDay, groupField.val());
+							$.post("{{path('CalendarBundle_addEvent')}}",{'array_events': arrayEvents});
+							arrayEvents = [];
+								calendar.fullCalendar('renderEvent',
+								{
+									id : id,
+									title: titleField.val(),
+									start: start,
+									end: end,
+									allDay: allDay,
+									body : "salut"
+								},
+								true
+							);
+						}
+						$dialogContent.dialog("close");
                },
-               cancel : function() 
+               "{% trans %}Cancel{% endtrans %}" : function() 
 			   {
                   $dialogContent.dialog("close");
                }
@@ -248,7 +259,7 @@ $(document).ready(function() {
             },
             buttons: 
 			{
-               save : function() 
+               lol : function() 
                {
                		if (isTime)
                		{
@@ -323,44 +334,52 @@ $(document).ready(function() {
 {% block body %}
 {{ parent() }}
 
-<div class="Application">
+<div id="event_edit_container">
+	<form>
+		<input type="hidden" />
+		<ul>
+		<li>
+				<label for="title">{% trans %}Title{% endtrans %}: </label><input type="text" name="title" />
+			</li>
+			<!--
+			<li>
+				<span>Date: </span><span class="date_holder"></span> 
+			</li>
+			-->
+			<li name="startTime">
+				<label name="lblStart">{% trans %}Start Time{% endtrans %}</label> <input type="text" name="start" id="startHour" />
+			</li>
+			<li>
+				<label name="lblEnd">{% trans %}End Time{% endtrans %} : </label> <input type="text" name="end" id="endHour" />
+			
+			</li>
+			<!--
+			<li>
+				<label for="group">Group: </label><select name="group"><option value="">Select group</option>
+				{% for group in user.getConnectionsGroups() %}
+				
+					<option value={{ group.getName() }} > {{ group.getName() }}</option>
+				{% endfor %}
+			</li>
+			-->
+			<li>
+				<label for="body">{% trans %}Description{% endtrans %}: </label><textarea name="body"></textarea>
+			</li>
+		</ul>
+	</form>
+</div>
 
+<div class="Application">
+	<!--
 	<div > <p> You have {{ user.getCalendar().getCalendarEventsToAccept()| length  }} event(s) to accept</p>
 	<form action="{{ path("CalendarBundle_displayEventToAccept")}}" method="post">
 			<input type="submit" value="Display" />
 		</form>
 	</div>
-	<div id='calendar'></div>
-	<div id="event_edit_container">
-		<form>
-			<input type="hidden" />
-			<ul>
-			<li>
-					<label for="title">Title: </label><input type="text" name="title" />
-				</li>
-				<li>
-					<span>Date: </span><span class="date_holder"></span> 
-				</li>
-				<li name="startTime">
-					<label name="lblStart">Start Time</label> <input type="text" name="start" id="startHour" />
-				</li>
-				<li>
-					<label name="lblEnd">End Time : </label> <input type="text" name="end" id="endHour" />
-				
-				</li>
-					<li>
-					<label for="group">Group: </label><select name="group"><option value="">Select group</option>
-					{% for group in user.getConnectionsGroups() %}
-					
-						<option value={{ group.getName() }} > {{ group.getName() }}</option>
-					{% endfor %}
-				</li>
-				
-				<li>
-					<label for="body">Body: </label><textarea name="body"></textarea>
-				</li>
-			</ul>
-		</form>
+	-->
+	<div style="height:34px;"></div>
+	<div class="scroll_container" rel="scroller">
+		<div id='calendar'></div>
 	</div>
 </div>
 
