@@ -90,6 +90,7 @@ class CalendarController extends CoreController
 	{
 		$this->preprocessApplication();
 
+		var_dump($_POST);
 		$array = $_POST['edit_event'];		
 		$id = $array['0'];
 		$title = $array['1'];
@@ -115,8 +116,8 @@ class CalendarController extends CoreController
 			else
 		$event->setAllDay(0);
 		*/
-		$event->setStart($start);
-		$event->setEnd($end);
+		//$event->setStart($start);
+		//$event->setEnd($end);
 		
 		$em->flush();
 		
@@ -154,7 +155,7 @@ class CalendarController extends CoreController
 	public function addeventAction()
 	{
 		$this->preprocessApplication();
-		
+		 
 		$session = $this->getRequest()->getSession();
 		
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
@@ -166,7 +167,7 @@ class CalendarController extends CoreController
 		$start = $array['1'];
 		$end = $array['2'];
 		$allDay = $array['3'];
-		$group = $array['4'];
+		$group = false; //$array['4'];
 		
 		$em = $this->getDoctrine()->getEntityManager();
 		
