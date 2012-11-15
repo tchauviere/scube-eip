@@ -14,6 +14,9 @@ a{
 a:hover{
 	color:#4878ac;
 }
+a img {
+	border:none;
+}
 
 .breaker {
 	width:100%;

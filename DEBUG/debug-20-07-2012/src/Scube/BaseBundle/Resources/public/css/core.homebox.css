@@ -44,10 +44,17 @@
 	font-weight: bold;
 	line-height: 35px;
 	vertical-align:middle;
+	
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
+	border-radius:5px;
+
 	-moz-box-shadow: 0 1px 3px #999;
 	-webkit-box-shadow: 0 1px 3px #999;
+	-o-box-shadow:0 1px 3px #999;
+	box-shadow:0 1px 3px #999;
+	filter:progid:DXImageTransform.Microsoft.Shadow(color=#999, Direction=180, Strength=3);
+
 	text-shadow: 0 -1px 1px #222;
 	position: relative;
 	cursor: pointer;
