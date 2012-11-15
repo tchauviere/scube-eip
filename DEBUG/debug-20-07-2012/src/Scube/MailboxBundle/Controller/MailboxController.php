@@ -101,8 +101,10 @@ class MailboxController extends CoreController
 			$query = $em->createQuery("SELECT u, m, c FROM ScubeBaseBundle:User u JOIN u.mailbox m JOIN m.conversations c WHERE u.id=:id_user ORDER BY c.date_last_mail DESC")->setParameters(array('id_user' => $user->getId()));
 			$conv_result = $query->getResult();
 			$conversations = array();
-			if ($conv_result)
-				$conversations = $query->getResult()[0]->getMailbox()->getConversations();
+			if ($conv_result) {
+				$conv_tmp = $query->getResult();
+				$conversations = $conv_tmp[0]->getMailbox()->getConversations();
+			}
 		}
 
         return $this->render('ScubeMailboxBundle:Mailbox:index.html.twig', array('user' => $user, 'conversation' => false, 'all_users' => $all_users, 'conversations_list' => $conversations));
