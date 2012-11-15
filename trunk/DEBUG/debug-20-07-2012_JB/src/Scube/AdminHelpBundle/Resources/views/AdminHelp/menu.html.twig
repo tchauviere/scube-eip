@@ -1,6 +1,5 @@
 <ul class="sidebar_navigation">
 	{% for app in app_list %}
-	<li><a href="{{ path("ScubeAdminHelpBundle_getHelp", {'id': app.getBundleName()})}}">{{app.getType()}} - {{app.getName()}}</a></li>
-					
+		<li><a href="{{ path("ScubeAdminHelpBundle_getHelp", {'id': app.getId()})}}">{{app.getType()}} / {{app.getName()}}</a></li>			
 	{% endfor %}
 </ul>

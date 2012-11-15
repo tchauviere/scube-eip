@@ -1,18 +1,26 @@
 ScubeMediasBundle_homepage:
     pattern:  /medias
     defaults: { _controller: ScubeMediasBundle:Medias:index }
-ScubeMediasBundle_homepage_folder:
-    pattern:  /medias/{id}
-    defaults: { _controller: ScubeMediasBundle:Medias:index }
 ScubeMediasBundle_load:
-    pattern:  /medias_load/{id}
+    pattern:  /medias/load/{id}
     defaults: { _controller: ScubeMediasBundle:Medias:load }
 ScubeMediasBundle_load_noparam:
-    pattern:  /medias_load
+    pattern:  /medias/load
     defaults: { _controller: ScubeMediasBundle:Medias:load }
-ScubeMediasBundle_delete_folder:
-    pattern:  /medias_delete_folder/{id}
-    defaults: { _controller: ScubeMediasBundle:Medias:deleteFolder }
 ScubeMediasBundle_delete_media:
-    pattern:  /medias_delete_media/{id}
+    pattern:  /medias/delete/{id}
     defaults: { _controller: ScubeMediasBundle:Medias:deleteMedia }
+
+# Folder
+ScubeMediasBundle_create_folder:
+    pattern:  /medias/folder/create
+    defaults: { _controller: ScubeMediasBundle:Medias:createFolder }
+ScubeMediasBundle_edit_folder:
+    pattern:  /medias/folder/edit/{id}
+    defaults: { _controller: ScubeMediasBundle:Medias:editFolder }
+ScubeMediasBundle_delete_folder:
+    pattern:  /medias/folder/delete/{id}
+    defaults: { _controller: ScubeMediasBundle:Medias:deleteFolder }
+ScubeMediasBundle_upload:
+    pattern:  /medias/folder/upload/{id}
+    defaults: { _controller: ScubeMediasBundle:Medias:upload }

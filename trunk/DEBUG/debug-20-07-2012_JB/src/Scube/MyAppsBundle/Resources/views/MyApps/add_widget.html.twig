@@ -6,15 +6,15 @@
 
 <div class="Application">
 
-		<h1>Clip a new widget</h1>
+		<h1>{% trans %}Clip a new widget{% endtrans %}</h1>
 			
 			{% if success %}
 			
-			<p class="success" style="text-align:center;">Please reload the main grid to perform. <a target="_parent" href="{{ path("_homepage") }}">Click here !</a></p>
+			<p class="success" style="text-align:center;">{% trans %}Please reload the main grid to perform{% endtrans %}. <a target="_parent" href="{{ path("_homepage") }}">{% trans %}Click here{% endtrans %} !</a></p>
 			
 			{% else %}
 			
-			<h3>Select a gray cell for position</h3>
+			<h3>{% trans %}Select a gray cell for position{% endtrans %}</h3>
 			<table id="grid_selector" style="margin:0 auto;">
 			
 				{% set pos_y = 0 %}
@@ -38,11 +38,11 @@
 				{% endfor %}
 			</table>
 			
-			<h3>Select the widget you want to clip</h3>
+			<h3>{% trans %}Select the widget you want to clip{% endtrans %}</h3>
 			<form action="{{ path('ScubeMyAppsBundle_add_widget') }}" method="post" {{ form_enctype(form) }}>
 				{{ form_widget(form) }}
 			
-				<input type="submit" value="Clip the widget now !" />
+				<input type="submit" value="{% trans %}Clip the widget now{% endtrans %} !" />
 			</form>
 			
 			{% endif %}

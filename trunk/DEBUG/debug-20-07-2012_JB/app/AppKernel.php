@@ -23,7 +23,6 @@ class AppKernel extends Kernel
             new Scube\InstallBundle\ScubeInstallBundle(),
             new Scube\AdminUserBundle\ScubeAdminUserBundle(),
 			new Scube\AdminSettingsBundle\ScubeAdminSettingsBundle(),
-			new Scube\AdminLogsBundle\ScubeAdminLogsBundle(),
 			new Scube\ConnectionsBundle\ScubeConnectionsBundle(),
 			new Scube\AccountBundle\ScubeAccountBundle(),
 			new Scube\CalendarBundle\ScubeCalendarBundle(),
@@ -36,11 +35,13 @@ class AppKernel extends Kernel
 			new Scube\MailboxBundle\ScubeMailboxBundle(),
 			new Scube\AdminAppearanceBundle\ScubeAdminAppearanceBundle(),
 			new Scube\MediasBundle\ScubeMediasBundle(),
-			new Scube\FacebookBundle\ScubeFacebookBundle(),
 			new Scube\AdminHelpBundle\ScubeAdminHelpBundle(),
+			new Scube\AdminSystemBundle\ScubeAdminSystemBundle(),
+            new Scube\TorrentBundle\ScubeTorrentBundle(),
+			new Scube\FacebookBundle\ScubeFacebookBundle(),
+            new Scube\GoldBookBundle\ScubeGoldBookBundle()
 			/*APP_DELIMITER*/
 
-            
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

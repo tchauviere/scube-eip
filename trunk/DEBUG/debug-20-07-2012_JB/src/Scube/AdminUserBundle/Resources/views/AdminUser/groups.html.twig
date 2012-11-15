@@ -12,20 +12,20 @@
 		{% include 'ScubeAdminUserBundle:AdminUser:menu.html.twig' %}
 	</td>
 	<td class="sidebar_main">
-		<h1>Groups Manager</h1>
+		<h1>{% trans %}Groups Manager{% endtrans %}</h1>
 		
-		<p class="result_table">
-			<a href="{{ path("AdminUserBundle_group_add")}}" class="button green">+ Create Group</a>
-		</p>
+		<div class="btn_line">
+			<a href="{{ path("AdminUserBundle_group_add")}}" class="button green">+ {% trans %}Create group{% endtrans %}</a>
+		</div>
 		
-		<div class="result_table_scroll">
+		<div class="scroll_container" rel="scroller">
 			<table class="table_full_size result_table">
 				
 				<thead>
 					<tr>
-						<th>Name</th>
-						<th>Status</th>
-						<th>Actions</th>
+						<th>{% trans %}Name{% endtrans %}</th>
+						<th>{% trans %}Status{% endtrans %}</th>
+						<th>{% trans %}Actions{% endtrans %}</th>
 					</tr>
 				</thead>
 				
@@ -37,21 +37,21 @@
 						</td>
 						<td>
 							{% if grp.getLocked() %}
-								Locked
+								{% trans %}Locked{% endtrans %}
 							{% else %}
-								Removable
+								{% trans %}Removable{% endtrans %}
 							{% endif %}
 						</td>
 						<td>
-							<a href="{{ path("AdminUserBundle_group_edit", { 'id': grp.getId()})}}" class="button grey small">Edit</a>
+							<a href="{{ path("AdminUserBundle_group_edit", { 'id': grp.getId()})}}" class="button grey small">{% trans %}Edit{% endtrans %}</a>
 							{% if grp.getLocked() == false %}
 							
-								<a href="#" onclick="$('#hidden_remove_{{grp.getId()}}').slideDown();" class="button red small">Remove</a>
+								<a href="#" onclick="$('#hidden_remove_{{grp.getId()}}').slideDown();" class="button red small">{% trans %}Remove{% endtrans %}</a>
 								
 								<div id="hidden_remove_{{grp.getId()}}" class="confirmation_box">
-									<span>Sure ?</span> 
-									<a href="{{ path("AdminUserBundle_group_remove", { 'id': grp.getId()})}}" class="button red xsmall">Yes</a>
-									<a href="#" onclick="$('#hidden_remove_{{grp.getId()}}').slideUp();" class="button grey xsmall">Cancel</a> 
+									<span>{% trans %}Sure{% endtrans %} ?</span> 
+									<a href="{{ path("AdminUserBundle_group_remove", { 'id': grp.getId()})}}" class="button red xsmall">{% trans %}Yes{% endtrans %}</a>
+									<a href="#" onclick="$('#hidden_remove_{{grp.getId()}}').slideUp();" class="button grey xsmall">{% trans %}Cancel{% endtrans %}</a> 
 								</div>
 							{% endif %}
 						</td>
@@ -67,30 +67,16 @@
 
 <script>
 
-function resize_table()
-{
-	available_height = $(".Application").height()	 - $(".sidebar_main h1").outerHeight(true) - $("p.result_table").outerHeight(true) + 11;
-	$('table.result_table').css("max-height", available_height);
-	$('div.result_table_scroll').css("height", available_height);
-}
-
 $(document).ready(function() 
 	{
-		resize_table();
-		
 		{% if add is defined %}
-			add_notification('success', 'Group added successfully');
+			add_notification('success', '{% trans %}Group added successfully{% endtrans %}');
 		{% endif %}
 		
 		{% if remove is defined %}
-			add_notification('success', 'Group removed successfully');
+			add_notification('success', '{% trans %}Group removed successfully{% endtrans %}');
 		{% endif %}
 	});
-$(window).resize(function() 
-	{
-		resize_table();
-	});
-
 </script>
 
 {% endblock %}

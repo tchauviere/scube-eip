@@ -1,0 +1,5 @@
+ScubeGoldBookBundle_homepage:
+    pattern:  /gb
+    defaults: { _controller: ScubeGoldBookBundle:GoldBook:index }
+    requirements:
+        _method:  GET|POST

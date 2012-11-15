@@ -42,7 +42,13 @@ class CoreController extends Controller
 	 */
 	public function	checkMaintenance()
 	{
+		$file = $this->container->get('kernel')->getRootDir()."/maintenance/mtn.scb";
 		
+		if (file_exists($file))
+		{
+			if (filesize($file) >= 1 && !$this->user->getMaintenancePermission())
+				throw new \Exception('Site under maintenance mode. Please try again in a while :)');
+		}
 	}
 	
 	/*

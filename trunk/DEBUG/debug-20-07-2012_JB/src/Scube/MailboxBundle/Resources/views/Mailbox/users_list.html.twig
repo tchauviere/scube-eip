@@ -1,5 +1,71 @@
-{% for usr in users_list %}
+<li class="conversation-home">
+	<a href="{{ path("ScubeMailboxBundle_homepage") }}">
+		{% image '@ScubeBaseBundle/Resources/public/images/conversations.png' %}
+			<img src="{{ asset_url }}" />
+		{% endimage %}
+		{% trans %}My discussions{% endtrans %}
+	</a>
+</li>
+<li class="conversation-home">
+	<a href="#" onclick="show_participants();">
+		{% image '@ScubeBaseBundle/Resources/public/images/new_mail.png' %}
+			<img src="{{ asset_url }}" />
+		{% endimage %}
+		{% trans %}Write new mail{% endtrans %}
+	</a>
+</li>
+
+{% for usr in users_online %}
 	<li>
-		<a href="{{ path("ScubeMailboxBundle_homepage_conversation", {"id_user":usr.getId()}) }}">{{usr.getFirstname()}} {{usr.getSurname()}}</a>
+		<a class="online{% if usr.getId() in users_selected %} in-conversation{% endif %}" href="{{ path("ScubeMailboxBundle_homepage_conversation", {"users_selected":usr.getId()}) }}">
+
+			{% if  usr.getProfile().getPicture() %}
+				<img class="user-picture" src="{{usr.getProfile().getPicture()}}?{{time}}"/>
+			{% else %}
+				{% image '@ScubeBaseBundle/Resources/public/images/default_picture.png'	%}
+					<img class="user-picture" src="{{ asset_url }}" />
+				{% endimage %}
+			{% endif %}
+
+		{{usr.getFirstname()}} {{usr.getSurname()}}
+		</a>
 	</li>
 {% endfor %}
+
+{% if users_offline|length %}
+	<li id="link-hide-offline" {% if not keep_extended %}style="display:none;"{% endif %}>
+		<a class="hide-offline" href="#" onclick="hide_offline();" >
+			{% image '@ScubeBaseBundle/Resources/public/images/reduce.png'	%}
+				<img src="{{ asset_url }}" />
+			{% endimage %}
+			{% trans %}Hide offline people{% endtrans %} ({{users_offline|length}})
+		</a>
+	</li>
+
+	<li id="link-show-offline" {% if keep_extended %}style="display:none;"{% endif %}>
+		<a class="show-offline" href="#" onclick="show_offline();" >
+			{% image '@ScubeBaseBundle/Resources/public/images/extend.png'	%}
+				<img src="{{ asset_url }}" />
+			{% endimage %}
+			{% trans %}Show offline people{% endtrans %} ({{users_offline|length}})
+		</a>
+	</li>
+
+
+	{% for usr in users_offline %}
+		<li class="user-offline{% if not keep_extended %} user-hidden{% endif %}">
+			<a {% if usr.getId() in users_selected %}class="in-conversation"{% endif %} href="{{ path("ScubeMailboxBundle_homepage_conversation", {"users_selected":usr.getId()}) }}">
+
+				{% if  usr.getProfile().getPicture() %}
+					<img class="user-picture" src="{{usr.getProfile().getPicture()}}?{{time}}"/>
+				{% else %}
+					{% image '@ScubeBaseBundle/Resources/public/images/default_picture.png'	%}
+						<img class="user-picture" src="{{ asset_url }}" />
+					{% endimage %}
+				{% endif %}
+
+			{{usr.getFirstname()}} {{usr.getSurname()}}
+			</a>
+		</li>
+	{% endfor %}
+{% endif %}

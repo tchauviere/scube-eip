@@ -6,7 +6,7 @@
 
 <div class="Application">
 
-	<h1>My Apps</h1>
+	<h1>{% trans %}My Apps{% endtrans %}</h1>
 	
 	<div class="result_table_scroll" style="width:90%;margin:0 auto;">
 		<table class="table_full_size result_table">
@@ -20,7 +20,7 @@
 					<div class="table_text">{{app.getDescription()}}</div>
 				</td>
 				<td style="background-color:white;">
-					<a href="{{ path(app.getlink()) }}" class="button green medium">start !</a>
+					<a href="{{ path(app.getlink()) }}" class="button green medium">{% trans %}start{% endtrans %} !</a>
 				</td>
 			</tr>
 			{% endfor %}

@@ -12,26 +12,22 @@
 		{% include 'ScubeAdminAppsBundle:AdminApps:menu.html.twig' %}
 	</td>
 	<td class="sidebar_main">
-		<h1>Install widget</h1>
-		{% if success %}
-			<p class="form_success">Widget has been successfully installed.</p>
+		<h1>{% trans %}Install widget{% endtrans %}</h1>
+		
+		{% if error %}
+			<p class="form_error">{% trans %}An error occured{% endtrans %} : {{ error }}</p>
 		{% endif %}
 		
-		<p>If your widget is already installed, please uninstall before (for a reinstall process).</p>
+		<p>{% trans %}If your widget is already installed, please uninstall before (for a reinstall process){% endtrans %}.</p>
 		
 		<form action="{{ path('AdminAppsBundle_widget_install') }}" method="post" {{ form_enctype(form) }}>
 			{{ form_widget(form) }}
 		
-			<input type="submit" value="Install now" />
+			<input type="submit" value="{% trans %}Install now{% endtrans %}" />
 		</form>
 	</td>
 </tr>
 </div>
 
-<script>
-$(".select_actions").change(function() {
-	load_page($("#"+$(this).attr('id') + " option:selected").attr('value'));
-});
-</script>
 
 {% endblock %}

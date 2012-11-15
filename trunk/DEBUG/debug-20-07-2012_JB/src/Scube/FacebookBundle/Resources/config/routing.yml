@@ -1,11 +1,5 @@
-ScubeFacebookBundle_homepage:
+#Routing for testing FacebookController functionalities -> Useless for anything else
+ScubeFacebookBundle_index:
     pattern:  /facebook
-    defaults: { _controller: ScubeFacebookBundle:Default:index }
-    
-ScubeFacebookBundle_login_check:
-    pattern:  /login_check
-    defaults: { _controller: ScubeFacebookBundle:Default:index }
-    
-ScubeFacebookBundle_logout:
-    pattern:  /facebook_logout
-    defaults: { _controller: ScubeFacebookBundle:Default:logout }
+    defaults: { _controller: ScubeFacebookBundle:Facebook:index }
+

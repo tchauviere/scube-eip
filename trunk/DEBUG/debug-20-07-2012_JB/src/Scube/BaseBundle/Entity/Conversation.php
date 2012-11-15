@@ -19,10 +19,20 @@ class Conversation
     protected $id;
 
 	/**
-     * @ORM\ManyToOne(targetEntity="Scube\BaseBundle\Entity\User")
-     * @ORM\JoinColumn(name="user", referencedColumnName="id")
+     * @ORM\ManyToMany(targetEntity="Scube\BaseBundle\Entity\User")
+     * @ORM\JoinColumn(name="user")
      */
-    protected $interlocutor;
+    protected $recipients;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $new_mails;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $date_last_mail;
 	
 	/**
      * @ORM\ManyToMany(targetEntity="Scube\BaseBundle\Entity\Mail")
@@ -47,26 +57,6 @@ class Conversation
     }
 
     /**
-     * Set interlocutor
-     *
-     * @param Scube\BaseBundle\Entity\User $interlocutor
-     */
-    public function setInterlocutor(\Scube\BaseBundle\Entity\User $interlocutor)
-    {
-        $this->interlocutor = $interlocutor;
-    }
-
-    /**
-     * Get interlocutor
-     *
-     * @return Scube\BaseBundle\Entity\User 
-     */
-    public function getInterlocutor()
-    {
-        return $this->interlocutor;
-    }
-
-    /**
      * Add mails
      *
      * @param Scube\BaseBundle\Entity\Mail $mails
@@ -84,5 +74,65 @@ class Conversation
     public function getMails()
     {
         return $this->mails;
+    }
+
+    /**
+     * Add recipients
+     *
+     * @param Scube\BaseBundle\Entity\User $recipients
+     */
+    public function addUser(\Scube\BaseBundle\Entity\User $recipients)
+    {
+        $this->recipients[] = $recipients;
+    }
+
+    /**
+     * Get recipients
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getRecipients()
+    {
+        return $this->recipients;
+    }
+
+    /**
+     * Set new_mails
+     *
+     * @param boolean $newMails
+     */
+    public function setNewMails($newMails)
+    {
+        $this->new_mails = $newMails;
+    }
+
+    /**
+     * Get new_mails
+     *
+     * @return boolean 
+     */
+    public function getNewMails()
+    {
+        return $this->new_mails;
+    }
+
+    /**
+     * Set date_last_mail
+     *
+     * @param datetime $dateLastMail
+     */
+    public function setDateLastMail($dateLastMail)
+    {
+        $this->date_last_mail = $dateLastMail;
+    }
+
+    /**
+     * Get date_last_mail
+     *
+     * @return datetime 
+     */
+    public function getDateLastMail()
+    {
+        return $this->date_last_mail;
     }
 }

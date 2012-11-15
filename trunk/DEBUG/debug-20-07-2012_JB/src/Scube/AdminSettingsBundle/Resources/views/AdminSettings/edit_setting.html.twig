@@ -9,24 +9,22 @@
 <table class="table_content">
 <tr>
 	<td class="sidebar_left">
-		<ul class="sidebar_navigation">
-			<li><a href="{{ path("AdminSettingsBundle_homepage")}}">Manage settings</a></li>
-		</ul>
+		{% include 'ScubeAdminSettingsBundle:AdminSettings:menu.html.twig' %}
 	</td>
 	<td class="sidebar_main">
-		<h1>Edit setting  {{setting.getKey()}} </h1>
+		<h1>{% trans %}Edit setting{% endtrans %}  {{setting.getKey()}} </h1>
 		
 		<p class="result_table">
-			<a href="{{ path("AdminSettingsBundle_homepage")}}" class="button grey"><- Back to Settings</a>
+			<a href="{{ path("AdminSettingsBundle_homepage")}}" class="button grey"><- {% trans %}Back to Settings{% endtrans %}</a>
 		</p>
 		
 		{% if success %}
-			<p class="form_success">The setting has been successfully updated.</p>
+			<p class="form_success">{% trans %}The setting has been successfully updated{% endtrans %}.</p>
 		{% endif %}
 		<form action="{{ path("AdminSettingsBundle_edit", { 'id': setting.getId()})}}" method="post" {{ form_enctype(form) }}>
 			{{ form_widget(form) }}
 		
-			<input type="submit" value="Save" />
+			<input type="submit" value="{% trans %}Save{% endtrans %}" />
 		</form>
 	</td>
 </tr>

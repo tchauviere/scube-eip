@@ -2,17 +2,19 @@
 
 namespace Scube\ProfileViewerBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Scube\CoreBundle\Controller\CoreController;
 use Symfony\Component\HttpFoundation\Request;
 use Scube\BaseBundle\Entity\User;
 use Scube\BaseBundle\Entity\UserProfile;
 use Scube\BaseBundle\Entity\News;
 
-class ProfileViewerController extends Controller
+class ProfileViewerController extends CoreController
 {
     
     public function indexAction(Request $request, $id_user)
     {
+    	$this->preprocessApplication();
+
 		$session = $this->getRequest()->getSession();
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
 		$user_connected = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
@@ -23,6 +25,8 @@ class ProfileViewerController extends Controller
     }
 	public function newsfeedAction(Request $request, $id_user)
     {
+    	$this->preprocessApplication();
+
 		$session = $this->getRequest()->getSession();
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
 		$user_connected = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
@@ -81,6 +85,8 @@ class ProfileViewerController extends Controller
 	
 	public function postListAction(Request $request, $id_user)
     {
+    	$this->preprocessApplication();
+
 		$session = $this->getRequest()->getSession();
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
 		$user_connected = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
@@ -116,6 +122,8 @@ class ProfileViewerController extends Controller
 	
 	public function newsfeedRemoveAction(Request $request, $id_user, $id_news)
     {
+    	$this->preprocessApplication();
+
 		$session = $this->getRequest()->getSession();
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
 		$user_connected = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
@@ -139,6 +147,8 @@ class ProfileViewerController extends Controller
 	
 	public function infosAction(Request $request, $id_user)
     {
+    	$this->preprocessApplication();
+
 		$session = $this->getRequest()->getSession();
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
 		$user_connected = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
@@ -173,6 +183,8 @@ class ProfileViewerController extends Controller
     }
 	public function picsAction(Request $request, $id_user)
     {
+    	$this->preprocessApplication();
+    	
 		$session = $this->getRequest()->getSession();
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
 		$user_connected = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));

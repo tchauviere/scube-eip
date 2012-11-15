@@ -49,6 +49,11 @@ class User
     protected $gender;
 	
 	/**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    protected $fb_id;
+	
+	/**
      * @ORM\Column(type="boolean")
      */
     protected $online;
@@ -72,6 +77,16 @@ class User
      * @ORM\Column(type="string", length=5)
      */
     protected $locale;
+	
+	/**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    protected $ip;
+	
+	/**
+     * @ORM\Column(type="boolean")
+     */
+    protected $maintenance_permission;
 	
 	/**
      * @ORM\OneToOne(targetEntity="Scube\BaseBundle\Entity\BaseInterface")
@@ -120,6 +135,12 @@ class User
 	 * @ORM\JoinTable(name="media_folders")
      */ 
     protected $media_folders;
+	
+	/**
+     * @ORM\ManyToMany(targetEntity="Scube\BaseBundle\Entity\TorrentFolder")
+	 * @ORM\JoinTable(name="torrent_folders")
+     */ 
+    protected $torrent_folders;
 	
     public function __construct()
     {
@@ -416,6 +437,26 @@ class User
     }
 
     /**
+     * Add torrent_folders
+     *
+     * @param Scube\BaseBundle\Entity\TorrentFolder $torrentFolders
+     */
+    public function addTorrentFolder(\Scube\BaseBundle\Entity\TorrentFolder $torrentFolders)
+    {
+        $this->torrent_folders[] = $torrentFolders;
+    }
+
+    /**
+     * Get torrent_folders
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getTorrentFolders()
+    {
+        return $this->torrent_folders;
+    }
+
+    /**
      * Add media_folders
      *
      * @param Scube\BaseBundle\Entity\MediaFolder $mediaFolders
@@ -513,5 +554,65 @@ class User
     public function getLocale()
     {
         return $this->locale;
+    }
+
+    /**
+     * Set ip
+     *
+     * @param string $ip
+     */
+    public function setIp($ip)
+    {
+        $this->ip = $ip;
+    }
+
+    /**
+     * Get ip
+     *
+     * @return string 
+     */
+    public function getIp()
+    {
+        return $this->ip;
+    }
+
+    /**
+     * Set maintenance_permission
+     *
+     * @param boolean $maintenancePermission
+     */
+    public function setMaintenancePermission($maintenancePermission)
+    {
+        $this->maintenance_permission = $maintenancePermission;
+    }
+
+    /**
+     * Get maintenance_permission
+     *
+     * @return boolean 
+     */
+    public function getMaintenancePermission()
+    {
+        return $this->maintenance_permission;
+    }
+	
+	 /**
+     * Set fb_id
+     *
+     * @param string $fbId
+     */
+    public function setFbId($fbId)
+    {
+        $this->fb_id = $fbId;
+    }
+
+    /**
+     * Get fb_id
+     *
+     * @return string 
+     */
+    public function getFbId()
+    {
+        return $this->fb_id;
     }
 }

@@ -14,11 +14,11 @@
 	<td class="sidebar_main">
 		<h1>{% trans %}Users Manager{% endtrans %}</h1>
 		
-		<p class="result_table">
+		<div class="btn_line">
 			<a href="{{ path("AdminUserBundle_user_add")}}" class="button green">+ {% trans %}Create user{% endtrans %}</a>
-		</p>
+		</div>
 		
-		<div class="result_table_scroll">
+		<div class="scroll_container" rel="scroller">
 			<table class="table_full_size result_table">
 				<thead>
 					<tr>
@@ -78,18 +78,8 @@
 </div>
 
 <script>
-
-function resize_table()
-{
-	available_height = $(".Application").height()	 - $(".sidebar_main h1").outerHeight(true) - $("p.result_table").outerHeight(true) + 11;
-	$('table.result_table').css("max-height", available_height);
-	$('div.result_table_scroll').css("height", available_height);
-}
-
 $(document).ready(function() 
 	{
-		resize_table();
-		
 		{% if add is defined %}
 			add_notification('success', '{% trans %}User added successfully{% endtrans %}');
 		{% endif %}
@@ -98,11 +88,6 @@ $(document).ready(function()
 			add_notification('success', '{% trans %}User removed successfully{% endtrans %}');
 		{% endif %}
 	});
-$(window).resize(function() 
-	{
-		resize_table();
-	});
-
 </script>
 
 {% endblock %}

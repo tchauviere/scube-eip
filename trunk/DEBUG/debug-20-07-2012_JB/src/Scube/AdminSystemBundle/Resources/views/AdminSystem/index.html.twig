@@ -1,0 +1,64 @@
+{% extends 'ScubeBaseBundle:Base:core_application.html.twig' %}
+
+{% block body %}
+{{ parent() }}
+
+<div class="Application">
+	<table class="table_content">
+		<tr>
+			<td class="sidebar_left">
+				{% include 'ScubeAdminSystemBundle:Adminsystem:menu.html.twig' %}
+			</td>
+			<td class="sidebar_main">
+				<h1>{% trans %}Overview{% endtrans %}</h1>
+
+				<div class="scroll_container" rel="scroller">
+					<table class="table_full_size result_table">
+						
+						<tbody>
+							<tr>
+								<td colspan="2">
+									<div class="form_error">{% trans %}Use this application with caution. Unexperimented people shouldn't alter the parameters of this application.{% endtrans %}</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="table_title">{% trans %}Running environment{% endtrans %}</div>
+								</td>
+								<td>
+									{{ infos.environment }}
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="table_title">{% trans %}Users{% endtrans %}</div>
+								</td>
+								<td>
+									{{ infos.users }}
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="table_title">{% trans %}Installed applications{% endtrans %}</div>
+								</td>
+								<td>
+									{{ infos.apps }}
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="table_title">{% trans %}Installed widgets{% endtrans %}</div>
+								</td>
+								<td>
+									{{ infos.widgets }}
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</td>
+		</tr>
+	</table>
+</div>
+
+{% endblock %}

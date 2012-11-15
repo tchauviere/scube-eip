@@ -13,6 +13,7 @@ use Scube\BaseBundle\Entity\InterfaceWidget;
 use Scube\BaseBundle\Entity\ConnectionsGroup;
 use Scube\BaseBundle\Entity\Calendar;
 use Scube\BaseBundle\Entity\Mailbox;
+use Scube\BaseBundle\Entity\DbSettings;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,7 +38,7 @@ class DefaultController extends Controller
 		$em->flush();
 		
 		$default_app2 = new Application();
-		$default_app2->setName("Users & Groups");
+		$default_app2->setName("Users and Groups");
 		$default_app2->setBundleName("AdminUserBundle");
 		$default_app2->setLink("AdminUserBundle_homepage");
 		$default_app2->setType("admin");
@@ -60,19 +61,6 @@ class DefaultController extends Controller
 		$default_app3->setNecessary(true);
 		$em = $this->getDoctrine()->getEntityManager();
 		$em->persist($default_app3);
-		$em->flush();
-		
-		$default_app4 = new Application();
-		$default_app4->setName("Reports");
-		$default_app4->setBundleName("AdminLogsBundle");
-		$default_app4->setLink("AdminLogsBundle_homepage");
-		$default_app4->setType("admin");
-		$default_app4->setCategory("core");
-		$default_app4->setDescription("View Scube's Logs and find errors");
-		$default_app4->setActivated(true);
-		$default_app4->setNecessary(true);
-		$em = $this->getDoctrine()->getEntityManager();
-		$em->persist($default_app4);
 		$em->flush();
 		
 		$default_app5 = new Application();
@@ -230,6 +218,58 @@ class DefaultController extends Controller
 		$em->persist($default_app11);
 		$em->flush();
 		
+		$default_app12 = new Application();
+		$default_app12->setName("System");
+		$default_app12->setBundleName("AdminSystemBundle");
+		$default_app12->setLink("ScubeAdminSystemBundle_homepage");
+		$default_app12->setType("admin");
+		$default_app12->setCategory("core");
+		$default_app12->setDescription("Scube System Maintenance");
+		$default_app12->setActivated(true);
+		$default_app12->setNecessary(true);
+		$em = $this->getDoctrine()->getEntityManager();
+		$em->persist($default_app12);
+		$em->flush();
+		
+		$default_app13 = new Application();
+		$default_app13->setName("Torrent");
+		$default_app13->setBundleName("TorrentBundle");
+		$default_app13->setLink("ScubeTorrentBundle_homepage");
+		$default_app13->setType("normal");
+		$default_app13->setCategory("core");
+		$default_app13->setDescription("Upload and share your torrent files");
+		$default_app13->setActivated(true);
+		$default_app13->setNecessary(true);
+		$em = $this->getDoctrine()->getEntityManager();
+		$em->persist($default_app13);
+		$em->flush();
+
+		$default_app14 = new Application();
+		$default_app14->setName("MyApps");
+		$default_app14->setBundleName("MyAppsBundle");
+		$default_app14->setLink("ScubeMyAppsBundle_homepage");
+		$default_app14->setType("normal");
+		$default_app14->setCategory("core");
+		$default_app14->setDescription("Manage your applications and widgets");
+		$default_app14->setActivated(true);
+		$default_app14->setNecessary(true);
+		$em = $this->getDoctrine()->getEntityManager();
+		$em->persist($default_app14);
+		$em->flush();
+
+		$default_app15 = new Application();
+		$default_app15->setName("Profile");
+		$default_app15->setBundleName("ProfileViewerBundle");
+		$default_app15->setLink("ScubeProfileViewerBundle_homepage");
+		$default_app15->setType("normal");
+		$default_app15->setCategory("core");
+		$default_app15->setDescription("Watch profile of users");
+		$default_app15->setActivated(true);
+		$default_app15->setNecessary(true);
+		$em = $this->getDoctrine()->getEntityManager();
+		$em->persist($default_app15);
+		$em->flush();
+		
 		/* Default Settings */
 		$default_setting = new ScubeSetting();
 		$default_setting->setKey("allow_registration");
@@ -279,19 +319,23 @@ class DefaultController extends Controller
 		$default_grp = new PermissionsGroup();
 		$default_grp->setName("administrator");
 		$default_grp->setLocked(true);
+		$default_grp->setMtnToken(true);
 		
 		$default_grp->addApplication($default_app5);
 		$default_grp->addApplication($default_app6);
 		$default_grp->addApplication($default_app7);
 		$default_grp->addApplication($default_app8);
 		$default_grp->addApplication($default_app10);
+		$default_grp->addApplication($default_app13);
+		$default_grp->addApplication($default_app14);
+		$default_grp->addApplication($default_app15);
 		
 		$default_grp->addAdminApplication($default_app);
 		$default_grp->addAdminApplication($default_app2);
 		$default_grp->addAdminApplication($default_app3);
-		$default_grp->addAdminApplication($default_app4);
 		$default_grp->addAdminApplication($default_app9);
 		$default_grp->addAdminApplication($default_app11);
+		$default_grp->addAdminApplication($default_app12);
 		
 		$em = $this->getDoctrine()->getEntityManager();
 		$em->persist($default_grp);
@@ -301,12 +345,16 @@ class DefaultController extends Controller
 		$default_grp2 = new PermissionsGroup();
 		$default_grp2->setName("default");
 		$default_grp2->setLocked(true);
+		$default_grp2->setMtnToken(false);
 		
 		$default_grp2->addApplication($default_app5);
 		$default_grp2->addApplication($default_app6);
 		$default_grp2->addApplication($default_app7);
 		$default_grp2->addApplication($default_app8);
 		$default_grp2->addApplication($default_app10);
+		$default_grp2->addApplication($default_app13);
+		$default_grp2->addApplication($default_app14);
+		$default_grp2->addApplication($default_app15);
 		
 		$em = $this->getDoctrine()->getEntityManager();
 		$em->persist($default_grp2);
@@ -340,17 +388,24 @@ class DefaultController extends Controller
 				/* Set mailbox object */
 				$mailbox = new Mailbox();
 				
+				/* set user ip */
+				$userIp = $this->getRequest()->getClientIp();
+				$user->setIp($userIp);
+				
+				
 				$user->setPermissionsGroup($this->getDoctrine()->getRepository('ScubeBaseBundle:PermissionsGroup')->findOneBy(array('name' => "administrator")));
 				$user->setOnline(false);
 				$user->setBlocked(false);
 				$user->setDateRegister(new \DateTime());
 				$user->setDateLastAccess(new \DateTime());
 				$user->setLocale($this->getDoctrine()->getRepository('ScubeBaseBundle:ScubeSetting')->findOneBy(array('key' => "default_locale"))->getValue());
+				$user->setMaintenancePermission(true);
 				
 				$user->setProfile($profile);
 				$user->setBaseInterface($interface);
 				$user->setCalendar($calendar);
 				$user->setMailbox($mailbox);
+				
 				
 				
 				

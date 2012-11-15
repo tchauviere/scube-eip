@@ -9,20 +9,18 @@
 <table class="table_content">
 <tr>
 	<td class="sidebar_left">
-		<ul class="sidebar_navigation">
-			<li><a href="{{ path("AdminSettingsBundle_homepage")}}">Manage settings</a></li>
-		</ul>
+		{% include 'ScubeAdminSettingsBundle:AdminSettings:menu.html.twig' %}
 	</td>
 	<td class="sidebar_main">
-		<h1>Settings Manager</h1>
+		<h1>{% trans %}Settings Manager{% endtrans %}</h1>
 		
 		<div class="result_table_scroll">
 			<table class="table_full_size result_table">
 				<thead>
 					<tr>
-						<th>Key</th>
-						<th>Value</th>
-						<th>Actions</th>
+						<th>{% trans %}Key{% endtrans %}</th>
+						<th>{% trans %}Value{% endtrans %}</th>
+						<th>{% trans %}Actions{% endtrans %}</th>
 					</tr>
 				</thead>
 				
@@ -36,7 +34,7 @@
 							{{setting.getValue()}}
 						</td>
 						<td>
-							<a href="{{ path("AdminSettingsBundle_edit", { 'id': setting.getId()})}}" class="button grey small">Edit</a>
+							<a href="{{ path("AdminSettingsBundle_edit", { 'id': setting.getId()})}}" class="button grey small">{% trans %}Edit{% endtrans %}</a>
 						</td>
 					</tr>
 					{% endfor %}
@@ -47,25 +45,5 @@
 </tr>
 </table>
 </div>
-
-<script>
-
-function resize_table()
-{
-	available_height = $(".Application").height()	 - $(".sidebar_main h1").outerHeight(true);
-	$('table.result_table').css("max-height", available_height);
-	$('div.result_table_scroll').css("height", available_height);
-}
-
-$(document).ready(function() 
-	{
-		resize_table();
-	});
-$(window).resize(function() 
-	{
-		resize_table();
-	});
-
-</script>
 
 {% endblock %}

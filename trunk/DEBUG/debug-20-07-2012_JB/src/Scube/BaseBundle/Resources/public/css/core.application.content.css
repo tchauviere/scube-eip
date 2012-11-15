@@ -15,7 +15,18 @@ a:hover{
 	color:#4878ac;
 }
 
+.breaker {
+	width:100%;
+	clear:both;
+	height:0px;
+}
+
 .Application {
+}
+
+.Application p {
+	margin:0 5px;
+	padding:5px 0;
 }
 
 .Application h1 {
@@ -47,13 +58,24 @@ a:hover{
 	list-style-type:none;
 }
 .Application .table_content .sidebar_left .sidebar_navigation li {
-	text-align:right;
-	padding:10px 20px;
+	text-align:left;
+	padding:0;
 }
-.Application .table_content .sidebar_left .sidebar_navigation li a{
+.Application .table_content .sidebar_left .sidebar_navigation li a {
 	text-decoration:none;
+	padding:10px 20px;
+	line-height:20px;
+	font-size:15px;
+	display:block;
 	color:#333;
+}
+.Application .table_content .sidebar_left .sidebar_navigation li a:hover {
+	color:black;
 	text-shadow:0px 1px 1px white;
+}
+.Application .table_content .sidebar_left .sidebar_navigation li a.active {
+	background-color:#DADADA;
+	border-left:5px solid #4878AC;
 }
 
 .Application .table_content .sidebar_main{
@@ -65,6 +87,13 @@ a:hover{
 	border-bottom:1px solid gray;
 	margin:15px 10px;
 	text-align:left;
+}
+.Application .table_content .sidebar_main h2{
+	padding-bottom:0px;
+	margin:15px 30px;
+	text-align:left;
+	font-size:18px;
+	color:#333;
 }
 
 
@@ -165,14 +194,6 @@ thead.table-head-color-1 {
 
 thead.table-head-color-2 {
 	background-color: #929e78;
-}
-
-p.result_table {
-	margin-left:2px;
-}
-
-div.result_table_scroll {
-	overflow-y:scroll;
 }
 
 /* #BUTTONS
@@ -310,4 +331,13 @@ a.button:hover {
 }
 .error {
 	color:#94211A;
+}
+
+/* Scroller */
+div.scroll_container {
+	overflow-y: scroll;
+}
+div.btn_line {
+	margin:0 2px;
+	padding:5px 0;
 }

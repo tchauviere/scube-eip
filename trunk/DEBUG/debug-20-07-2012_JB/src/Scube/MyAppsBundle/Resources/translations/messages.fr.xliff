@@ -3,8 +3,48 @@
     <file source-language="en" datatype="plaintext" original="file.ext">
         <body>
             <trans-unit id="1">
-                <source>Symfony2 is great</source>
-                <target>J'aime Symfony2</target>
+                <source>My Apps</source>
+                <target>Mes applications</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>start</source>
+                <target>Démarrer</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>Clip a new widget</source>
+                <target>Positionner un nouveau widget</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>Please reload the main grid to perform</source>
+                <target>Merci d'actualiser la grille pour que cela prenne effet</target>
+            </trans-unit>
+            <trans-unit id="5">
+                <source>Click here</source>
+                <target>Cliquez ici</target>
+            </trans-unit>
+            <trans-unit id="6">
+                <source>Select a gray cell for position</source>
+                <target>Sélectionner une case grisée</target>
+            </trans-unit>
+            <trans-unit id="7">
+                <source>Select the widget you want to clip</source>
+                <target>Sélectionner le widget à positionner</target>
+            </trans-unit>
+            <trans-unit id="8">
+                <source>Clip the widget now</source>
+                <target>Ajouter le widget</target>
+            </trans-unit>
+            <trans-unit id="9">
+                <source>Calendar</source>
+                <target>Calendrier</target>
+            </trans-unit>
+            <trans-unit id="10">
+                <source>Connections</source>
+                <target>Connexions</target>
+            </trans-unit>
+            <trans-unit id="11">
+                <source>Medias</source>
+                <target>Médias</target>
             </trans-unit>
         </body>
     </file>

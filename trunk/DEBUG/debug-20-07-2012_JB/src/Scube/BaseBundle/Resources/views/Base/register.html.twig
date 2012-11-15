@@ -13,11 +13,16 @@
 	{% if success %}
 		<p class="form_success">Your account has been successfully created. <a href="{{ path('_homepage') }}">You can now login here !</a></p>
 	{% else %}
-	<form action="{{ path('_register') }}" method="post" {{ form_enctype(form) }}>
-		{{ form_widget(form) }}
 	
-		<input type="submit" value="Register now !" />
-	</form>
+		{% if error_email is defined and error_email %}
+			<p class="form_error">Sorry, this email is already used.</a></p>
+		{% endif %}
+		
+		<form action="{{ path('_register') }}" method="post" {{ form_enctype(form) }}>
+			{{ form_widget(form) }}
+		
+			<input type="submit" value="Register now !" />
+		</form>
 	{% endif %}
 {% else %}
 	<p class="form_error">Registration not activated</p>

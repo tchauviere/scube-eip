@@ -2,7 +2,7 @@
 
 namespace Scube\MyAppsBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Scube\CoreBundle\Controller\CoreController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Scube\BaseBundle\Entity\User;
@@ -11,12 +11,14 @@ use Scube\BaseBundle\Entity\BaseInterface;
 use Scube\BaseBundle\Entity\Widget;
 use Scube\BaseBundle\Entity\InterfaceWidget;
 
-class MyAppsController extends Controller
+class MyAppsController extends CoreController
 {
     
     /* Applications */
 	public function myAppsAction(Request $request)
     {
+    	$this->preprocessApplication();
+
 		$session = $this->getRequest()->getSession();
 		
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
@@ -29,6 +31,8 @@ class MyAppsController extends Controller
 	/* Widgets */
 	public function addWidgetAction(Request $request, $default_x=NULL, $default_y=NULL)
     {
+    	$this->preprocessApplication();
+
 		$session = $this->getRequest()->getSession();
 		
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
@@ -109,6 +113,8 @@ class MyAppsController extends Controller
 	/* CALLED BY AJAX */
 	public function saveWidgetPositionAction(Request $request, $widget_id=false, $pos_x=0, $pos_y=0)
     {
+    	$this->preprocessApplication();
+
 		$widget = $this->getDoctrine()->getRepository('ScubeBaseBundle:InterfaceWidget')->find($widget_id);
 		$widget->setPosX($pos_x);
 		$widget->setPosY($pos_y);
@@ -118,6 +124,7 @@ class MyAppsController extends Controller
     }
 	public function deleteWidgetAction(Request $request, $id=false)
     {
+		$this->preprocessApplication();
 		
 		$widget = $this->getDoctrine()->getRepository('ScubeBaseBundle:InterfaceWidget')->find($id);
 		

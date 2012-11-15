@@ -61,12 +61,12 @@
 </div>
 
 <div id="lock_header">
-	<input type="checkbox" name="grid_lock" checked="checked" /> <label>Lock</label>
+	<input type="checkbox" name="grid_lock" checked="checked" /> <label>{% trans %}Lock{% endtrans %}</label>
 </div>
 
 {%if user.getPermissionsGroup().getAdminApplications()|length != 0%}
 <div id="admin_header">
-	<input type="checkbox" name="grid_admin" /> <label>Admin</label>
+	<input type="checkbox" name="grid_admin" /> <label>{% trans %}Admin{% endtrans %}</label>
 </div>
 {%endif%}
 

@@ -56,20 +56,20 @@
 		
 		
 		<div id="group_grid">
-			<h1>My connections</h1>
+			<h1>{% trans %}My connections{% endtrans %}</h1>
 			
 			{% if success %}
-				<p class="form_success">The group has been successfully added.</p>
+				<p class="form_success">{% trans %}The group has been added successfully{% endtrans %}.</p>
 			{% endif %}
 			<form class="top_form" action="{{ path("ConnectionsBundle_homepage")}}" method="post" {{ form_enctype(form) }}>
 				
 				{{ form_widget(form._token) }}
 				{{ form_widget(form.name) }}
 			
-				<input type="submit" value="Create group" />
+				<input type="submit" value="{% trans %}Create group{% endtrans %}" />
 			</form>
 			
-			<table id="connections_grid" class="table_full_size" style="border-spacing:5px;">
+			<table id="connections_grid" class="table_full_size" style="border-spacing:15px;">
 			<tr>
 				{% for group in user.getConnectionsGroups() %}
 				
@@ -224,8 +224,17 @@ function	remove_connection_from_group(user_id, group_id)
 	.top_form input {
 		display:inline;
 		margin:0;
-		width:30%;
-		border-radius:5px;
+		width:50%;
+		height:30px;
+		vertical-align:middle;
+	}
+	.top_form input[type="submit"] {
+		display:inline;
+		margin:0;
+		width:20%;
+		height:30px;
+		vertical-align:middle;
+		border-radius:0px;
 	}
 	
 	#search_input img {
@@ -236,7 +245,7 @@ function	remove_connection_from_group(user_id, group_id)
 		border-spacing:5px;
 		width:25%;
 		background-color:#CCC;
-		border-radius:5px;
+		border-radius:3px;
 		box-shadow: 0 0 5px #555;
 		margin:5px;
 		cursor:pointer;
@@ -270,8 +279,21 @@ function	remove_connection_from_group(user_id, group_id)
 	#search_list li {
 		list-style-type:none;
 		border-bottom:1px solid white;
-		padding:0;
 		cursor:pointer;
+
+		text-decoration: none;
+		padding: 5px 20px;
+		line-height: 20px;
+		font-size: 15px;
+		display: block;
+		color: #333;
+		vertical-align: middle;
+	}
+	#search_list li img.user-picture {
+		width: 30px;
+		vertical-align: middle;
+		display: inline-block;
+		margin-right: 10px;
 	}
 	
 	#search_group_filter {

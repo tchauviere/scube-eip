@@ -207,7 +207,7 @@ $(document).ready(function() {
 			
 		eventClick: function(calEvent, $event) 
 		{
-		 var isTime = false;	
+		 var isTime = false;
          var $dialogContent = $("#event_edit_container");
          resetForm($dialogContent);
          var startField = $dialogContent.find("input[name='start']").val("");
@@ -310,11 +310,11 @@ $(document).ready(function() {
 
 <script>
 	$(function() {
-		$( "#datepicker" ).datepicker();
+		$("#datepicker").datepicker();
 		$("#startHour").timepicker({});
 		$("#endHour").timepicker({});
 	});
-	</script>
+</script>
 
 {% endblock %}
 
