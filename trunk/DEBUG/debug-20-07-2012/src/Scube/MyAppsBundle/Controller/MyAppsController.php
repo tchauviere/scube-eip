@@ -25,6 +25,11 @@ class MyAppsController extends CoreController
 		$user = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
 		
 		$app_list = $user->getPermissionsGroup()->getApplications();
+
+		foreach ($app_list as $k=>$app) {
+			if ($app->getLink() == "ScubeProfileViewerBundle_homepage")
+				unset($app_list[$k]);
+		}
 		
 		return $this->render('ScubeMyAppsBundle:MyApps:my_apps.html.twig', array('user' => $user, 'app_list' => $app_list));
     }

@@ -24,6 +24,9 @@ h2 {
 	color:#1a2732;
 	font-size:18px;
 }
+a img {
+	border:none;
+}
 .error {
 	color:#94211A;
 }
