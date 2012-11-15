@@ -1,0 +1,126 @@
+{% extends 'ScubeBaseBundle:Base:core_application.html.twig' %}
+
+
+{% block body %}
+{{ parent() }}
+
+<div class="Application">
+
+<table class="table_content">
+<tr>
+	<td class="sidebar_left">
+		<ul id="torrent_list">
+			{% if folder %}
+				<li style="border-bottom:1px solid #333;"><strong>Select a torrent</strong> (<a href="{{ path("ScubeTorrentBundle_homepage_folder", { 'id': folder.getId()})}}">Back to folder</a> - <a href="{{ path("ScubeTorrentBundle_homepage")}}">Back to main page</a>)</li>
+				{% for torrent in folder.getTorrentFolder() %}
+					<li>
+						<span><a href="#" onclick='load_torrent("{{ torrent.id }}", "{{ torrent.type }}");'>{{ torrent.name }}</a></span>
+						<a style="float:right;" href="{{ path('ScubeTorrentBundle_delete_torrent', { 'id': torrent.getId()}) }}"  >
+						{% image '@ScubeBaseBundle/Resources/public/images/remove.png' %}
+							<img width="16" src="{{ asset_url }}" alt="Remove"/></a>
+						{% endimage %}
+						</a> 
+					</li>
+				{% endfor %}
+			{% else %}
+				<li style="border-bottom:1px solid #333;"><strong>Select a folder</strong></li>
+				{% for ifolder in user.getTorrentFolders() %}
+					<li>
+						<a href="{{ path("ScubeTorrentBundle_homepage_folder", { 'id': ifolder.getId()})}}">{{ ifolder.name }}</a>
+						<a style="float:right;" href="{{ path('ScubeTorrentBundle_delete_folder', { 'id': ifolder.getId()}) }}"  >
+						{% image '@ScubeBaseBundle/Resources/public/images/remove.png' %}
+							<img width="16" src="{{ asset_url }}" alt="Remove"/></a>
+						{% endimage %}
+						</a> 
+					</li>
+				{% endfor %}
+			{% endif %}
+		
+			
+		</ul>
+	</td>
+	<td class="sidebar_main">
+		
+		
+		
+		{% if folder %}
+			<h1>Folder {{ folder.getName() }}</h1>
+			
+			<div id="target_area">
+				{% if success %}
+					<p class="form_success">The torrent has been uploaded.</p>
+				{% endif %}
+						
+				<form action="{{ path('ScubeTorrentBundle_homepage_folder', { 'id': folder.getId()}) }}" method="post" {{ form_enctype(form) }}>
+					{{ form_widget(form) }}
+					<input type="hidden" name="ext_torrent" value="false" />
+					<input type="submit" value="Upload torrent" />
+				</form>
+				<br />
+			</div>
+			
+		{% else %}
+			<h1>Your torrent files</h1>
+			{% if success %}
+				<p class="form_success">The folder has been created.</p>
+			{% endif %}
+					
+			<form class="top_form" action="{{ path('ScubeTorrentBundle_homepage') }}" method="post" {{ form_enctype(form_folder) }}>
+				
+				{{ form_widget(form_folder._token) }}
+				{{ form_widget(form_folder.name) }}
+			
+				<input type="submit" value="Create folder" />
+			</form>
+		{% endif %}
+	</td>
+</tr>
+</table>
+</div>
+
+<div id="torrent_loader">
+	{% image '@ScubeBaseBundle/Resources/public/images/application_loader.gif' %}
+		<img src="{{ asset_url }}" alt="Loading.." />
+	{% endimage %}
+</div>
+
+<style>
+
+#torrent_loader {
+	display:none;
+}
+
+.top_form {
+	text-align:center;
+	margin-bottom:20px;
+}
+.top_form input {
+	display:inline;
+	margin:0;
+	width:30%;
+	border-radius:5px;
+}
+
+#torrent_list {
+	padding-left:5px;
+}
+#torrent_list li {
+	list-style-type:none;
+	border-bottom:1px solid white;
+	padding:0;
+	margin-top:3px;
+}
+#torrent_list li a {
+	color:#333;
+	text-decoration:none;
+}
+
+#vizualiser {
+	text-align:center;
+	overflow:hidden;
+}
+
+</style>
+
+{% endblock %}
+

@@ -15,11 +15,7 @@ if (isset($_POST))
 	    !empty($_POST['distributionbundle_doctrine_step_user']))
 	    {
 
-$new_parameters = "
-; These parameters can be imported into other config files
-; by enclosing the key with % (like %database_user%)
-; Comments start with ';', as in php.ini
-[parameters]
+$new_parameters = "[parameters]
 database_driver=\"".$_POST['distributionbundle_doctrine_step_driver']."\"
 database_host=\"".$_POST['distributionbundle_doctrine_step_host']."\"
 database_port=\"".$_POST['distributionbundle_doctrine_step_port']."\"
@@ -31,10 +27,10 @@ mailer_host=\"localhost\"
 mailer_user=\"\"
 mailer_password=\"\"
 locale=\"en\"
-secret=\"01e324a59f7ff5232919a83d4ade681c2024d876\"\n";
+secret=\"01e324a59f7ff5232919a83d4ade681c2024d876\"\n";		
 	    
 		$filename = "../../app/config/parameters.ini";
-		
+		  
 		if (is_writable($filename))
 		{
 			file_put_contents($filename, $new_parameters);

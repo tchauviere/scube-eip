@@ -1,0 +1,371 @@
+{% extends 'ScubeBaseBundle:Base:core_application.html.twig' %}
+
+
+{% block body %}
+{{ parent() }}
+
+<div class="Application">
+
+<div id="create_folder">
+	<p class="folder-title">{% trans %}Name the new folder{% endtrans %}</p>
+
+	<form action="{{ path('ScubeMediasBundle_create_folder') }}" method="post" {{ form_enctype(form_folder) }}>
+		<div class="folder-input">
+
+			{{ form_widget(form_folder._token) }}
+			{{ form_widget(form_folder.name) }}
+			
+		</div>
+		<div class="folder-buttons">
+			<a href="#" class="button small red" onclick="hide_folder_form();">{% trans %}Cancel{% endtrans %}</a>
+			<input type="submit" class="button small" value="{% trans %}Create folder{% endtrans %}" />
+		</div>
+	</form>
+</div>
+
+<table class="table_content">
+<tr>
+	<td class="sidebar_left">
+		<div class="scroll_container" rel="scroller">
+			<ul id="media_list">
+				<li class="folder-list-item-top">
+					<a href="{{ path("ScubeMediasBundle_homepage")}}">
+						{% image '@ScubeBaseBundle/Resources/public/images/play.png' %}
+							<img src="{{ asset_url }}" />
+						{% endimage %}
+						{% trans %}Last uploaded files{% endtrans %}
+					</a>
+				</li>
+				<li class="folder-list-item-top">
+					<a href="#" onclick="show_folder_form();">
+						{% image '@ScubeBaseBundle/Resources/public/images/new_folder.png' %}
+							<img src="{{ asset_url }}" />
+						{% endimage %}
+						{% trans %}Create new folder{% endtrans %}
+					</a>
+				</li>
+
+				{% for ifolder in user.getMediaFolders() %}
+					<li id="folder-{{ifolder.getId()}}" class="folder-list-item">
+						<a href="#" onclick="toggle_folder({{ifolder.getId()}});" >
+							{% image '@ScubeBaseBundle/Resources/public/images/extend.png'	%}
+								<img class="img-extend" src="{{ asset_url }}" />
+							{% endimage %}
+							{% image '@ScubeBaseBundle/Resources/public/images/reduce.png'	%}
+								<img class="img-reduce" src="{{ asset_url }}" />
+							{% endimage %}
+							{{ ifolder.name }}
+						</a>
+						<ul class="hidden">
+							<li>
+								<a href="{{ path("ScubeMediasBundle_edit_folder", { 'id': ifolder.getId()})}}">
+									{% image '@ScubeBaseBundle/Resources/public/images/edit_folder.png'	%}
+										<img src="{{ asset_url }}" />
+									{% endimage %}
+									{% trans %}Configure{% endtrans %} {{ ifolder.name }}
+								</a>
+							</li>
+							<li>
+								<a href="{{ path("ScubeMediasBundle_upload", { 'id': ifolder.getId()})}}">
+									{% image '@ScubeBaseBundle/Resources/public/images/upload.png'	%}
+										<img src="{{ asset_url }}" />
+									{% endimage %}
+									{% trans %}Upload new media{% endtrans %}
+								</a>
+							</li>
+							{% for media in ifolder.getMediasFolder() %}
+								</li>
+								<li class="media-list-item">
+									<a href="#" onclick='load_media("{{ media.id }}", "{{ media.type }}");'>
+									{% if media.type == 'picture' %}
+										{% image '@ScubeBaseBundle/Resources/public/images/medias_icone_picture.png' %}
+											<img width="16" src="{{ asset_url }}" alt="Picture"/>
+										{% endimage %}
+									{% elseif (media.type == 'youtube' or media.type == 'dailymotion' or media.type == 'vimeo') %}
+										{% image '@ScubeBaseBundle/Resources/public/images/medias_icone_video.png' %}
+											<img width="16" src="{{ asset_url }}" alt="Picture"/>
+										{% endimage %}
+									{% elseif media.type == 'document' %}
+										{% image '@ScubeBaseBundle/Resources/public/images/medias_icone_document.png' %}
+											<img width="16" src="{{ asset_url }}" alt="Picture"/>
+										{% endimage %}
+									{% elseif media.type == 'music' %}
+										{% image '@ScubeBaseBundle/Resources/public/images/medias_icone_music.png' %}
+											<img width="16" src="{{ asset_url }}" alt="Picture"/>
+										{% endimage %}
+									{% endif %}
+									{{ media.name }}
+									
+										<a class="remove" href="{{ path('ScubeMediasBundle_delete_media', { 'id': media.getId()}) }}"  >
+											{% image '@ScubeBaseBundle/Resources/public/images/remove.png' %}
+												<img width="16" src="{{ asset_url }}" alt="Remove"/>
+											{% endimage %}
+										</a>
+									</a> 
+								</li>
+							{% endfor %}
+						</ul>
+					</li>
+				{% endfor %}
+			</ul>
+		</div>
+	</td>
+	<td class="sidebar_main">
+
+		{% block media_page %}
+
+		{% endblock %}
+		
+	</td>
+</tr>
+</table>
+</div>
+
+<div id="media_loader">
+	{% image '@ScubeBaseBundle/Resources/public/images/application_loader.gif' %}
+		<img src="{{ asset_url }}" alt="Loading.." />
+	{% endimage %}
+</div>
+
+<script>
+
+function	load_media(id, type) {
+
+	$.ajax({
+		  url: "{{ path('ScubeMediasBundle_load_noparam')}}" + "/"+id,
+		  beforeSend: function() {
+		   
+			if ($("#target_area").length)
+			{
+				$("#target_area").css({"text-align":"center"});
+				$("#target_area").html($("#media_loader").html());
+			}
+			else
+				$("#vizualiser").html($("#media_loader").html());
+		  },
+		  success: function(data) {	
+		  	allocated_height = $(".sidebar_main").height() - $(".sidebar_main h1").height() - parseInt($(".sidebar_main h1").css("margin-top")) - parseInt($(".sidebar_main h1").css("margin-bottom"))  - parseInt($(".sidebar_main h1").css("padding-bottom")) - parseInt($(".sidebar_main h1").css("padding-top")) - 50;/* 1= border */
+			
+		  	$(".sidebar_main").css({
+				"background-color":"black"
+			});
+			
+			$(".sidebar_main").html(data);
+			if (type == "picture")
+				$("#vizualiser img").css({"max-width":$(".sidebar_main").width(), "max-height":allocated_height});
+			else if (type == "document")
+				$("#vizualiser iframe").css({"width":$(".sidebar_main").width(), "height":allocated_height});
+		  }
+		});
+}
+
+function	show_folder_form()
+{
+	$("#create_folder").fadeIn();
+}
+
+function	hide_folder_form()
+{
+	$("#create_folder").fadeOut();
+}
+
+function	toggle_folder(id)
+{
+	element = $("#folder-"+id);
+	sub_element = $("#folder-"+id+" ul");
+	if (element.find(".img-extend:visible").length)
+	{
+		/* The element is currently hidden */
+		element.find(".img-extend").hide();
+		element.find(".img-reduce").show();
+		sub_element.slideDown();
+	}
+	else
+	{
+		/* The element is currently shown */
+		element.find(".img-reduce").hide();
+		element.find(".img-extend").show();
+		sub_element.slideUp();
+	}
+}
+
+</script>
+
+<style>
+
+#media_loader {
+	display:none;
+}
+
+.top_form {
+	text-align:center;
+	margin-bottom:20px;
+}
+.top_form input {
+	display:inline;
+	margin:0;
+	width:30%;
+	border-radius:5px;
+}
+
+#media_list {
+	padding-left:5px;
+}
+#media_list li {
+	list-style-type:none;
+	border-bottom:1px solid white;
+	padding:0;
+	margin-top:3px;
+}
+#media_list li a {
+	color:#333;
+	text-decoration:none;
+}
+
+#vizualiser {
+	text-align:center;
+	overflow:hidden;
+}
+
+	#create_folder {
+		display:none;
+		position:absolute;
+		width:300px;
+		height:110px;
+		border-radius: 5px;
+		box-shadow: 0 0 5px #555;
+		background-color:white;
+		left:50%;
+		top:50%;
+		margin-left:-150px;
+		margin-top:-55px;
+		overflow-y: hidden;
+	}
+	.folder-title {
+		border-bottom:1px solid #C6C9CE;
+		font-weight:bold;
+		text-align:center;
+	}
+	.folder-input input {
+		height:20px;
+		width:80%;
+		margin:5px auto;
+	}
+	.folder-buttons {
+		text-align:center;
+	}
+	.folder-buttons a, .folder-buttons input {
+		display:inline-block;
+		-moz-border-radius: 0px;
+		-webkit-border-radius: 0px;
+		border-radius:0px;
+		vertical-align:middle;
+		margin-bottom:0px;
+		height:auto;
+		width:auto;
+	}
+
+	#media_list .folder-list-item-top {
+		border-bottom: 1px solid #C6C9CE;
+		padding:10px;
+	}
+	#media_list .folder-list-item {
+		border-bottom: none;
+		padding:10px;
+	}
+	#media_list li a {
+		text-decoration: none;
+		padding: 5px 20px;
+		padding-right:0px;
+		line-height: 20px;
+		font-size: 15px;
+		display: block;
+		color: #333;
+		width:70%;
+
+		vertical-align:middle;
+	}
+	
+	.folder-list-item-top a {
+		vertical-align:middle;
+		font-weight:bold;
+	}
+	.folder-list-item-top a img {
+		vertical-align:middle;
+		display:inline-block;
+		margin-right:10px;
+	}
+	.folder-list-item a {
+		vertical-align:middle;
+		font-weight:bold;
+	}
+	.folder-list-item a img {
+		vertical-align:middle;
+		display:inline-block;
+		margin-right:10px;
+	}
+
+	.folder-list-item a img.img-reduce {
+		display:none;
+	}
+	#media_list li ul {
+		display:none;
+	}
+
+	#media_list .media-list-item a {
+		vertical-align:middle;
+		display:inline-block;
+		font-weight:normal;
+	}
+	#media_list .media-list-item a.remove {
+		float:right;
+		width:15%;
+		padding-left:0;
+	}
+	.media-list-item a img {
+		vertical-align:middle;
+		display:inline-block;
+		margin-right:10px;
+	}
+
+
+	.last-medias-line a {
+		text-decoration:none;
+		display:block;
+		border-bottom:1px solid #C6C9CE;
+		padding:10px;
+		height:60px;
+	}
+	.last-medias-picture {
+		display:inline-block;
+		vertical-align:middle;
+	}
+	.last-medias-picture img {
+		width:60px;
+	}
+	.last-medias-block-middle {
+		display:inline-block;
+		vertical-align:middle;
+		width:60%;
+		overflow:hidden;
+	}
+	.last-medias-title {
+		padding-left:20px;
+		font-weight:bold;
+		color:#568DC5;
+	}
+	.last-medias-date {
+		display:inline-block;
+		float:right;
+		margin-top:20px;
+		color:#666;
+		font-size:11px;
+		width:15%;
+		overflow:hidden;
+		text-align:right;
+	}
+
+</style>
+
+{% endblock %}
+

@@ -12,8 +12,8 @@
 		{% include 'ScubeAdminHelpBundle:AdminHelp:menu.html.twig' %}
 	</td>
 	<td class="sidebar_main">
-		<h1>Apps Helper - {{ id }}</h1>
-		{% include helpFile %}
+		<h1>{% trans %}Application Helper{% endtrans %} - {{ help_app.getName() }}</h1>
+		{% include help_view %}
 	</td>
 </tr>
 </div>

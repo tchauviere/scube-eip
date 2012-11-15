@@ -2,11 +2,19 @@ ScubeMailboxBundle_homepage:
     pattern:  /mailbox
     defaults: { _controller: ScubeMailboxBundle:Mailbox:index }
 ScubeMailboxBundle_homepage_conversation:
-    pattern:  /mailbox/{id_user}
+    pattern:  /mailbox/{users_selected}
     defaults: { _controller: ScubeMailboxBundle:Mailbox:index }
+
 ScubeMailboxBundle_ajax_users_list:
-    pattern:  /mailbox_ajax_users_list/{search}
-    defaults: { _controller: ScubeMailboxBundle:Mailbox:UsersList}
+    pattern:  /mailbox_ajax_users_list/{users_selected}/{search}/{keep_extended}
+    defaults: { _controller: ScubeMailboxBundle:Mailbox:usersList}
 ScubeMailboxBundle_ajax_users_list_noparam:
     pattern:  /mailbox_ajax_users_list
-    defaults: { _controller: ScubeMailboxBundle:Mailbox:UsersList }
+    defaults: { _controller: ScubeMailboxBundle:Mailbox:usersList }
+
+ScubeMailboxBundle_ajax_mail_list:
+    pattern:  /mailbox_ajax_mail_list/{users_selected}
+    defaults: { _controller: ScubeMailboxBundle:Mailbox:mailList }
+ScubeMailboxBundle_ajax_mail_list_noparam:
+    pattern:  /mailbox_ajax_mail_list
+    defaults: { _controller: ScubeMailboxBundle:Mailbox:mailList }

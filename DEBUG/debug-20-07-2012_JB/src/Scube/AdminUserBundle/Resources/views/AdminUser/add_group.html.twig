@@ -11,20 +11,23 @@
 		{% include 'ScubeAdminUserBundle:AdminUser:menu.html.twig' %}
 	</td>
 	<td class="sidebar_main">
-		<h1>Create group</h1>
+		<h1>{% trans %}Create group{% endtrans %}</h1>
 		
-		<p class="result_table">
-			<a href="{{ path("AdminUserBundle_groups")}}" class="button grey"><- Back to Groups</a>
-		</p>
+		<div class="btn_line">
+			<a href="{{ path("AdminUserBundle_groups")}}" class="button grey"><- {% trans %}Back to Groups{% endtrans %}</a>
+		</div>
 		
-		{% if success %}
-			<p class="form_success">The group has been successfully added.</p>
+		{% if error is defined and error %}
+			<p class="form_error">{{ error_text }}</p>
 		{% endif %}
-		<form action="{{ path("AdminUserBundle_group_add")}}" method="post" {{ form_enctype(form) }}>
-			{{ form_widget(form) }}
 		
-			<input type="submit" value="Save" />
-		</form>
+		<div class="scroll_container" rel="scroller">
+			<form action="{{ path("AdminUserBundle_group_add")}}" method="post" {{ form_enctype(form) }}>
+				{{ form_widget(form) }}
+			
+				<input type="submit" value="{% trans %}Save{% endtrans %}" />
+			</form>
+		</div>
 	</td>
 </tr>
 </div>

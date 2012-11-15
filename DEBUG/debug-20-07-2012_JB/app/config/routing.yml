@@ -1,5 +1,17 @@
+ScubeFacebookBundle:
+    resource: "@ScubeFacebookBundle/Resources/config/routing.yml"
+    prefix:   /
+
+ScubeTorrentBundle:
+    resource: "@ScubeTorrentBundle/Resources/config/routing.yml"
+    prefix:   /
+
 ScubeCoreBundle:
     resource: "@ScubeCoreBundle/Resources/config/routing.yml"
+    prefix:   /
+
+ScubeAdminSystemBundle:
+    resource: "@ScubeAdminSystemBundle/Resources/config/routing.yml"
     prefix:   /
 
 ScubeAdminHelpBundle:
@@ -16,10 +28,6 @@ WidgetsMailboxWidgetBundle:
 
 WidgetsMediasWidgetBundle:
     resource: "@WidgetsMediasWidgetBundle/Resources/config/routing.yml"
-    prefix:   /
-
-ScubeFacebookBundle:
-    resource: "@ScubeFacebookBundle/Resources/config/routing.yml"
     prefix:   /
 
 ScubeMediasBundle:
@@ -78,8 +86,8 @@ ScubeAdminSettingsBundle:
     resource: "@ScubeAdminSettingsBundle/Resources/config/routing.yml"
     prefix:   /
 
-ScubeAdminLogsBundle:
-    resource: "@ScubeAdminLogsBundle/Resources/config/routing.yml"
+ScubeGoldBookBundle:
+    resource: "@ScubeGoldBookBundle/Resources/config/routing.yml"
     prefix:   /
 
 #APP_DELIMITER

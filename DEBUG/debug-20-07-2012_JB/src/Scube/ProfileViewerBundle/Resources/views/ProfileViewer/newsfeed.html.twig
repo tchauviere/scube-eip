@@ -5,21 +5,21 @@
 	{% if auth %}
 		<div class="newsfeed_inputbox">
 			{% if success %}
-				<p class="form_success">The news has been successfully posted.</p>
+				<p class="form_success">{% trans %}The news has been successfully posted{% endtrans %}.</p>
 			{% endif %}
 			<form class="top_form" action="{{ path("ScubeProfileViewerBundle_newsfeed", {'id_user':user_to_display.getId()} )}}" method="post" {{ form_enctype(form) }}>
 				
 				{{ form_widget(form._token) }}
 				{{ form_widget(form.content_text) }}
 			
-				<input type="submit" value="Post it !" />
+				<input type="submit" value="{% trans %}Post it{% endtrans %} !" />
 			</form>
 		</div>
 		<div class="newsfeed_list">
 			
 		</div>
 	{% else %}
-		<p class="error">You need permissions</p>
+		<p class="error">{% trans %}You need permissions{% endtrans %}</p>
 	{% endif %}
 	
 <style>

@@ -29,12 +29,12 @@ class Calendar
 	 * @ORM\JoinTable(name="calendar_events_to_accept")
      */ 
     protected $calendar_events_to_accept;
-	
-	public function __construct()
+    public function __construct()
     {
         $this->calendar_events = new \Doctrine\Common\Collections\ArrayCollection();
+    $this->calendar_events_to_accept = new \Doctrine\Common\Collections\ArrayCollection();
     }
-
+    
     /**
      * Get id
      *
@@ -83,15 +83,5 @@ class Calendar
     public function getCalendarEventsToAccept()
     {
         return $this->calendar_events_to_accept;
-    }
-
-    /**
-     * Get calendar_event_to_accept
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getCalendarEventToAccept()
-    {
-        return $this->calendar_event_to_accept;
     }
 }

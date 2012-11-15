@@ -37,8 +37,8 @@ class CalendarController extends Controller
 		}
 
 		$Event = new CalendarEvent();
-		$Event->setTitle($eventToAccept->getEvent()->getTitle() + " (" + $eventToAccept->getEvent()->getFirstname() + " )");
-		$Event->setAllDay($eventToAccept->getEvent()->getAllDay());		
+		$Event->setTitle($eventToAccept->getEvent()->getTitle() ) ;//$eventToAccept->getEvent()->getTitle() + " (" + $eventToAccept->getUserCreator()->getFirstname() + " )");
+		$Event->setAllDay($eventToAccept->getEvent()->getAllDay());
 		$Event->setStart($eventToAccept->getEvent()->getStart());
 		$Event->setEnd($eventToAccept->getEvent()->getEnd());
 
@@ -139,7 +139,7 @@ class CalendarController extends Controller
 
 		 return $this->render('ScubeCalendarBundle:Calendar:index.html.twig', array('user'=>$user));
 	}
-	
+
 	public function addeventAction()
 	{
 
@@ -148,16 +148,13 @@ class CalendarController extends Controller
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
 		$user = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
 	
-		$array = $_POST['array_events'];
-		
+		$array = $_POST['array_events'];	
 		
 		$title = $array['0'];
 		$start = $array['1'];
 		$end = $array['2'];
 		$allDay = $array['3'];
 		$group = $array['4'];
-		
-		
 		
 		$em = $this->getDoctrine()->getEntityManager();
 		
@@ -175,6 +172,16 @@ class CalendarController extends Controller
 		$user->getCalendar()->addCalendarEvent($Event);
 		$em->flush();
 	
+	/*
+		$EventToAccept = new CalendarEventToAccept();
+		$EventToAccept->setEvent($Event);
+		$em->persist($EventToAccept);
+		$EventToAccept->setUserCreator($user);
+		$em->flush();
+		//$guest->getCalendar()->addCalendarEvent($Event);
+		$user->getCalendar()->addCalendarEventToAccept($EventToAccept);
+		$em->flush();	*/
+
 		if ($group)
 		{
 			$connectionGroup = "";
@@ -189,6 +196,7 @@ class CalendarController extends Controller
 			{
 				$listUser = $connectionGroup->getUsers();
 				/*ici*/
+
 				foreach ($listUser as $guest)
 				{
 					$EventToAccept = new CalendarEventToAccept();
@@ -199,6 +207,7 @@ class CalendarController extends Controller
 					$em->flush();
 					//$guest->getCalendar()->addCalendarEvent($Event);
 					$guest->getCalendar()->addCalendarEventToAccept($EventToAccept);
+					$em->flush();
 				}
 				$em->flush();
 			}

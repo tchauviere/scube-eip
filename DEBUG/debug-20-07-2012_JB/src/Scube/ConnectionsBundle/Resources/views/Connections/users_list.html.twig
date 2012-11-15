@@ -1,20 +1,25 @@
 {% for usr in users_list %}
 	<li id="user_{{usr.getId()}}">
+
+	{% if  usr.getProfile().getPicture() %}
+		<img class="user-picture" src="{{usr.getProfile().getPicture()}}?{{time}}"/>
+	{% else %}
+		<a style="text-decoration:none;" href="{{ path("ScubeProfileViewerBundle_homepage", {'id_user':usr.getId()} )}}" title="{% trans %}Go to profile{% endtrans %}">
+			{% image '@ScubeBaseBundle/Resources/public/images/default_picture.png'	%}
+				<img class="user-picture" src="{{ asset_url }}" />
+			{% endimage %}
+		</a>
+	{% endif %}
+
 	<span>{{usr.getFirstname()}} {{usr.getSurname()}}</span>
 	
 	{% if group_id %}
-		<a style="float:right;" href="#" onclick="remove_connection_from_group({{usr.getId()}}, {{group_id}});" >
+		<a style="float:right;margin-top:5px;" href="#" onclick="remove_connection_from_group({{usr.getId()}}, {{group_id}});" >
 		{% image '@ScubeBaseBundle/Resources/public/images/remove.png' %}
 		<img width="16" src="{{ asset_url }}" alt="Remove"/></a>
 		{% endimage %}
 		</a> 
 	{% endif %}
-	
-	<a style="float:right;" href="{{path("ScubeProfileViewerBundle_homepage", { 'id_user': usr.getId()})}}" >
-	{% image '@ScubeBaseBundle/Resources/public/images/user.png' %}
-	<img width="16" src="{{ asset_url }}" alt="Profile"/></a>
-	{% endimage %}
-	</a>
 	
 	<input type="hidden" value="{{usr.getId()}}"/></li>
 {% endfor %}

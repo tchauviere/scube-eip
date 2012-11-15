@@ -1,0 +1,37 @@
+{% extends 'ScubeBaseBundle:Base:core_application.html.twig' %}
+
+{% block body %}
+{{ parent() }}
+
+<div class="Application">
+	<table class="table_content">
+		<tr>
+			<td class="sidebar_left">
+				{% include 'ScubeAdminSystemBundle:Adminsystem:menu.html.twig' %}
+			</td>
+			<td class="sidebar_main">
+				<h1>{% trans %}Database{% endtrans %}</h1>
+
+				<div class="form_error">
+					{% trans %}Use this application with caution. Unexperimented people shouldn't alter the parameters of this application.{% endtrans %}
+				</div>
+
+				<ul>
+					<li>{% trans %}If you set wrong parameters into this form, your site could be unavailable.{% endtrans %}</li>
+					<li>{% trans %}If errors occur after validation of this form, you can manually edit the file app/config/parameters.ini.{% endtrans %}</li>
+					<li>{% trans %}The database that you want to set up must be full. An empty database will result an error.{% endtrans %}</li>
+				</ul>
+
+				<div class="scroll_container" rel="scroller">
+					<form action="{{ path("ScubeAdminSystemBundle_database")}}" method="post" {{ form_enctype(form) }}>
+						{{ form_widget(form) }}
+					
+						<input type="submit" value="{% trans %}Save{% endtrans %}" />
+					</form>
+				</div>
+			</td>
+		</tr>
+	</table>
+</div>
+
+{% endblock %}

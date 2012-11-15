@@ -1,0 +1,16 @@
+<form action="{{ path('ScubeGoldBookBundle_homepage') }}" method="post" {{ form_enctype(form) }}>
+     {{ form_errors(form) }}
+
+        {{ form_widget(form.inform) }}
+        {{ form_label(form.inform, 'Oui, je désire être informé des nouveautés à propos de Scube.') }} <br>
+
+        {{ form_label(form.comm, 'Je trouve que le projet Scube ...:') }} <br>
+        {{ form_widget(form.comm) }}<br>
+        
+        {{ form_label(form.idea, 'Mes idées concernant de nouveaux modules à ajouter sont...') }} <br>
+        {{ form_widget(form.idea) }}<br>
+
+        {{ form_rest(form) }}
+
+        <input formnovalidate="true" type="submit" value="Submit" />
+</form>

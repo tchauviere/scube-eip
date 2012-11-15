@@ -12,9 +12,12 @@
 		{% include 'ScubeAdminHelpBundle:AdminHelp:menu.html.twig' %}
 	</td>
 	<td class="sidebar_main">
-    
-    {{ welcome }}
-<!-- beinvenu dans le module d'aide à l'administrateur-->
+		<h1>{% trans %}Help for administrator{% endtrans %}</h1> 
+		<p>
+		{% trans %}Dear Administrator{% endtrans %},<br /><br />
+		{% trans %}This application has been created in order to help you for taking control of your Scube Network{% endtrans %}.<br /><br />
+		{% trans %}Please find in the right side the application helps{% endtrans %}.
+		</p>
 	</td>
 </tr>
 </div>

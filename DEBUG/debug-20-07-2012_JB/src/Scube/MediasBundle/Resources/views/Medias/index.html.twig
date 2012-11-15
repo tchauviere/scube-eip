@@ -1,161 +1,45 @@
-{% extends 'ScubeBaseBundle:Base:core_application.html.twig' %}
+{% extends 'ScubeMediasBundle:Medias:medias_core.html.twig' %}
 
+{% block media_page %}
 
-{% block body %}
-{{ parent() }}
+	<h1>{% trans %}Your medias{% endtrans %}</h1>
 
-<div class="Application">
-
-<table class="table_content">
-<tr>
-	<td class="sidebar_left">
-		<ul id="media_list">
-		
-			{% if folder %}
-				<li style="border-bottom:1px solid #333;"><strong>Select a media</strong> (<a href="{{ path("ScubeMediasBundle_homepage")}}">back</a>)</li>
-				{% for media in folder.getMediasFolder() %}
-					<li>
-						<span><a href="#" onclick='load_media("{{ media.id }}", "{{ media.type }}");'>{{ media.name }}</a></span>
-						<a style="float:right;" href="{{ path('ScubeMediasBundle_delete_media', { 'id': media.getId()}) }}"  >
-						{% image '@ScubeBaseBundle/Resources/public/images/remove.png' %}
-							<img width="16" src="{{ asset_url }}" alt="Remove"/></a>
+	<div class="scroll_container" rel="scroller">
+	{% for media in last_medias %}
+		<div class="last-medias-line">
+			<a href="#" onclick='load_media("{{ media.id }}", "{{ media.type }}");'>
+				<div class="last-medias-picture">
+					{% if media.type == 'picture' %}
+						{% image '@ScubeBaseBundle/Resources/public/images/medias_icone_picture.png' %}
+							<img src="{{ asset_url }}" alt="Picture"/>
 						{% endimage %}
-						</a> 
-					</li>
-				{% endfor %}
-			{% else %}
-				<li style="border-bottom:1px solid #333;"><strong>Select a folder</strong></li>
-				{% for ifolder in user.getMediaFolders() %}
-					<li>
-						<a href="{{ path("ScubeMediasBundle_homepage_folder", { 'id': ifolder.getId()})}}">{{ ifolder.name }}</a>
-						<a style="float:right;" href="{{ path('ScubeMediasBundle_delete_folder', { 'id': ifolder.getId()}) }}"  >
-						{% image '@ScubeBaseBundle/Resources/public/images/remove.png' %}
-							<img width="16" src="{{ asset_url }}" alt="Remove"/></a>
+					{% elseif (media.type == 'youtube' or media.type == 'dailymotion' or media.type == 'vimeo') %}
+						{% image '@ScubeBaseBundle/Resources/public/images/medias_icone_video.png' %}
+							<img src="{{ asset_url }}" alt="Picture"/>
 						{% endimage %}
-						</a> 
-					</li>
-				{% endfor %}
-			{% endif %}
-		
-			
-		</ul>
-	</td>
-	<td class="sidebar_main">
-		
-		
-		
-		{% if folder %}
-			<h1>Folder {{ folder.getName() }}</h1>
-			
-			<div id="target_area">
-				{% if success %}
-					<p class="form_success">The media has been uploaded.</p>
-				{% endif %}
-						
-				<form action="{{ path('ScubeMediasBundle_homepage_folder', { 'id': folder.getId()}) }}" method="post" {{ form_enctype(form) }}>
-					{{ form_widget(form) }}
-				
-					<input type="submit" value="Upload media" />
-				</form>
-			</div>
-			
-		{% else %}
-			<h1>Your medias files</h1>
-			{% if success %}
-				<p class="form_success">The folder has been created.</p>
-			{% endif %}
-					
-			<form class="top_form" action="{{ path('ScubeMediasBundle_homepage') }}" method="post" {{ form_enctype(form_folder) }}>
-				
-				{{ form_widget(form_folder._token) }}
-				{{ form_widget(form_folder.name) }}
-			
-				<input type="submit" value="Create folder" />
-			</form>
-		{% endif %}
-	</td>
-</tr>
-</table>
-</div>
+					{% elseif media.type == 'document' %}
+						{% image '@ScubeBaseBundle/Resources/public/images/medias_icone_document.png' %}
+							<img src="{{ asset_url }}" alt="Picture"/>
+						{% endimage %}
+					{% elseif media.type == 'music' %}
+						{% image '@ScubeBaseBundle/Resources/public/images/medias_icone_music.png' %}
+							<img src="{{ asset_url }}" alt="Picture"/>
+						{% endimage %}
+					{% endif %}
+				</div>
 
-<div id="media_loader">
-	{% image '@ScubeBaseBundle/Resources/public/images/application_loader.gif' %}
-		<img src="{{ asset_url }}" alt="Loading.." />
-	{% endimage %}
-</div>
+				<div class="last-medias-block-middle">
+					<div class="last-medias-title">
+						{{ media.getName() }}
+					</div>
+				</div>
 
-<script>
-
-function	load_media(id, type) {
-
-	$.ajax({
-		  url: "{{ path('ScubeMediasBundle_load_noparam')}}" + "/"+id,
-		  beforeSend: function() {
-		   
-			if ($("#target_area").length)
-			{
-				$("#target_area").css({"text-align":"center"});
-				$("#target_area").html($("#media_loader").html());
-			}
-			else
-				$("#vizualiser").html($("#media_loader").html());
-		  },
-		  success: function(data) {	
-		  	allocated_height = $(".sidebar_main").height() - $(".sidebar_main h1").height() - parseInt($(".sidebar_main h1").css("margin-top")) - parseInt($(".sidebar_main h1").css("margin-bottom"))  - parseInt($(".sidebar_main h1").css("padding-bottom")) - parseInt($(".sidebar_main h1").css("padding-top")) - 50;/* 1= border */
-			
-		  	$(".sidebar_main").css({
-				"background-color":"black"
-			});
-			
-			$(".sidebar_main").html(data);
-			if (type == "picture")
-				$("#vizualiser img").css({"max-width":$(".sidebar_main").width(), "max-height":allocated_height});
-			else if (type == "document")
-				$("#vizualiser iframe").css({"width":$(".sidebar_main").width(), "height":allocated_height});
-		  }
-		});
-}
-
-
-</script>
-
-<style>
-
-#media_loader {
-	display:none;
-}
-
-.top_form {
-	text-align:center;
-	margin-bottom:20px;
-}
-.top_form input {
-	display:inline;
-	margin:0;
-	width:30%;
-	border-radius:5px;
-}
-
-#media_list {
-	padding-left:5px;
-}
-#media_list li {
-	list-style-type:none;
-	border-bottom:1px solid white;
-	padding:0;
-	margin-top:3px;
-}
-#media_list li a {
-	color:#333;
-	text-decoration:none;
-}
-
-#vizualiser {
-	text-align:center;
-	overflow:hidden;
-}
-
-</style>
+				<div class="last-medias-date">
+					{{ media.getDate()|date('d/m/Y') }}
+				</div>
+			</a>
+		</div>
+	{% endfor %}
+	</div>
 
 {% endblock %}
-

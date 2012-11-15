@@ -1,0 +1,306 @@
+<style>
+	.top_form {
+		text-align:center;
+		margin-bottom:20px;
+		vertical-align:middle;
+	}
+	.top_form input[type="submit"] {
+		display:inline;
+		margin:0;
+		width:30%;
+		border-radius:5px;
+		vertical-align:middle;
+	}
+	.top_form textarea {
+		display:inline;
+		margin:0;
+		width:65%;
+		border-radius:5px;
+		vertical-align:middle;
+	}
+	
+	#search_input img {
+		vertical-align:middle;
+	}
+	
+	
+	#search_connection {
+		border-radius:5px;
+		margin:0px;
+		width:70%;
+		display:inline;
+	}
+	#search_list {
+		padding-left:0px;
+	}
+	#search_list li {
+		list-style-type:none;
+		border-bottom:1px solid white;
+		padding:0;
+		cursor:pointer;
+	}
+	
+	#loading {
+		display:none;
+	}
+	
+	.top_form_left input[type="text"] {
+		float:left;
+		width:80%;
+		display:block;
+		font-weight:bold;
+		border:none;
+		text-align:center;
+		font-size:16px;
+		font-weight:bold;
+		margin-left:16px;
+	}
+	.top_form_left input[type="checkbox"] {
+		float:right;
+		width:15%;
+		height:16px;
+		display:block;
+		margin:0px;
+	}
+	.top_form_left label {
+		height:16px;
+		font-size:10px;
+		float:left;
+		width:80%;
+		display:block;
+		text-align:left;
+		font-weight:normal;
+	}
+	
+	.participants {
+		color:#666;
+		font-size:12px;
+		margin:0px 10px;
+		text-align:right;
+	}
+	.mailbox_message {
+		width:60%;
+		margin:10px;
+		background-color:white;
+		border-radius:5px;
+		box-shadow: 0 0 5px #555;
+	}
+	.type_in {
+		background-color:white;
+		float:left;
+	}
+	.type_out {
+		background-color:whiteSmoke;
+		float:right;
+	}
+	.message_picture img {
+		height:30px;
+		float:left;
+		margin:5px;
+	}
+	.message_name {
+		margin:5px;
+		color:#333;
+		font-size:12px;
+		text-align:left;
+		height:30px;
+		line-height:30px;
+		vertical-align:middle;
+	}
+	.message_content {
+		margin:10px;
+		color:black;
+		font-size:14px;
+		text-align:left;
+	}
+	.message_date {
+		margin:3px;
+		color:#333;
+		font-size:10px;
+		text-align:right;
+	}
+	.write-message-form {
+		text-align:center;
+		margin-bottom:20px;
+		vertical-align:middle;
+	}
+	.write-message-form input[type="submit"] {
+		display:inline;
+		margin:0;
+		width:20%;
+		height:50px;
+		vertical-align:middle;
+		border-radius:0px;
+	}
+	.write-message-form textarea {
+		display:inline;
+		margin:0;
+		width:75%;
+		height:50px;
+		vertical-align:middle;
+	}
+
+	#search_list li {
+	}
+
+	#search_list li a {
+		text-decoration: none;
+		padding: 5px 20px;
+		line-height: 20px;
+		font-size: 15px;
+		display: block;
+		color: #333;
+
+		vertical-align:middle;
+	}
+	#search_list li a.online {
+		border-left: 5px solid #8EB218;
+	}
+
+	#search_list li img.user-picture {
+		width:30px;
+		vertical-align:middle;
+		display:inline-block;
+		margin-right:10px;
+	}
+
+	.hide-offline {
+		vertical-align:middle;
+		font-weight:bold;
+	}
+	.hide-offline img {
+		vertical-align:middle;
+		display:inline-block;
+		margin-right:10px;
+	}
+
+	.show-offline {
+		vertical-align:middle;
+		font-weight:bold;
+	}
+	.show-offline img {
+		vertical-align:middle;
+		display:inline-block;
+		margin-right:10px;
+	}
+
+	.user-hidden {
+		display:none;
+	}
+
+	.in-conversation {
+		background-color:#DADADA;
+	}
+
+	#search_list .conversation-home {
+		border-bottom: 1px solid #C6C9CE;
+		padding:10px;
+	}
+	
+	.conversation-home a {
+		vertical-align:middle;
+		font-weight:bold;
+	}
+	.conversation-home a img {
+		vertical-align:middle;
+		display:inline-block;
+		margin-right:10px;
+	}
+
+	#participants {
+		display:none;
+		position:absolute;
+		width:300px;
+		height:300px;
+		border-radius: 5px;
+		box-shadow: 0 0 5px #555;
+		background-color:white;
+		left:50%;
+		top:50%;
+		margin-left:-150px;
+		margin-top:-150px;
+		overflow-y: hidden;
+	}
+	#participants .button {
+		margin:0 auto;
+	}
+	.participants-title {
+		border-bottom:1px solid #C6C9CE;
+		font-weight:bold;
+		text-align:center;
+	}
+	.participants-list {
+		height:230px;
+		overflow-y: scroll;
+	}
+	.participants-list label {
+		display:inline-block;
+		vertical-align:middle;
+		width:auto;
+		font-weight:normal;
+	}
+	.participants-list input {
+		display:inline-block;
+		width:auto;
+		vertical-align:middle;
+		margin:0;
+		margin-right:5px;
+	}
+	.participants-line {
+		height:20px;
+		margin:5px 10px;
+		text-align:left;
+	}
+	.participants-buttons {
+		text-align:center;
+	}
+
+	.conversation-line {
+		
+	}
+	.conversation-line a {
+		text-decoration:none;
+		display:block;
+		border-bottom:1px solid #C6C9CE;
+		padding:10px;
+		height:60px;
+	}
+	.conversation-picture {
+		display:inline-block;
+		vertical-align:middle;
+	}
+	.conversation-picture img {
+		width:60px;
+	}
+	.conversation-block-middle {
+		display:inline-block;
+		vertical-align:middle;
+		width:70%;
+		overflow:hidden;
+	}
+	.conversation-title {
+		font-weight:bold;
+		color:#568DC5;
+	}
+	.conversation-message {
+		color:#333;
+		font-size:12px;
+	}
+	.conversation-date {
+		display:inline-block;
+		float:right;
+		margin-top:20px;
+		color:#666;
+		font-size:11px;
+		width:15%;
+		overflow:hidden;
+		text-align:right;
+	}
+
+	.conversation-line a.not-read {
+		background-color:whiteSmoke;
+	}
+	.conversation-line a.not-read .conversation-title {
+		color:#8EB218;
+	}
+</style>

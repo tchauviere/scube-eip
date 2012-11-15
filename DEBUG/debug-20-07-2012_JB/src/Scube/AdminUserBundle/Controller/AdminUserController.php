@@ -2,7 +2,6 @@
 
 namespace Scube\AdminUserBundle\Controller;
 
-//use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 use Scube\CoreBundle\Controller\CoreController;
@@ -60,6 +59,10 @@ class AdminUserController extends CoreController
 			$form->bindRequest($request);
 	
 			if ($form->isValid()) {
+				$test_email_user = $this->getDoctrine()->getRepository('ScubeBaseBundle:User')->findOneBy(array('email' => $user->getEmail()));
+				if ($test_email_user)
+					return $this->render('ScubeAdminUserBundle:AdminUser:add_user.html.twig', array('user'=>$user, 'form' => $form->createView(), "success"=>false, "error_email"=>true));
+					
 				/* Set profile object */
 				$profile = new UserProfile();
 				/* Set interface object */
@@ -70,10 +73,9 @@ class AdminUserController extends CoreController
 				$mailbox = new Mailbox();
 				
 				$user->setOnline(false);
-				$user->setBlocked(false);
 				$user->setDateRegister(new \DateTime());
 				$user->setDateLastAccess(new \DateTime());
-				$user->setLocale($this->getDoctrine()->getRepository('ScubeBaseBundle:ScubeSetting')->findOneBy(array('key' => "default_locale"))->getValue());
+				$user->setMaintenancePermission(false);
 				
 				$user->setProfile($profile);
 				$user->setBaseInterface($interface);
@@ -135,7 +137,11 @@ class AdminUserController extends CoreController
 			$form->bindRequest($request);
 	
 			if ($form->isValid()) {
-			
+				
+				$test_email_user = $this->getDoctrine()->getRepository('ScubeBaseBundle:User')->findOneBy(array('email' => $user->getEmail()));
+				if ($test_email_user && $test_email_user->getId() != $user->getId())
+					return $this->render('ScubeAdminUserBundle:AdminUser:edit_user.html.twig', array('user'=>$user, 'form' => $form->createView(), "success"=>false, "error_email"=>true));
+				
 				$em = $this->getDoctrine()->getEntityManager();
 				
 				if (isset($parameters['user_is_me']))
@@ -219,8 +225,8 @@ class AdminUserController extends CoreController
 		
 		$form = $this->createFormBuilder($defaultData)
             ->add('name', 'text')
-			->add('apps', 'choice', array('choices' => $app_list, 'multiple'  => true, 'required'    => false))
-			->add('admin_apps', 'choice', array('choices' => $admin_app_list, 'multiple'  => true, 'required'    => false))
+			->add('apps', 'choice', array('choices' => $app_list, 'multiple'  => true, 'required'    => false, 'label' => "Associated applications"))
+			->add('admin_apps', 'choice', array('choices' => $admin_app_list, 'multiple'  => true, 'required'    => false, 'label' => "Associated administrator applications"))
             ->getForm();
 				
 		if ($request->getMethod() == 'POST') {
@@ -234,11 +240,19 @@ class AdminUserController extends CoreController
 			if (strlen($edit_form['name']) < 1)
 			{
 				$error = true;
-				$error_text = "Please enter a valid name (at least 1 character)";
+				$error_text = $this->get('translator')->trans("Please enter a valid name (at least 1 character)");
 				return $this->render('ScubeAdminUserBundle:AdminUser:add_group.html.twig', array('form' => $form->createView(), "success"=>false, "error"=>$error, "error_text"=>$error_text));
 			}
 			else
 				$grp->setName($edit_form['name']);
+			
+			$test_name_group = $this->getDoctrine()->getRepository('ScubeBaseBundle:PermissionsGroup')->findOneBy(array('name' => $edit_form['name']));
+			if ($test_name_group)
+			{
+				$error = true;
+				$error_text = $this->get('translator')->trans("Group name already used");
+				return $this->render('ScubeAdminUserBundle:AdminUser:add_group.html.twig', array('form' => $form->createView(), "success"=>false, "error"=>$error, "error_text"=>$error_text));
+			}
 			
 			if (!$error)
 			{
@@ -318,24 +332,31 @@ class AdminUserController extends CoreController
 		
 		$form = $this->createFormBuilder($defaultData)
             ->add('name', 'text', array('read_only'=>$read_only_name))
-			->add('apps', 'choice', array('choices' => $app_list, 'multiple'  => true, 'required'    => false))
-			->add('admin_apps', 'choice', array('choices' => $admin_app_list, 'multiple'  => true, 'required'    => false))
+			->add('apps', 'choice', array('choices' => $app_list, 'multiple'  => true, 'required'    => false, 'label' => "Associated applications"))
+			->add('admin_apps', 'choice', array('choices' => $admin_app_list, 'multiple'  => true, 'required'    => false, 'label' => "Associated administrator applications"))
             ->getForm();
 				
 		if ($request->getMethod() == 'POST') {
 			$form->bindRequest($request);
 			
 			$edit_form = $form->getData();
+			$test_name_group = $this->getDoctrine()->getRepository('ScubeBaseBundle:PermissionsGroup')->findOneBy(array('name' => $edit_form['name']));
 			
 			if (strlen($edit_form['name']) < 1)
 			{
 				$error = true;
-				$error_text = "Please enter a valid name (at least 1 character)";
+				$error_text = $this->get('translator')->trans("Please enter a valid name (at least 1 character)");
+				return $this->render('ScubeAdminUserBundle:AdminUser:edit_group.html.twig', array('grp'=>$grp, 'form' => $form->createView(), "success"=>false, "error"=>$error, "error_text"=>$error_text));
+			}
+			else if ($test_name_group && $grp->getId() != $test_name_group->getId())
+			{
+				$error = true;
+				$error_text = $this->get('translator')->trans("Group name already used");
 				return $this->render('ScubeAdminUserBundle:AdminUser:edit_group.html.twig', array('grp'=>$grp, 'form' => $form->createView(), "success"=>false, "error"=>$error, "error_text"=>$error_text));
 			}
 			else if (!$read_only_name)
 				$grp->setName($edit_form['name']);
-				
+			
 			if (!$error)
 			{
 				$grp->setApplication(new \Doctrine\Common\Collections\ArrayCollection());

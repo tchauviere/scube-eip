@@ -1,10 +1,31 @@
 {% extends 'ScubeBaseBundle:Base:core_application.html.twig' %}
 
+{% block more_javascripts %}
+		
+	{% include 'ScubeMailboxBundle:Mailbox:mailbox_style.html.twig' %}
+
+{% endblock %}
 
 {% block body %}
 {{ parent() }}
 
 <div class="Application">
+
+<div id="participants">
+	<p class="participants-title">{% trans %}Select participants{% endtrans %}</p>
+
+	<div class="participants-list">
+		{% for usr in all_users %}
+			<div class="participants-line">
+				<input id="participant-{{usr.id}}" type="checkbox" value="{{usr.id}}" /> <label for="participant-{{usr.id}}">{{usr.firstname}} {{usr.surname}}</label>
+			</div>
+		{% endfor %}
+	</div>
+	<div class="participants-buttons">
+		<a href="#" class="button small red" onclick="hide_participants();">{% trans %}Cancel{% endtrans %}</a>
+		<a href="#" class="button small" onclick="write_mail();">{% trans %}Go to conversation{% endtrans %}</a>
+	</div>
+</div>
 
 <table class="table_content">
 <tr>
@@ -22,41 +43,81 @@
 			{% endimage %}
 		</div>		
 		
-		<ul id="search_list">
-			
-		</ul>
+		<div class="scroll_container" rel="scroller">
+			<ul id="search_list">
+				
+			</ul>
+		</div>
 	</td>
 	<td class="sidebar_main">
 		
-		<h1>Mailbox{%if conversation%} -> {{conversation.interlocutor.firstname}} {{conversation.interlocutor.surname}}{%endif%}</h1>
-		
 		{%if conversation%}
-			{% for mail in conversation.getMails() %}
-				<div class="mailbox_message type_{{mail.getType()}}">
-					<p class="message_name">
-						{%if mail.type == "in"%}
-							{{conversation.interlocutor.firstname}} {{conversation.interlocutor.surname}} 
-						{% else %}
-							{{user.firstname}} {{user.surname}} 
-						{%endif%}
-						 says:
-					</p>
-					<p class="message_content">{{mail.getMessage()}}</p>
-					<p class="message_date">{{mail.getMailingDate()|date()}}</p>
-				</div>
-			{% endfor %}
+
+			<h1>{% trans %}Mail{% endtrans %}</h1>
+			<div class="participants">
+				{% trans %}Participants are{% endtrans %}:
+				{% for participant in conversation.getRecipients() %}
+					{{participant.firstname}} {{participant.surname}}{% if not loop.last %}, {% endif %}
+				{% endfor %}
+			</div>
+
+			<div id="mail_list" class="scroll_container" rel="scroller">
+				
+			</div>
 			
-			<form class="top_form" action="{{ path("ScubeMailboxBundle_homepage_conversation", {'id_user':conversation.interlocutor.getId()} )}}" method="post" {{ form_enctype(form) }}>
+			<form class="write-message-form" action="{{ path("ScubeMailboxBundle_homepage_conversation", {'users_selected':users_selected} )}}" method="post" {{ form_enctype(form) }}>
 			
-			{{ form_widget(form._token) }}
-			{{ form_widget(form.message) }}
-		
-			<input type="submit" value="send !" />
-		</form>
+				{{ form_widget(form._token) }}
+				{{ form_widget(form.message) }}
 			
-			
+				<input type="submit" value="{% trans %}Send{% endtrans %}" />
+			</form>
+
 		{%else%}
-			<p style="min-height:150px;">Please select an interlocutor in the left sidebar to load the conversation.</p>
+			<h1>{% trans %}Mailbox{% endtrans %}</h1>
+
+			<div id="mail_list" class="scroll_container" rel="scroller">
+				{% for conv in conversations_list %}
+					{% if conv.mails|length %}
+						<div class="conversation-line">
+
+							{% set recipients_id = [] %}
+							{% for recipient in conv.recipients %}
+								{% set recipients_id = recipients_id|merge([recipient.id]) %}
+							{% endfor %}
+
+							<a {% if conv.getNewMails() %}class="not-read"{% endif %} href="{{ path("ScubeMailboxBundle_homepage_conversation", {"users_selected":recipients_id|join('-')}) }}">
+
+								{% set last_mail = conv.mails|reverse|slice(0, 1).0 %}
+
+								<div class="conversation-picture">
+									{% if  last_mail.author.getProfile().getPicture() %}
+										<img src="{{last_mail.author.getProfile().getPicture()}}"/>
+									{% else %}
+										{% image '@ScubeBaseBundle/Resources/public/images/default_picture.png'	%}
+											<img src="{{ asset_url }}" />
+										{% endimage %}
+									{% endif %}
+								</div>
+								<div class="conversation-block-middle">
+									<div class="conversation-title">
+										{% for recipient in conv.recipients %}
+											{{recipient.firstname}} {{recipient.surname}}{% if not loop.last %}, {% endif %}
+										{% endfor %}
+									</div>
+									<div class="conversation-message">
+										{{ last_mail.message|striptags|slice(0, 100) }}
+									</div>
+								</div>
+								<div class="conversation-date">
+									{{ conv.getDateLastMail()|date('d/m/Y') }}
+								</div>
+							</a>
+						<div class="breaker"></div>
+						</div>
+					{% endif %}
+				{% endfor %}
+			</div>
 		{%endif%}
 		
 	</td>
@@ -66,26 +127,38 @@
 <script>
 
 var group_selected = false;
+var offline_extended = false;
 
 	$(document).ready(function() 
 	{
 		load_users_list();
+		load_mail_list();
+
 		$("#search_connection").keyup(function() 
 		{
 			load_users_list();
 		});
+
+		var user_list_timer=setInterval("load_users_list()", 30000);
+		var mail_list_timer=setInterval("load_mail_list()", 20000);
 		
 	});
 	
 function	load_users_list()
 {
-	var url = "{{ path("ScubeMailboxBundle_ajax_users_list_noparam") }}";
-	
+	users_conversation = "{%if conversation%}{{users_selected}}{%else%}0{%endif%}";
+
+	var url = "{{ path("ScubeMailboxBundle_ajax_users_list_noparam") }}/" + users_conversation;
+
 	if ($("#search_connection").val())
 		url = url + "/" + $("#search_connection").val();
 	else
 		url = url + "/0";
 	
+	if (offline_extended)
+		url = url + "/1";
+	else
+		url = url + "/0";
 
 	$.ajax({
 			  url: url,
@@ -101,118 +174,63 @@ function	load_users_list()
 			});
 }
 
+function	load_mail_list()
+{
+	{% if conversation %}
+		var url = "{{ path("ScubeMailboxBundle_ajax_mail_list_noparam") }}/{{users_selected}}";
+		$.ajax({
+			  url: url,
+			  success: function(data) {	
+			  	$("#mail_list").html(data);
+			  	$("#mail_list").prop({ scrollTop: $("#mail_list").prop("scrollHeight") });
+			  }
+			});
+	{% endif %}
+}
+
+function	show_offline()
+{
+	offline_extended = true;
+	$('.user-offline').fadeIn();
+	$('#link-hide-offline').show();
+	$('#link-show-offline').hide();
+	
+}
+
+function	hide_offline()
+{
+	offline_extended = false;
+	$('.user-offline').fadeOut();
+	$('#link-hide-offline').hide();
+	$('#link-show-offline').show();
+}
+
+function	show_participants()
+{
+	$("#participants").fadeIn();
+}
+
+function	hide_participants()
+{
+	$("#participants").fadeOut();
+}
+
+function	write_mail()
+{
+	if (!$("#participants input:checkbox:checked").length) {
+		alert("{% trans %}Please select at least one participant{% endtrans %}");
+		return false;
+	}
+		
+	url = "{{ path("ScubeMailboxBundle_homepage") }}";
+	args = new Array();
+	$("#participants input:checkbox:checked").each(function() {
+		args.push($(this).val());
+	});
+	url = url + "/" + args.join("-");
+	window.location = url;
+}
+
 </script>
-
-<style>
-	.top_form {
-		text-align:center;
-		margin-bottom:20px;
-		vertical-align:middle;
-	}
-	.top_form input[type="submit"] {
-		display:inline;
-		margin:0;
-		width:30%;
-		border-radius:5px;
-		vertical-align:middle;
-	}
-	.top_form textarea {
-		display:inline;
-		margin:0;
-		width:65%;
-		border-radius:5px;
-		vertical-align:middle;
-	}
-	
-	#search_input img {
-		vertical-align:middle;
-	}
-	
-	
-	#search_connection {
-		border-radius:5px;
-		margin:0px;
-		width:70%;
-		display:inline;
-	}
-	#search_list {
-		padding-left:5px;
-	}
-	#search_list li {
-		list-style-type:none;
-		border-bottom:1px solid white;
-		padding:0;
-		cursor:pointer;
-	}
-	
-	#loading {
-		display:none;
-	}
-	
-	.top_form_left input[type="text"] {
-		float:left;
-		width:80%;
-		display:block;
-		font-weight:bold;
-		border:none;
-		text-align:center;
-		font-size:16px;
-		font-weight:bold;
-		margin-left:16px;
-	}
-	.top_form_left input[type="checkbox"] {
-		float:right;
-		width:15%;
-		height:16px;
-		display:block;
-		margin:0px;
-	}
-	.top_form_left label {
-		height:16px;
-		font-size:10px;
-		float:left;
-		width:80%;
-		display:block;
-		text-align:left;
-		font-weight:normal;
-	}
-	
-	.mailbox_message {
-		width:60%;
-		margin:10px;
-		background-color:white;
-		border-radius:5px;
-		box-shadow: 0 0 5px #555;
-	}
-	.type_in {
-		background-color:white;
-		float:left;
-	}
-	.type_out {
-		background-color:#B7AA10;
-		float:right;
-	}
-	.message_name {
-		margin:3px;
-		color:#333;
-		font-size:10px;
-		text-align:left;
-	}
-	.message_content {
-		margin:10px;
-		color:black;
-		font-size:14px;
-		text-align:left;
-	}
-	.message_date {
-		margin:3px;
-		color:#333;
-		font-size:10px;
-		text-align:right;
-	}
-	
-</style>
-
-
 
 {% endblock %}

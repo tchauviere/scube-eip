@@ -3,8 +3,80 @@
     <file source-language="en" datatype="plaintext" original="file.ext">
         <body>
             <trans-unit id="1">
-                <source>Symfony2 is great</source>
-                <target>J'aime Symfony2</target>
+                <source>Configuration of</source>
+                <target>Configuration de</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>Delete folder</source>
+                <target>Suppression du dossier</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>Upload</source>
+                <target>Chargement de fichier</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>Media added successfully</source>
+                <target>Média ajouté avec succès</target>
+            </trans-unit>
+            <trans-unit id="5">
+                <source>Upload file</source>
+                <target>Charger un fichier</target>
+            </trans-unit>
+            <trans-unit id="6">
+                <source>Accepted formats are</source>
+                <target>Les formats acceptés sont</target>
+            </trans-unit>
+            <trans-unit id="7">
+                <source>Upload media</source>
+                <target>Charger le média</target>
+            </trans-unit>
+            <trans-unit id="8">
+                <source>Use existing video</source>
+                <target>Utiliser une vidéo existante</target>
+            </trans-unit>
+            <trans-unit id="9">
+                <source>Set the url of your video</source>
+                <target>Mettre l'URL de votre vidéo</target>
+            </trans-unit>
+            <trans-unit id="10">
+                <source>Add an external video</source>
+                <target>Ajouter la vidéo</target>
+            </trans-unit>
+            <trans-unit id="11">
+                <source>File</source>
+                <target>Fichier</target>
+            </trans-unit>
+            <trans-unit id="12">
+                <source>Your medias</source>
+                <target>Vos fichiers multimédia</target>
+            </trans-unit>
+            <trans-unit id="13">
+                <source>Name the new folder</source>
+                <target>Nom du nouveau dossier</target>
+            </trans-unit>
+            <trans-unit id="14">
+                <source>Create folder</source>
+                <target>Créer le dossier</target>
+            </trans-unit>
+            <trans-unit id="15">
+                <source>Last uploaded files</source>
+                <target>Derniers fichiers chargés</target>
+            </trans-unit>
+            <trans-unit id="16">
+                <source>Create new folder</source>
+                <target>Créer un nouveau dossier</target>
+            </trans-unit>
+            <trans-unit id="17">
+                <source>Configure</source>
+                <target>Configurer</target>
+            </trans-unit>
+            <trans-unit id="18">
+                <source>Upload new media</source>
+                <target>Charger un nouveau média</target>
+            </trans-unit>
+            <trans-unit id="19">
+                <source></source>
+                <target></target>
             </trans-unit>
         </body>
     </file>
