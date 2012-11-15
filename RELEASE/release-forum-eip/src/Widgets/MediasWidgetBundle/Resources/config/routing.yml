@@ -1,0 +1,3 @@
+WidgetsMediasWidgetBundle_homepage:
+    pattern:  /medias_widget
+    defaults: { _controller: WidgetsMediasWidgetBundle:Default:index }

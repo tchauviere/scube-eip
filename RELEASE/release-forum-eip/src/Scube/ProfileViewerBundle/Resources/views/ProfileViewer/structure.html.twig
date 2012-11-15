@@ -1,0 +1,55 @@
+{% extends 'ScubeBaseBundle:Base:core_application.html.twig' %}
+
+
+{% block body %}
+{{ parent() }}
+
+<div class="Application">
+
+<table class="table_content">
+<tr>
+	<td class="sidebar_left" style="width:20%;">
+		{% include 'ScubeProfileViewerBundle:ProfileViewer:menu.html.twig' %}
+	</td>
+	<td class="sidebar_main">
+		<h1>
+			{% if user_to_display.getOnline() %}
+				{% image '@ScubeProfileViewerBundle/Resources/public/images/online.png' %}
+				<img width="16" src="{{ asset_url }}" alt="Online"/></a>
+				{% endimage %}
+			{% endif %}
+			{{user_to_display.firstname}} {{user_to_display.surname}}
+		</h1>
+		<div id="profileviewer_mainframe">
+			{% block mainframe %}{% endblock %}
+		</div>
+	</td>
+</tr>
+</table>
+
+</div>
+
+<style>
+
+.header_profile_viewer {
+	margin:0px;
+	background-color:#4878AC;
+	padding:5px;
+}
+
+.header_profile_viewer h1 {
+	color:white;
+	margin:5px;
+	text-align:left;
+	text-shadow:none;
+	font-size:24px;
+}
+
+.profile_picture {
+	margin:0px;
+	text-align:center;
+}
+
+</style>
+
+{% endblock %}

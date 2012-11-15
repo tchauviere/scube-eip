@@ -1,0 +1,13 @@
+<div class="profile_picture">
+	{% if user_to_display.getProfile().getPicture() %}
+		<img style="width:100%;max-width:200px;" src="{{ user_to_display.getProfile().getPicture() }}" alt="Profile Picture"/>
+	{% else %}
+		{% image '@ScubeBaseBundle/Resources/public/images/default_picture.png' %}
+			<img style="width:100%;max-width:200px;" src="{{ asset_url }}" alt="Profile Picture"/>
+		{% endimage %}
+	{% endif %}
+</div>
+<ul class="sidebar_navigation">
+	<li><a href="{{ path("ScubeProfileViewerBundle_newsfeed", {'id_user':user_to_display.getId()} )}}">{% trans %}Newsfeed{% endtrans %}</a></li>
+	<li><a href="{{ path("ScubeProfileViewerBundle_infos", {'id_user':user_to_display.getId()} )}}">{% trans %}Informations{% endtrans %}</a></li>
+</ul>

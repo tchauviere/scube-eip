@@ -1,0 +1,127 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="1">
+                <source>Account</source>
+                <target>Compte</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>Profile</source>
+                <target>Profil</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>Picture</source>
+                <target>Photo</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>Email and password</source>
+                <target>Courriel et mot de passe</target>
+            </trans-unit>
+            <trans-unit id="5">
+                <source>Edit account</source>
+                <target>Modification du compte</target>
+            </trans-unit>
+            <trans-unit id="6">
+                <source>Your account has been successfully updated</source>
+                <target>Votre compte a été mis à jour avec succès</target>
+            </trans-unit>
+            <trans-unit id="7">
+                <source>For a full update</source>
+                <target>Pour une mise à jour complète</target>
+            </trans-unit>
+            <trans-unit id="8">
+                <source>please refresh your desktop here</source>
+                <target>merci d'actualiser la page</target>
+            </trans-unit>
+            <trans-unit id="9">
+                <source>Save</source>
+                <target>Sauvergader</target>
+            </trans-unit>
+            <trans-unit id="10">
+                <source>Edit profile</source>
+                <target>Modification du profil</target>
+            </trans-unit>
+            <trans-unit id="11">
+                <source>Your profile has been successfully updated</source>
+                <target>Votre profil a été mis à jour avec succès</target>
+            </trans-unit>
+            <trans-unit id="12">
+                <source>Single</source>
+                <target>Célibataire</target>
+            </trans-unit>
+            <trans-unit id="13">
+                <source>Married</source>
+                <target>Marié(e)</target>
+            </trans-unit>
+            <trans-unit id="14">
+                <source>Phone number</source>
+                <target>Téléphone</target>
+            </trans-unit>
+            <trans-unit id="15">
+                <source>Native city</source>
+                <target>Lieu de naissance</target>
+            </trans-unit>
+            <trans-unit id="16">
+                <source>City</source>
+                <target>Ville de résidence</target>
+            </trans-unit>
+            <trans-unit id="17">
+                <source>Address</source>
+                <target>Adresse de résidence</target>
+            </trans-unit>
+            <trans-unit id="18">
+                <source>Postal code</source>
+                <target>Code postal</target>
+            </trans-unit>
+            <trans-unit id="19">
+                <source>Website</source>
+                <target>Site internet</target>
+            </trans-unit>
+            <trans-unit id="20">
+                <source>Edit picture</source>
+                <target>Modification de la photo</target>
+            </trans-unit>
+            <trans-unit id="21">
+                <source>Edit email and password</source>
+                <target>Modification courriel et mot de passe</target>
+            </trans-unit>
+            <trans-unit id="22">
+                <source>Upload picture</source>
+                <target>Charger la photo</target>
+            </trans-unit>
+            <trans-unit id="23">
+                <source>Your picture has been successfully updated</source>
+                <target>Votre photo a été mise à jour avec succès</target>
+            </trans-unit>
+            <trans-unit id="24">
+                <source>Your picture need to be cropped for replacing current</source>
+                <target>Votre photo doit être recadrée pour remplacer l'actuelle</target>
+            </trans-unit>
+            <trans-unit id="25">
+                <source>Area to crop</source>
+                <target>Cadrage</target>
+            </trans-unit>
+            <trans-unit id="26">
+                <source>Preview</source>
+                <target>Prévisualisation</target>
+            </trans-unit>
+            <trans-unit id="27">
+                <source>Crop picture</source>
+                <target>Recader la photo</target>
+            </trans-unit>
+            <trans-unit id="28">
+                <source>Accepted extensions are jpg, png, gif and bmp.</source>
+                <target>Les extensions acceptées sont jpg, png, gif et bmp</target>
+            </trans-unit>
+            <trans-unit id="29">
+                <source>Minimum dimension is</source>
+                <target>La taille minimum de la photo est</target>
+            </trans-unit>
+            <trans-unit id="30">
+                <source>You must select an area to crop</source>
+                <target>Vous devez sélectionner une zone de découpage</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

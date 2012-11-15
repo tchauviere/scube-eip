@@ -1,0 +1,68 @@
+#Grid {
+	position:relative;
+	height:1500px;
+}
+
+.empty_cell {
+	background-color:whiteSmoke;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius:5px;
+	position:absolute;
+}
+.empty_cell_hover {
+	background-color:#CCC;
+	cursor:pointer;
+}
+
+.plain_cell {
+	background-color:#ccc;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius:5px;
+	position:absolute;
+	-moz-box-shadow: 0 0 10px #555;
+	-webkit-box-shadow: 0 0 10px #555;
+	-o-box-shadow:0 0 10px #555;
+	box-shadow:0 0 10px #555;
+	filter:progid:DXImageTransform.Microsoft.Shadow(color=#555, Direction=NaN, Strength=10);
+	box-shadow: 0 0 10px #555;
+}
+
+.cell_hover {
+	background-color:#CCC;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius:5px;
+	position:absolute;
+}
+
+.cell_fullscreen {
+	position:absolute;
+	/*float:right;*/
+	right:0px;
+	top:0;
+	margin:5px;
+	width:30px;
+	height:30px;
+}
+
+.cell_remove {
+	position:absolute;
+	right:0px;
+	top:0;
+	margin:5px;
+	width:24px;
+	height:24px;
+	cursor:pointer;
+}
+
+.cell_anchor {
+	position:absolute;
+	left:0px;
+	top:0;
+	margin:5px;
+	width:24px;
+	height:24px;
+	cursor:pointer;
+}

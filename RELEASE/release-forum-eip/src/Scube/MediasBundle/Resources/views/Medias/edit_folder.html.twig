@@ -1,0 +1,12 @@
+{% extends 'ScubeMediasBundle:Medias:medias_core.html.twig' %}
+
+{% block media_page %}
+	
+	<h1>{% trans %}Configuration of{% endtrans %} {{ folder.getName() }}</h1>
+			
+	<div class="btn_line" style="text-align:center;">
+		<a class="button red" href="{{ path("ScubeMediasBundle_delete_folder", { 'id': folder.getId()})}}">{% trans %}Delete folder{% endtrans %} {{ folder.getName() }}</a>
+	</div>
+	<div id="target_area">
+	</div>
+{% endblock %}

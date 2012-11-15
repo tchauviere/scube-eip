@@ -1,0 +1,110 @@
+{% extends 'ScubeBaseBundle:Base:core_application.html.twig' %}
+
+{% block body %}
+{{ parent() }}
+
+<div class="Application">
+	<table class="table_content">
+		<tr>
+			<td class="sidebar_left">
+				{% include 'ScubeAdminSystemBundle:Adminsystem:menu.html.twig' %}
+			</td>
+			<td class="sidebar_main">
+				<h1>{% trans %}Reports{% endtrans %}</h1>
+
+				<div id="top_infos" class="result_table" style="padding-bottom: 15px;">
+					<table class="table_full_size result_table">
+					<tr>
+						<td style="text-align: center; color: black; width: 25%">
+							{% if environment == "prod" %}
+								{% image '@ScubeAdminSystemBundle/Resources/public/images/prod_mod.png' %}
+									<img style="margin-top: 10px; margin-bottom: 10px;" width="64px" height="64px" src="{{ asset_url }}" alt="{% trans %}Production{% endtrans %}" title="{% trans %}Production{% endtrans %}" />
+								{% endimage %}
+							{% else %}
+								{% image '@ScubeAdminSystemBundle/Resources/public/images/dev_mod.png' %}
+									<img style="margin-top: 10px; margin-bottom: 10px;" width="64px" height="64px" src="{{ asset_url }}" alt="{% trans %}Development{% endtrans %}" title="{% trans %}Development{% endtrans %}" />	
+								{% endimage %}
+							{% endif %}
+						</td>
+						
+						<td style="text-align: center; color: black; width: 50%;">
+							
+							{% trans %}Running environment{% endtrans %} : <strong>{{ environment_readable }}</strong>
+							
+						</td>
+						
+						<td style="color: black; text-align: center; margin-top: 10px; width: 25%;">
+							<a href="{{ path("ScubeAdminSystemBundle_reports_clear") }}" class="button red">{% trans %}Clear reports{% endtrans %}</a>
+						</td>
+					</tr>
+					</table>
+				</div>
+
+				<div class="scroll_container" rel="scroller">
+					<table class="table_full_size result_table">
+
+						<thead>
+							<tr>
+								<th>{% trans %}Date{% endtrans %}</th>
+								<th>{% trans %}Type{% endtrans %}</th>
+								<th>{% trans %}Actions{% endtrans %}</th>
+							</tr>
+						</thead>
+
+						<tbody>
+							{% for log in reports | reverse %}
+							<tr>
+								<td>
+									<div class="table_text">{{ log.date }}</div>
+								</td>
+								<td>
+									<div class="table_text">{{ log.type }}</div>
+								</td>
+								<td>
+									<a href="#" onclick="$('#detail_{{log.id}}').slideDown();" class="button small green">{% trans %}View the message{% endtrans %}</a>
+								</td>
+							</tr>
+							<tr>
+								<td id="detail_{{log.id}}" class="detail_line" colspan="3">
+									<div class="message_log">
+										{{ log.msg }}
+									</div>
+									<div class="close_button">
+										<a href="#" onclick="$('#detail_{{log.id}}').slideUp();" class="button small red">{% trans %}Close{% endtrans %}</a>
+									</div>
+									
+								</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<style>
+
+.detail_line {
+	display: none;
+}
+
+.close_button {
+	text-align: right;
+	margin-right: 5%;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.message_log {
+	margin-top: 15px;
+	color: black;
+	font-size: small;
+	text-alignment: justify;
+	line-height: 1.2em;
+}
+
+</style>
+
+{% endblock %}

@@ -1,0 +1,93 @@
+{% extends 'ScubeBaseBundle:Base:core_application.html.twig' %}
+
+
+{% block body %}
+{{ parent() }}
+
+<div class="Application">
+
+<table class="table_content">
+<tr>
+	<td class="sidebar_left" style="width:15%;">
+		{% include 'ScubeAdminUserBundle:AdminUser:menu.html.twig' %}
+	</td>
+	<td class="sidebar_main">
+		<h1>{% trans %}Users Manager{% endtrans %}</h1>
+		
+		<div class="btn_line">
+			<a href="{{ path("AdminUserBundle_user_add")}}" class="button green">+ {% trans %}Create user{% endtrans %}</a>
+		</div>
+		
+		<div class="scroll_container" rel="scroller">
+			<table class="table_full_size result_table">
+				<thead>
+					<tr>
+						<th>{% trans %}Name{% endtrans %}</th>
+						<th>{% trans %}Status{% endtrans %}</th>
+						<th>{% trans %}Group{% endtrans %}</th>
+						<th>{% trans %}Member for{% endtrans %}</th>
+						<th>{% trans %}Last access{% endtrans %}</th>
+						<th>{% trans %}Actions{% endtrans %}</th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					{% for usr in usr_list %}
+					<tr>
+						<td>
+							<div class="table_title">{{usr.getEmail()}}</div>
+							<div class="table_text">{{usr.getFirstname()}} {{usr.getSurname()}}</div>
+						</td>
+						<td>
+							{% if usr.getBlocked %}
+								{% trans %}Blocked{% endtrans %}
+							{% else %}
+								{% trans %}Active{% endtrans %}
+							{% endif %}
+						</td>
+						<td>
+							{{usr.getPermissionsGroup().getName()}}
+						</td>
+						<td>
+							{{ usr.getDateRegister()|ago }}
+						</td>
+						<td>
+							{{ usr.getDateLastAccess()|ago }}
+						</td>
+						<td>
+							<a href="{{ path("AdminUserBundle_user_edit", { 'id': usr.getId()})}}" class="button grey">{% trans %}Edit{% endtrans %}</a>
+							
+							{% if current_usr.getId() != usr.getId() %}
+							<a href="#" onclick="$('#hidden_remove_{{usr.getId()}}').slideDown();" class="button red">{% trans %}Remove{% endtrans %}</a>
+							<div id="hidden_remove_{{usr.getId()}}" class="confirmation_box">
+								<span>{% trans %}Sure{% endtrans %} ?</span> 
+								<a href="{{ path("AdminUserBundle_user_remove", { 'id': usr.getId()})}}" class="button red xsmall">{% trans %}Yes{% endtrans %}</a>
+								<a href="#" onclick="$('#hidden_remove_{{usr.getId()}}').slideUp();" class="button grey xsmall">{% trans %}Cancel{% endtrans %}</a> 
+							</div>
+							{% endif %}
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+				
+			</table>
+		</div>
+	</td>
+</tr>
+</table>
+</div>
+
+<script>
+$(document).ready(function() 
+	{
+		{% if add is defined %}
+			add_notification('success', '{% trans %}User added successfully{% endtrans %}');
+		{% endif %}
+		
+		{% if remove is defined %}
+			add_notification('success', '{% trans %}User removed successfully{% endtrans %}');
+		{% endif %}
+	});
+</script>
+
+{% endblock %}

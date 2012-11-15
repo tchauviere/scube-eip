@@ -1,0 +1,85 @@
+{% extends 'ScubeBaseBundle:Base:core_application.html.twig' %}
+
+{% block body %}
+{{ parent() }}
+
+<div class="Application">
+	<table class="table_content">
+		<tr>
+			<td class="sidebar_left">
+				{% include 'ScubeAdminSystemBundle:Adminsystem:menu.html.twig' %}
+			</td>
+			<td class="sidebar_main">
+				<h1>{% trans %}Maintenance{% endtrans %}</h1>
+
+				<div class="btn_line">
+					{% if maintenance_status %}
+						<a href="{{ path("ScubeAdminSystemBundle_maintenance_switch_activation")}}" class="button red">{% trans %}Switch Off{% endtrans %}</a>
+					{% else %}
+						<a href="{{ path("ScubeAdminSystemBundle_maintenance_switch_activation")}}" class="button green">{% trans %}Switch On{% endtrans %}</a>
+					{% endif %}
+					
+
+					<div class="button green">
+						<p style="text-align:center;">{% trans %}Grant a user{% endtrans %}</p>
+						<select class="autoload" style="width:auto;">
+							<option value="">- {% trans %}Available users{% endtrans %} -</option>
+							{% for user in unauthorized_users %}
+								<option value="{{ path("ScubeAdminSystemBundle_maintenance_grant", { 'id': user.getId()})}}">{{ user.firstname }} {{ user.surname }}</option>
+							{% endfor %}
+						</select>
+					</div>
+				</div>
+
+				<div class="scroll_container" rel="scroller">
+					<table class="table_full_size result_table">
+
+						<thead>
+							<tr>
+								<th>{% trans %}Name{% endtrans %}</th>
+								<th>{% trans %}Group{% endtrans %}</th>
+								<th>{% trans %}Actions{% endtrans %}</th>
+							</tr>
+						</thead>
+
+						<tbody>
+							{% for user in authorized_users %}
+							<tr>
+								<td>
+									<div class="table_title">{{user.getEmail()}}</div>
+									<div class="table_text">{{user.getFirstname()}} {{user.getSurname()}}</div>
+								</td>
+								<td>
+									{{user.getPermissionsGroup().getName()}}
+								</td>
+								<td>
+									<a href="{{ path("ScubeAdminSystemBundle_maintenance_ungrant", { 'id': user.getId()})}}" class="button grey">{% trans %}Withdraw permission{% endtrans %}</a>
+								</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<script>
+	$(".autoload").change(function() {
+		window.location = $(this).val();
+	});
+</script>
+
+<style>
+	.button p {
+		display:inline;
+	}
+	.button select {
+		display:inline;
+		margin-bottom:0;
+		height:20px;
+	}
+</style>
+
+{% endblock %}

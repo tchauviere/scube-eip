@@ -1,0 +1,12 @@
+<form class="top_form_left" action="{{ path("ConnectionsBundle_edit_group", {"id":group.getId()} )}}" method="post" {{ form_enctype(form) }}>
+			
+	{{ form_widget(form.name) }}
+	<div class="breaker"></div>
+	{% trans %}Give access to{% endtrans %}:
+	<div class="breaker"></div>
+	
+	<div>
+		{{ form_widget(form) }}
+	</div>
+	<input type="submit" value="{% trans %}Save{% endtrans %}" />
+</form>

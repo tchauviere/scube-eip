@@ -1,0 +1,3 @@
+WidgetsGoldBookWidgetBundle_homepage:
+    pattern:  /goldbook_widget
+    defaults: { _controller: WidgetsGoldBookWidgetBundle:Default:index }

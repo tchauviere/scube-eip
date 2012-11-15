@@ -1,0 +1,66 @@
+{% extends 'ScubeBaseBundle:Base:core_application.html.twig' %}
+
+
+{% block body %}
+{{ parent() }}
+
+<div class="Application">
+
+<table class="table_content">
+<tr>
+	<td class="sidebar_left">
+		{% include 'ScubeAdminAppsBundle:AdminApps:menu.html.twig' %}
+	</td>
+	<td class="sidebar_main">
+		<h1>{% trans %}Applications Manager{% endtrans %}</h1>
+		
+		<div class="btn_line">
+			<a href="{{ path("AdminAppsBundle_install")}}" class="button green">+ {% trans %}Manual install{% endtrans %}</a>
+		</div>
+		
+		<div class="scroll_container" rel="scroller">
+			<table class="table_full_size result_table">
+				<thead>
+					<tr>
+						<th>{% trans %}Name{% endtrans %}</th>
+						<th>{% trans %}Type{% endtrans %}</th>
+						<th>{% trans %}Category{% endtrans %}</th>
+						<th>{% trans %}Actions{% endtrans %}</th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					{% for app in app_list %}
+					<tr>
+						<td>
+							<div class="table_title">{{app.getName()}}</div>
+							<div class="table_text">{{app.getDescription()}}</div>
+						</td>
+						<td>
+							{{app.getType()}}
+						</td>
+						<td>
+							{{app.getCategory()}}
+						</td>
+						<td>
+							{% if app.getNecessary() == false and app.getActivated() %}
+								<a href="{{ path("AdminAppsBundle_activate", { 'id': app.getId(), 'val':0 })}}" class="button yellow">{% trans %}Desactivate{% endtrans %}</a>
+							{% elseif app.getNecessary() == false and app.getActivated() == false %}
+								<a href="{{ path("AdminAppsBundle_activate", { 'id': app.getId(), 'val':1 })}}" class="button yellow">{% trans %}Activate{% endtrans %}</a>
+							{%endif%}
+							
+							{% if app.getNecessary() == false %}
+								<a href="{{ path("AdminAppsBundle_remove", { 'id': app.getId()})}}" class="button red">{% trans %}Uninstall{% endtrans %}</a>
+							{%endif%}
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</td>
+</tr>
+</div>
+</table>
+
+{% endblock %}

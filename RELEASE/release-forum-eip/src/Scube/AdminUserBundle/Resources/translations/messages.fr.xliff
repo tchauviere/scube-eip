@@ -1,0 +1,207 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="1">
+                <source>Users Manager</source>
+                <target>Gestionnaire d'utilisateurs</target>
+            </trans-unit>
+			<trans-unit id="2">
+                <source>Create user</source>
+                <target>Ajouter un utilisateur</target>
+            </trans-unit>
+			<trans-unit id="3">
+                <source>Name</source>
+                <target>Nom</target>
+            </trans-unit>
+			<trans-unit id="4">
+                <source>Status</source>
+                <target>Statut</target>
+            </trans-unit>
+			<trans-unit id="5">
+                <source>Group</source>
+                <target>Groupe</target>
+            </trans-unit>
+			<trans-unit id="6">
+                <source>Member for</source>
+                <target>Membre depuis</target>
+            </trans-unit>
+			<trans-unit id="7">
+                <source>Last access</source>
+                <target>Dernier accès</target>
+            </trans-unit>
+			<trans-unit id="8">
+                <source>Actions</source>
+                <target>Actions</target>
+            </trans-unit>
+			<trans-unit id="9">
+                <source>Blocked</source>
+                <target>Bloqué</target>
+            </trans-unit>
+			<trans-unit id="10">
+                <source>Active</source>
+                <target>Actif</target>
+            </trans-unit>
+			<trans-unit id="11">
+                <source>Edit</source>
+                <target>Modifier</target>
+            </trans-unit>
+			<trans-unit id="12">
+                <source>Remove</source>
+                <target>Supprimer</target>
+            </trans-unit>
+			<trans-unit id="13">
+                <source>Sure</source>
+                <target>Valider</target>
+            </trans-unit>
+			<trans-unit id="14">
+                <source>Yes</source>
+                <target>Oui</target>
+            </trans-unit>
+			<trans-unit id="15">
+                <source>Cancel</source>
+                <target>Annuler</target>
+            </trans-unit>
+			<trans-unit id="16">
+                <source>User added successfully</source>
+                <target>Utilisateur ajouté avec succès</target>
+            </trans-unit>
+			<trans-unit id="17">
+                <source>User removed successfully</source>
+                <target>Utilisateur supprimé avec succès</target>
+            </trans-unit>
+			<trans-unit id="18">
+                <source>Users</source>
+                <target>Utilisateurs</target>
+            </trans-unit>
+			<trans-unit id="19">
+                <source>Groups</source>
+                <target>Groupes</target>
+            </trans-unit>
+			<trans-unit id="20">
+                <source>Back to Users</source>
+                <target>Retour à la liste</target>
+            </trans-unit>
+			<trans-unit id="21">
+                <source>Firstname</source>
+                <target>Prénom</target>
+            </trans-unit>
+			<trans-unit id="22">
+                <source>Surname</source>
+                <target>Nom</target>
+            </trans-unit>
+			<trans-unit id="23">
+                <source>Email</source>
+                <target>Courriel</target>
+            </trans-unit>
+			<trans-unit id="24">
+                <source>Password</source>
+                <target>Mot de passe</target>
+            </trans-unit>
+			<trans-unit id="25">
+                <source>Birthday</source>
+                <target>Date de naissance</target>
+            </trans-unit>
+			<trans-unit id="26">
+                <source>Gender</source>
+                <target>Civilité</target>
+            </trans-unit>
+			<trans-unit id="27">
+                <source>Blocking</source>
+                <target>Blocage</target>
+            </trans-unit>
+			<trans-unit id="28">
+                <source>Language</source>
+                <target>Langage</target>
+            </trans-unit>
+			<trans-unit id="29">
+                <source>You can't block youself, the option has been disabled</source>
+                <target>Vous ne pouvez activer le blocage sur votre propre compte, l'option a été désactivée</target>
+            </trans-unit>
+			<trans-unit id="30">
+                <source>The user has been successfully updated</source>
+                <target>L'utilisateur a été modifié avec succès</target>
+            </trans-unit>
+			<trans-unit id="31">
+                <source>Save</source>
+                <target>Sauvegarder</target>
+            </trans-unit>
+			<trans-unit id="32">
+                <source>Edit user</source>
+                <target>Modification de l'utilisateur</target>
+            </trans-unit>
+			<trans-unit id="33">
+                <source>Groups Manager</source>
+                <target>Gestionnaire de groupes</target>
+            </trans-unit>
+			<trans-unit id="34">
+                <source>Create group</source>
+                <target>Ajouter un groupe</target>
+            </trans-unit>
+			<trans-unit id="35">
+                <source>Locked</source>
+                <target>Verrouillé</target>
+            </trans-unit>
+			<trans-unit id="36">
+                <source>Removable</source>
+                <target>Suppressible</target>
+            </trans-unit>
+			<trans-unit id="37">
+                <source>Group added successfully</source>
+                <target>Groupe ajouté avec succès</target>
+            </trans-unit>
+			<trans-unit id="38">
+                <source>Group removed successfully</source>
+                <target>Groupe supprimé avec succès</target>
+            </trans-unit>
+			<trans-unit id="39">
+                <source>Back to Groups</source>
+                <target>Retour à la liste</target>
+            </trans-unit>
+			<trans-unit id="40">
+                <source>Edit group</source>
+                <target>Modification du groupe</target>
+            </trans-unit>
+			<trans-unit id="41">
+                <source>Associated applications</source>
+                <target>Applications associées</target>
+            </trans-unit>
+			<trans-unit id="42">
+                <source>Associated administrator applications</source>
+                <target>Applications administrateur associées</target>
+            </trans-unit>
+			<trans-unit id="43">
+                <source>No</source>
+                <target>Non</target>
+            </trans-unit>
+			<trans-unit id="44">
+                <source>Male</source>
+                <target>Homme</target>
+            </trans-unit>
+			<trans-unit id="45">
+                <source>Female</source>
+                <target>Femme</target>
+            </trans-unit>
+			<trans-unit id="46">
+                <source>French</source>
+                <target>Français</target>
+            </trans-unit>
+			<trans-unit id="47">
+                <source>English</source>
+                <target>Anglais</target>
+            </trans-unit>
+			<trans-unit id="48">
+                <source>Email already used by another user</source>
+                <target>Courriel déjà utilisé par un autre utilisateur</target>
+            </trans-unit>
+			<trans-unit id="49">
+                <source>Please enter a valid name (at least 1 character)</source>
+                <target>Veuillez entrer un nom de groupe valide (au moins 1 caractère)</target>
+            </trans-unit>
+			<trans-unit id="50">
+                <source>Group name already used</source>
+                <target>Nom de groupe déjà utilisé</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

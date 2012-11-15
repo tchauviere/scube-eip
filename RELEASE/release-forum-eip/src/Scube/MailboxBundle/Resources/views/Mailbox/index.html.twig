@@ -1,0 +1,236 @@
+{% extends 'ScubeBaseBundle:Base:core_application.html.twig' %}
+
+{% block more_javascripts %}
+		
+	{% include 'ScubeMailboxBundle:Mailbox:mailbox_style.html.twig' %}
+
+{% endblock %}
+
+{% block body %}
+{{ parent() }}
+
+<div class="Application">
+
+<div id="participants">
+	<p class="participants-title">{% trans %}Select participants{% endtrans %}</p>
+
+	<div class="participants-list">
+		{% for usr in all_users %}
+			<div class="participants-line">
+				<input id="participant-{{usr.id}}" type="checkbox" value="{{usr.id}}" /> <label for="participant-{{usr.id}}">{{usr.firstname}} {{usr.surname}}</label>
+			</div>
+		{% endfor %}
+	</div>
+	<div class="participants-buttons">
+		<a href="#" class="button small red" onclick="hide_participants();">{% trans %}Cancel{% endtrans %}</a>
+		<a href="#" class="button small" onclick="write_mail();">{% trans %}Go to conversation{% endtrans %}</a>
+	</div>
+</div>
+
+<table class="table_content">
+<tr>
+	<td class="sidebar_left">
+		<div id="search_input" style="text-align:center;padding-top:5px;">
+			
+			<input type="text" name="search_connection" id="search_connection" /> 
+		
+			{% image '@ScubeConnectionsBundle/Resources/public/images/search.png' %}
+				<img id="loaded" style="height:25px;" src="{{ asset_url }}" alt="Search" />
+			{% endimage %}
+			
+			{% image '@ScubeConnectionsBundle/Resources/public/images/ajax-loader.gif' %}
+				<img id="loading" style="height:25px;" src="{{ asset_url }}" alt="Search" />
+			{% endimage %}
+		</div>		
+		
+		<div class="scroll_container" rel="scroller">
+			<ul id="search_list">
+				
+			</ul>
+		</div>
+	</td>
+	<td class="sidebar_main">
+		
+		{%if conversation%}
+
+			<h1>{% trans %}Mail{% endtrans %}</h1>
+			<div class="participants">
+				{% trans %}Participants are{% endtrans %}:
+				{% for participant in conversation.getRecipients() %}
+					{{participant.firstname}} {{participant.surname}}{% if not loop.last %}, {% endif %}
+				{% endfor %}
+			</div>
+
+			<div id="mail_list" class="scroll_container" rel="scroller">
+				
+			</div>
+			
+			<form class="write-message-form" action="{{ path("ScubeMailboxBundle_homepage_conversation", {'users_selected':users_selected} )}}" method="post" {{ form_enctype(form) }}>
+			
+				{{ form_widget(form._token) }}
+				{{ form_widget(form.message) }}
+			
+				<input type="submit" value="{% trans %}Send{% endtrans %}" />
+			</form>
+
+		{%else%}
+			<h1>{% trans %}Mailbox{% endtrans %}</h1>
+
+			<div id="mail_list" class="scroll_container" rel="scroller">
+				{% for conv in conversations_list %}
+					{% if conv.mails|length %}
+						<div class="conversation-line">
+
+							{% set recipients_id = [] %}
+							{% for recipient in conv.recipients %}
+								{% set recipients_id = recipients_id|merge([recipient.id]) %}
+							{% endfor %}
+
+							<a {% if conv.getNewMails() %}class="not-read"{% endif %} href="{{ path("ScubeMailboxBundle_homepage_conversation", {"users_selected":recipients_id|join('-')}) }}">
+
+								{% set last_mail = conv.mails|reverse|slice(0, 1).0 %}
+
+								<div class="conversation-picture">
+									{% if  last_mail.author.getProfile().getPicture() %}
+										<img src="{{last_mail.author.getProfile().getPicture()}}"/>
+									{% else %}
+										{% image '@ScubeBaseBundle/Resources/public/images/default_picture.png'	%}
+											<img src="{{ asset_url }}" />
+										{% endimage %}
+									{% endif %}
+								</div>
+								<div class="conversation-block-middle">
+									<div class="conversation-title">
+										{% for recipient in conv.recipients %}
+											{{recipient.firstname}} {{recipient.surname}}{% if not loop.last %}, {% endif %}
+										{% endfor %}
+									</div>
+									<div class="conversation-message">
+										{{ last_mail.message|striptags|slice(0, 100) }}
+									</div>
+								</div>
+								<div class="conversation-date">
+									{{ conv.getDateLastMail()|date('d/m/Y') }}
+								</div>
+							</a>
+						<div class="breaker"></div>
+						</div>
+					{% endif %}
+				{% endfor %}
+			</div>
+		{%endif%}
+		
+	</td>
+</tr>
+</div>
+
+<script>
+
+var group_selected = false;
+var offline_extended = false;
+
+	$(document).ready(function() 
+	{
+		load_users_list();
+		load_mail_list();
+
+		$("#search_connection").keyup(function() 
+		{
+			load_users_list();
+		});
+
+		var user_list_timer=setInterval("load_users_list()", 30000);
+		var mail_list_timer=setInterval("load_mail_list()", 20000);
+		
+	});
+	
+function	load_users_list()
+{
+	users_conversation = "{%if conversation%}{{users_selected}}{%else%}0{%endif%}";
+
+	var url = "{{ path("ScubeMailboxBundle_ajax_users_list_noparam") }}/" + users_conversation;
+
+	if ($("#search_connection").val())
+		url = url + "/" + $("#search_connection").val();
+	else
+		url = url + "/0";
+	
+	if (offline_extended)
+		url = url + "/1";
+	else
+		url = url + "/0";
+
+	$.ajax({
+			  url: url,
+			  beforeSend: function() {
+			  	$("#loaded").hide();
+				$("#loading").show();
+			  },
+			  success: function(data) {	
+			  	$("#search_list").html(data);
+				$("#loaded").show();
+				$("#loading").hide();
+			  }
+			});
+}
+
+function	load_mail_list()
+{
+	{% if conversation %}
+		var url = "{{ path("ScubeMailboxBundle_ajax_mail_list_noparam") }}/{{users_selected}}";
+		$.ajax({
+			  url: url,
+			  success: function(data) {	
+			  	$("#mail_list").html(data);
+			  	$("#mail_list").prop({ scrollTop: $("#mail_list").prop("scrollHeight") });
+			  }
+			});
+	{% endif %}
+}
+
+function	show_offline()
+{
+	offline_extended = true;
+	$('.user-offline').fadeIn();
+	$('#link-hide-offline').show();
+	$('#link-show-offline').hide();
+	
+}
+
+function	hide_offline()
+{
+	offline_extended = false;
+	$('.user-offline').fadeOut();
+	$('#link-hide-offline').hide();
+	$('#link-show-offline').show();
+}
+
+function	show_participants()
+{
+	$("#participants").fadeIn();
+}
+
+function	hide_participants()
+{
+	$("#participants").fadeOut();
+}
+
+function	write_mail()
+{
+	if (!$("#participants input:checkbox:checked").length) {
+		alert("{% trans %}Please select at least one participant{% endtrans %}");
+		return false;
+	}
+		
+	url = "{{ path("ScubeMailboxBundle_homepage") }}";
+	args = new Array();
+	$("#participants input:checkbox:checked").each(function() {
+		args.push($(this).val());
+	});
+	url = url + "/" + args.join("-");
+	window.location = url;
+}
+
+</script>
+
+{% endblock %}

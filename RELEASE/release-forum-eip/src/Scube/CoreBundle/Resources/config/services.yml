@@ -1,0 +1,7 @@
+parameters:
+#    scube_core.example.class: Scube\CoreBundle\Example
+
+services:
+#    scube_core.example:
+#        class: %scube_core.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
