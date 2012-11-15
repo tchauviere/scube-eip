@@ -69,13 +69,14 @@ class CoreController extends Controller
 	public function	checkAccess()
 	{
 		$current_route = $this->container->get('request')->get('_route');
+		if ($current_route == "_internal")
+			return;
 		
 		list($route_for_query) = explode("_", $current_route);
 		
 		$em = $this->getDoctrine()->getEntityManager();
 		$query = $em->createQuery("SELECT a FROM ScubeBaseBundle:Application a WHERE a.link LIKE :link")
 					->setParameter('link', $route_for_query.'%');
-					
 		$current_app = $query->getSingleResult();
 		
 		$user_apps = array();
