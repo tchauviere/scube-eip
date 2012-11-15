@@ -2,17 +2,19 @@
 
 namespace Scube\CalendarBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Scube\CoreBundle\Controller\CoreController;
 
 use Scube\BaseBundle\Entity\User;
 use Scube\BaseBundle\Entity\CalendarEvent;
 use Scube\BaseBundle\Entity\CalendarEventToAccept;
 
-class CalendarController extends Controller
+class CalendarController extends CoreController
 {
     
     public function indexAction()
     {
+    	$this->preprocessApplication();
+
 		$session = $this->getRequest()->getSession();
 		
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
@@ -23,6 +25,8 @@ class CalendarController extends Controller
 	
 	public function acceptEventAction($id)
 	{
+		$this->preprocessApplication();
+
 		$session = $this->getRequest()->getSession();
 		
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
@@ -52,6 +56,8 @@ class CalendarController extends Controller
 	
 	public function refuseeventAction($id)
 	{
+		$this->preprocessApplication();
+
 		$em = $this->getDoctrine()->getEntityManager();
 		$event = $em->getRepository('ScubeBaseBundle:CalendarEventToAccept')->find($id);
 		
@@ -70,7 +76,9 @@ class CalendarController extends Controller
 	
 	public function displayeventtoacceptAction()
 	{
-	$session = $this->getRequest()->getSession();
+		$this->preprocessApplication();
+
+		$session = $this->getRequest()->getSession();
 		
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
 		$user = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
@@ -80,6 +88,8 @@ class CalendarController extends Controller
 	
 	public function editeventAction()
 	{
+		$this->preprocessApplication();
+
 		$array = $_POST['edit_event'];		
 		$id = $array['0'];
 		$title = $array['1'];
@@ -115,6 +125,7 @@ class CalendarController extends Controller
 	
 	public function deleteeventAction()
 	{
+		$this->preprocessApplication();
 
 		$session = $this->getRequest()->getSession();
 		
@@ -142,7 +153,8 @@ class CalendarController extends Controller
 
 	public function addeventAction()
 	{
-
+		$this->preprocessApplication();
+		
 		$session = $this->getRequest()->getSession();
 		
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');

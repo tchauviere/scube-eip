@@ -3,8 +3,28 @@
     <file source-language="en" datatype="plaintext" original="file.ext">
         <body>
             <trans-unit id="1">
-                <source>Symfony2 is great</source>
-                <target>J'aime Symfony2</target>
+                <source>Title</source>
+                <target>Titre</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>Start Time</source>
+                <target>Heure de début</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>End Time</source>
+                <target>Heure de fin</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>Description</source>
+                <target>Description</target>
+            </trans-unit>
+            <trans-unit id="5">
+                <source>New Calendar Event</source>
+                <target>Nouvel évenement</target>
+            </trans-unit>
+            <trans-unit id="6">
+                <source>Cancel</source>
+                <target>Annuler</target>
             </trans-unit>
         </body>
     </file>
