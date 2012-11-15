@@ -29,11 +29,6 @@ class PermissionsGroup
     protected $locked;
 	
 	/**
-     * @ORM\Column(type="boolean")
-     */
-    protected $mtnToken;
-	
-	/**
      * @ORM\ManyToMany(targetEntity="Scube\BaseBundle\Entity\Application")
 	 * @ORM\JoinTable(name="group_applications")
      */ 
@@ -158,25 +153,5 @@ class PermissionsGroup
     public function getLocked()
     {
         return $this->locked;
-    }
-
-    /**
-     * Set mtnToken
-     *
-     * @param boolean $mtnToken
-     */
-    public function setMtnToken($mtnToken)
-    {
-        $this->mtnToken = $mtnToken;
-    }
-
-    /**
-     * Get mtnToken
-     *
-     * @return boolean 
-     */
-    public function getMtnToken()
-    {
-        return $this->mtnToken;
     }
 }
