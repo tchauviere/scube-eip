@@ -319,7 +319,6 @@ class DefaultController extends Controller
 		$default_grp = new PermissionsGroup();
 		$default_grp->setName("administrator");
 		$default_grp->setLocked(true);
-		$default_grp->setMtnToken(true);
 		
 		$default_grp->addApplication($default_app5);
 		$default_grp->addApplication($default_app6);
@@ -345,7 +344,6 @@ class DefaultController extends Controller
 		$default_grp2 = new PermissionsGroup();
 		$default_grp2->setName("default");
 		$default_grp2->setLocked(true);
-		$default_grp2->setMtnToken(false);
 		
 		$default_grp2->addApplication($default_app5);
 		$default_grp2->addApplication($default_app6);
