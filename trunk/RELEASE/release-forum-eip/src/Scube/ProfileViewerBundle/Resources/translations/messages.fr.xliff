@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="1">
+                <source>Newsfeed</source>
+                <target>Fil d'actualités</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>Informations</source>
+                <target>Informations</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>Pictures</source>
+                <target>Photos</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>The news has been successfully posted</source>
+                <target>L'actualité a été postée avec succès</target>
+            </trans-unit>
+            <trans-unit id="5">
+                <source>Post it</source>
+                <target>Poster</target>
+            </trans-unit>
+            <trans-unit id="6">
+                <source>You need permissions</source>
+                <target>Vous n'avez pas les permissions nécéssaires</target>
+            </trans-unit>
+            <trans-unit id="7">
+                <source>Basic information</source>
+                <target>Informations de base</target>
+            </trans-unit>
+            <trans-unit id="8">
+                <source>Marital status</source>
+                <target>Etat matrimonial</target>
+            </trans-unit>
+            <trans-unit id="9">
+                <source>Contact information</source>
+                <target>Informations de contact</target>
+            </trans-unit>
+            <trans-unit id="10">
+                <source>Phone</source>
+                <target>Téléphone</target>
+            </trans-unit>
+            <trans-unit id="11">
+                <source>Web</source>
+                <target>Site internet</target>
+            </trans-unit>
+            <trans-unit id="12">
+                <source>Home</source>
+                <target>Maison</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

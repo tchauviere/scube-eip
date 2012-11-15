@@ -1,0 +1,21 @@
+{% extends 'ScubeProfileViewerBundle:ProfileViewer:structure.html.twig' %}
+
+
+{% block mainframe %}
+	{% if auth %}
+		
+	{% else %}
+		<p class="error">{% trans %}You need permissions{% endtrans %}</p>
+	{% endif %}
+
+	
+<style>
+
+
+	
+</style>
+
+{% endblock %}
+
+
+

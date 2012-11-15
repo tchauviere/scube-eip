@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>{% block title %}Scube{% endblock %}</title>
+
+{% javascripts
+    '@ScubeBaseBundle/Resources/public/js/jquery.1.7.1.js' 
+	'@ScubeBaseBundle/Resources/public/js/jquery.ui.js'
+	'@ScubeBaseBundle/Resources/public/js/jquery.easing.1.3.js' 
+	'@ScubeBaseBundle/Resources/public/js/jquery.mousewheel.min.js' 
+	'@ScubeBaseBundle/Resources/public/js/jquery.scrollbar.js' 
+	'@ScubeBaseBundle/Resources/public/js/jquery.submit.js'
+	'@ScubeBaseBundle/Resources/public/js/jquery.checkbox.js' 
+	'@ScubeBaseBundle/Resources/public/js/jquery.fittext.js'
+%}
+<script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+{% block more_javascripts %}{% endblock %}
+
+{% stylesheets 
+	'@ScubeBaseBundle/Resources/public/css/core.application.loader.css' 
+	'@ScubeBaseBundle/Resources/public/css/core.base.css'
+	'@ScubeBaseBundle/Resources/public/css/core.form.css'
+	'@ScubeBaseBundle/Resources/public/css/core.grid.css'
+	'@ScubeBaseBundle/Resources/public/css/core.header.css'
+	'@ScubeBaseBundle/Resources/public/css/core.homebox.css'
+	'@ScubeBaseBundle/Resources/public/css/core.scrollbar.css'
+	'@ScubeBaseBundle/Resources/public/css/core.widget.css'
+%}
+<link rel="stylesheet" href="{{ asset_url }}" />
+{% endstylesheets %}
+
+<link rel="stylesheet" href="{{ asset('themes/current/general.css') }}" />
+
+
+<!--[if lt IE 7]>
+ <style type="text/css">
+ .dock img { behavior: url({{ asset('bundles/base/iepngfix.htc') }}) }
+ </style>
+<![endif]-->
+
+</head>
+<body>
+{% block body %}
+<div id="header">
+	<a href="{{ path('_homepage') }}">
+		{% image '@ScubeBaseBundle/Resources/public/images/logo_scube_entete.png' %}
+		<img src="{{ asset_url }}" alt="Logo"/>
+		{% endimage %}
+	</a>
+</div>
+
+{% if user is defined %}
+
+<div id="home_corner">
+	{% image '@ScubeBaseBundle/Resources/public/images/tools-corner.png' %}
+	<img src="{{ asset_url }}" alt="Home"/>
+	{% endimage %}
+</div>
+
+<div id="lock_header">
+	<input type="checkbox" name="grid_lock" checked="checked" /> <label>{% trans %}Lock{% endtrans %}</label>
+</div>
+
+{%if user.getPermissionsGroup().getAdminApplications()|length != 0%}
+<div id="admin_header">
+	<input type="checkbox" name="grid_admin" /> <label>{% trans %}Admin{% endtrans %}</label>
+</div>
+{%endif%}
+
+{% endif %}
+
+
+{% endblock %}
+
+
+</body>
+</html>

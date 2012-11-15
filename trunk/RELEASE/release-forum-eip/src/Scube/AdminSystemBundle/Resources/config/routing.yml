@@ -1,0 +1,34 @@
+ScubeAdminSystemBundle_homepage:
+    pattern:  /system
+    defaults: { _controller: ScubeAdminSystemBundle:AdminSystem:index }
+
+ScubeAdminSystemBundle_database:
+    pattern:  /system/database
+    defaults: { _controller: ScubeAdminSystemBundle:AdminSystem:database }
+
+ScubeAdminSystemBundle_maintenance:
+    pattern:  /system/maintenance
+    defaults: { _controller: ScubeAdminSystemBundle:AdminSystem:maintenance }
+ScubeAdminSystemBundle_maintenance_grant:
+    pattern:  /system/maintenance/grant/{id}
+    defaults: { _controller: ScubeAdminSystemBundle:AdminSystem:maintenanceGrant }
+ScubeAdminSystemBundle_maintenance_ungrant:
+    pattern:  /system/maintenance/ungrant/{id}
+    defaults: { _controller: ScubeAdminSystemBundle:AdminSystem:maintenanceUngrant }
+ScubeAdminSystemBundle_maintenance_switch_activation:
+    pattern:  /system/maintenance/switch
+    defaults: { _controller: ScubeAdminSystemBundle:AdminSystem:maintenanceSwitchActivation }
+
+ScubeAdminSystemBundle_reports:
+    pattern:  /system/reports
+    defaults: { _controller: ScubeAdminSystemBundle:AdminSystem:reports }
+ScubeAdminSystemBundle_reports_clear:
+    pattern:  /system/reports/clear
+    defaults: { _controller: ScubeAdminSystemBundle:AdminSystem:reportsClear }
+
+ScubeAdminSystemBundle_cache:
+    pattern:  /system/cache
+    defaults: { _controller: ScubeAdminSystemBundle:AdminSystem:cache }
+ScubeAdminSystemBundle_cache_clear:
+    pattern:  /system/cache/clear
+    defaults: { _controller: ScubeAdminSystemBundle:AdminSystem:cacheClear }

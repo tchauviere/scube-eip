@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="1">
+                <source>My connections</source>
+                <target>Mes connexions</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>Create group</source>
+                <target>Créer le groupe</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>Give access to</source>
+                <target>Donner l'accès à</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>The group has been added successfully</source>
+                <target>Le groupe a été créé avec succès</target>
+            </trans-unit>
+            <trans-unit id="5">
+                <source>Go to profile</source>
+                <target>Voir le profil</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

@@ -1,0 +1,82 @@
+{% extends 'ScubeBaseBundle:Base:core_application.html.twig' %}
+
+
+{% block body %}
+{{ parent() }}
+
+<div class="Application">
+
+<table class="table_content">
+<tr>
+	<td class="sidebar_left" style="width:15%;">
+		{% include 'ScubeAdminUserBundle:AdminUser:menu.html.twig' %}
+	</td>
+	<td class="sidebar_main">
+		<h1>{% trans %}Groups Manager{% endtrans %}</h1>
+		
+		<div class="btn_line">
+			<a href="{{ path("AdminUserBundle_group_add")}}" class="button green">+ {% trans %}Create group{% endtrans %}</a>
+		</div>
+		
+		<div class="scroll_container" rel="scroller">
+			<table class="table_full_size result_table">
+				
+				<thead>
+					<tr>
+						<th>{% trans %}Name{% endtrans %}</th>
+						<th>{% trans %}Status{% endtrans %}</th>
+						<th>{% trans %}Actions{% endtrans %}</th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					{% for grp in grp_list %}
+					<tr>
+						<td>
+							<div class="table_title">{{grp.getName()}}</div>
+						</td>
+						<td>
+							{% if grp.getLocked() %}
+								{% trans %}Locked{% endtrans %}
+							{% else %}
+								{% trans %}Removable{% endtrans %}
+							{% endif %}
+						</td>
+						<td>
+							<a href="{{ path("AdminUserBundle_group_edit", { 'id': grp.getId()})}}" class="button grey small">{% trans %}Edit{% endtrans %}</a>
+							{% if grp.getLocked() == false %}
+							
+								<a href="#" onclick="$('#hidden_remove_{{grp.getId()}}').slideDown();" class="button red small">{% trans %}Remove{% endtrans %}</a>
+								
+								<div id="hidden_remove_{{grp.getId()}}" class="confirmation_box">
+									<span>{% trans %}Sure{% endtrans %} ?</span> 
+									<a href="{{ path("AdminUserBundle_group_remove", { 'id': grp.getId()})}}" class="button red xsmall">{% trans %}Yes{% endtrans %}</a>
+									<a href="#" onclick="$('#hidden_remove_{{grp.getId()}}').slideUp();" class="button grey xsmall">{% trans %}Cancel{% endtrans %}</a> 
+								</div>
+							{% endif %}
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</td>
+</tr>
+</table>
+</div>
+
+<script>
+
+$(document).ready(function() 
+	{
+		{% if add is defined %}
+			add_notification('success', '{% trans %}Group added successfully{% endtrans %}');
+		{% endif %}
+		
+		{% if remove is defined %}
+			add_notification('success', '{% trans %}Group removed successfully{% endtrans %}');
+		{% endif %}
+	});
+</script>
+
+{% endblock %}

@@ -1,0 +1,6 @@
+ScubeAdminHelpBundle_homepage:
+    pattern:  /admin_help
+    defaults: { _controller: ScubeAdminHelpBundle:AdminHelp:index }
+ScubeAdminHelpBundle_getHelp:
+    pattern:  /admin_help_getHelp/help/{id}
+    defaults: { _controller: ScubeAdminHelpBundle:AdminHelp:getHelp }

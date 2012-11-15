@@ -1,0 +1,7 @@
+parameters:
+#    scube_medias.example.class: Scube\MediasBundle\Example
+
+services:
+#    scube_medias.example:
+#        class: %scube_medias.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

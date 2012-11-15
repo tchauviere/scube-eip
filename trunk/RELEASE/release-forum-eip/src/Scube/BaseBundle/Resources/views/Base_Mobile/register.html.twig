@@ -1,0 +1,43 @@
+{% extends 'ScubeBaseBundle:Base_Mobile:base.html.twig' %}
+
+{% block more_javascripts %}
+<script type="text/javascript">
+	$(document).bind('mobileinit',function(){
+				$.extend($.mobile, {
+							pageLoadErrorMessageTheme: 'd',
+							pageLoadErrorMessage: 'All Fields Required !'
+    })
+})
+</script>
+{% endblock %}
+
+{% block title %}Scube{% endblock %}
+
+{% block body %}
+{{ parent() }}
+{% block header_btns %}{% endblock %}
+<div data-role="content" data-theme="b">
+
+<h1>Register</h1>
+
+{% if allow_registration %}
+	{% if success %}
+		<p class="form_success">Your account has been successfully created. <a href="{{ path('_homepage') }}">You can now login here !</a></p>
+	{% else %}
+		{% if error_email is defined and error_email %}
+			<p class="form_error">Sorry, this email is already used.</a></p>
+		{% endif %}
+		<form action="{{ path('_register') }}" method="post" {{ form_enctype(form) }}>
+	
+			{{ form_widget(form) }}
+		
+			<input type="submit" value="Register now !" />
+		</form>
+	{% endif %}
+{% else %}
+	<p class="form_error">Registration not activated</p>
+{% endif %}
+
+</div>
+
+{% endblock %}

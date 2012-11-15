@@ -1,0 +1,62 @@
+{% extends 'ScubeBaseBundle:Base:core_application.html.twig' %}
+
+
+{% block body %}
+{{ parent() }}
+
+<h1>GoldBook</h1>
+<form action="{{ path('ScubeGoldBookBundle_homepage') }}" method="post" {{ form_enctype(form) }}>
+     {{ form_errors(form) }}
+
+        
+        
+        <div class="breaker"></div>
+        {{ form_label(form.comm, 'Je trouve que le projet Scube ...') }} 
+        {{ form_widget(form.comm) }}<br>
+        
+        {{ form_label(form.idea, 'Mes idées concernant de nouveaux modules à ajouter sont...') }}
+        {{ form_widget(form.idea) }}<br>
+
+        <div class="inline-input">
+        	{{ form_widget(form.inform) }}
+        	{{ form_label(form.inform, 'Oui, je désire être informé des nouveautés à propos de Scube.') }}
+        </div>
+
+        {{ form_rest(form) }}
+
+        <input formnovalidate="true" type="submit" value="Soumettre" />
+</form>
+
+<style>
+
+input label {
+	display:inline;
+}
+
+.inline-input {
+	width:50%;
+	margin:0 auto;
+	margin-bottom:10px;
+}
+.inline-input label, .inline-input input {
+	display:inline;
+	width:auto;
+	margin:0;
+	font-weight:normal;
+	vertical-align:middle;
+}
+
+textarea {
+	width:50%;
+	height:100px;
+	margin: 0 auto;
+	display:block
+}
+
+h1 {
+	text-align:center;
+}
+
+</style>
+
+{% endblock %}

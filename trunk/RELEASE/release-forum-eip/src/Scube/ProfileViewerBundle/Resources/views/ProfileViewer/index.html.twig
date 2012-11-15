@@ -1,0 +1,147 @@
+{% extends 'ScubeBaseBundle:Base:core_application.html.twig' %}
+
+
+{% block body %}
+{{ parent() }}
+
+<div class="Application">
+
+<table class="table_content">
+<tr>
+	<td class="sidebar_left" style="width:20%;">
+		{% include 'ScubeProfileViewerBundle:ProfileViewer:menu.html.twig' %}
+	</td>
+	<td class="sidebar_main">
+		<h1>
+			{% image '@ScubeProfileViewerBundle/Resources/public/images/online.png' %}
+			<img width="16" src="{{ asset_url }}" alt="Online"/></a>
+			{% endimage %}
+			{{user_to_display.firstname}} {{user_to_display.surname}}
+		</h1>
+		<div id="profileviewer_mainframe"></div>
+	</td>
+</tr>
+</table>
+
+
+
+</div>
+
+<script>
+	function change_frame(url)
+	{
+	
+		$("#profileviewer_mainframe").fadeOut();
+		$.ajax({
+			  url: url,
+			  success: function(data) {	
+			  	$("#profileviewer_mainframe").html(data);
+				$("#profileviewer_mainframe").fadeIn();
+			  }
+			});
+	}
+	
+	$(document).ready(function() 
+	{
+		change_frame('{{ path("ScubeProfileViewerBundle_newsfeed", {'id_user':user_to_display.getId()} )}}');
+	});
+</script>
+
+<style>
+
+.Application {min-height:200px;}
+
+.header_profile_viewer {
+	margin:0px;
+	background-color:#4878AC;
+	padding:5px;
+}
+
+.header_profile_viewer h1 {
+	color:white;
+	margin:5px;
+	text-align:left;
+	text-shadow:none;
+	font-size:24px;
+}
+
+.profile_picture {
+	margin:0px;
+	text-align:center;
+}
+
+.top_form {
+	text-align:center;
+	margin-bottom:20px;
+	vertical-align:middle;
+}
+.top_form input[type="submit"] {
+	display:inline;
+	margin:0;
+	width:30%;
+	border-radius:5px;
+	vertical-align:middle;
+}
+.top_form textarea {
+	display:inline;
+	margin:0;
+	width:65%;
+	border-radius:5px;
+	vertical-align:middle;
+}
+
+.news_post {
+	width:80%;
+	margin:10px auto;
+	background-color:white;
+	border-radius:5px;
+	box-shadow: 0 0 5px #555;
+}
+.post_author {
+	padding-left:10px;
+}
+.post_content {
+	padding-left:10px;
+}
+.post_date {
+	margin-top:20px;
+	margin-bottom:5px;
+	margin-right:10px;
+	text-align:right;
+	color:#999;
+	font-size:0.8em;
+}
+
+.infos_frame {
+	width:80%;
+	margin:10px auto;
+	padding:10px;
+	background-color:white;
+	border-radius:5px;
+	box-shadow: 0 0 5px #555;
+}
+.infos_frame .infos_title {
+	margin:10px;
+	text-align:left;
+	font-size:18px;
+	font-weight:bold;
+	text-decoration:none;
+	color:#4878AC;
+}
+.infos_frame .infos_list {
+	list-style-type:none;
+}
+.infos_frame .infos_list li {
+	color:#999;
+	font-weight:bold;
+	font-size:14px;
+}
+.infos_frame .infos_list li .infos_value {
+	color:black;
+	font-weight:bold;
+	font-size:14px;
+}
+	
+</style>
+
+{% endblock %}

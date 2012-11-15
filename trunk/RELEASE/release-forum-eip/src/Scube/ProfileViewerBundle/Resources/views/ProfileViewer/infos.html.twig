@@ -1,0 +1,96 @@
+{% extends 'ScubeProfileViewerBundle:ProfileViewer:structure.html.twig' %}
+
+
+{% block mainframe %}
+	{% if auth %}
+		<div class="infos_frame">
+			<p class="infos_title">{% trans %}Basic information{% endtrans %}</p>
+			<ul class="infos_list">
+				{% if user_to_display.getGender() %}
+					<li>{% trans %}Gender{% endtrans %} : <span class="infos_value">{{user_to_display.getGender()}}</span></li>
+				{% endif %}
+				
+				{% if user_to_display.getBirthday() %}
+					<li>{% trans %}Birthday{% endtrans %} : <span class="infos_value">{{user_to_display.getBirthday()|date("m-d-Y")}}</span></li>
+				{% endif %}
+				
+				{% if user_to_display.getProfile().getStatus() %}
+					<li>{% trans %}Marital status{% endtrans %} : <span class="infos_value">{{user_to_display.getProfile().getStatus() }}</span></li>
+				{% endif %}
+				
+				{% if user_to_display.getProfile().getLanguage() %}
+					<li>{% trans %}Language{% endtrans %} : <span class="infos_value">{{user_to_display.getProfile().getLanguage() }}</span></li>
+				{% endif %}
+				
+				{% if user_to_display.getProfile().getNativeCity() %}
+					<li>{% trans %}Native city{% endtrans %} : <span class="infos_value">{{user_to_display.getProfile().getNativeCity() }}</span></li>
+				{% endif %}
+			</ul>
+		</div>
+		<div class="infos_frame">
+			<p class="infos_title">{% trans %}Contact information{% endtrans %}</p>
+			<ul class="infos_list">
+				<li>{% trans %}Email{% endtrans %} : <span class="infos_value">{{user_to_display.getEmail()}}</span></li>
+				
+				{% if user_to_display.getProfile().getPhoneNumber() %}
+					<li>{% trans %}Phone{% endtrans %} : <span class="infos_value">{{user_to_display.getProfile().getPhoneNumber() }}</span></li>
+				{% endif %}
+				
+				{% if user_to_display.getProfile().getWebsite() %}
+					<li>{% trans %}Web{% endtrans %} : <span class="infos_value">{{user_to_display.getProfile().getWebsite() }}</span></li>
+				{% endif %}
+				
+				{% if user_to_display.getProfile().getCity() or user_to_display.getProfile().getPostalCode() or user_to_display.getProfile().getAddress() %}
+					<li>{% trans %}Home{% endtrans %} : <span class="infos_value">
+						{% if user_to_display.getProfile().getAddress() %}{{user_to_display.getProfile().getAddress() }} - {% endif %}
+						{% if user_to_display.getProfile().getCity() %}{{user_to_display.getProfile().getCity() }} {% endif %}
+						{% if user_to_display.getProfile().getPostalCode() %}{{user_to_display.getProfile().getPostalCode() }}{% endif %}
+						</span>
+					</li>
+				{% endif %}
+				
+			</ul>
+		</div>
+	{% else %}
+		<p class="error">{% trans %}You need permissions{% endtrans %}</p>
+	{% endif %}
+
+	
+<style>
+
+.infos_frame {
+	width:80%;
+	margin:10px auto;
+	padding:10px;
+	background-color:white;
+	border-radius:5px;
+	box-shadow: 0 0 5px #555;
+}
+.infos_frame .infos_title {
+	margin:10px;
+	text-align:left;
+	font-size:18px;
+	font-weight:bold;
+	text-decoration:none;
+	color:#4878AC;
+}
+.infos_frame .infos_list {
+	list-style-type:none;
+}
+.infos_frame .infos_list li {
+	color:#999;
+	font-weight:bold;
+	font-size:14px;
+}
+.infos_frame .infos_list li .infos_value {
+	color:black;
+	font-weight:bold;
+	font-size:14px;
+}
+	
+</style>
+
+{% endblock %}
+
+
+

@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="1">
+                <source>Development</source>
+                <target>Développement</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>Production</source>
+                <target>Production</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>Overview</source>
+                <target>Résumé</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>Use this application with caution. Unexperimented people shouldn't alter the parameters of this application.</source>
+                <target>Utiliser cette application avec prudence. Les utilisateurs inexpérimentés ne devraient pas modifier les paramètres de l'application.</target>
+            </trans-unit>
+            <trans-unit id="5">
+                <source>Maintenance</source>
+                <target>Maintenance</target>
+            </trans-unit>
+            <trans-unit id="6">
+                <source>Reports</source>
+                <target>Rapports</target>
+            </trans-unit>
+            <trans-unit id="7">
+                <source>Database</source>
+                <target>Base de données</target>
+            </trans-unit>
+            <trans-unit id="8">
+                <source>Cache</source>
+                <target>Cache</target>
+            </trans-unit>
+            <trans-unit id="9">
+                <source>Clear cache</source>
+                <target>Vider le cache</target>
+            </trans-unit>
+            <trans-unit id="10">
+                <source>Clear cache will clean the temporary files of your website. The process after the cleaning could be longer because the Scube system will re-create every temporary file.</source>
+                <target>Vider le cache supprimera les fichiers temporaires du site. Après le nettoyage, les pages pourraient mettre plus de temps à charger pendant la création des nouveaux fichiers temporaires.</target>
+            </trans-unit>
+            <trans-unit id="11">
+                <source>Running environment</source>
+                <target>Environnement en exécution</target>
+            </trans-unit>
+            <trans-unit id="12">
+                <source>Installed applications</source>
+                <target>Applications installées</target>
+            </trans-unit>
+            <trans-unit id="13">
+                <source>Installed widgets</source>
+                <target>Widgets installés</target>
+            </trans-unit>
+            <trans-unit id="14">
+                <source>If you set wrong parameters into this form, your site could be unavailable.</source>
+                <target>Si des mauvaises valeurs sont saisies, le site pourrait devenir inaccessible.</target>
+            </trans-unit>
+            <trans-unit id="15">
+                <source>If errors occur after validation of this form, you can manually edit the file app/config/parameters.ini.</source>
+                <target>Si des erreurs surviennent après validation, vous pouvez éditer manuellement le fichier app/config/parameters.ini.</target>
+            </trans-unit>
+            <trans-unit id="16">
+                <source>The database that you want to set up must be full. An empty database will result an error.</source>
+                <target>La base de données que vous voulez utiliser doit être déjà pleine. Une base de données vide causera des erreurs.</target>
+            </trans-unit>
+            <trans-unit id="17">
+                <source>Switch On</source>
+                <target>Activer la maintenance</target>
+            </trans-unit>
+            <trans-unit id="18">
+                <source>Switch Off</source>
+                <target>Désactiver la maintenance</target>
+            </trans-unit>
+            <trans-unit id="19">
+                <source>Grant a user</source>
+                <target>Donner la permission à</target>
+            </trans-unit>
+            <trans-unit id="20">
+                <source>Available users</source>
+                <target>Utilisateurs disponibles</target>
+            </trans-unit>
+            <trans-unit id="21">
+                <source>Withdraw permission</source>
+                <target>Retirer la permission</target>
+            </trans-unit>
+            <trans-unit id="22">
+                <source>Clear reports</source>
+                <target>Vider les rapports</target>
+            </trans-unit>
+            <trans-unit id="23">
+                <source>View the message</source>
+                <target>Voir le message</target>
+            </trans-unit>
+            <trans-unit id="24">
+                <source>Close</source>
+                <target>Fermer</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

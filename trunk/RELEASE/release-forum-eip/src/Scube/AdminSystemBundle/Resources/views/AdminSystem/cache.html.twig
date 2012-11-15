@@ -1,0 +1,26 @@
+{% extends 'ScubeBaseBundle:Base:core_application.html.twig' %}
+
+{% block body %}
+{{ parent() }}
+
+<div class="Application">
+	<table class="table_content">
+		<tr>
+			<td class="sidebar_left">
+				{% include 'ScubeAdminSystemBundle:Adminsystem:menu.html.twig' %}
+			</td>
+			<td class="sidebar_main">
+				<h1>{% trans %}Cache{% endtrans %}</h1>
+
+				<div class="btn_line">
+					<a href="{{ path("ScubeAdminSystemBundle_cache_clear") }}" class="button green">{% trans %}Clear cache{% endtrans %}</a>
+				</div>
+				<p>
+					{% trans %}Clear cache will clean the temporary files of your website. The process after the cleaning could be longer because the Scube system will re-create every temporary file.{% endtrans %}
+				</p>
+			</td>
+		</tr>
+	</table>
+</div>
+
+{% endblock %}

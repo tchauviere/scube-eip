@@ -1,0 +1,45 @@
+{% extends 'ScubeBaseBundle:Base_Mobile:base.html.twig' %}
+
+{% block title %}Login in your Scube{% endblock %}
+
+{% block body %}
+{{ parent() }}
+{% block header_btns %}{% endblock %}
+{% block back_btns %}{% endblock %}
+<div data-role="content">
+
+<h1>Sign In</h1>
+
+{% if error %}
+	<p style="text-align:center;">Invalid email and/or password</p>
+{% endif %}
+	
+{% if blocked %}
+	<p style="text-align:center;">Sorry, you have been blocked by the administrator.</p>
+{% endif %}
+
+<form data-transition="flip" action="{{ path('_homepage') }}" method="post" {{ form_enctype(form) }}>
+	{{ form_row(form._token) }} 
+	
+	<div id="email" style="margin-left: 10px; width:80%;">
+	{{ form_label(form.Email, "Email") }}
+	{{ form_errors(form.Email) }}
+	{{ form_widget(form.Email) }}
+	</div>
+	
+	<div id="password" style="margin-left: 10px; width:80%;">
+	{{ form_label(form.Password, "Password") }}
+	{{ form_errors(form.Password) }}
+	{{ form_widget(form.Password) }}
+	</div>
+
+    <input data-theme="b" type="submit" value="Sign in"/>
+</form>
+
+{% if allow_registration %}
+<p style="text-align:center;"><a href="{{ path('_register') }}" data-transition="slide">Not yet registered ? Click here.</a></p>
+{% endif %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'ScubeMediasBundle:Medias:medias_core.html.twig' %}
+
+{% block media_page %}
+
+	<h1>{% trans %}Your medias{% endtrans %}</h1>
+
+	<div class="scroll_container" rel="scroller">
+	{% for media in last_medias %}
+		<div class="last-medias-line">
+			<a href="#" onclick='load_media("{{ media.id }}", "{{ media.type }}");'>
+				<div class="last-medias-picture">
+					{% if media.type == 'picture' %}
+						{% image '@ScubeBaseBundle/Resources/public/images/medias_icone_picture.png' %}
+							<img src="{{ asset_url }}" alt="Picture"/>
+						{% endimage %}
+					{% elseif (media.type == 'youtube' or media.type == 'dailymotion' or media.type == 'vimeo') %}
+						{% image '@ScubeBaseBundle/Resources/public/images/medias_icone_video.png' %}
+							<img src="{{ asset_url }}" alt="Picture"/>
+						{% endimage %}
+					{% elseif media.type == 'document' %}
+						{% image '@ScubeBaseBundle/Resources/public/images/medias_icone_document.png' %}
+							<img src="{{ asset_url }}" alt="Picture"/>
+						{% endimage %}
+					{% elseif media.type == 'music' %}
+						{% image '@ScubeBaseBundle/Resources/public/images/medias_icone_music.png' %}
+							<img src="{{ asset_url }}" alt="Picture"/>
+						{% endimage %}
+					{% endif %}
+				</div>
+
+				<div class="last-medias-block-middle">
+					<div class="last-medias-title">
+						{{ media.getName() }}
+					</div>
+				</div>
+
+				<div class="last-medias-date">
+					{{ media.getDate()|date('d/m/Y') }}
+				</div>
+			</a>
+		</div>
+	{% endfor %}
+	</div>
+
+{% endblock %}

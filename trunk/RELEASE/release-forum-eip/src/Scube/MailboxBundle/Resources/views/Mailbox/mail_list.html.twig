@@ -1,0 +1,35 @@
+{% for mail in conversation.getMails() %}
+	<div class="mailbox_message type_{{mail.getType()}}">
+
+		<div class="message_picture">
+			{%if mail.type == "in"%}
+				{% if  mail.author.getProfile().getPicture() %}
+					<img src="{{mail.author.getProfile().getPicture()}}"/>
+				{% else %}
+					{% image '@ScubeBaseBundle/Resources/public/images/default_picture.png'	%}
+						<img src="{{ asset_url }}" />
+					{% endimage %}
+				{% endif %}
+			{% else %}
+				{% if  user.getProfile().getPicture() %}
+					<img src="{{user.getProfile().getPicture()}}"/>
+				{% else %}
+					{% image '@ScubeBaseBundle/Resources/public/images/default_picture.png'	%}
+						<img src="{{ asset_url }}" />
+					{% endimage %}
+				{% endif %}
+			{%endif%}
+		</div>
+
+		<p class="message_name">
+			{%if mail.type == "in"%}
+				{{mail.author.firstname}} {{mail.author.surname}} 
+			{% else %}
+				{{user.firstname}} {{user.surname}} 
+			{%endif%}
+			 {% trans %}wrote{% endtrans %}:
+		</p>
+		<p class="message_content">{{mail.getMessage()|nl2br}}</p>
+		<p class="message_date">{{mail.getMailingDate()|date()}}</p>
+	</div>
+{% endfor %}

@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="1">
+                <source>Key</source>
+                <target>Clé</target>
+            </trans-unit>
+			<trans-unit id="2">
+                <source>Value</source>
+                <target>Valeur</target>
+            </trans-unit>
+			<trans-unit id="3">
+                <source>Settings</source>
+                <target>Paramètres</target>
+            </trans-unit>
+			<trans-unit id="4">
+                <source>Settings Manager</source>
+                <target>Gestionnaire de paramètres</target>
+            </trans-unit>
+			<trans-unit id="5">
+                <source>Actions</source>
+                <target>Actions</target>
+            </trans-unit>
+			<trans-unit id="6">
+                <source>Edit</source>
+                <target>Modifier</target>
+            </trans-unit>
+			<trans-unit id="7">
+                <source>Edit setting</source>
+                <target>Modification du paramètre</target>
+            </trans-unit>
+			<trans-unit id="8">
+                <source>Back to Settings</source>
+                <target>Retour à la liste</target>
+            </trans-unit>
+			<trans-unit id="9">
+                <source>The setting has been successfully updated</source>
+                <target>Le paramètre a été modifié avec succès</target>
+            </trans-unit>
+			<trans-unit id="10">
+                <source>Save</source>
+                <target>Sauvegarder</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

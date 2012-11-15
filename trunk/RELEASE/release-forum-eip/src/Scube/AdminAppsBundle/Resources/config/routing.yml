@@ -1,0 +1,22 @@
+AdminAppsBundle_homepage:
+    pattern:  /admin_apps
+    defaults: { _controller: ScubeAdminAppsBundle:AdminApps:index }
+AdminAppsBundle_activate:
+    pattern:  /admin_apps_activate/{id}/{val}
+    defaults: { _controller: ScubeAdminAppsBundle:AdminApps:activate }
+AdminAppsBundle_remove:
+    pattern:  /admin_apps_remove/{id}
+    defaults: { _controller: ScubeAdminAppsBundle:AdminApps:remove }
+AdminAppsBundle_install:
+    pattern:  /admin_apps_install
+    defaults: { _controller: ScubeAdminAppsBundle:AdminApps:install }
+
+AdminAppsBundle_widget_homepage:
+    pattern:  /admin_apps_widgets
+    defaults: { _controller: ScubeAdminAppsBundle:AdminApps:indexWidget }
+AdminAppsBundle_widget_install:
+    pattern:  /admin_apps_widget_install
+    defaults: { _controller: ScubeAdminAppsBundle:AdminApps:installWidget }
+AdminAppsBundle_widget_remove:
+    pattern:  /admin_apps_widget_remove/{id}
+    defaults: { _controller: ScubeAdminAppsBundle:AdminApps:removeWidget }
