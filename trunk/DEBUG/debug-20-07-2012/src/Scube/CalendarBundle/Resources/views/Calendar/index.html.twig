@@ -259,7 +259,7 @@ $(document).ready(function() {
             },
             buttons: 
 			{
-               lol : function() 
+               "{% trans %}Save{% endtrans %}" : function() 
                {
                		if (isTime)
                		{
@@ -275,13 +275,13 @@ $(document).ready(function() {
                 calEvent.title = titleField.val();
 
                 calendar.fullCalendar("updateEvent", calEvent);
-				arrayEvents.push(calEvent.id, calEvent.title, calEvent.start.toString(), calEvent.end.toString());
+				arrayEvents.push(calEvent.id, calEvent.title, 0/*calEvent.start.toString()*/, 0/*calEvent.end.toString()*/);
 				
 				$.post("{{path('CalendarBundle_editEvent')}}",{'edit_event': arrayEvents});
 				arrayEvents = [];
                 $dialogContent.dialog("close");
                },
-               "delete" : function() 
+               "{% trans %}Delete{% endtrans %}" : function() 
 			   {
 			    $('#calendar').fullCalendar("removeEvents", calEvent.id);
 				arrayEvents.push(calEvent.id);
@@ -291,7 +291,7 @@ $(document).ready(function() {
 				
                 $dialogContent.dialog("close");
                },
-               cancel : function() 
+               "{% trans %}Cancel{% endtrans %}" : function() 
 			   {
                   $dialogContent.dialog("close");
                }
