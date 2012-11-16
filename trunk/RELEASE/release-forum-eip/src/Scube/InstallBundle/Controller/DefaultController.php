@@ -444,7 +444,7 @@ class DefaultController extends Controller
 				$default_usr_interface_widget5 = new InterfaceWidget();
 				$default_usr_interface_widget5->setWidth(1);
 				$default_usr_interface_widget5->setHeight(1);
-				$default_usr_interface_widget5->setPosX(5);
+				$default_usr_interface_widget5->setPosX(3);
 				$default_usr_interface_widget5->setPosY(0);
 				$default_usr_interface_widget5->setWidget($this->getDoctrine()->getRepository('ScubeBaseBundle:Widget')->findOneBy(array('name' => "Gold Book")));
 				$interface->addInterfaceWidget($default_usr_interface_widget5);
@@ -456,6 +456,7 @@ class DefaultController extends Controller
 				$em->persist($default_usr_interface_widget2);
 				$em->persist($default_usr_interface_widget3);
 				$em->persist($default_usr_interface_widget4);
+				$em->persist($default_usr_interface_widget5);
 				$em->persist($interface);
 				$em->persist($calendar);
 				$em->persist($mailbox);
