@@ -86,6 +86,12 @@
 								{% set recipients_id = recipients_id|merge([recipient.id]) %}
 							{% endfor %}
 
+							<a class="remove-link" href="{{ path("ScubeMailboxBundle_remove_conversation", {"users_selected":recipients_id|join('-')}) }}">
+								{% image '@ScubeBaseBundle/Resources/public/images/remove.png' %}
+									<img style="width:12px;" src="{{ asset_url }}" />
+								{% endimage %}
+							</a>
+
 							<a {% if conv.getNewMails() %}class="not-read"{% endif %} href="{{ path("ScubeMailboxBundle_homepage_conversation", {"users_selected":recipients_id|join('-')}) }}">
 
 								{% set last_mail = conv.mails|reverse|slice(0, 1).0 %}
@@ -143,7 +149,16 @@ var offline_extended = false;
 		var mail_list_timer=setInterval("load_mail_list()", 20000);
 		
 	});
-	
+
+	$('.conversation-line').live('hover', function() 
+	{
+		$('.remove-link', this).toggle();
+	});
+	$('.mailbox_message').live('hover', function() 
+	{
+		$('.remove-link', this).toggle();
+	});
+
 function	load_users_list()
 {
 	users_conversation = "{%if conversation%}{{users_selected}}{%else%}0{%endif%}";

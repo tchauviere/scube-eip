@@ -109,6 +109,43 @@ class MailboxController extends CoreController
 
         return $this->render('ScubeMailboxBundle:Mailbox:index.html.twig', array('user' => $user, 'conversation' => false, 'all_users' => $all_users, 'conversations_list' => $conversations));
     }
+
+    public function removeConversationAction(Request $request, $users_selected=false)
+    {
+    	$this->preprocessApplication();
+
+    	$users_selected_array = explode('-', $users_selected);
+		$conversation = $this->getConversationByRecipients($this->user, $users_selected_array);
+		
+		$em = $this->getDoctrine()->getEntityManager();
+				
+		$em->remove($conversation);
+		$em->flush();
+				
+		return $this->redirect($this->generateUrl('ScubeMailboxBundle_homepage'));
+    }
+
+    public function removeMailAction(Request $request, $users_selected, $mail_id=false)
+    {
+    	$this->preprocessApplication();
+
+    	$em = $this->getDoctrine()->getEntityManager();
+		$mail = $em->getRepository('ScubeBaseBundle:Mail')->find($mail_id);
+
+		if (!$mail) {
+			throw $this->createNotFoundException('No mail found for id '.$mail_id);
+		}
+		/*
+		if ($mail->getAuthor()->getId() != $this->user->getId()) {
+			throw $this->createNotFoundException('You don\'t own this mail');
+		}
+		*/
+			
+		$em->remove($mail);
+		$em->flush();
+		
+		return $this->redirect($this->generateUrl('ScubeMailboxBundle_homepage_conversation', array('users_selected'=>$users_selected)));
+    }
 	
 	public function	usersListAction(Request $request, $users_selected, $search="", $keep_extended=false)
 	{
