@@ -79,6 +79,7 @@
 		text-align:right;
 	}
 	.mailbox_message {
+		position:relative;
 		width:60%;
 		margin:10px;
 		background-color:white;
@@ -256,7 +257,7 @@
 	}
 
 	.conversation-line {
-		
+		position:relative;
 	}
 	.conversation-line a {
 		text-decoration:none;
@@ -302,5 +303,14 @@
 	}
 	.conversation-line a.not-read .conversation-title {
 		color:#8EB218;
+	}
+	a.remove-link {
+		display:none;
+		position:absolute;
+		top:5px;
+		right:5px;
+		height:auto;
+		border:none;
+		padding:0px;
 	}
 </style>

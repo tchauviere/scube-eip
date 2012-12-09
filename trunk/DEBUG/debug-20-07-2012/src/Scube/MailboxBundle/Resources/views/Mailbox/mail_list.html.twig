@@ -1,6 +1,12 @@
 {% for mail in conversation.getMails() %}
 	<div class="mailbox_message type_{{mail.getType()}}">
 
+		<a class="remove-link" href="{{ path("ScubeMailboxBundle_remove_mail", {"users_selected":users_selected, "mail_id":mail.getId()}) }}">
+			{% image '@ScubeBaseBundle/Resources/public/images/remove.png' %}
+				<img style="width:12px;" src="{{ asset_url }}" />
+			{% endimage %}
+		</a>
+
 		<div class="message_picture">
 			{%if mail.type == "in"%}
 				{% if  mail.author.getProfile().getPicture() %}

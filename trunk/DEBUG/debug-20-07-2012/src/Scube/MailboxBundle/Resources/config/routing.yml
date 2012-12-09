@@ -4,6 +4,12 @@ ScubeMailboxBundle_homepage:
 ScubeMailboxBundle_homepage_conversation:
     pattern:  /mailbox/{users_selected}
     defaults: { _controller: ScubeMailboxBundle:Mailbox:index }
+ScubeMailboxBundle_remove_conversation:
+    pattern:  /mailbox_remove_conversation/{users_selected}
+    defaults: { _controller: ScubeMailboxBundle:Mailbox:removeConversation }
+ScubeMailboxBundle_remove_mail:
+    pattern:  /mailbox_remove_mail/{users_selected}/{mail_id}
+    defaults: { _controller: ScubeMailboxBundle:Mailbox:removeMail }
 
 ScubeMailboxBundle_ajax_users_list:
     pattern:  /mailbox_ajax_users_list/{users_selected}/{search}/{keep_extended}
