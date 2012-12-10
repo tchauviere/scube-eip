@@ -37,7 +37,7 @@ class AccountController extends CoreController
 				
 				$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
 				$LoggingUser = $form->getData();
-				$user = $repository->findOneBy(array('email' => $LoggingUser->getEmail(), 'password' => $LoggingUser->getPassword()));
+				$user = $this->user;
 				if ($user)
 				{
 					$session->set('user', $user);
@@ -75,7 +75,7 @@ class AccountController extends CoreController
 				
 				$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
 				$LoggingUser = $form->getData();
-				$user = $repository->findOneBy(array('email' => $LoggingUser->getEmail(), 'password' => $LoggingUser->getPassword()));
+				$user = $this->user;
 				if ($user)
 				{
 					$session->set('user', $user);

@@ -1,15 +1,15 @@
 {% for usr in users_list %}
 	<li id="user_{{usr.getId()}}">
 
-	{% if  usr.getProfile().getPicture() %}
-		<img class="user-picture" src="{{usr.getProfile().getPicture()}}?{{time}}"/>
-	{% else %}
-		<a style="text-decoration:none;" href="{{ path("ScubeProfileViewerBundle_homepage", {'id_user':usr.getId()} )}}" title="{% trans %}Go to profile{% endtrans %}">
+	<a style="text-decoration:none;" href="{{ path("ScubeProfileViewerBundle_homepage", {'id_user':usr.getId()} )}}" title="{% trans %}Go to profile{% endtrans %}">
+		{% if  usr.getProfile().getPicture() %}
+			<img class="user-picture" src="{{usr.getProfile().getPicture()}}?{{time}}"/>
+		{% else %}
 			{% image '@ScubeBaseBundle/Resources/public/images/default_picture.png'	%}
 				<img class="user-picture" src="{{ asset_url }}" />
 			{% endimage %}
-		</a>
-	{% endif %}
+		{% endif %}
+	</a>
 
 	<span>{{usr.getFirstname()}} {{usr.getSurname()}}</span>
 	

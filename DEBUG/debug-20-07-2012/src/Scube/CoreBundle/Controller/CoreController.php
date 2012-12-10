@@ -25,6 +25,17 @@ class CoreController extends Controller
 		$this->checkBlackList();
 		$this->checkAccess();
 	}
+
+	protected function preprocessPage($need_session=true)
+	{
+		if ($need_session) {
+			$this->checkUser();
+			$this->checkLocale();
+			$this->checkBlackList();
+		}
+		$this->checkMaintenance();
+		
+	}
 	
 	/*
 	 * /!\ Must be called after checkUser() 
@@ -46,8 +57,10 @@ class CoreController extends Controller
 		
 		if (file_exists($file))
 		{
-			if (filesize($file) >= 1 && !$this->user->getMaintenancePermission())
-				throw new \Exception('Site under maintenance mode. Please try again in a while :)');
+			if (filesize($file) >= 1) { // need permissions
+				if (!$this->getRequest()->getSession()->get('user') || !$this->user->getMaintenancePermission())
+					throw new \Exception('Site under maintenance mode. Please try again in a while.');
+			}				
 		}
 	}
 	

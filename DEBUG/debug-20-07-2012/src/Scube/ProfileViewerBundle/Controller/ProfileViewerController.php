@@ -17,7 +17,7 @@ class ProfileViewerController extends CoreController
 
 		$session = $this->getRequest()->getSession();
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
-		$user_connected = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
+		$user_connected = $this->user;
 		$user_to_display = $repository->find($id_user);
 		if (\Scube\BaseBundle\Controller\BaseController::isMobile())
 			return $this->render('ScubeBaseBundle:Base_Mobile:view_profile.html.twig', array("user_connected"=>$user_connected, "user_to_display"=>$user_to_display));
@@ -29,7 +29,7 @@ class ProfileViewerController extends CoreController
 
 		$session = $this->getRequest()->getSession();
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
-		$user_connected = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
+		$user_connected = $this->user;
 		$user_to_display = $repository->find($id_user);
 		
 		if ($user_connected == $user_to_display)
@@ -89,7 +89,7 @@ class ProfileViewerController extends CoreController
 
 		$session = $this->getRequest()->getSession();
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
-		$user_connected = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
+		$user_connected = $this->user;
 		$user_to_display = $repository->find($id_user);
 		
 		if ($user_connected == $user_to_display)
@@ -126,7 +126,7 @@ class ProfileViewerController extends CoreController
 
 		$session = $this->getRequest()->getSession();
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
-		$user_connected = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
+		$user_connected = $this->user;
 		$user_to_display = $repository->find($id_user);
 		
 		$news = $this->getDoctrine()->getRepository('ScubeBaseBundle:News')->find($id_news);
@@ -151,7 +151,7 @@ class ProfileViewerController extends CoreController
 
 		$session = $this->getRequest()->getSession();
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
-		$user_connected = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
+		$user_connected = $this->user;
 		$user_to_display = $repository->find($id_user);
 		
 		if ($user_connected == $user_to_display)
@@ -187,7 +187,7 @@ class ProfileViewerController extends CoreController
     	
 		$session = $this->getRequest()->getSession();
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
-		$user_connected = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
+		$user_connected = $this->user;
 		$user_to_display = $repository->find($id_user);
 		
 		if ($user_connected == $user_to_display)

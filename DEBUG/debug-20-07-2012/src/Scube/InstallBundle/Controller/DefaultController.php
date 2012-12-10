@@ -312,6 +312,20 @@ class DefaultController extends Controller
 		$em = $this->getDoctrine()->getEntityManager();
 		$em->persist($default_setting6);
 		$em->flush();
+
+		$default_setting7 = new ScubeSetting();
+		$default_setting7->setKey("site_name");
+		$default_setting7->setValue("Scube");
+		$em = $this->getDoctrine()->getEntityManager();
+		$em->persist($default_setting7);
+		$em->flush();
+
+		$default_setting8 = new ScubeSetting();
+		$default_setting8->setKey("logo");
+		$default_setting8->setValue($this->get('request')->getBasePath()."/logo.png");
+		$em = $this->getDoctrine()->getEntityManager();
+		$em->persist($default_setting8);
+		$em->flush();
 		
 		/* Default Permissions Groups */
 		

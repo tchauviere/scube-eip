@@ -19,7 +19,7 @@ class MediasController extends CoreController
         $session = $this->getRequest()->getSession();
 		
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
-		$user = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
+		$user = $this->user;
 		
 		$media_folder = new MediaFolder();
 		$form_folder = $this->getCreateFolderForm($media_folder);
@@ -46,7 +46,7 @@ class MediasController extends CoreController
         $session = $this->getRequest()->getSession();
 		
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
-		$user = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
+		$user = $this->user;
 		
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:Media');
 		$media = $repository->find($id);
@@ -92,7 +92,7 @@ class MediasController extends CoreController
         $session = $this->getRequest()->getSession();
 		
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
-		$user = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
+		$user = $this->user;
 		
 		
 		$media = $this->getDoctrine()->getRepository('ScubeBaseBundle:Media')->find($id);
@@ -160,7 +160,7 @@ class MediasController extends CoreController
         $session = $this->getRequest()->getSession();
 		
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
-		$user = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
+		$user = $this->user;
 
 		$folder = $this->getDoctrine()->getRepository('ScubeBaseBundle:MediaFolder')->find($id);
 		if (!$folder) {

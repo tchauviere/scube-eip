@@ -19,7 +19,7 @@ class ConnectionsController extends CoreController
 		$session = $this->getRequest()->getSession();
 		
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
-		$user = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
+		$user = $this->user;
 		
 		$em1 = $this->getDoctrine()->getEntityManager();
 		$query = $em1->createQuery("SELECT u FROM ScubeBaseBundle:User u");
@@ -144,7 +144,7 @@ class ConnectionsController extends CoreController
 			}
 		}
 		
-		return $this->render('ScubeConnectionsBundle:Connections:users_list.html.twig', array('users_list'=>$users_list, 'group_id' => $group_id));
+		return $this->render('ScubeConnectionsBundle:Connections:users_list.html.twig', array('users_list'=>$users_list, 'group_id' => $group_id, 'time' => time()));
 	}
 	
 	public function	AddUserInGroupAction(Request $request, $id_usr=0, $id_grp=0)
@@ -154,7 +154,7 @@ class ConnectionsController extends CoreController
 		$session = $this->getRequest()->getSession();
 		
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
-		$user = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
+		$user = $this->user;
 		
 		$target_usr = $repository->find($id_usr);
 		
@@ -179,7 +179,7 @@ class ConnectionsController extends CoreController
 		$session = $this->getRequest()->getSession();
 		
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
-		$user = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
+		$user = $this->user;
 		
 		$target_usr = $repository->find($id_usr);
 		

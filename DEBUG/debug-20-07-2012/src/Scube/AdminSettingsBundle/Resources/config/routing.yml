@@ -5,3 +5,7 @@ AdminSettingsBundle_homepage:
 AdminSettingsBundle_edit:
     pattern:  /admin_settings_edit/{id}
     defaults: { _controller: ScubeAdminSettingsBundle:AdminSettings:edit }
+
+AdminSettingsBundle_site_infos:
+    pattern:  /admin_settings_site_infos
+    defaults: { _controller: ScubeAdminSettingsBundle:AdminSettings:siteInfos }

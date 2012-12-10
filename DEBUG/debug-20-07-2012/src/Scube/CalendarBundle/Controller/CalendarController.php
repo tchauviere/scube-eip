@@ -18,7 +18,7 @@ class CalendarController extends CoreController
 		$session = $this->getRequest()->getSession();
 		
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
-		$user = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
+		$user = $this->user;
 		
         return $this->render('ScubeCalendarBundle:Calendar:index.html.twig', array('user'=>$user));
     }
@@ -30,7 +30,7 @@ class CalendarController extends CoreController
 		$session = $this->getRequest()->getSession();
 		
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
-		$user = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
+		$user = $this->user;
 		
 		$em = $this->getDoctrine()->getEntityManager();
 		$eventToAccept = $em->getRepository('ScubeBaseBundle:CalendarEventToAccept')->find($id);
@@ -63,7 +63,7 @@ class CalendarController extends CoreController
 		
 		$session = $this->getRequest()->getSession();
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
-		$user = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
+		$user = $this->user;
 		
 		if (!$event) {
 			throw $this->createNotFoundException('No event found for id '.$id);
@@ -81,7 +81,7 @@ class CalendarController extends CoreController
 		$session = $this->getRequest()->getSession();
 		
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
-		$user = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
+		$user = $this->user;
 		
 		return  $this->render('ScubeCalendarBundle:Calendar:acceptEvent.html.twig', array('user'=>$user));
 	}
@@ -100,7 +100,7 @@ class CalendarController extends CoreController
 		
 		$session = $this->getRequest()->getSession();
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
-		$user = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
+		$user = $this->user;
 
 		$em = $this->getDoctrine()->getEntityManager();
 		$event = $em->getRepository('ScubeBaseBundle:CalendarEvent')->find($id);
@@ -147,7 +147,7 @@ class CalendarController extends CoreController
 		$em->flush();
 		
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
-		$user = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
+		$user = $this->user;
 
 		 return $this->render('ScubeCalendarBundle:Calendar:index.html.twig', array('user'=>$user));
 	}
@@ -159,8 +159,8 @@ class CalendarController extends CoreController
 		$session = $this->getRequest()->getSession();
 		
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
-		$user = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
-	
+		$user = $this->user;
+		
 		$array = $_POST['array_events'];	
 		
 		$title = $array['0'];
