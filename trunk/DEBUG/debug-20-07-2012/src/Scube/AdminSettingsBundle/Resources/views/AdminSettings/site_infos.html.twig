@@ -1,0 +1,36 @@
+{% extends 'ScubeBaseBundle:Base:core_application.html.twig' %}
+
+
+{% block body %}
+{{ parent() }}
+
+<div class="Application">
+
+<table class="table_content">
+<tr>
+	<td class="sidebar_left">
+		{% include 'ScubeAdminSettingsBundle:AdminSettings:menu.html.twig' %}
+	</td>
+	<td class="sidebar_main">
+		<h1>{% trans %}Site informations{% endtrans %}</h1>
+		
+		{% if success %}
+			<p class="form_success">{% trans %}The site informations has been successfully updated{% endtrans %}.
+			{% trans %}For a full update{% endtrans %}, <a target="_parent" href="{{ path('_homepage') }}">{% trans %}please refresh your desktop{% endtrans %}</a>.
+			</p>
+		{% endif %}
+
+		<p style="text-align:center;">
+			<img style="width:300px;" src="{{logo}}" />
+		</p>
+
+		<form action="{{ path("AdminSettingsBundle_site_infos")}}" method="post" {{ form_enctype(form) }}>
+			{{ form_widget(form) }}
+
+			<input type="submit" value="{% trans %}Save{% endtrans %}" />
+		</form>
+	</td>
+</tr>
+</div>
+
+{% endblock %}

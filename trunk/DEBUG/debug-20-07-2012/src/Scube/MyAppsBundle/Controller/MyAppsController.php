@@ -22,7 +22,7 @@ class MyAppsController extends CoreController
 		$session = $this->getRequest()->getSession();
 		
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
-		$user = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
+		$user = $this->user;
 		
 		$app_list = $user->getPermissionsGroup()->getApplications();
 
@@ -41,7 +41,7 @@ class MyAppsController extends CoreController
 		$session = $this->getRequest()->getSession();
 		
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
-		$user = $repository->findOneBy(array('email' => $session->get('user')->getEmail(), 'password' => $session->get('user')->getPassword()));
+		$user = $this->user;
 		$widget_list = $user->getBaseInterface()->getWidgets();
 		
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:Widget');

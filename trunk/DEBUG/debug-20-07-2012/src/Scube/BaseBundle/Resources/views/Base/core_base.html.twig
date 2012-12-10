@@ -45,10 +45,9 @@
 <body>
 {% block body %}
 <div id="header">
-	<a href="{{ path('_homepage') }}">
-		{% image '@ScubeBaseBundle/Resources/public/images/logo_scube_entete.png' %}
-		<img src="{{ asset_url }}" alt="Logo"/>
-		{% endimage %}
+	<a href="{{ path('_homepage') }}" title="{{site_info.site_name}}">
+		
+		<img src="{{site_info.logo}}" alt="{{site_info.site_name}}" />
 	</a>
 </div>
 

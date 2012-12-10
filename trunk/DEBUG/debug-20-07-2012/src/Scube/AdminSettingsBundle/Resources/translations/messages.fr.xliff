@@ -42,6 +42,22 @@
                 <source>Save</source>
                 <target>Sauvegarder</target>
             </trans-unit>
+            <trans-unit id="11">
+                <source>Site informations</source>
+                <target>Informations du site</target>
+            </trans-unit>
+            <trans-unit id="12">
+                <source>Site name</source>
+                <target>Nom du site</target>
+            </trans-unit>
+            <trans-unit id="13">
+                <source>The site informations has been successfully updated</source>
+                <target>Les informations du site ont été sauvegardées</target>
+            </trans-unit>
+            <trans-unit id="14">
+                <source>please refresh your desktop</source>
+                <target>Veuillez actualiser l'environnement</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
