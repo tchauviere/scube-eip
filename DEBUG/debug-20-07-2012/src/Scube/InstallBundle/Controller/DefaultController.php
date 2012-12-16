@@ -396,6 +396,7 @@ class DefaultController extends Controller
 			$form->bindRequest($request);
 	
 			if ($form->isValid()) {
+
 				/* Set profile object */
 				$profile = new UserProfile();
 				/* Set interface object */
@@ -408,6 +409,8 @@ class DefaultController extends Controller
 				/* set user ip */
 				$userIp = $this->getRequest()->getClientIp();
 				$user->setIp($userIp);
+
+				$user->setPassword(\Scube\BaseBundle\Controller\BaseController::hashPassword($user->getPassword()));
 				
 				
 				$user->setPermissionsGroup($this->getDoctrine()->getRepository('ScubeBaseBundle:PermissionsGroup')->findOneBy(array('name' => "administrator")));
