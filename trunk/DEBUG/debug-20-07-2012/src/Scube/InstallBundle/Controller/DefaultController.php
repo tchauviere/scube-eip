@@ -377,6 +377,11 @@ class DefaultController extends Controller
     
     public function indexAction(Request $request)
     {
+    	$infos = array();
+		$infos['site_name'] = $this->getDoctrine()->getRepository('ScubeBaseBundle:ScubeSetting')->findOneBy(array('key' => "site_name"))->getValue();
+		$infos['logo'] = $this->getDoctrine()->getRepository('ScubeBaseBundle:ScubeSetting')->findOneBy(array('key' => "logo"))->getValue();
+
+
 		$user = new User();
 		$form = $this->createFormBuilder($user)
             ->add('Firstname', 'text')
@@ -468,10 +473,10 @@ class DefaultController extends Controller
 				
 				\Scube\BaseBundle\Controller\BaseController::createUserDirectory($this->get('kernel'), $user);
 				
-				return $this->render('ScubeInstallBundle:Default:index.html.twig', array('form' => $form->createView(), 'success' => true));
+				return $this->render('ScubeInstallBundle:Default:index.html.twig', array("site_info" => $infos, 'form' => $form->createView(), 'success' => true));
 			}
 		}
 
-		return $this->render('ScubeInstallBundle:Default:index.html.twig', array('form' => $form->createView()));
+		return $this->render('ScubeInstallBundle:Default:index.html.twig', array("site_info" => $infos, 'form' => $form->createView()));
     }
 }
