@@ -11,7 +11,7 @@
 	<div class="scroll_container" rel="scroller">
 		<div id="target_area">
 			<h2>{% trans %}Upload file{% endtrans %}</h2>
-			<p style="text-align:center;color:#666;font-size:14px;">{% trans %}Accepted formats are{% endtrans %} pdf, png, jpg</p>
+			<p style="text-align:center;color:#666;font-size:14px;">{% trans %}Accepted formats are{% endtrans %} pdf, png, jpg and mp3</p>
 			<form action="{{ path('ScubeMediasBundle_upload', { 'id': folder.getId()}) }}" method="post" {{ form_enctype(form) }}>
 				{{ form_widget(form) }}
 				<input type="hidden" name="ext_media" value="false" />

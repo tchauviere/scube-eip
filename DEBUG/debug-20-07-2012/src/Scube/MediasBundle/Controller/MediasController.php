@@ -83,8 +83,8 @@ class MediasController extends CoreController
 				break ;
 			}
 		}
-		
-		return $this->render('ScubeMediasBundle:Medias:load.html.twig', array('media'=>$media, 'prev_media'=>$prev_media, 'next_media'=>$next_media, 'embedded_url'=>$embedded_url));
+		$baseUrl = $this->get('request')->getBaseUrl();
+		return $this->render('ScubeMediasBundle:Medias:load.html.twig', array('media'=>$media, 'prev_media'=>$prev_media, 'next_media'=>$next_media, 'embedded_url'=>$embedded_url, 'base_url'=>$baseUrl));
     }
 	public function deleteMediaAction(Request $request, $id)
     {
@@ -247,7 +247,7 @@ class MediasController extends CoreController
 						case "jpeg": $type="picture"; break;
 						case "png": $type="picture"; break;
 						/* Videos */
-						case "3gp": $type="video"; break;
+						//case "3gp": $type="video"; break;
 						/* Docs */
 						case "pdf": $type="document"; break;
 						/* Music */
