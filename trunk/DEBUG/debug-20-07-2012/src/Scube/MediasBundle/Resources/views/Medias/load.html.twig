@@ -1,9 +1,3 @@
-{% javascripts
-    '@ScubeMediasBundle/Resources/public/js/flashobject.js' 
-%}
-<script type="text/javascript" src="{{ asset_url }}"></script>
-{% endjavascripts %}
-
 <h1 style="color:white;text-shadow:none;">{{media.name}}</h1>
 
 <div id="vizualiser">
@@ -11,29 +5,120 @@
 	<img style="vertical-align:bottom;display:inline;" src="{{media.path}}" alt="{{media.name}}" />
 {% elseif media.type == "document" %}
 	<iframe style="border:none;" src="{{media.path}}"></iframe>
-{% elseif media.type == "video" %}
-	<div style="display:inline-block;">
-    <div id="lecteur_79330" style="display:inline-block;">
-		<a href="http://www.macromedia.com/go/getflashplayer">Vous devez installer le Plugin FlashPlayer</a>
-    </div>
-    <script type="text/javascript">
-    //<!--
-		var flashvars_79330 = {};
-		var params_79330 = {
-				quality: "high",
-				bgcolor: "#000000",
-				allowScriptAccess: "always",
-				allowFullScreen: "true",
-				wmode: "transparent",				
-				flashvars: "fichier=http://localhost{{media.path}}"
-			};
-		var attributes_79330 = {};
-        flashObject("../../v1_7.swf", "lecteur_79330", "720", "405", "8", false, flashvars_79330, params_79330, attributes_79330);
-    //-->
-    </script>
-	</div>
 {% elseif (media.type == "youtube" or media.type == "dailymotion" or media.type == "vimeo") %}
 	{{ embedded_url | raw }}
+{% elseif (media.type == "music") %}
+	{% stylesheets 
+		'@ScubeBaseBundle/Resources/public/css/jplayer.blue.monday.css' 
+	%}
+		<link rel="stylesheet" href="{{ asset_url }}" />
+	{% endstylesheets %}
+
+	<style>
+		{% image '@ScubeBaseBundle/Resources/public/images/jplayer.blue.monday.jpg' %}
+			a.jp-play {background: url({{ asset_url }}) 0 0 no-repeat;}
+			a.jp-play:hover {background: url({{ asset_url }}) -41px 0 no-repeat;}
+			a.jp-pause {background: url({{ asset_url }}) 0 -42px no-repeat; display: none;}
+			a.jp-pause:hover {background: url({{ asset_url }}) -41px -42px no-repeat;}
+			a.jp-stop {background: url({{ asset_url }}) 0 -83px no-repeat;margin-left:10px;}
+			a.jp-stop:hover {background: url({{ asset_url }}) -29px -83px no-repeat;}
+			a.jp-previous {background: url({{ asset_url }}) 0 -112px no-repeat;}
+			a.jp-previous:hover {background: url({{ asset_url }}) -29px -112px no-repeat;}
+			a.jp-next {background: url({{ asset_url }}) 0 -141px no-repeat;}
+			a.jp-next:hover {background: url({{ asset_url }}) -29px -141px no-repeat;}
+			div.jp-seek-bar {background: url({{ asset_url }}) 0 -202px repeat-x; width:0px; height:100%; cursor: pointer;}
+			div.jp-play-bar {background: url({{ asset_url }}) 0 -218px repeat-x ;	width:0px; height:100%;}
+			a.jp-mute {background: url({{ asset_url }}) 0 -170px no-repeat;}
+			a.jp-mute:hover {background: url({{ asset_url }}) -19px -170px no-repeat;}
+			a.jp-unmute {background: url({{ asset_url }}) -60px -170px no-repeat;	display: none;}
+			a.jp-unmute:hover {background: url({{ asset_url }}) -79px -170px no-repeat;}
+			a.jp-volume-max {background: url({{ asset_url }}) 0 -186px no-repeat;}
+			a.jp-volume-max:hover {background: url({{ asset_url }}) -19px -186px no-repeat;}
+			div.jp-volume-bar {position: absolute; overflow:hidden; background: url({{ asset_url }}) 0 -250px repeat-x; width:46px; height:5px; cursor: pointer;}
+			div.jp-volume-bar-value {background: url({{ asset_url }}) 0 -256px repeat-x; width:0px; height:5px;}
+			a.jp-full-screen {background: url({{ asset_url }}) 0 -310px no-repeat; margin-left: 20px;}
+			a.jp-full-screen:hover {background: url({{ asset_url }}) -30px -310px no-repeat;}
+			a.jp-restore-screen {background: url({{ asset_url }}) -60px -310px no-repeat;	margin-left: 20px;}
+			a.jp-restore-screen:hover {background: url({{ asset_url }}) -90px -310px no-repeat;}
+			a.jp-repeat {background: url({{ asset_url }}) 0 -290px no-repeat;}
+			a.jp-repeat:hover {background: url({{ asset_url }}) -30px -290px no-repeat;}
+			a.jp-repeat-off {background: url({{ asset_url }}) -60px -290px no-repeat;}
+			a.jp-repeat-off:hover {background: url({{ asset_url }}) -90px -290px no-repeat;}
+			a.jp-shuffle {background: url({{ asset_url }}) 0 -270px no-repeat; margin-left: 5px;}
+			a.jp-shuffle:hover {background: url({{ asset_url }}) -30px -270px no-repeat;}
+			a.jp-shuffle-off {background: url({{ asset_url }}) -60px -270px no-repeat; margin-left: 5px;}
+			a.jp-shuffle-off:hover {background: url({{ asset_url }}) -90px -270px no-repeat;}
+		{% endimage %}
+		{% image '@ScubeBaseBundle/Resources/public/images/jplayer.blue.monday.seeking.gif' %}
+			div.jp-seeking-bg {background: url({{ asset_url }});}
+		{% endimage %}
+		{% image '@ScubeBaseBundle/Resources/public/images/jplayer.blue.monday.video.play.png' %}
+			a.jp-video-play-icon {position:relative; display:block;	width: 112px; height: 100px; margin-left:-56px;	margin-top:-50px; left:50%;	top:50%; background: url("{{ asset_url }}") 0 0 no-repeat; text-indent:-9999px;}
+			div.jp-video-play:hover a.jp-video-play-icon {background: url("{{ asset_url }}") 0 -100px no-repeat;}
+		{% endimage %}
+	</style>
+	
+	{% javascripts
+		'@ScubeBaseBundle/Resources/public/js/jquery.jplayer.min.js' 
+	%}
+		<script type="text/javascript" src="{{ asset_url }}"></script>
+	{% endjavascripts %}
+	
+	<center>
+		<div id="jquery_jplayer_1" class="jp-jplayer"></div>
+			  <div id="jp_container_1" class="jp-audio">
+			    <div class="jp-type-single">
+			      <div class="jp-gui jp-interface">
+			        <ul class="jp-controls">
+			          <li><a href="javascript:;" class="jp-play" tabindex="1">play</a></li>
+			          <li><a href="javascript:;" class="jp-pause" tabindex="1">pause</a></li>
+			          <li><a href="javascript:;" class="jp-stop" tabindex="1">stop</a></li>
+			          <li><a href="javascript:;" class="jp-mute" tabindex="1" title="mute">mute</a></li>
+			          <li><a href="javascript:;" class="jp-unmute" tabindex="1" title="unmute">unmute</a></li>
+			          <li><a href="javascript:;" class="jp-volume-max" tabindex="1" title="max volume">max volume</a></li>
+			        </ul>
+			        <div class="jp-progress">
+			          <div class="jp-seek-bar">
+			            <div class="jp-play-bar"></div>
+			          </div>
+			        </div>
+			        <div class="jp-volume-bar">
+			          <div class="jp-volume-bar-value"></div>
+			        </div>
+			        <div class="jp-time-holder">
+			          <div class="jp-current-time"></div>
+			          <div class="jp-duration"></div>
+			          <ul class="jp-toggles">
+			            <li><a href="javascript:;" class="jp-repeat" tabindex="1" title="repeat">repeat</a></li>
+			            <li><a href="javascript:;" class="jp-repeat-off" tabindex="1" title="repeat off">repeat off</a></li>
+			          </ul>
+			        </div>
+			      </div>
+			      <div class="jp-title">
+			        <ul>
+			          <li>{{media.name}}</li>
+			        </ul>
+			      </div>
+			      <div class="jp-no-solution">
+			        <span>Update Required</span>
+			        To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
+			      </div>
+			    </div>
+		</div>
+	<center>
+	<script type="text/javascript">
+		jQuery(document).ready(function(){
+	      jQuery("#jquery_jplayer_1").jPlayer({
+	        ready: function () {
+	          $(this).jPlayer("setMedia", {
+	            mp3: "{{media.path}}",
+	          });
+	        },
+	        swfPath: "{{base_url}}/../Jplayer.swf",
+	        supplied: "mp3"
+	      });
+	    });
+	</script>
 {%endif%}
 {% if media.type != "document" %}
 	<hr />
