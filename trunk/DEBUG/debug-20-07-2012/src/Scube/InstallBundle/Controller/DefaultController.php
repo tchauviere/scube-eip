@@ -327,6 +327,20 @@ class DefaultController extends Controller
 		$em->persist($default_setting8);
 		$em->flush();
 		
+		$default_setting9 = new ScubeSetting();
+		$default_setting9->setKey("fb_app_id");
+		$default_setting9->setValue("113002988858656");
+		$em = $this->getDoctrine()->getEntityManager();
+		$em->persist($default_setting9);
+		$em->flush();
+
+		$default_setting10 = new ScubeSetting();
+		$default_setting10->setKey("fb_secret");
+		$default_setting10->setValue("c906e0c740e95395d71a56f3d68dd390");
+		$em = $this->getDoctrine()->getEntityManager();
+		$em->persist($default_setting10);
+		$em->flush();
+
 		/* Default Permissions Groups */
 		
 		// admin

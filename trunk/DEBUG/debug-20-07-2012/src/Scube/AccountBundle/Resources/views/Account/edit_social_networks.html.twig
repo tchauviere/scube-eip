@@ -1,0 +1,30 @@
+{% extends 'ScubeBaseBundle:Base:core_application.html.twig' %}
+
+
+{% block body %}
+{{ parent() }}
+
+<div class="Application">
+
+<table class="table_content">
+<tr>
+	<td class="sidebar_left">
+		{% include 'ScubeAccountBundle:Account:menu.html.twig' %}
+	</td>
+	<td class="sidebar_main">
+		<h1>{% trans %}Connections to social networks{% endtrans %}</h1>
+		
+		<p>
+		{% if fb_is_connected %}
+			{% trans %}You are currently connected to your Facebook account{% endtrans %}
+		{% else %}
+			{% trans %}You are not connected to Facebook, please{% endtrans %} <a target="_blank" href="{{ fb_login_url }}">{% trans %}Sign in{% endtrans %}</a>
+		{% endif %} 
+		</p>
+	</td>
+</tr>
+</table>
+
+</div>
+
+{% endblock %}
