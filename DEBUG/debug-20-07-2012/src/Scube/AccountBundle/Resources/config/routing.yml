@@ -10,3 +10,9 @@ ScubeAccountBundle_edit_profile:
 ScubeAccountBundle_edit_picture:
     pattern:  /edit_picture
     defaults: { _controller: ScubeAccountBundle:Account:editPicture }
+ScubeAccountBundle_social_networks:
+    pattern:  /edit_social_networks
+    defaults: { _controller: ScubeAccountBundle:Account:editSocialNetworks }
+ScubeAccountBundle_social_networks_confirm:
+    pattern:  /social_networks_confirm
+    defaults: { _controller: ScubeAccountBundle:Account:socialNetworksConfirm }

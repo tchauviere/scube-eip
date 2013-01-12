@@ -122,6 +122,26 @@
                 <source>You must select an area to crop</source>
                 <target>Vous devez sélectionner une zone de découpage</target>
             </trans-unit>
+            <trans-unit id="31">
+                <source>Social networks</source>
+                <target>Réseaux sociaux</target>
+            </trans-unit>
+            <trans-unit id="32">
+                <source>Connections to social networks</source>
+                <target>Connexions au réseaux sociaux</target>
+            </trans-unit>
+            <trans-unit id="33">
+                <source>You are currently connected to your Facebook account</source>
+                <target>Vous êtes bien connecté à facebook</target>
+            </trans-unit>
+            <trans-unit id="34">
+                <source>You are not connected to Facebook, please</source>
+                <target>Vous n'êtes pas connecté à Facebook, veuillez</target>
+            </trans-unit>
+            <trans-unit id="35">
+                <source>Sign in</source>
+                <target>vous authentifier</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -263,6 +263,51 @@ class AccountController extends CoreController
 		return $this->render('ScubeAccountBundle:Account:edit_picture.html.twig', $parameters);
     }
 
+    /* Social networks */
+	public function editSocialNetworksAction(Request $request)
+    {
+    	$this->preprocessApplication();
+		$session = $this->getRequest()->getSession();
+		
+		$user = $this->user;
+
+		$fb_controller = new \Scube\FacebookBundle\Controller\FacebookController;
+		$fb_controller->initController($this->getDoctrine(), $this->getRequest());
+
+		$fb = $fb_controller->createFacebookObject();
+
+		$fb_is_connected = false;
+		$redirect_url = $this->getRequest()->getScheme().'://'.$this->getRequest()->getHttpHost().$this->generateUrl("ScubeAccountBundle_social_networks_confirm");
+		$fb_login_url = $fb_controller->getFbLoginUrl($fb, $redirect_url);
+
+		if ($fb_controller->checkUserAlreadyRegistered($user->getId()))
+			$fb_is_connected = true;
+		
+		return $this->render('ScubeAccountBundle:Account:edit_social_networks.html.twig', array('fb_is_connected' => $fb_is_connected, 'fb_login_url' => $fb_login_url));
+    }
+
+    /* Social networks */
+	public function socialNetworksConfirmAction(Request $request)
+    {
+    	$this->preprocessApplication();
+
+    	$user = $this->user;
+
+		if (isset($_GET['error']))
+		{
+			return $this->redirect($this->generateUrl('ScubeAccountBundle_social_networks'));			
+		}
+		
+		$fb_controller = new \Scube\FacebookBundle\Controller\FacebookController;
+		$fb_controller->initController($this->getDoctrine(), $this->getRequest());
+
+		$fb = $fb_controller->createFacebookObject();
+
+		$result = $fb_controller->registerFbId($fb, $user->getId());
+		
+		return $this->redirect($this->generateUrl('ScubeAccountBundle_social_networks'));		
+	}
+
     /*
      * Check if picture need to be cropped
      */

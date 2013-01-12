@@ -50,6 +50,10 @@
                 <source>Home</source>
                 <target>Maison</target>
             </trans-unit>
+            <trans-unit id="13">
+                <source>from facebook</source>
+                <target>de facebook</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

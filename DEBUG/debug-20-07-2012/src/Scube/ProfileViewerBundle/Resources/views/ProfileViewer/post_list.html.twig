@@ -1,3 +1,4 @@
+{#
 {% if auth %}
 	{% for news in user_to_display.getNewsfeed()|reverse %}
 		<div class="news_post">
@@ -36,4 +37,68 @@
 		</div>
 	{% endfor %}
 {% endif %}
-
+#}
+{% if auth %}
+	{% for news in post_list %}
+		{% if not news.fb %}
+			<div class="news_post">
+				<table class="table_full_size">
+					<tr>
+					<td style="width:10%;">
+						{% if news.author_img %}
+							<img style="width:100%;" src="{{ news.author_img }}" alt="Profile Picture"/>
+						{% else %}
+							{% image '@ScubeBaseBundle/Resources/public/images/default_picture.png' %}
+								<img style="width:100%;" src="{{ asset_url }}" alt="Profile Picture"/>
+							{% endimage %}
+						{% endif %}
+					</td>
+					
+					<td style="width:90%;">
+						{% if news.author_id == user_connected.getId() or user_to_display == user_connected %}
+							{% image '@ScubeBaseBundle/Resources/public/images/remove.png' %}
+								<a style="float:right;" href="{{ path("ScubeProfileViewerBundle_newsfeed_remove", {'id_user':user_to_display.getId(), 'id_news':news.news_id} )}}">
+									<img style="width:16px;" src="{{ asset_url }}" alt="Remove this post"/>
+								</a>
+							{% endimage %}
+						{% endif %}
+						<p class="post_author">
+							<a href="{{ path("ScubeProfileViewerBundle_homepage", {'id_user':news.author_id} )}}">{{ news.author_firstname }} {{ news.author_surname }}</a>
+						</p>
+						<p class="post_content">
+							{{ news.news_message }}
+						</p>
+						<p class="post_date">
+							{{ news.news_date | date() }}
+						</p>
+					</td>
+					</tr>
+				</table>
+			</div>
+		{% else %}
+			<div class="news_post">
+				<table class="table_full_size">
+					<tr>
+					<td style="width:10%;">
+						{% image '@ScubeBaseBundle/Resources/public/images/default_picture.png' %}
+							<img style="width:100%;" src="{{ asset_url }}" alt="Profile Picture"/>
+						{% endimage %}
+					</td>
+					
+					<td style="width:90%;">
+						<p class="post_author">
+							{{ news.author_fullname }}
+						</p>
+						<p class="post_content">
+							{{ news.news_message }}
+						</p>
+						<p class="post_date">
+							{%trans%}from facebook{% endtrans %} {{ news.news_date | date() }}
+						</p>
+					</td>
+					</tr>
+				</table>
+			</div>
+		{% endif %}
+	{% endfor %}
+{% endif %}

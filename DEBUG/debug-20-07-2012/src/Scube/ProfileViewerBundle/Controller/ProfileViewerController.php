@@ -91,6 +91,8 @@ class ProfileViewerController extends CoreController
 		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:User');
 		$user_connected = $this->user;
 		$user_to_display = $repository->find($id_user);
+
+		$post_list = array();
 		
 		if ($user_connected == $user_to_display)
 			$auth = true;
@@ -115,9 +117,55 @@ class ProfileViewerController extends CoreController
 					break ;
 			}
 		}
+
+		$fb_is_connected = false;
+		$fb_post_list = array();
+		$fb_controller = new \Scube\FacebookBundle\Controller\FacebookController;
+		$fb_controller->initController($this->getDoctrine(), $this->getRequest());
+
+		$fb = $fb_controller->createFacebookObject();
+
+		if ($fb_controller->checkUserAlreadyRegistered($user_to_display->getId())) {
+			$fb_is_connected = true;
+			$fb_post_list = $fb_controller->getUserFeed($fb, $user_to_display->getId());
+		}
+		
+		$scube_post_list = $user_to_display->getNewsfeed();
+
+		$post_list = array();
+		
+		foreach ($scube_post_list as $p) {
+			$post = array();
+			$post['news_id'] = $p->getId();
+			$post['news_message'] = $p->getContentText();
+			$post['news_date'] = $p->getPostDate();
+			$post['author_img'] = $p->getAuthor()->getProfile()->getPicture();
+			$post['author_id'] = $p->getAuthor()->getId();
+			$post['author_firstname'] = $p->getAuthor()->getFirstname();
+			$post['author_surname'] = $p->getAuthor()->getSurname();
+
+			$post['timestamp'] = $post['news_date']->getTimestamp();
+
+			$post['fb'] = false;
+			$post_list[] = $post;
+		}
+		
+		if ($fb_post_list)
+			foreach ($fb_post_list->data as $p) {
+				$post = array();
+				$post['news_message'] = $p->message;
+				$post['news_date'] = $p->updated_time;
+				$post['author_fullname'] = $p->from->name;
+				$post['timestamp'] = strtotime($post['news_date']);
+
+				$post['fb'] = true;
+				$post_list[] = $post;
+			}
+
+		$post_list = $this->array_sort($post_list, 'timestamp', SORT_DESC);
 		
 		
-        return $this->render('ScubeProfileViewerBundle:ProfileViewer:post_list.html.twig', array("user_connected"=>$user_connected, "user_to_display"=>$user_to_display, "auth"=>$auth));
+        return $this->render('ScubeProfileViewerBundle:ProfileViewer:post_list.html.twig', array("user_connected"=>$user_connected, "user_to_display"=>$user_to_display, "auth"=>$auth, "post_list"=>$post_list));
     }
 	
 	public function newsfeedRemoveAction(Request $request, $id_user, $id_news)
@@ -216,4 +264,40 @@ class ProfileViewerController extends CoreController
 		
         return $this->render('ScubeProfileViewerBundle:ProfileViewer:pics.html.twig', array("user_connected"=>$user_connected, "user_to_display"=>$user_to_display, "auth"=>$auth));
     }
+
+    private function array_sort($array, $on, $order=SORT_ASC)
+	{
+	    $new_array = array();
+	    $sortable_array = array();
+
+	    if (count($array) > 0) {
+	        foreach ($array as $k => $v) {
+	            if (is_array($v)) {
+	                foreach ($v as $k2 => $v2) {
+	                    if ($k2 == $on) {
+	                        $sortable_array[$k] = $v2;
+	                    }
+	                }
+	            } else {
+	                $sortable_array[$k] = $v;
+	            }
+	        }
+
+	        switch ($order) {
+	            case SORT_ASC:
+	                asort($sortable_array);
+	            break;
+	            case SORT_DESC:
+	                arsort($sortable_array);
+	            break;
+	        }
+
+	        foreach ($sortable_array as $k => $v) {
+	            $new_array[$k] = $array[$k];
+	        }
+	    }
+
+	    return $new_array;
+	}
+
 }
