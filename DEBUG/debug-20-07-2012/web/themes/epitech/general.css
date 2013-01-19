@@ -1,8 +1,41 @@
 body
 {
-background-color:#FFF;
+background-color:#90BEE5;
 }
 
 h1{
-color:#333;
+color:#005e89;
 }
+
+#header {
+background-color: #FFFFFF;
+}
+
+#admin_header label, #lock_header label {
+color: #005e89;
+}
+
+input[type="submit"] {
+background-color: #005e89;
+}
+
+.blue_btn {
+background: #005e89;
+}
+
+.start_menu_btn {
+background: #005e89;
+}
+
+.yellow_btn {
+background: #005e89;
+}
+
+.red_btn {
+background: #005e89;
+}
+
+.start_menu_mini_btn {
+	background: #005e89;
+}
+
