@@ -1,4 +1,5 @@
 <ul class="sidebar_navigation">
-	<li><a href="{{ path("ScubeAdminAppearanceBundle_homepage")}}">Configuration</a></li>
-	<li><a href="{{ path("ScubeAdminAppearanceBundle_general")}}">General Appearance</a></li>
+	{% for theme_list in list %}
+		<li><a style="{%if theme_list==current%}font-weight:bold;color:#8EB218;{%endif%}" href="{{ path("ScubeAdminAppearanceBundle_theme", {'theme':theme_list} )}}">{{ theme_list }}</a></li>
+	{% endfor %}
 </ul>

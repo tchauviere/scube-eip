@@ -341,6 +341,13 @@ class DefaultController extends Controller
 		$em->persist($default_setting10);
 		$em->flush();
 
+		$default_setting11 = new ScubeSetting();
+		$default_setting11->setKey("theme");
+		$default_setting11->setValue("scube");
+		$em = $this->getDoctrine()->getEntityManager();
+		$em->persist($default_setting11);
+		$em->flush();
+
 		/* Default Permissions Groups */
 		
 		// admin
