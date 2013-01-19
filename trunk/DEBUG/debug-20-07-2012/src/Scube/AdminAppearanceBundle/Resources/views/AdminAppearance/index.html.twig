@@ -12,7 +12,7 @@
 		{% include 'ScubeAdminAppearanceBundle:AdminAppearance:menu.html.twig' %}
 	</td>
 	<td class="sidebar_main">
-		<h1>Appearance Manager - Theme {{view}}</h1>
+		<h1>{%trans%}Appearance Manager{%endtrans%} - {%trans%}Theme{%endtrans%} {{view}}</h1>
 
 		<div class="btn_line">
 			<a href="{{ path("ScubeAdminAppearanceBundle_set_current", {'theme':view})}}" class="button green">+ {% trans %}Activate{% endtrans %}</a>
