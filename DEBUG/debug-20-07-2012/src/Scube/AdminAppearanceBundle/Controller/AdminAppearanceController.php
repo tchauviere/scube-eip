@@ -7,58 +7,37 @@ use Symfony\Component\HttpFoundation\Request;
 
 class AdminAppearanceController extends Controller
 {
-	public function indexAction(Request $request)
+	public function indexAction(Request $request, $theme=false)
     {
-		$draft_pending = false;
+    	$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:ScubeSetting');
+		$current = $repository->findOneBy(array('key' => "theme"))->getValue();
+
+    	if (!$theme)
+    		return $this->redirect($this->generateUrl('ScubeAdminAppearanceBundle_theme', array('theme'=>$current)));
+
+    	$list = array();
+    	foreach (glob($this->get('kernel')->getRootDir()."/../web/themes/*") as $file) {
+    		if (basename($file) != 'current')
+    		$list[] = basename($file);
+    	}
 		
-		if (count(glob($this->get('kernel')->getRootDir()."/../web/themes/draft/*")))
-			$draft_pending = true;
-		
-		return $this->render('ScubeAdminAppearanceBundle:AdminAppearance:index.html.twig', array("draft_pending"=>$draft_pending));
+		return $this->render('ScubeAdminAppearanceBundle:AdminAppearance:index.html.twig', array("list"=>$list, 'current'=>$current, 'view' => $theme));
     }
-	public function setOnlineAction(Request $request)
+    public function setCurrentAction(Request $request, $theme)
     {
-		$files = glob($this->get('kernel')->getRootDir()."/../web/themes/draft/*");
-		
-		foreach ($files as $f)
-		{
-			rename($f, $this->get('kernel')->getRootDir()."/../web/themes/current/".basename($f));
-		}
-		
-		return $this->redirect($this->generateUrl('ScubeAdminAppearanceBundle_homepage'));
-    }
-	public function setDefaultAction(Request $request)
-    {
-		$files = glob($this->get('kernel')->getRootDir()."/../web/themes/default/*");
+		$files = glob($this->get('kernel')->getRootDir()."/../web/themes/".$theme."/*");
 		
 		foreach ($files as $f)
 		{
 			copy($f, $this->get('kernel')->getRootDir()."/../web/themes/current/".basename($f));
 		}
+
+		$repository = $this->getDoctrine()->getRepository('ScubeBaseBundle:ScubeSetting');
+		$current = $repository->findOneBy(array('key' => "theme"));
+		$current->setValue($theme);
+		$em = $this->getDoctrine()->getEntityManager();
+	   	$em->flush();
 		
-		return $this->redirect($this->generateUrl('ScubeAdminAppearanceBundle_homepage'));
-    }
-    public function generalAction(Request $request)
-    {
-		$defaultData = array();
-		$form = $this->createFormBuilder($defaultData)
-			->add('BODY_BGCOLOR', 'text')
-			->add('H1_COLOR', 'text')
-			->getForm();
-	
-			if ($request->getMethod() == 'POST') {
-				$form->bindRequest($request);
-	
-				$data = $form->getData();
-				$css_model = file_get_contents($this->get('kernel')->getRootDir()."/../web/themes/model/general.css");
-				
-				$css_model = str_replace("[#BODY_BGCOLOR#]", $data["BODY_BGCOLOR"], $css_model);
-				$css_model = str_replace("[#H1_COLOR#]", $data["H1_COLOR"], $css_model);
-				
-				file_put_contents($this->get('kernel')->getRootDir()."/../web/themes/draft/general.css", $css_model);
-			}
-		
-		
-        return $this->render('ScubeAdminAppearanceBundle:AdminAppearance:general.html.twig', array("form"=>$form->createView()));
+		return $this->redirect($this->generateUrl('ScubeAdminAppearanceBundle_theme', array('theme'=>$current->getValue())));
     }
 }

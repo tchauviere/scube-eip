@@ -1,12 +1,9 @@
 ScubeAdminAppearanceBundle_homepage:
     pattern:  /admin_appearance
     defaults: { _controller: ScubeAdminAppearanceBundle:AdminAppearance:index }
-ScubeAdminAppearanceBundle_general:
-    pattern:  /admin_appearance_general
-    defaults: { _controller: ScubeAdminAppearanceBundle:AdminAppearance:general }
-ScubeAdminAppearanceBundle_setonline:
-    pattern:  /admin_appearance_setonline
-    defaults: { _controller: ScubeAdminAppearanceBundle:AdminAppearance:setOnline }
-ScubeAdminAppearanceBundle_setdefault:
-    pattern:  /admin_appearance_setdefault
-    defaults: { _controller: ScubeAdminAppearanceBundle:AdminAppearance:setDefault }
+ScubeAdminAppearanceBundle_theme:
+    pattern:  /admin_appearance/{theme}
+    defaults: { _controller: ScubeAdminAppearanceBundle:AdminAppearance:index }
+ScubeAdminAppearanceBundle_set_current:
+    pattern:  /admin_appearance_set_current/{theme}
+    defaults: { _controller: ScubeAdminAppearanceBundle:AdminAppearance:setCurrent }
